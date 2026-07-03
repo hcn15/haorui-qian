@@ -1,0 +1,2545 @@
+﻿<!DOCTYPE html>
+<html xml:lang="zh" lang="zh" style="--color: #005CE6; --vh: 708px; scroll-behavior: auto;">
+<!-- ====================================================== -->
+<!-- 中文首页 - index.html -->
+<!-- 页面结构：顶部导航 + Hero轮播 + 新闻列表 + 产品服务 + 核心技术 + 应用场景 + 底部Footer -->
+<!-- ====================================================== -->
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport"
+		content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<meta name="format-detection" content="telephone=no,telephone=no,email=no,adress=no">
+	<meta name="renderer" content="webkit">
+	<meta name="force-rendering" content="webkit">
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<title>浩瑞绿色科技</title>
+	<meta name="keywords" content="无电制冷技术,被动辐射制冷技术,节能新材料,降温制冷,绿色低碳">
+	<meta name="description" content="">
+	<!-- ico -->
+	<link rel="shortcut icon" href="">
+	<!-- 公共 -->
+	<link rel="stylesheet" type="text/css" href="./index_files/extend.css">
+	<link rel="stylesheet" type="text/css" href="./index_files/style.css">
+	<link rel="stylesheet" type="text/css" href="./index_files/g-style.css">
+	<link rel="stylesheet" type="text/css" href="./index_files/f-style.css">
+	<script src="./index_files/hm.js"></script>
+	<script src="./config1.js"></script>
+	<script>
+		window.__PRELOAD_DATA__ = {};
+		window.__PRELOAD_PROMISES__ = {};
+
+		function preloadApi(url, key) {
+			window.__PRELOAD_PROMISES__[key] = fetch(`${SERVER_BASE_URL}${url}`)
+				.then(res => res.json())
+				.then(data => {
+					window.__PRELOAD_DATA__[key] = data;
+					return data;
+				})
+				.catch(err => {
+					console.error(`❌ 预加载 ${key} 失败：`, err);
+					return null;
+				});
+		}
+
+		console.log('🔮 开始预加载数据...');
+		preloadApi('/website/news?latest=true', 'news');
+		preloadApi('/website/product', 'product');
+		preloadApi('/website/techMain', 'techMain');
+		preloadApi('/website/techScrolling', 'techScrolling');
+		preloadApi('/website/scene', 'scene');
+	</script>
+	<script src="./index_files/svg-inject.min.js" type="text/javascript"></script>
+	<style type="text/css">
+		img[onload^="SVGInject("] {
+			visibility: hidden;
+		}
+	</style>
+	<!-- 公共结束 -->
+	<link rel="stylesheet" href="./index_files/yang-product.css">
+	<link rel="stylesheet" href="./index_files/zstyle.css">
+	<link rel="stylesheet" href="./index_files/layui.css">
+
+	<link rel="stylesheet" href="./index_files/share.min.css">
+	<link rel="stylesheet" type="text/css" href="./index_files/liMarquee.css">
+	<link rel="stylesheet" type="text/css" href="./index_files/mobile.css">
+
+	<meta name="baidu-site-verification" content="codeva-LR64T0uUwL" />
+	<script>
+		var _hmt = _hmt || [];
+		(function () {
+			var hm = document.createElement("script");
+			hm.src = "https://hm.baidu.com/hm.js?67f4d50cbdf1f4f1092a7bc9b04b5066";
+			var s = document.getElementsByTagName("script")[0];
+			s.parentNode.insertBefore(hm, s);
+		})();
+	</script>
+	<script>https://tongji.baidu.com/main/homepage/10000676506
+		var _hmt = _hmt || [];
+		(function () {
+			var hm = document.createElement("script");
+			hm.src = "https://hm.baidu.com/hm.js?7b77eb0c0d77f95775dda0be48c379af";
+			var s = document.getElementsByTagName("script")[0];
+			s.parentNode.insertBefore(hm, s);
+		})();
+	</script>
+
+
+	<style>
+		.join-box1 .container .right {
+			padding-top: 0;
+		}
+
+		.news-info1 .container .newsinfo1 .public-content {
+			color: #272727;
+		}
+
+		.znewslist .box .cn1 .cn2 {
+			letter-spacing: 1px;
+		}
+
+		.znewslist .box .cn1 .cn3 {
+			height: auto;
+		}
+
+		/* ========== 移动端适配样式 ========== */
+		@media (max-width: 767px) {
+			.new-nav-wrap {
+				padding: 0 10px !important;
+				height: 48px !important;
+				position: relative !important;
+			}
+
+			.new-nav-logo {
+				height: 48px !important;
+				margin-left: 0 !important;
+				margin-right: 0 !important;
+				flex: 1 !important;
+				justify-content: center !important;
+			}
+
+			.new-nav-logo img {
+				height: 20px !important;
+			}
+
+			.new-nav-main {
+				height: 48px !important;
+				position: absolute !important;
+				right: 10px !important;
+				top: 0 !important;
+			}
+
+			.new-nav-list {
+				display: none !important;
+			}
+
+			.new-nav-right {
+				display: none !important;
+			}
+
+			.mobile-menu-btn {
+				display: flex !important;
+				flex-direction: column;
+				justify-content: center;
+				align-items: center;
+				width: 40px;
+				height: 40px;
+				cursor: pointer;
+				z-index: 10001;
+			}
+
+			.mobile-menu-btn span {
+				display: block;
+				width: 24px;
+				height: 2px;
+				background: #fff;
+				margin: 3px 0;
+				transition: all 0.3s;
+			}
+
+			.mobile-menu-btn.active span:nth-child(1) {
+				transform: rotate(45deg) translateY(8px);
+			}
+
+			.mobile-menu-btn.active span:nth-child(2) {
+				opacity: 0;
+			}
+
+			.mobile-menu-btn.active span:nth-child(3) {
+				transform: rotate(-45deg) translateY(-8px);
+			}
+
+			.mobile-nav-overlay {
+				display: none;
+				position: fixed;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				background: rgba(0, 0, 0, 0.6);
+				z-index: 9998;
+			}
+
+			.mobile-nav-overlay.active {
+				display: block;
+			}
+
+			.mobile-nav-drawer {
+				position: fixed;
+				top: 0;
+				right: -100%;
+				width: 85%;
+				max-width: 300px;
+				height: 100%;
+				background: #ffffff;
+				z-index: 9999;
+				transition: right 0.3s ease;
+				overflow-y: auto;
+				padding-top: 60px;
+			}
+
+			.mobile-nav-drawer.active {
+				right: 0;
+			}
+
+			.mobile-nav-item {
+				border-bottom: 1px solid #f0f0f0;
+			}
+
+			.mobile-nav-item:last-child {
+				border-bottom: none;
+			}
+
+			.mobile-nav-link {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				padding: 15px 20px;
+				color: #333;
+				font-size: 16px;
+				text-decoration: none;
+				background: none;
+			}
+
+			.mobile-nav-link:active {
+				background: #f5f5f5;
+			}
+
+			.mobile-nav-link svg {
+				width: 16px;
+				height: 16px;
+				fill: #999;
+				transition: transform 0.3s;
+			}
+
+			.mobile-nav-item.open .mobile-nav-link svg {
+				transform: rotate(180deg);
+			}
+
+			.mobile-nav-sub {
+				display: none;
+				background: #f9f9f9;
+			}
+
+			.mobile-nav-item.open .mobile-nav-sub {
+				display: block;
+			}
+
+			.mobile-nav-sub-item {
+				padding: 12px 20px 12px 40px;
+				border-bottom: 1px solid #f0f0f0;
+			}
+
+			.mobile-nav-sub-item:last-child {
+				border-bottom: none;
+			}
+
+			.mobile-nav-sub-link {
+				color: #666;
+				font-size: 14px;
+				text-decoration: none;
+				display: block;
+			}
+
+			.mobile-nav-sub-link:active {
+				color: #1967c2;
+			}
+
+			.mobile-nav-lang {
+				padding: 15px 20px;
+				border-bottom: 1px solid #f0f0f0;
+				display: flex;
+				gap: 10px;
+			}
+
+			.mobile-nav-lang a {
+				color: #333;
+				font-size: 15px;
+				text-decoration: none;
+				padding: 5px 10px;
+				border: 1px solid #ddd;
+				border-radius: 4px;
+			}
+
+			.mobile-nav-lang a.active {
+				background: #1967c2;
+				color: #fff;
+				border-color: #1967c2;
+			}
+		}
+
+		@media (min-width: 768px) {
+			.mobile-menu-btn {
+				display: none !important;
+			}
+
+			.mobile-nav-overlay {
+				display: none !important;
+			}
+
+			.mobile-nav-drawer {
+				display: none !important;
+			}
+		}
+
+		.mobile-menu-btn {
+			display: none;
+		}
+
+		/* ========== 首页各区域移动端适配 ========== */
+		@media (max-width: 767px) {
+			.news-section .container {
+				padding: 0 15px !important;
+			}
+
+			.news-section .pub_title h2 {
+				font-size: 20px !important;
+				padding: 15px 0 8px !important;
+			}
+
+			.news-section>div>div:nth-child(2) {
+				padding-bottom: 8px !important;
+			}
+
+			.news-section>div>div:nth-child(2)>div:nth-child(1) {
+				font-size: 16px !important;
+			}
+
+			.news-section>div>div:nth-child(3) {
+				flex-direction: column !important;
+				gap: 15px !important;
+			}
+
+			.news-section>div>div:nth-child(3)>div:nth-child(1) {
+				height: auto !important;
+				max-height: 350px !important;
+				width: 100% !important;
+			}
+
+			.news-section>div>div:nth-child(3)>div:nth-child(1) li {
+				padding: 12px 0 !important;
+			}
+
+			.news-section>div>div:nth-child(3)>div:nth-child(1) li div:nth-child(1) {
+				width: 60px !important;
+				font-size: 14px !important;
+			}
+
+			.news-section>div>div:nth-child(3)>div:nth-child(1) li div:nth-child(2) h3 {
+				font-size: 14px !important;
+				line-height: 1.4 !important;
+			}
+
+			.news-section>div>div:nth-child(3)>div:nth-child(1) li div:nth-child(2) p {
+				font-size: 12px !important;
+				display: -webkit-box;
+				-webkit-line-clamp: 2;
+				-webkit-box-orient: vertical;
+				overflow: hidden;
+			}
+
+			.news-section>div>div:nth-child(3)>div:nth-child(2) {
+				width: 100% !important;
+				height: 250px !important;
+			}
+
+			#prev-btn,
+			#next-btn {
+				width: 32px !important;
+				height: 32px !important;
+				font-size: 16px !important;
+			}
+
+			#prev-btn {
+				left: 10px !important;
+			}
+
+			#next-btn {
+				right: 10px !important;
+			}
+
+			.slider-container img {
+				width: 100% !important;
+				height: 100% !important;
+				object-fit: cover !important;
+			}
+
+			.slider-container>div>div {
+				padding: 15px !important;
+			}
+
+			.slider-container>div>div span {
+				font-size: 12px !important;
+				padding: 4px 10px !important;
+				margin-bottom: 8px !important;
+			}
+
+			.slider-container>div>div h3 {
+				font-size: 16px !important;
+				line-height: 1.4 !important;
+			}
+
+			.hth {
+				padding-top: 0 !important;
+				margin-top: 0 !important;
+			}
+
+			.hth .pub_title {
+				padding: 15px 0 8px !important;
+			}
+
+			.hth .pub_title h2 {
+				font-size: 20px !important;
+			}
+
+			.hth .box {
+				margin-top: 10px !important;
+			}
+
+			.hfo .pub_title_tbox .pub_title h2 {
+				font-size: 20px !important;
+				padding: 20px 0 8px !important;
+			}
+
+			.hfo .box .hfo_box {
+				flex-direction: column !important;
+				height: auto !important;
+			}
+
+			.hfo .box .hfo_box .public-img {
+				width: 100% !important;
+				height: 200px !important;
+			}
+
+			.hfo .box .hfo_box .gr {
+				width: 100% !important;
+				padding: 20px 15px !important;
+				height: auto !important;
+			}
+
+			.hfo .box .hfo_box .gr .logo_t h3 {
+				font-size: 16px !important;
+				line-height: 1.4 !important;
+			}
+
+			.hfo .box .hfo_box .gr .txt .txt_t .g_p {
+				font-size: 14px !important;
+				line-height: 1.6 !important;
+			}
+
+			.swiper-scene .swiper-slide {
+				width: 100% !important;
+				margin-right: 0 !important;
+			}
+
+			footer {
+				padding: 25px 0 15px !important;
+				background-size: cover !important;
+				background-position: center !important;
+			}
+
+			footer .container {
+				padding: 0 15px !important;
+			}
+
+			footer .gt {
+				margin-bottom: 15px !important;
+			}
+
+			footer .gt h2 {
+				font-size: 20px !important;
+				margin-bottom: 0 !important;
+				line-height: 1.2 !important;
+			}
+
+			footer .gm {
+				margin-bottom: 15px !important;
+				flex-direction: column !important;
+				align-items: center !important;
+			}
+
+			footer .gm_r {
+				text-align: center !important;
+				width: 100% !important;
+			}
+
+			footer .gm_r h3 {
+				font-size: 15px !important;
+				margin-bottom: 8px !important;
+				line-height: 1.2 !important;
+			}
+
+			footer .gm_r .g_p {
+				font-size: 11px !important;
+				line-height: 1.5 !important;
+			}
+
+			footer .gm_r .g_p p {
+				margin-bottom: 4px !important;
+				display: block !important;
+				white-space: normal !important;
+				word-break: break-word !important;
+			}
+
+			footer .gb {
+				flex-direction: column !important;
+				text-align: center !important;
+				gap: 8px !important;
+				font-size: 10px !important;
+				padding-top: 12px !important;
+				border-top-width: 1px !important;
+				border-top-style: solid !important;
+				border-top-color: rgba(255,255,255,0.15) !important;
+			}
+
+			footer .gb_l {
+				display: flex !important;
+				flex-direction: column !important;
+				align-items: center !important;
+				gap: 4px !important;
+			}
+
+			footer .gb_l p {
+				margin-bottom: 0 !important;
+			}
+
+			footer .gb_r {
+				display: flex !important;
+				gap: 12px !important;
+				justify-content: center !important;
+			}
+
+			.h_banner,
+			.h_banner.on {
+				margin: 0 !important;
+				padding: 0 !important;
+				height: auto !important;
+				min-height: auto !important;
+				max-height: none !important;
+				overflow: visible !important;
+			}
+
+			.h_banner_swi {
+				height: auto !important;
+				min-height: auto !important;
+				max-height: none !important;
+			}
+
+			.h_banner .h_b_box {
+				height: 220px !important;
+				min-height: 220px !important;
+				max-height: 220px !important;
+				overflow: hidden !important;
+				margin-top: 0 !important;
+			}
+
+			html, body {
+				margin: 0 !important;
+				padding: 0 !important;
+			}
+
+			.h_b_txt {
+				left: 10px !important;
+				right: 10px !important;
+				text-align: center !important;
+				top: 50% !important;
+				transform: translateY(-50%) !important;
+			}
+
+			.h_b_txt .txt_t h1 {
+				font-size: 18px !important;
+				line-height: 1.4 !important;
+			}
+
+			.h_b_txt .txt_t h1 span {
+				font-size: 18px !important;
+				margin-bottom: 4px !important;
+			}
+
+			.gpop {
+				display: none !important;
+			}
+
+			.htw .pub_title h2 {
+				font-size: 22px !important;
+			}
+
+			.htw .box .box_t {
+				display: flex !important;
+				flex-direction: column !important;
+				gap: 15px !important;
+			}
+
+			.htw .box .box_t .box_t_con {
+				width: 100% !important;
+			}
+
+			.swiper-tech .swiper-slide {
+				width: 100% !important;
+				margin-right: 10px !important;
+			}
+
+			.swiper-tech .public-img img {
+				height: 180px !important;
+			}
+
+			.swiper-tech .txt h3 {
+				font-size: 16px !important;
+			}
+		}
+	</style>
+	<link id="layuicss-laydate" rel="stylesheet" href="./index_files/laydate.css" media="all">
+	<link id="layuicss-layer" rel="stylesheet" href="./index_files/layer.css" media="all">
+	<link id="layuicss-skincodecss" rel="stylesheet" href="./index_files/code.css" media="all">
+	<style type="text/css">
+		.qa-sdk-wrapper {
+			position: fixed;
+			width: 400px;
+			right: -600px;
+			max-height: 530px;
+			overflow: hidden;
+			border-radius: 4px;
+			box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.1);
+			transition: all 0.5s ease-in-out;
+			background: #fff;
+		}
+
+		.qa-sdk-close-btn {
+			display: inline-block;
+			width: 18px;
+			height: 18px;
+			cursor: pointer;
+			position: absolute;
+			top: 16px;
+			right: 16px;
+		}
+
+		.qa-sdk-close-btn:hover {
+			border-radius: 50%;
+			background-color: #d5d9df;
+		}
+
+		#qa-sdk-iframe {
+			width: 400px;
+		}
+
+		@media (min-width: 1024px) and (max-width: 1366px) {
+			.qa-sdk-wrapper {
+				width: 356px;
+			}
+
+			#qa-sdk-iframe {
+				width: 356px;
+			}
+		}
+	</style>
+	<style id="imt-injected-styles">
+		/* 翻译加载器样式 */
+		.imt-loading-indicator {
+			vertical-align: middle !important;
+			width: 10px !important;
+			height: 10px !important;
+			display: inline-block !important;
+			margin: 0 4px !important;
+			border: 2px rgba(221, 244, 255, 0.6) solid !important;
+			border-top: 2px rgba(0, 0, 0, 0.375) solid !important;
+			border-left: 2px rgba(0, 0, 0, 0.375) solid !important;
+			border-radius: 50% !important;
+			padding: 0 !important;
+			-webkit-animation: imt-loading-animation 0.6s infinite linear !important;
+			animation: imt-loading-animation 0.6s infinite linear !important;
+		}
+
+		@-webkit-keyframes imt-loading-animation {
+			from {
+				-webkit-transform: rotate(0deg);
+			}
+
+			to {
+				-webkit-transform: rotate(359deg);
+			}
+		}
+
+		@keyframes imt-loading-animation {
+			from {
+				transform: rotate(0deg);
+			}
+
+			to {
+				transform: rotate(359deg);
+			}
+		}
+
+		.se_imt_html {
+			height: 100%;
+		}
+
+		.se_imt_html body {
+			position: relative;
+			min-height: 100%;
+			top: 40px;
+		}
+
+		@media print {
+			#imt-webext {
+				display: none !important;
+			}
+		}
+	</style>
+	<style id="ai-assist-webType-style">
+		.ai-assist-highlight {
+			background: yellow;
+		}
+
+		@media print {
+
+			#ai-assist-root-bangs,
+			#ai-assist-root-bilibili,
+			#ai-assist-root-new {
+				display: none !important;
+			}
+		}
+	</style>
+	<style>
+		/* 核心：下拉正常弹出，不被挤压 */
+		.nav_on,
+		.nav_on * {
+			overflow: visible !important;
+			-webkit-transform: translateZ(0);
+			transform: translateZ(0);
+		}
+
+		.nav_on li.on2,
+		.nav_on li {
+			position: relative !important;
+			padding: 0 !important;
+			margin: 0 !important;
+		}
+
+		.pro_nav2 {
+			position: absolute !important;
+			top: 100% !important;
+			left: 0 !important;
+			transform: none !important;
+			z-index: 9999999 !important;
+			margin-left: 0 !important;
+			top: 9999px !important;
+		}
+
+		.nav_on li:hover .pro_nav2 {
+			top: 100% !important;
+		}
+
+		/* 语言框基础样式 */
+		.nav_lan {
+			position: relative !important;
+			z-index: 1 !important;
+		}
+
+		.nav_lan_box {
+			background: transparent !important;
+			border: none !important;
+			outline: none !important;
+			box-shadow: none !important;
+		}
+
+		.nav_on li a {
+			position: relative !important;
+		}
+
+		.nav_on li a svg {
+			display: none !important;
+		}
+
+		/* 三角样式 */
+		.nav_on li.on2>a::after,
+		.nav_on li:nth-child(2)>a::after {
+			content: "" !important;
+			position: absolute !important;
+			right: -8px !important;
+			top: 50% !important;
+			transform: translateY(-50%) !important;
+			width: 0 !important;
+			height: 0 !important;
+			border-left: 4px solid transparent !important;
+			border-right: 4px solid transparent !important;
+			border-top: 4px solid #fff !important;
+			will-change: auto !important;
+			transform-origin: center !important;
+		}
+
+		/* 【终极强制：任何状态、任何鼠标操作，三角永久显示】 */
+		.nav_on li a::after,
+		.nav_on li:hover a::after,
+		.nav_on li:active a::after,
+		.nav_on li:focus a::after,
+		.nav_on li:visited a::after,
+		body:hover .nav_on li a::after {
+			opacity: 1 !important;
+			visibility: visible !important;
+			display: block !important;
+			pointer-events: none !important;
+		}
+
+		html,
+		body {
+			max-width: 100vw;
+			overflow-x: hidden;
+		}
+
+		/* ===================== 永久修复三角消失问题 ===================== */
+		.nav_on li.on2>a::after {
+			display: block !important;
+			opacity: 1 !important;
+			visibility: visible !important;
+			transition: none !important;
+			animation: none !important;
+		}
+	</style>
+
+</head>
+
+<body style="">
+	<!-- 导航搜索+菜单 -->
+	<style>
+		.h_banner {
+			position: relative;
+			z-index: 1;
+		}
+
+		/* 全新顶级命名空间，杜绝旧样式污染 */
+		.new-nav-wrap * {
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+			list-style: none;
+			text-decoration: none;
+			font-family: "Microsoft YaHei", "SimSun", "宋体", sans-serif !important;
+		}
+
+		.new-nav-wrap {
+			width: 100%;
+			background: linear-gradient(90deg, #004a99, #1967c2);
+			height: 60px;
+			display: flex;
+			align-items: center;
+			padding: 0 22px;
+			box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+			/* 关键：给父级导航设置相对定位，为子菜单做定位基准 */
+			position: relative;
+			z-index: 9999;
+		}
+
+		.new-nav-logo {
+			display: flex;
+			align-items: center;
+			height: 60px;
+			margin-right: 30px;
+			margin-left: 50px;
+		}
+
+		.new-nav-logo img {
+			height: 28px;
+			width: auto;
+		}
+
+		.new-nav-main {
+			flex: 1;
+			display: flex;
+			justify-content: flex-end;
+			align-items: center;
+			height: 60px;
+		}
+
+		.new-nav-list {
+			display: flex;
+			align-items: center;
+			gap: 36px;
+			white-space: nowrap;
+			height: 60px;
+		}
+
+		.new-nav-item {
+			height: 60px;
+			display: flex;
+			align-items: center;
+			position: relative;
+			padding: 0 10px;
+		}
+
+		.new-nav-link {
+			display: flex;
+			align-items: center;
+			gap: 5px;
+			color: #f0f7ff;
+			font-size: 17px;
+			transition: all 0.25s ease;
+			/* 去掉默认下划线 */
+			text-decoration: none;
+		}
+
+		.new-nav-link:hover {
+			color: #ffffff;
+			/* 去掉hover时的下划线 */
+			border-bottom: none;
+			padding-bottom: 0;
+		}
+
+		.new-nav-link::after {
+			content: "";
+			display: block !important;
+			width: 0;
+			height: 0;
+			border-left: 4px solid transparent;
+			border-right: 4px solid transparent;
+			border-top: 4px solid #f0f7ff;
+			opacity: 1 !important;
+			visibility: visible !important;
+			pointer-events: none;
+			transition: transform 0.2s;
+		}
+
+		.new-nav-item:hover .new-nav-link::after {
+			border-top-color: #fff;
+			transform: rotate(180deg);
+		}
+
+		.new-nav-item.no-dropdown .new-nav-link::after {
+			display: none !important;
+		}
+
+		.new-nav-sub {
+			position: absolute;
+			top: 100%;
+			left: 0;
+			background: #ffffff;
+			padding: 12px 0;
+			display: none;
+			min-width: 140px;
+			border-radius: 4px;
+			box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+			/* 确保子菜单层级足够高 */
+			z-index: 99999;
+		}
+
+		.new-nav-item:hover .new-nav-sub {
+			display: block;
+		}
+
+		.new-nav-sub-item {
+			padding: 9px 18px;
+			transition: background 0.2s;
+		}
+
+		.new-nav-sub-item:hover {
+			background: #f5f8fc;
+		}
+
+		.new-nav-sub-link {
+			color: #222222;
+			font-size: 15px;
+			text-decoration: none;
+		}
+
+		.new-nav-right {
+			display: flex;
+			align-items: center;
+			gap: 22px;
+			height: 60px;
+			margin-left: 32px;
+		}
+
+		/* 语言下拉菜单样式 */
+		.nav_lan {
+			position: relative;
+			display: flex;
+			align-items: center;
+			cursor: pointer;
+			/* 保持和之前一致的间距 */
+			gap: 6px;
+		}
+
+		.nav_lan_sel {
+			position: absolute;
+			top: 100%;
+			left: 0;
+			background: #fff;
+			display: none;
+			border-radius: 4px;
+			box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+			/* 关键：设置足够高的层级，确保在所有内容之上 */
+			z-index: 99999;
+		}
+
+		.nav_lan:hover .nav_lan_sel {
+			display: block;
+		}
+
+		.nav_lan_sel a {
+			display: block;
+			padding: 7px 10px;
+			color: #222;
+			font-size: 15px;
+			text-decoration: none;
+		}
+
+		.nav_lan_sel a:hover {
+			background: #f5f8fc;
+		}
+
+		/* 搜索按钮样式 */
+		.nav_search {
+			cursor: pointer;
+			padding-left: 22px;
+			border-left: 1px solid rgba(255, 255, 255, 0.4);
+		}
+
+		/* 搜索框样式 */
+		.new-nav-search-box {
+			position: absolute;
+			top: 100%;
+			right: 22px;
+			background: #ffffff;
+			padding: 10px;
+			border-radius: 4px;
+			box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+			display: none;
+			z-index: 99999;
+		}
+
+		.new-nav-search-box.active {
+			display: block;
+		}
+
+		.new-nav-search-input {
+			width: 220px;
+			padding: 8px 12px;
+			border: 1px solid #ddd;
+			border-radius: 4px;
+			font-size: 15px;
+			outline: none;
+		}
+
+		.new-nav-search-input:focus {
+			border-color: #1967c2;
+		}
+
+		.new-nav-search-submit {
+			background: #1967c2;
+			color: #fff;
+			border: none;
+			padding: 8px 16px;
+			border-radius: 4px;
+			cursor: pointer;
+			margin-left: 6px;
+		}
+	</style>
+
+	<!-- ====================================================== -->
+	<!-- 【区域1】顶部导航栏 -->
+	<!-- 包含：Logo、导航菜单（首页/产品服务/核心技术/应用场景/产品选型/关于我们/联系我们）、语言切换 -->
+	<!-- ====================================================== -->
+	<div class="new-nav-wrap">
+		<div class="new-nav-logo">
+			<a href="./index.html">
+				<img src="./img/JSlogo-beb0d75f.png" alt="logo">
+			</a>
+		</div>
+
+		<div class="new-nav-main">
+			<ul class="new-nav-list">
+				<li class="new-nav-item no-dropdown">
+					<a href="./index.html" class="new-nav-link">首页</a>
+				</li>
+				<li class="new-nav-item">
+					<a href="#" class="new-nav-link">产品服务</a>
+					<div class="new-nav-sub" id="navProductSub"></div>
+				</li>
+				<li class="new-nav-item">
+					<a href="javascript:void(0);" class="new-nav-link">应用场景</a>
+					<div class="new-nav-sub">
+						<div class="new-nav-sub-item"><a href="./index.html#yycj" class="new-nav-sub-link">无电制冷</a>
+						</div>
+						<div class="new-nav-sub-item"><a href="./index.html#yycj" class="new-nav-sub-link">无线自组网</a>
+						</div>
+					</div>
+				</li>
+				<li class="new-nav-item no-dropdown">
+					<a href="./index.html#cpxn" class="new-nav-link">核心技术</a>
+				</li>
+				<li class="new-nav-item no-dropdown">
+					<a href="#lxwm" class="new-nav-link">联系我们</a>
+				</li>
+			</ul>
+
+			<div class="new-nav-right">
+				<!-- 完全原样搬入对方的语言栏代码，三角尺寸已调整为和菜单其他下拉箭头一致 -->
+				<div class="nav_lan">
+					<svg xmlns="http://www.w3.org/2000/svg" width="20.84" height="20.812" viewBox="0 0 20.84 20.812">
+						<defs>
+							<style>
+								.cls-1 {
+									fill: #fff;
+									fill-rule: evenodd;
+								}
+							</style>
+						</defs>
+						<path class="cls-1"
+							d="M1743.42,40.832a10.417,10.417,0,1,0,10.41,10.416A10.427,10.427,0,0,0,1743.42,40.832Zm7.42,6.314h-3.62a17.821,17.821,0,0,0-.67-2.883c-0.12-.357-0.25-0.7-0.4-1.046A8.534,8.534,0,0,1,1750.84,47.145Zm-8.72-2.275c0.58-1.747,1.17-2.1,1.3-2.1s0.72,0.358,1.3,2.106a14.836,14.836,0,0,1,.54,2.274h-3.69A16.191,16.191,0,0,1,1742.12,44.87Zm-7.19,6.377a8.356,8.356,0,0,1,.29-2.167h4.18c-0.06.705-.09,1.43-0.09,2.167s0.03,1.463.09,2.17h-4.18A8.377,8.377,0,0,1,1734.93,51.247Zm1.06,4.1h3.62a18.943,18.943,0,0,0,.67,2.884,9.871,9.871,0,0,0,.41,1.046A8.544,8.544,0,0,1,1735.99,55.35Zm4.29-11.088a18.956,18.956,0,0,0-.67,2.883h-3.62a8.548,8.548,0,0,1,4.7-3.929A9.873,9.873,0,0,0,1740.28,44.262Zm4.44,13.363c-0.58,1.748-1.18,2.105-1.3,2.105s-0.72-.358-1.3-2.105a16.074,16.074,0,0,1-.55-2.275h3.69A14.783,14.783,0,0,1,1744.72,57.625Zm0.78-4.208h-4.17c-0.05-.7-0.08-1.428-0.08-2.17s0.03-1.467.08-2.167h4.17c0.06,0.7.08,1.426,0.08,2.167S1745.56,52.716,1745.5,53.417Zm0.65,5.863c0.15-.341.28-0.69.4-1.046a17.823,17.823,0,0,0,.67-2.884h3.62A8.559,8.559,0,0,1,1746.15,59.28Zm1.29-5.863c0.05-.706.08-1.431,0.08-2.17s-0.03-1.462-.08-2.167h4.18a8.346,8.346,0,0,1,.28,2.167,8.82,8.82,0,0,1-.28,2.17h-4.18Z"
+							transform="translate(-1733 -40.844)"></path>
+					</svg>
+					<div class="nav_lan_box">
+						<!-- 三角尺寸调整为 width="8" height="4"，和菜单其他下拉箭头视觉大小一致 -->
+						<svg xmlns="http://www.w3.org/2000/svg" width="8" height="4" viewBox="0 0 6 3">
+							<defs>
+								<style>
+									.cls-1 {
+										fill: #fff;
+										fill-rule: evenodd;
+									}
+								</style>
+							</defs>
+							<path class="cls-1" d="M231,51l-3-3h6Z" transform="translate(-228 -48)"></path>
+						</svg>
+					</div>
+					<div class="nav_lan_sel">
+						<a href="./index-en.html">EN</a>
+						<a href="./index.html">简</a>
+					</div>
+				</div>
+
+				<!-- 完全原样搬入对方的搜索框代码 -->
+				<div class="nav_search" id="searchBtn">
+					<svg xmlns="http://www.w3.org/2000/svg" width="20.44" height="20.469" viewBox="0 0 20.44 20.469">
+						<defs>
+							<style>
+								.cls-1 {
+									fill: #fff;
+									fill-rule: evenodd;
+								}
+							</style>
+						</defs>
+						<path class="cls-1"
+							d="M1865.38,57.236l-3.93-3.932a9,9,0,1,0-1.71,1.715l3.92,3.931A1.214,1.214,0,0,0,1865.38,57.236Zm-15.73-4.725a6.6,6.6,0,0,1,0-9.308A6.583,6.583,0,1,1,1849.65,52.51Z"
+							transform="translate(-1845.31 -38.844)"></path>
+					</svg>
+				</div>
+
+				<div class="new-nav-search-box" id="searchBox">
+					<form action="./search.html" method="get">
+						<input type="text" name="keyword" class="new-nav-search-input" placeholder="请输入搜索关键词...">
+						<button type="submit" class="new-nav-search-submit">搜索</button>
+					</form>
+				</div>
+			</div>
+
+			<!-- 移动端汉堡菜单按钮 -->
+			<div class="mobile-menu-btn" id="mobileMenuBtn">
+				<span></span>
+				<span></span>
+				<span></span>
+			</div>
+		</div>
+	</div>
+
+	<!-- 移动端侧边栏覆盖层 -->
+	<div class="mobile-nav-overlay" id="mobileNavOverlay"></div>
+
+	<!-- 移动端侧边栏菜单 -->
+	<div class="mobile-nav-drawer" id="mobileNavDrawer">
+		<div class="mobile-nav-lang">
+			<a href="./index.html" class="active">中文</a>
+			<a href="./index-en.html">EN</a>
+		</div>
+		<div class="mobile-nav-item">
+			<a href="./index.html" class="mobile-nav-link">首页</a>
+		</div>
+		<div class="mobile-nav-item">
+			<a href="#" class="mobile-nav-link">产品服务
+				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+					<path d="M6 9l6 6 6-6"/>
+				</svg>
+			</a>
+			<div class="mobile-nav-sub" id="mobileNavProductSub"></div>
+		</div>
+		<div class="mobile-nav-item">
+			<a href="#" class="mobile-nav-link">应用场景
+				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+					<path d="M6 9l6 6 6-6"/>
+				</svg>
+			</a>
+			<div class="mobile-nav-sub">
+				<div class="mobile-nav-sub-item"><a href="./index.html#yycj" class="mobile-nav-sub-link">无电制冷</a></div>
+				<div class="mobile-nav-sub-item"><a href="./index.html#yycj" class="mobile-nav-sub-link">无线自组网</a></div>
+			</div>
+		</div>
+		<div class="mobile-nav-item">
+			<a href="./index.html#cpxn" class="mobile-nav-link">核心技术</a>
+		</div>
+		<div class="mobile-nav-item">
+			<a href="#lxwm" class="mobile-nav-link">联系我们</a>
+		</div>
+	</div>
+
+	<script>
+		const searchBtn = document.getElementById('searchBtn');
+		const searchBox = document.getElementById('searchBox');
+
+		// 搜索框点击事件
+		searchBtn.addEventListener('click', function (e) {
+			e.stopPropagation();
+			searchBox.classList.toggle('active');
+			if (searchBox.classList.contains('active')) {
+				searchBox.querySelector('input').focus();
+			}
+		});
+
+		// 点击页面其他地方关闭搜索框
+		document.addEventListener('click', function () {
+			searchBox.classList.remove('active');
+		});
+
+		// 点击搜索框内部不关闭
+		searchBox.addEventListener('click', function (e) {
+			e.stopPropagation();
+		});
+
+		// ========== 移动端菜单交互 ==========
+		const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+		const mobileNavOverlay = document.getElementById('mobileNavOverlay');
+		const mobileNavDrawer = document.getElementById('mobileNavDrawer');
+		const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+
+		function toggleMobileMenu() {
+			mobileMenuBtn.classList.toggle('active');
+			mobileNavOverlay.classList.toggle('active');
+			mobileNavDrawer.classList.toggle('active');
+		}
+
+		function closeMobileMenu() {
+			mobileMenuBtn.classList.remove('active');
+			mobileNavOverlay.classList.remove('active');
+			mobileNavDrawer.classList.remove('active');
+			document.querySelectorAll('.mobile-nav-item').forEach(item => {
+				item.classList.remove('open');
+			});
+		}
+
+		mobileMenuBtn.addEventListener('click', function (e) {
+			e.stopPropagation();
+			toggleMobileMenu();
+		});
+
+		mobileNavOverlay.addEventListener('click', function () {
+			closeMobileMenu();
+		});
+
+		mobileNavLinks.forEach(function (link) {
+			link.addEventListener('click', function (e) {
+				const hasSub = this.nextElementSibling && this.nextElementSibling.classList.contains('mobile-nav-sub');
+				if (hasSub) {
+					e.preventDefault();
+					this.parentElement.classList.toggle('open');
+				} else {
+					closeMobileMenu();
+				}
+			});
+		});
+
+		document.querySelectorAll('.mobile-nav-sub-link').forEach(function (link) {
+			link.addEventListener('click', function () {
+				closeMobileMenu();
+			});
+		});
+
+		document.querySelectorAll('.mobile-nav-lang a').forEach(function (link) {
+			link.addEventListener('click', function () {
+				closeMobileMenu();
+			});
+		});
+
+		window.addEventListener('resize', function () {
+			if (window.innerWidth >= 768) {
+				closeMobileMenu();
+			}
+		});
+	</script>
+
+
+	<!-- ====================================================== -->
+	<!-- 【区域2】首图/Hero轮播区域 -->
+	<!-- 包含：背景图、主标题（浩瑞科技 绿色智能安全黑科技产品全球运营商） -->
+	<!-- ====================================================== -->
+	<div class="h_banner on" style="margin:0; padding:0; overflow:visible;">
+		<div class="h_banner_swi" style="margin:0; padding:0;">
+			<div class="h_b_box"
+				style="margin:0; padding:0; height:300px; overflow:visible; position:relative; z-index:1;">
+				<!-- 用背景图替代 img，彻底解决加载失败和白线 -->
+				<div class="h_b_imgbj"
+					style="height:100%; width:100%; background: url('./index_files/home11.png') center/cover no-repeat; position:absolute; top:0; left:0; z-index:1;">
+				</div>
+				<div class="h_b_img" style="height:100%; width:100%; position:absolute; top:0; left:0; z-index:2;">
+					<!-- pc 轻微模糊 -->
+					<img class="img1" src="./img/1909398f30d64adda7a0b7eb978f5d13.jpeg" alt="首页-banner3-012323.jpg"
+						style="height:100%; width:100%; object-fit:cover; display:block; border:0; outline:0;">
+					<!-- 移动端 轻微模糊 -->
+					<img class="img2" src="./img/1909398f30d64adda7a0b7eb978f5d13.jpeg" alt="首页-banner3-012323.jpg"
+						style="height:100%; width:100%; object-fit:cover; display:block; border:0; outline:0;">
+				</div>
+
+				<div class="h_b_txt"
+					style="position:absolute; top:50%; left:60px; right:0; transform: translateY(-50%); z-index:3;">
+					<div class="container">
+						<div class="txt_t">
+							<h1 class="p1" style="font-size: 38px; text-align:center; color:#fff; margin:0;">
+								<span style="display:block; font-size: 38px;">浩瑞科技</span>
+								绿色 智能 安全 黑科技产品全球运营商
+							</h1>
+							<p class="p2 font24"></p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<!-- ====================================================== -->
+	<!-- 【区域3】资讯动态/新闻列表 -->
+	<!-- 包含：左侧新闻文字列表 + 右侧新闻图片轮播 -->
+	<!-- 数据来源：GET /website/news?latest=true（不包含图片，图片通过独立接口按需加载） -->
+	<!-- ====================================================== -->
+	<section class="news-section" id="zxdt" style="background:#f5f5f5; padding: 0;">
+		<div class="container" style="max-width:1200px; margin:0 auto; padding:0 20px;">
+			<div class="pub_title" style="text-align:center; margin:0; padding:40px 0 20px;">
+				<h2 style="font-size:28px; text-align:center; margin:0;">资讯动态</h2>
+			</div>
+
+			<div style="position:relative; margin-bottom:15px; width:100%;">
+				<div
+					style="color:#c8102e; font-size:18px; font-weight:bold; padding-bottom:10px; border-bottom:2px solid #c8102e; display:inline-block; position:relative; z-index:2;">
+					集团要闻</div>
+				<div style="position:absolute; left:0; bottom:0; width:100%; height:1px; background:#CCC; z-index:1;">
+				</div>
+			</div>
+
+			<div style="display:flex; gap:30px; align-items:flex-start; position:relative;">
+				<!-- 左侧固定550px高度，内容超出滚动 -->
+				<div style="flex:1; height:520px; overflow-y:auto;">
+					<!-- JS动态渲染：新闻列表项 -->
+					<ul id="news-list" style="list-style:none; padding:0; margin:0;"></ul>
+				</div>
+
+				<!-- 右侧同步改为550px高度 -->
+				<div
+					style="width:600px; height:500px; border-radius:8px; overflow:hidden; position:relative; flex-shrink:0;">
+					<!-- JS动态渲染：新闻图片轮播项 -->
+					<div id="slider-container" style="width:100%; height:100%; position:relative;"></div>
+					<div id="prev-btn"
+						style="position:absolute; left:20px; top:50%; transform:translateY(-50%); width:44px; height:44px; background:rgba(0,0,0,0.4); color:#fff; border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer; z-index:10; font-size:20px;">
+						‹</div>
+					<div id="next-btn"
+						style="position:absolute; right:20px; top:50%; transform:translateY(-50%); width:44px; height:44px; background:rgba(0,0,0,0.4); color:#fff; border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer; z-index:10; font-size:20px;">
+						›</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<script>
+	async function loadNewsData() {
+		console.log('🔹 开始调用：资讯动态接口');
+		const res = await fetch(`${SERVER_BASE_URL}/website/news?latest=true`);
+		const json = await res.json();
+		console.log("✅ 成功拿到新闻：", json);
+		let newsList = json.data || [];
+
+		newsList = newsList.sort((a, b) => b.id - a.id);
+
+		const listEl = document.getElementById("news-list");
+		newsList.forEach((news, index) => {
+			const li = document.createElement("li");
+			li.style.cssText = "display:flex; padding:18px 0; border-bottom:1px solid #eee; cursor:pointer;";
+			const newsDate = news.date.split('T')[0];
+			li.innerHTML = `
+            <div style="width:70px; text-align:center; color:#c8102e; font-weight:bold;">
+                <div style="font-size:16px;">${newsDate}</div>
+            </div>
+            <div style="flex:1;">
+                <h3 style="margin:0 0 5px; font-size:16px; font-weight:normal;">${news.title}</h3>
+                <p style="margin:0; font-size:14px; color:#666;">${news.summary || (news.content ? news.content.substring(0, 50) + '...' : '暂无摘要')}</p>
+            </div>
+        `;
+			li.onclick = () => location.href = `./news-detail.html?id=${news.id}`;
+			listEl.appendChild(li);
+		});
+
+		const sliderEl = document.getElementById("slider-container");
+		const items = [];
+
+		newsList.forEach((news, idx) => {
+			const div = document.createElement("div");
+			div.style.cssText = `
+            position:absolute; 
+            top:0; 
+            left:0; 
+            width:100%; 
+            height:100%; 
+            transition: opacity 0.8s ease;
+            cursor: pointer;
+        `;
+			const imgUrl = news.imageUrl || '';
+			div.innerHTML = `
+            <img src="${imgUrl}" style="width:100%; height:100%; object-fit:cover;">
+            <div style="position:absolute; bottom:0; left:0; right:0; padding:30px 25px; background:linear-gradient(transparent, rgba(0,0,0,0.6));">
+                <span style="background:#c8102e; color:#fff; padding:6px 14px; border-radius:4px; font-size:14px; margin-bottom:12px; display:inline-block;">集团要闻</span>
+                <h3 style="font-size:22px; color:#fff; margin:0; line-height:1.4;">${news.title}</h3>
+            </div>
+        `;
+			div.onclick = () => location.href = `./news-detail.html?id=${news.id}`;
+			sliderEl.appendChild(div);
+			items.push(div);
+		});
+
+		let current = 0;
+		items.forEach((it, i) => it.style.opacity = i === 0 ? 1 : 0);
+
+		function goToSlide(index) {
+			if (items.length === 0) return;
+			items[current].style.opacity = 0;
+			current = (index + items.length) % items.length;
+			items[current].style.opacity = 1;
+		}
+
+		function nextSlide() {
+			goToSlide(current + 1);
+		}
+
+		function prevSlide() {
+			goToSlide(current - 1);
+		}
+
+		const prevBtn = document.getElementById('prev-btn');
+		const nextBtn = document.getElementById('next-btn');
+
+		if (prevBtn) {
+			prevBtn.addEventListener('click', prevSlide);
+		}
+
+		if (nextBtn) {
+			nextBtn.addEventListener('click', nextSlide);
+		}
+
+		setInterval(() => {
+			nextSlide();
+		}, 3000);
+		console.log('✅ 资讯动态接口调用完成');
+	}
+</script>
+
+
+
+	<!-- ====================================================== -->
+	<!-- 【区域4】产品服务 -->
+	<!-- 包含：PC/移动端背景图 + 文字描述 + 底部图标切换 -->
+	<!-- 数据来源：GET /website/product -->
+	<!-- ====================================================== -->
+	<div class="hth" id="cpfw">
+		<div class="pub_title" style="text-align:center;  margin:0; padding:100px 0 20px;">
+			<h2 class="font-m font56 wow fadeInUp">产品服务</h2>
+		</div>
+		<div class="box" style="margin-top: 50px; ">
+			<div class="imgbj_box">
+				<!-- JS动态渲染：PC端产品图片列表 -->
+				<div class="imgbj_img imgbj_img_pc" id="imgPcWrap"></div>
+				<!-- JS动态渲染：移动端产品图片列表 -->
+				<div class="imgbj_img imgbj_img_md" id="imgMdWrap"></div>
+				<div class="imgbj_bj">
+					<img loading="lazy" src="./index_files/home13.png" alt="">
+				</div>
+			</div>
+			<div class="box_txt">
+				<div class="container">
+					<!-- JS动态渲染：产品文字描述项 -->
+					<div class="hth_txt wow fadeInUp" id="txtWrap"
+						style="visibility: visible; animation-name: fadeInUp; animation-delay: 0.2s;">
+					</div>
+					<!-- JS动态渲染：底部图标切换项 -->
+					<div class="hth_box wow fadeInUp" id="iconBoxWrap"
+						style="visibility: visible; animation-name: fadeInUp; animation-delay: 0.2s;">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script>
+		// 全局参数 G 控制逻辑（关闭浏览器自动重置）
+		if (sessionStorage.getItem('G') === null) {
+			sessionStorage.setItem('G', '0');
+		}
+		function getG() { return parseInt(sessionStorage.getItem('G')); }
+		function setG1() { sessionStorage.setItem('G', '1'); }
+
+		// 原有跳转函数 完整保留
+		function goWdzl() {
+			if (getG() === 1) { window.location.href = './chanpin1-cp1.html' } else { setG1(); window.location.href = './index-aboutus.html' }
+		}
+		function goZnpt() {
+			if (getG() === 1) { window.location.href = './chanpin1-znpt.html' } else { setG1(); window.location.href = './index-aboutus-znpt.html' }
+		}
+		function goAqwx() {
+			if (getG() === 1) { window.location.href = './chanpin1-aqwx.html' } else { setG1(); window.location.href = './index-aboutus-aqwx.html' }
+		}
+		function goWrsb() {
+			if (getG() === 1) { window.location.href = './chanpin1-ai.html' } else { setG1(); window.location.href = './index-aboutus-ai.html' }
+		}
+		function goDkjj() {
+			if (getG() === 1) { window.location.href = './chanpin1-dkjj.html' } else { setG1(); window.location.href = './index-aboutus-dkjj.html' }
+		}
+		function goDzsp() {
+			if (getG() === 1) { window.location.href = './chanpin1-dzsp.html' } else { setG1(); window.location.href = './index-aboutus-dzsp.html' }
+		}
+		function goStxz() {
+			if (getG() === 1) { window.location.href = './chanpin1-stxz.html' } else { setG1(); window.location.href = './index-aboutus-stxz.html' }
+		}
+
+		// ========== 动态渲染 + 切换交互核心逻辑 ==========
+		// 获取页面容器
+		const imgPcWrap = document.getElementById('imgPcWrap');
+		const imgMdWrap = document.getElementById('imgMdWrap');
+		const txtWrap = document.getElementById('txtWrap');
+		const iconBoxWrap = document.getElementById('iconBoxWrap');
+
+		// 存储所有产品数据，供切换使用
+		let productListData = [];
+
+		async function loadProductData() {
+			console.log('🔹 开始调用：产品服务接口');
+			const apiUrl = `${SERVER_BASE_URL}/website/product`;
+			try {
+				const res = await fetch(apiUrl);
+				const resData = await res.json();
+
+				if (resData.code !== 0 || !Array.isArray(resData.data)) {
+					console.log('❌ 产品服务接口异常');
+					return;
+				}
+				productListData = resData.data;
+
+				let pcImgHtml = '';
+				let mdImgHtml = '';
+				let txtItemHtml = '';
+				let iconItemHtml = '';
+
+				productListData.forEach((item, index) => {
+					const { name, title, imageUrl, itemOne, itemTwo, itemThree, itemFour, itemFive, itemSix } = item;
+					const displayStyle = index === 0 ? 'display: block;' : 'display: none;';
+
+					pcImgHtml += `<img class="cp-img" data-index="${index}" loading="lazy" src="${imageUrl}" alt="${name}.jpg" style="${displayStyle}">`;
+					mdImgHtml += `<img class="cp-img" data-index="${index}" loading="lazy" src="${imageUrl}" alt="${name}.jpg" style="${displayStyle}">`;
+
+					let labelHtml = '';
+					const labelArr = [itemOne, itemTwo, itemThree, itemFour, itemFive, itemSix];
+					labelArr.forEach(label => {
+						if (label && label !== 'null') {
+							labelHtml += `<span>${label}</span>`;
+						}
+					});
+
+					txtItemHtml += `
+                    <div class="hth_txt_item cp-txt-item" data-index="${index}" style="${displayStyle}">
+                        <div class="g_tit">
+                            <div class="g_tit_t">
+                                <span class="">${name}</span>
+                                <h3 class="font-m font44">${title}</h3>
+                            </div>
+                            <div class="g_tit_lab font20">
+                                ${labelHtml}
+                            </div>
+                        </div>
+                        <div class="g_num">
+                            <div class="item">
+                                <div class="item_t">
+                                    <p class="font-r"> </p>
+                                    <span class=""> </span>
+                                </div>
+                                <div class="item_b">
+                                    <p> </p>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="item_t">
+                                    <p class="font-r"> </p>
+                                    <span class=""> </span>
+                                </div>
+                                <div class="item_b">
+                                    <p> </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    `;
+
+					let jumpFunc = '';
+					switch (index) {
+						case 0: jumpFunc = 'goWdzl()'; break;
+						case 1: jumpFunc = 'goZnpt()'; break;
+						case 2: jumpFunc = 'goAqwx()'; break;
+						case 3: jumpFunc = 'goWrsb()'; break;
+						case 4: jumpFunc = 'goDkjj()'; break;
+						case 5: jumpFunc = 'goDzsp()'; break;
+						case 6: jumpFunc = 'goStxz()'; break;
+					}
+					const onClass = index === 0 ? 'item on' : 'item';
+
+					iconItemHtml += `
+                    <div class="${onClass} cp-icon-item" data-index="${index}">
+                        <div class="g_svg">
+                            <i>
+                                ${getSvgByIndex(index)}
+                            </i>
+                            <p class="font20 font-m">${name}</p>
+                        </div>
+                        <div class="txt">
+                            <p class="font30">${name}</p>
+                            <a href="javascript:${jumpFunc}" title="${name}" class="public-btn font20">
+                                <p class=" font-m">探索更多</p>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="10.844" height="10"
+                                    viewBox="0 0 10.844 10" data-inject-url="" loading="lazy">
+                                    <defs>
+                                        <style>
+                                            .cls-1 {
+                                                fill: #fff;
+                                                fill-rule: evenodd;
+                                            }
+                                        </style>
+                                    </defs>
+                                    <path id="形状_1_拷贝_4--inject-18" data-name="形状 1 拷贝 4" class="cls-1"
+                                        d="M207.821,577.433a1.139,1.139,0,0,1,.241-0.459,0.786,0.786,0,0,1,.513-0.24c0.059,0,.119,0,0.179,0h7.48a0.4,0.4,0,0,0-.062-0.046,1.872,1.872,0,0,1-.609-0.462q-1.008-1.089-2.019-2.177a0.9,0.9,0,0,1-.243-0.919,0.731,0.731,0,0,1,1.166-.387,1.4,1.4,0,0,1,.143.135q1.892,2.029,3.782,4.061a0.876,0.876,0,0,1,.164,1.063,1.054,1.054,0,0,1-.158.212q-1.9,2.042-3.8,4.079a0.74,0.74,0,0,1-1.169-.022,0.9,0.9,0,0,1,.006-1.061c0.041-.053.085-0.1,0.13-0.15q0.861-.925,1.723-1.849a2.634,2.634,0,0,1,.923-0.781c0-.009,0-0.019-0.008-0.029h-0.119q-3.7,0-7.4,0a0.766,0.766,0,0,1-.688-0.32,2.361,2.361,0,0,1-.174-0.4v-0.249Z"
+                                        transform="translate(-207.812 -572.562)"></path>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                    `;
+				});
+
+				imgPcWrap.innerHTML = pcImgHtml;
+				imgMdWrap.innerHTML = mdImgHtml;
+				txtWrap.innerHTML = txtItemHtml;
+				iconBoxWrap.innerHTML = iconItemHtml;
+
+				renderProductNav();
+
+				bindSwitchEvent();
+				console.log('✅ 产品服务接口调用完成');
+			} catch (err) {
+				console.log('❌ 产品服务接口请求失败：', err);
+			}
+		}
+
+		// 动态渲染顶部和移动端产品服务导航菜单
+		function renderProductNav() {
+			const navProductSub = document.getElementById('navProductSub');
+			const mobileNavProductSub = document.getElementById('mobileNavProductSub');
+			
+			if (!navProductSub && !mobileNavProductSub) return;
+
+			let navHtml = '';
+			let mobileNavHtml = '';
+
+			productListData.forEach((item, index) => {
+				const { name } = item;
+				let jumpUrl = '';
+				switch (index) {
+					case 0: jumpUrl = './chanpin1-cp1.html'; break;
+					case 1: jumpUrl = './chanpin1-znpt.html'; break;
+					case 2: jumpUrl = './chanpin1-aqwx.html'; break;
+					case 3: jumpUrl = './chanpin1-ai.html'; break;
+					case 4: jumpUrl = './chanpin1-dkjj.html'; break;
+					case 5: jumpUrl = './chanpin1-dzsp.html'; break;
+					case 6: jumpUrl = './chanpin1-stxz.html'; break;
+				}
+
+				navHtml += `
+					<div class="new-nav-sub-item">
+						<a href="${jumpUrl}" class="new-nav-sub-link">${name}</a>
+					</div>
+				`;
+
+				mobileNavHtml += `
+					<div class="mobile-nav-sub-item">
+						<a href="${jumpUrl}" class="mobile-nav-sub-link">${name}</a>
+					</div>
+				`;
+			});
+
+			if (navProductSub) {
+				navProductSub.innerHTML = navHtml;
+			}
+			if (mobileNavProductSub) {
+				mobileNavProductSub.innerHTML = mobileNavHtml;
+			}
+		}
+
+		// 绑定点击/hover切换事件
+		function bindSwitchEvent() {
+			// 获取所有图标项
+			const iconItems = document.querySelectorAll('.cp-icon-item');
+			// 给每个图标项绑定事件（hover和click都支持）
+			iconItems.forEach(item => {
+				// 鼠标移入切换
+				item.addEventListener('mouseenter', function () {
+					const index = parseInt(this.getAttribute('data-index'));
+					switchToItem(index);
+				});
+				// 点击切换（兼容部分用户点击操作）
+				item.addEventListener('click', function () {
+					const index = parseInt(this.getAttribute('data-index'));
+					switchToItem(index);
+				});
+			});
+		}
+
+		// 核心切换函数：切换到指定index的产品
+		function switchToItem(index) {
+			// 1. 切换图标项的on状态
+			document.querySelectorAll('.cp-icon-item').forEach((el, idx) => {
+				if (idx === index) {
+					el.classList.add('on');
+				} else {
+					el.classList.remove('on');
+				}
+			});
+
+			// 2. 切换图片显示
+			document.querySelectorAll('.cp-img').forEach((el, idx) => {
+				if (idx === index) {
+					el.style.display = 'block';
+				} else {
+					el.style.display = 'none';
+				}
+			});
+
+			// 3. 切换文字项显示
+			document.querySelectorAll('.cp-txt-item').forEach((el, idx) => {
+				if (idx === index) {
+					el.style.display = 'block';
+				} else {
+					el.style.display = 'none';
+				}
+			});
+		}
+
+		// 根据索引返回对应原有SVG（完整保留你原来的图标）
+		function getSvgByIndex(idx) {
+			const svgList = [
+				// 0 无电制冷
+				`<svg xmlns="http://www.w3.org/2000/svg" width="72.469" height="72.53" viewBox="0 0 72.469 72.53" data-inject-url="" loading="lazy"><defs><style>.cls-133{fill:#fff;stroke:#1ca1ee;stroke-width:2px;fill-rule:evenodd;}</style></defs><path id="形状_29--inject-13" data-name="形状 29" class="cls-133" d="M180.547,4771.1h-2.71v-46.11a2.707,2.707,0,0,0-1.316-2.32l-27.106-16.27a2.69,2.69,0,0,0-2.79,0l-16.263,9.76a2.711,2.711,0,0,0-1.316,2.33v10.25l-9.344,4.68a2.713,2.713,0,0,0-1.5,2.42v35.26h-2.711a2.71,2.71,0,1,0,0,5.42h65.054A2.71,2.71,0,1,0,180.547,4771.1Zm-29.816,0H145.31v-10.85h5.421v10.85Zm21.684,0h-5.421v-29.83a2.716,2.716,0,0,0-2.71-2.72H131.757a2.717,2.717,0,0,0-2.711,2.72v21.69a2.711,2.711,0,1,0,5.421,0v-18.98h27.106v27.12h-5.421v-13.56a2.709,2.709,0,0,0-2.711-2.71H142.6a2.709,2.709,0,0,0-2.711,2.71v13.56H123.625v-33.58l9.291-4.65c0.034-.02.067-0.03,0.1-0.05l12.293-6.15v3.75a2.711,2.711,0,0,0,5.421,0v-8.14a2.7,2.7,0,0,0-3.923-2.42l-12.341,6.17v-6.01l13.553-8.13,24.395,14.64v44.57Z" transform="translate(-111.781 -4705)"></path></svg>`,
+				// 1 智能平台
+				`<svg xmlns="http://www.w3.org/2000/svg" width="44.12" height="50" viewBox="0 0 44.12 50" data-inject-url="" loading="lazy"><defs><style>.cls-1{fill:#fff;fill-rule:evenodd;}</style></defs><path id="形状_716--inject-37" data-name="形状 716" class="cls-1" d="M1416.01,4727.52h11.98v-7.75h-11.98v7.75Zm2.59-5.17h6.8v2.58h-6.8v-2.58Zm3.4-16.88-22.05,11.98v7.57h2.58v-6.03l2.33-1.27v30.81h34.28v-30.81l2.32,1.27v6.03h2.59v-7.57Zm-1.83,33.91-4.89,4.89v-9.78Zm1.83,1.83,4.74,4.74h-9.48Zm1.83-1.83,4.89-4.89v9.78Zm-1.83-1.83-4.87-4.86h9.74Zm14.56,8.4h-5.26V4730.1h-18.6v15.85h-5.26v-29.63l14.56-7.91,14.56,7.91v29.63Z" transform="translate(-1399.94 -4702)"></path></svg>`,
+				// 2 安全无线
+				`<svg xmlns="http://www.w3.org/2000/svg" width="59.47" height="50" viewBox="0 0 59.47 50" data-inject-url="https://" loading="lazy"><defs><style>.cls-155{fill:#fff;stroke:#2362bd;stroke-width:1px;fill-rule:evenodd;}</style></defs><path id="形状_717--inject-38" data-name="形状 717" class="cls-155" d="M1629.34,4744.85h-5.36a7.359,7.359,0,0,1-14.22,0h-10.95a7.359,7.359,0,0,1-14.22,0h-4.8a1.845,1.845,0,0,1,0-3.69h4.77a7.358,7.358,0,0,1,14.28,0h10.89a7.358,7.358,0,0,1,14.28,0h3.48v-9.5l-2.68-3.45h-14.32a1.842,1.842,0,0,1-1.84-1.84v-12.9h-28.86a1.84,1.84,0,1,1,0-3.68h30.7a1.835,1.835,0,0,1,1.84,1.84v1.84h7.86a1.817,1.817,0,0,1,1.64,1.02l5.53,10.99h0l3.43,4.42a1.864,1.864,0,0,1,.39,1.13v11.98A1.848,1.848,0,0,1,1629.34,4744.85Zm-37.64-5.59a3.685,3.685,0,1,0,3.69,3.68A3.683,3.683,0,0,0,1591.7,4739.26Zm25.17,0a3.685,3.685,0,1,0,3.69,3.68A3.683,3.683,0,0,0,1616.87,4739.26Zm2.18-22.1h-6.72v7.36h10.43Zm-23.91,2.02a1.835,1.835,0,0,1-1.84,1.84h-15.72a1.84,1.84,0,1,1,0-3.68h15.72A1.835,1.835,0,0,1,1595.14,4719.18Zm-3.01,7.25a1.842,1.842,0,0,1-1.84,1.84h-15.72a1.84,1.84,0,1,1,0-3.68h15.72A1.835,1.835,0,0,1,1592.13,4726.43Zm-14.55,5.4h8.47a1.84,1.84,0,1,1,0,3.68h-8.47A1.84,1.84,0,1,1,1577.58,4731.83Z" transform="translate(-1572.22 -4705.045)"></path></svg>`,
+				// 3 AI机器人
+				`<svg xmlns="http://www.w3.org/2000/svg" width="36.625" height="50.34" viewBox="0 0 36.625 50.34" data-inject-url="" loading="lazy"><defs><style>.cls-1{fill:#fff;fill-rule:evenodd;}</style></defs><path id="形状_712--inject-39" data-name="形状 712" class="cls-1" d="M722.366,4729.2a3.125,3.125,0,0,0-1.375-1.94l-13.255-8.88-0.521-15.56a3.14,3.14,0,0,0-6.279-.04l-0.677,15.83-12.886,8.53a3.151,3.151,0,1,0,3.265,5.39l12.907-7.23a3.712,3.712,0,0,0,1.244-.04v0.03l12.839,7.3a3.123,3.123,0,0,0,1.656.47,3.552,3.552,0,0,0,.728-0.08,3.118,3.118,0,0,0,2.369-3.72Zm-19.077-27.12a1.034,1.034,0,0,1,.761-0.31,1.086,1.086,0,0,1,1.072,1.1v0.01l0.521,15.15a3.832,3.832,0,0,0-3.275.03l0.6-15.23A1.042,1.042,0,0,1,703.289,4702.08Zm-13.724,28.66a1.072,1.072,0,1,1-1.1-1.84h0.013l11.735-7.76v0.36a3.812,3.812,0,0,0,1.1,2.68Zm12.709-9.24a1.765,1.765,0,1,1,0,.03v-0.03Zm17.931,8.98a1.037,1.037,0,0,1-.666.47,1.052,1.052,0,0,1-.844-0.15l-11.834-6.71a3.758,3.758,0,0,0,.974-3.12l12.021,8.01a1.084,1.084,0,0,1,.349,1.48v0.02Zm-6.445,17.44h-5.207l-0.64-17.75a1.042,1.042,0,1,0-2.083.07l0.62,17.64h-4.509l0.62-17.64a1.042,1.042,0,1,0-2.083-.07h0l-0.625,17.75h-5.206a1.04,1.04,0,1,0,0,2.08H713.76A1.04,1.04,0,1,0,713.76,4747.92Z" transform="translate(-685.844 -4699.66)"></path></svg>`,
+				// 4 低空经济
+				`<svg xmlns="http://www.w3.org/2000/svg" width="41.87" height="50" viewBox="0 0 41.87 50" data-inject-url="" loading="lazy"><defs><style>.cls-1{fill:#fff;fill-rule:evenodd;}</style></defs><path id="形状_715--inject-41" data-name="形状 715" class="cls-1" d="M1262.38,4745.77h-4.45l-8.53-28.5h10.95v2.5a1.25,1.25,0,0,0,2.5,0v-3.76a1.244,1.244,0,0,0-.56-1.04l-13.93-9.12a1.242,1.242,0,0,0-.69-0.21h-9.98a1.187,1.187,0,0,0-.68.21l-13.92,9.12a1.269,1.269,0,0,0-.56,1.04v3.76a1.25,1.25,0,0,0,2.5,0v-2.5h10.95l-8.53,28.5H1223a1.25,1.25,0,0,0,0,2.5h39.38a1.25,1.25,0,0,0,0-2.5h0Zm-25.14-23.99,3.3,2.36-5.1,3.64Zm12.7,6-5.1-3.64,3.3-2.36Zm1.32,4.44,3.49,11.67-9.91-7.09Zm-1.85-1.75-6.72,4.8-6.71-4.8,6.71-4.79Zm-15.29,1.75,6.42,4.58-9.91,7.09Zm8.57,6.12,10.41,7.43h-20.82Zm-3.78-23.57v-6.63h7.56v6.63h-7.56Zm10.06,0v-5.53l8.45,5.53h-8.45Zm-12.56-5.54v5.54h-8.45Zm10.38,8.04,0.6,1.98-4.7,3.36-4.69-3.36,0.59-1.98h8.2Z" transform="translate(-1221.75 -4701.95)"></path></svg>`,
+				// 5 大宗商品
+				`<svg xmlns="http://www.w3.org/2000/svg" width="49.406" height="50" viewBox="0 0 49.406 50" data-inject-url="" loading="lazy"><defs><style>.cls-1{fill:#fff;fill-rule:evenodd;}</style></defs><path id="形状_713--inject-40" data-name="形状 713" class="cls-1" d="M908.546,4730.57l-9.511-23.03a1.074,1.074,0,0,0-.992-0.66H869.811a1.075,1.075,0,0,0-.992.66l-9.5,23.03a1.08,1.08,0,0,0,.576,1.41,0.94,0.94,0,0,0,.437.08h3.522v16.82a1.074,1.074,0,0,0,1.073,1.08h38.064a1.074,1.074,0,0,0,1.073-1.08v-16.82h3.522a1.069,1.069,0,0,0,1.048-1.1A1.09,1.09,0,0,0,908.546,4730.57Zm-22.013,17.23h-5.211v-8.76h5.211v8.76Zm15.354,0h-13.21v-9.84a1.074,1.074,0,0,0-1.072-1.08h-7.356a1.074,1.074,0,0,0-1.072,1.08v9.84H865.972v-15.74h35.921Zm-39.952-17.9,8.578-20.86H897.32l8.626,20.86H861.935Zm33.626-18.77H872.3a1.07,1.07,0,0,0-1,.69l-5.608,14.55a1.087,1.087,0,0,0,.615,1.4,1.026,1.026,0,0,0,.388.07h34.451a1.078,1.078,0,0,0,1.075-1.08,1.143,1.143,0,0,0-.072-0.39l-5.581-14.58A1.073,1.073,0,0,0,895.561,4711.13Zm-17.783,7.02h4.959v2.6h-5.4Zm-2.622,2.6h-5l1-2.6H875.6Zm7.576-4.76h-4.584l0.472-2.7h4.117Zm2.144-2.74h4.118l0.471,2.74h-4.589v-2.74Zm-2.144,9.66v2.75h-6.241l0.456-2.73Zm2.144,0h5.774l0.472,2.75h-6.246v-2.75Zm0-2.16v-2.6h4.938l0.445,2.6h-5.383Zm7.136-2.6H896.7l1,2.6h-5.243Zm3.86-2.16h-4.235l-0.467-2.7h3.651Zm-22.839-2.7h3.41l-0.472,2.7h-3.989Zm-3.7,9.64H874.8l-0.471,2.75h-6.053Zm23.965,2.75-0.472-2.75h5.7l1.072,2.75h-6.3Z" transform="translate(-859.219 -4703.425)"></path></svg>`,
+				// 6 生态协作
+				`<svg xmlns="http://www.w3.org/2000/svg" width="72.469" height="72.53" viewBox="0 0 72.469 72.53" data-inject-url="" loading="lazy"><defs><style>.cls-133{fill:#fff;stroke:#1ca1ee;stroke-width:2px;fill-rule:evenodd;}</style></defs><path id="形状_29--inject-13" data-name="形状 29" class="cls-133" d="M180.547,4771.1h-2.71v-46.11a2.707,2.707,0,0,0-1.316-2.32l-27.106-16.27a2.69,2.69,0,0,0-2.79,0l-16.263,9.76a2.711,2.711,0,0,0-1.316,2.33v10.25l-9.344,4.68a2.713,2.713,0,0,0-1.5,2.42v35.26h-2.711a2.71,2.71,0,1,0,0,5.42h65.054A2.71,2.71,0,1,0,180.547,4771.1Zm-29.816,0H145.31v-10.85h5.421v10.85Zm21.684,0h-5.421v-29.83a2.716,2.716,0,0,0-2.71-2.72H131.757a2.717,2.717,0,0,0-2.711,2.72v21.69a2.711,2.711,0,1,0,5.421,0v-18.98h27.106v27.12h-5.421v-13.56a2.709,2.709,0,0,0-2.711-2.71H142.6a2.709,2.709,0,0,0-2.711,2.71v13.56H123.625v-33.58l9.291-4.65c0.034-.02.067-0.03,0.1-0.05l12.293-6.15v3.75a2.711,2.711,0,0,0,5.421,0v-8.14a2.7,2.7,0,0,0-3.923-2.42l-12.341,6.17v-6.01l13.553-8.13,24.395,14.64v44.57Z" transform="translate(-111.781 -4705)"></path></svg>`,
+				// 7 智慧农业与粮储
+				`<svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 50 50" fill="#fff"><path d="M25 5l-8 20h16l-8-20zm0 25l-6 15h12l-6-15zm-15 0l5-15h-5v15zm30 0v15h-5l5-15z"/></svg>`,
+				// 8 安防与识别
+				`<svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 50 50" fill="#fff"><path d="M25 2C12.3 2 2 12.3 2 25s10.3 23 23 23 23-10.3 23-23S37.7 2 25 2zm0 40c-9.4 0-17-7.6-17-17S15.6 8 25 8s17 7.6 17 17-7.6 17-17 17zm0-28c-5.5 0-10 4.5-10 10s4.5 10 10 10 10-4.5 10-10-4.5-10-10-10zm0 16c-3.3 0-6-2.7-6-6s2.7-6 6-6 6 2.7 6 6-2.7 6-6 6z"/></svg>`,
+				// 9 新能源与储能
+				`<svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 50 50" fill="#fff"><path d="M25 5L10 20h10l-5 15h10l5-15h10L25 5zm0 8l8 12h-16l8-12z"/></svg>`
+			];
+			return svgList[idx] || '';
+		}
+	</script>
+
+
+	<!-- ====================================================== -->
+	<!-- 【区域5】核心技术 -->
+	<!-- 包含：左侧图文展示（无线自组网/能源管理）+ 右侧技术轮播（Swiper） -->
+	<!-- 数据来源：GET /website/techMain（主图）+ GET /website/techScrolling（轮播） -->
+	<!-- ====================================================== -->
+	<div class="htw" id="cpxn">
+		<div class="container">
+			<div class="pub_title">
+				<h2 class="font-m font56 wow fadeInUp"
+					style="visibility: visible; animation-name: fadeInUp; animation-delay: 0.2s;">核心技术</h2>
+			</div>
+			<div class="box">
+				<div class="box_t">
+					<!-- 左侧模块：无线自组网 -->
+					<div class="box_t_con wow fadeInUp"
+						style="visibility: visible; animation-name: fadeInUp; animation-delay: 0.3s;">
+						<div class="public-img">
+							<!-- JS动态赋值：src = data.imageUrlLeft -->
+							<img id="imgLeftXs" loading="lazy" class="g_xs" src="" alt="">
+							<!-- JS动态赋值：src = data.imageUrlLeft -->
+							<img id="imgLeftYc" loading="lazy" class="g_yc" src="" alt="">
+						</div>
+						<div class="box_t_nr">
+							<div class="g_h3">
+								<i>
+									<svg xmlns="http://www.w3.org/2000/svg" width="47.906" height="64"
+										viewBox="0 0 47.906 64" data-inject-url=" " loading="lazy">
+										<defs>
+											<style>
+												.cls-1 {
+													fill: #484848;
+													fill-rule: evenodd;
+												}
+											</style>
+										</defs>
+										<path id="形状_27--inject-46" data-name="形状 27" class="cls-1" d=""
+											transform="translate(-121 -3051.86)"></path>
+									</svg>
+								</i>
+								<!-- JS动态赋值：innerText = data.titleLeft -->
+								<h3 id="titleLeftText" class="font40" style="
+                                    position: absolute;
+                                    top: 40px;
+                                    left: 50%;
+                                    transform: translateX(-50%);
+                                    margin: 0;
+                                    z-index: 999;
+                                    white-space: nowrap;
+                                    width: auto;
+                                    "></h3>
+							</div>
+						</div>
+					</div>
+
+					<!-- 右侧模块：无电制冷 -->
+					<div class="box_t_con wow fadeInUp"
+						style="visibility: visible; animation-name: fadeInUp; animation-delay: 0.4s;">
+						<div class="public-img">
+							<!-- JS动态赋值：src = data.imageUrl -->
+							<img id="imgRightXs" loading="lazy" class="g_xs" src="" alt="home6.jpg">
+							<!-- JS动态赋值：src = data.imageUrl -->
+							<img id="imgRightYc" loading="lazy" class="g_yc" src="" alt="home6.jpg">
+						</div>
+						<div class="box_t_nr">
+							<div class="g_h3">
+								<i>
+									<svg xmlns="http://www.w3.org/2000/svg" width="47.906" height="64"
+										viewBox="0 0 47.906 64" data-inject-url="" loading="lazy">
+										<defs>
+											<style>
+												.cls-1 {
+													fill: #484848;
+													fill-rule: evenodd;
+												}
+											</style>
+										</defs>
+										<path id="形状_27--inject-45" data-name="形状 27" class="cls-1" d=""
+											transform="translate(-121 -3051.86)"></path>
+									</svg>
+								</i>
+								<!-- JS动态赋值：innerText = data.title -->
+								<h3 class="font40">
+									<a href="./cpxn-wdzl.html" target="_blank"
+										style="cursor:pointer !important; color:inherit; text-decoration:none;"
+										id="titleRightText"></a>
+								</h3>
+							</div>
+							<!-- JS动态渲染：技术参数列表 -->
+							<div class="txt" id="techItemWrap"></div>
+						</div>
+					</div>
+				</div>
+				<!-- 轮播区域 -->
+				<div class="box_b" style="position:relative; min-height:300px; padding:0; z-index:10;">
+					<div class="swiper-container swiper-tech"
+						style="position:absolute; top:-260px; left:0; width:100%; overflow:hidden;">
+						<!-- JS动态渲染：核心技术轮播卡片 -->
+						<div class="swiper-wrapper" id="swiperWrapper"></div>
+					</div>
+					<!-- 分页：去掉固定top，放到轮播底部，距离底部15px -->
+					<div class="swiper-pagination swip2_pag"
+						style="position:absolute; bottom:15px; width:100%; left:0; text-align:center;"></div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+	<!-- 轮播依赖 -->
+	<script src="https://cdn.bootcdn.net/ajax/libs/Swiper/4.5.1/js/swiper.min.js"></script>
+
+	<script>
+		// 核心技术轮播全局实例
+		let scrollDataList = [];
+		let techSwiper = null;
+		let autoplayTimer = null;
+
+		async function loadCoreTechData() {
+			console.log('🔹 开始调用：核心技术接口');
+			try {
+				// 接口1：加载核心技术图文 + 参数
+				const techApiUrl = `${SERVER_BASE_URL}/website/techMain`;
+				const techRes = await fetch(techApiUrl);
+				const techResData = await techRes.json();
+				if (techResData.code === 0 && Array.isArray(techResData.data) && techResData.data.length > 0) {
+					const data = techResData.data[0];
+					document.getElementById('titleLeftText').innerText = data.titleLeft || '';
+					document.getElementById('imgLeftXs').src = data.imageUrlLeft || '';
+					document.getElementById('imgLeftYc').src = data.imageUrlLeft || '';
+
+					document.getElementById('titleRightText').innerText = data.title || '';
+					document.getElementById('imgRightXs').src = data.imageUrl || '';
+					document.getElementById('imgRightYc').src = data.imageUrl || '';
+
+					const wrap = document.getElementById('techItemWrap');
+					let itemHtml = '';
+					const paramList = [
+						{ label: data.itemOne, value: data.itemOneValue },
+						{ label: data.itemTwo, value: data.itemTwoValue },
+						{ label: data.itemThree, value: data.itemThreeValue },
+						{ label: data.itemFour, value: data.itemFourValue },
+						{ label: data.itemFive, value: data.itemFiveValue },
+						{ label: data.itemSix, value: data.itemSixValue }
+					];
+					paramList.forEach(item => {
+						if (item.label && item.value) {
+							itemHtml += `
+                            <div class="txt_p font24">
+                                <p>${item.label}<span>${item.value}</span></p>
+                            </div>
+                        `;
+						}
+					});
+					wrap.innerHTML = itemHtml;
+				}
+
+				// 接口2：轮播数据
+				const scrollApiUrl = `${SERVER_BASE_URL}/website/techScrolling`;
+				const scrollRes = await fetch(scrollApiUrl);
+				const scrollResData = await scrollRes.json();
+				if (scrollResData.code === 0 && Array.isArray(scrollResData.data)) {
+					scrollDataList = scrollResData.data;
+					const wrapper = document.getElementById('swiperWrapper');
+					let slideHtml = '';
+
+					scrollDataList.forEach((item, index) => {
+						const delay = (0.2 + index * 0.1).toFixed(1);
+						slideHtml += `
+                        <div class="swiper-slide" style="width: 444px; margin-right:20px;">
+                            <div class="item wow fadeInUp" style="visibility:visible; animation-delay:${delay}s;">
+                                <div class="public-img" style="width:100%; height:auto; overflow:hidden;">
+                                    <a href="${item.hrefTo || '#'}" target="_blank">
+                                        <img loading="lazy" src="${item.imageUrl || ''}" alt="${item.title || ''}"
+                                            style="width:100%; height:260px; object-fit:cover; display:block;">
+                                    </a>
+                                </div>
+                                <div class="txt" style="text-align:center; margin-top:10px;">
+                                    <h3 class="font-b font26" style="color:#fff;">${item.title || ''}</h3>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+					});
+
+					wrapper.innerHTML = slideHtml;
+					requestAnimationFrame(() => {
+						setTimeout(initTechSwiper, 200);
+					});
+				}
+				console.log('✅ 核心技术接口调用完成');
+			} catch (err) {
+				console.error('❌ 核心技术接口请求失败：', err);
+			}
+		}
+
+		// 初始化轮播函数
+		function initTechSwiper() {
+			// 销毁旧实例、清空兜底定时器
+			if (techSwiper) {
+				techSwiper.destroy(true, true);
+				techSwiper = null;
+			}
+			if (autoplayTimer) clearInterval(autoplayTimer);
+
+			// 数据不足2条禁用loop
+			const canLoop = scrollDataList.length >= 2;
+
+			techSwiper = new Swiper('.swiper-tech', {
+				allowTouchMove: true,
+				touchAngle: 30,
+				grabCursor: true,
+				watchSlidesVisibility: true,
+
+				autoplay: {
+					delay: 3000,
+					disableOnInteraction: false,
+					pauseOnMouseEnter: false
+				},
+
+				speed: 1000,
+				loop: canLoop,
+				slidesPerView: 3, // 修复：大屏一屏展示3张图片
+				spaceBetween: 20,
+				centeredSlides: false,
+				freeMode: false,
+
+				pagination: {
+					el: '.swip2_pag',
+					clickable: true
+				}
+			});
+
+			// 兜底定时器，保证永久轮播不停止
+			autoplayTimer = setInterval(() => {
+				if (techSwiper && !document.hidden) {
+					techSwiper.slideNext();
+				}
+			}, 3000);
+		}
+
+		// 窗口缩放刷新swiper
+		window.addEventListener('resize', () => {
+			if (techSwiper) {
+				techSwiper.update();
+			}
+		});
+
+		// 页面切回可视时重启
+		document.addEventListener('visibilitychange', () => {
+			if (!document.hidden && techSwiper) {
+				techSwiper.autoplay.start();
+			}
+		});
+
+		// 页面卸载清除定时器
+		window.addEventListener('beforeunload', () => {
+			if (autoplayTimer) clearInterval(autoplayTimer);
+		})
+	</script>
+
+
+	<!-- ====================================================== -->
+	<!-- 【区域6】应用场景 -->
+	<!-- 包含：场景卡片轮播（Swiper），每张卡片包含图片、标题、描述、查看更多按钮 -->
+	<!-- 数据来源：GET /website/scene -->
+	<!-- ====================================================== -->
+	<div class="hfo" id="yycj">
+		<div class="container">
+			<div class="pub_title_tbox">
+				<div class="pub_title" style="text-align: center; width: 100%;">
+					<h2 class="font-m font56 wow fadeInUp"
+						style="visibility: visible; animation-name: fadeInUp; animation-delay: 0.2s; margin: 0 auto; display: block;">
+						应用场景</h2>
+				</div>
+			</div>
+		</div>
+
+		<div class="box wow fadeInUp" style="visibility: visible; animation-name: fadeInUp; animation-delay: 0.2s;">
+			<!-- 应用场景轮播添加专属class swiper-scene -->
+			<div class="swiper-container swiper-scene">
+				<!-- JS动态渲染：应用场景卡片 -->
+				<div class="swiper-wrapper" id="sceneWrap"></div>
+				<span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span>
+			</div>
+		</div>
+	</div>
+
+	<style>
+		#news-swiper .swiper-slide {
+			width: 370px;
+			margin-right: 10px;
+			box-sizing: border-box;
+		}
+
+		/* 关键修改：强制固定图片容器尺寸 */
+		#news-swiper .public-img {
+			width: 100%;
+			height: 200px;
+			/* 设置一个固定的高度 */
+			overflow: hidden;
+			/* 裁剪超出部分 */
+		}
+
+		/* 关键修改：确保图片按比例填充容器 */
+		#news-swiper .public-img img {
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+			/* 保持比例并覆盖容器 */
+		}
+	</style>
+
+	<script>
+		// 应用场景轮播全局实例
+		let sceneSwiper = null;
+
+		function initSceneSwiper() {
+			setTimeout(() => {
+				if (sceneSwiper) sceneSwiper.destroy(true, true);
+				sceneSwiper = new Swiper('.swiper-scene', {
+					autoplay: {
+						delay: 3000,
+						disableOnInteraction: false,
+						pauseOnMouseEnter: false,
+					},
+					speed: 1800,
+					loop: true,
+					loopAdditionalSlides: 10,
+					slidesPerView: 'auto',
+					spaceBetween: 0,
+					centeredSlides: false,
+					freeMode: false,
+					watchOverflow: false,
+					pagination: {
+						el: '.swip2_pag',
+						clickable: true,
+					},
+					on: {
+						slideChangeTransitionEnd: function () {
+							this.autoplay.start();
+						}
+					}
+				})
+			}, 200)
+		}
+
+		async function loadSceneData() {
+			console.log('🔹 开始调用：应用场景接口');
+			try {
+				const api = `${SERVER_BASE_URL}/website/scene`;
+				const wrapDom = document.getElementById('sceneWrap');
+
+				const res = await fetch(api);
+				const resData = await res.json();
+
+				if (resData.code !== 0 || !Array.isArray(resData.data)) {
+					console.warn('❌ 应用场景接口异常');
+					return;
+				}
+				let htmlStr = '';
+				resData.data.forEach((item, idx) => {
+					let textArr = [];
+					if (item.textOne) textArr.push(item.textOne);
+					if (item.textTwo) textArr.push(item.textTwo);
+					if (item.textThree) textArr.push(item.textThree);
+					if (item.textFour) textArr.push(item.textFour);
+					if (item.textFive) textArr.push(item.textFive);
+					const contentText = textArr.join('<br>');
+
+					let moreBtn = '';
+					if (item.hrefTo !== null && item.hrefTo !== '') {
+						moreBtn = `
+                        <a href="${item.hrefTo}" title="${item.type || ''}" target="_blank"
+                            class="public-btn public-btn2 font20">
+                            <p class=" font-m">探索更多</p>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="10.844" height="10"
+                                viewBox="0 0 10.844 10" data-inject-url=" " loading="lazy">
+                                <defs>
+                                    <style>
+                                        .cls-1 {fill: #fff;fill-rule: evenodd;}
+                                    </style>
+                                </defs>
+                                <path id="形状_1_拷贝_4--inject-32" data-name="形状 1 拷贝 4" class="cls-1"
+                                    d="M207.821,577.433a1.139,1.139,0,0,1,.241-0.459,0.786,0.786,0,0,1,.513-0.24c0.059,0,.119,0,0.179,0h7.48a0.4,0.4,0,0,0-.062-0.046,1.872,1.872,0,0,1-.609-0.462q-1.008-1.089-2.019-2.177a0.9,0.9,0,0,1-.243-0.919,0.731,0.731,0,0,1,1.166-.387,1.4,1.4,0,0,1,.143.135q1.892,2.029,3.782,4.061a0.876,0.876,0,0,1,.164,1.063,1.054,1.054,0,0,1-.158.212q-1.9,2.042-3.8,4.079a0.74,0.74,0,0,1-1.169-.022,0.9,0.9,0,0,1,.006-1.061c0.041-.053.085-0.1,0.13-0.15q0.861-.925,1.723-1.849a2.634,2.634,0,0,1,.923-0.781c0-.009,0-0.019-0.008-0.029h-0.119q-3.7,0-7.4,0a0.766,0.766,0,0,1-.688-0.32,2.361,2.361,0,0,1-.174-0.4v-0.249Z"
+                                    transform="translate(-207.812 -572.562)"></path>
+                            </svg>
+                        </a>
+                    `;
+					}
+
+					htmlStr += `
+                    <div class="swiper-slide" data-swiper-slide-index="${idx}" style="width: 1249px; margin-right: 1px;">
+                        <div class="hfo_box" style="display: flex; align-items: flex-start; height: 500px;">
+                            <div class="public-img" style="width: 50%; height: 100%; overflow: hidden;">
+                                <img loading="lazy" src="${item.imageUrl || ''}" alt="${item.type || ''}"
+                                    style="width:100%;height:100%;object-fit: cover;object-position: center;">
+                            </div>
+                            <div class="gr"
+                                style="width:50%;height:100%;display: flex; flex-direction: column; align-items: flex-start !important; justify-content: flex-start; padding-left: 40px; padding-top: 80px; box-sizing: border-box;">
+                                <div class="logo_t">
+                                    <h3 class="font24 font-m">${item.title || ''}</h3>
+                                    <h3 class="font24 font-m">${item.type || ''}</h3>
+                                </div>
+                                <div class="txt">
+                                    <div class="txt_t">
+                                        <div class="g_p font18">
+                                            <p>${contentText}</p>
+                                        </div>
+                                    </div>
+                                    ${moreBtn}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+				});
+				wrapDom.innerHTML = htmlStr;
+				initSceneSwiper();
+				console.log('✅ 应用场景接口调用完成');
+			} catch (err) {
+				console.error('❌ 应用场景接口请求失败：', err);
+			}
+		}
+	</script>
+
+
+	<!-- ====================================================== -->
+	<!-- 【区域7】底部Footer -->
+	<!-- 包含：联系我们标题、公司信息（北京总部/海南公司/电话/邮箱） -->
+	<!-- ====================================================== -->
+		<!-- 包含：联系我们标题、公司信息（北京总部/海南公司/电话/邮箱） -->
+	<!-- ====================================================== -->
+	<footer style="background: url(./img/footer.jpg);background-size: cover; padding: 25px 0 0px;" id="lxwm">
+		<div class="container" style="color:#fff; padding:0 20px;">
+			<div class="gt" style="display:flex; justify-content:center; margin-bottom:15px;">
+				<h2 class="font50" style="font-size:28px; line-height:1.2; margin:0;"><bdo>联系我们</bdo></h2>
+			</div>
+
+			<div class="gm" style="display:flex; justify-content:center; margin-bottom:-90px;">
+
+				<div class="gm_r" style="text-align:center;">
+					<h3 class="font30 font-m" style="font-size:18px; margin:0 0 10px;">浩瑞绿色科技集团</h3>
+					<div class="g_p" style="font-size:13px; line-height:1.5;">
+						<p style="margin:0 0 5px;">北京总部：<bdo>北京市朝阳区百子湾东里大成国际9层 智慧生态前沿研究院</bdo></p>
+						<p style="margin:0 0 5px;">海南公司：<bdo>海南省海口市澄迈县海南生态软件园号A-22 浩瑞数智软件科技</bdo></p>
+						<p style="margin:0;">电 话：<bdo>+86-17301808315（CN）</bdo> | 业务咨询：<bdo>tech@jnsco.cn</bdo></p>
+					</div>
+				</div>
+			</div>
+			<div class="gb" style="display:flex; justify-content:space-between; align-items:center; border-top:1px solid rgba(255,255,255,0.15); padding-top:15px; font-size:12px;">
+				<div class="gb_l">
+					<p style="margin:0;">版权所有 浩瑞绿色科技  </p>
+					<a style="color:white;" href="https://beian.miit.gov.cn/#/Integrated/index"
+						target="_blank">京ICP备2026036471号</a>
+				</div>
+				<div class="gb_r">
+					<a href=" "></a>
+					<a href=" " target="_blank">隐私政策</a>
+					<a href=" " target="_blank">免责声明</a>
+				</div>
+			</div>
+		</div>
+
+	</footer>
+
+
+	<!-- 右侧浮窗 -->
+	<div class="gpop" style="display: block;">
+		<a href="#lxwm" class="pop_a cur1">
+			<div class="pop_a_img">
+				<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+					data-inject-url="https://www.i2cool.com.cn/static/cms/images/pop_r_svg.svg" loading="lazy">
+					<defs>
+						<style>
+							.cls-1 {
+								fill: #2260bc;
+								fill-rule: evenodd;
+							}
+						</style>
+					</defs>
+					<path id="形状_722--inject-47" data-name="形状 722" class="cls-1"
+						d="M186.357,199.5a0.858,0.858,0,0,1-.857-0.858V178.071a2.571,2.571,0,0,1,2.571-2.571h18.857a2.571,2.571,0,0,1,2.572,2.571v13.714a2.572,2.572,0,0,1-2.572,2.572H192.991a0.861,0.861,0,0,0-.558.206l-5.519,4.73a0.862,0.862,0,0,1-.557.207h0Zm1.714-22.286a0.857,0.857,0,0,0-.857.857v18.708l4.1-3.514a2.571,2.571,0,0,1,1.673-.623h13.937a0.856,0.856,0,0,0,.857-0.857V178.071a0.857,0.857,0,0,0-.857-0.857H188.071Zm14.572,6H192.357a0.857,0.857,0,0,1,0-1.714h10.286A0.857,0.857,0,0,1,202.643,183.214ZM197.5,187.5h-5.143a0.858,0.858,0,0,1,0-1.715H197.5A0.858,0.858,0,0,1,197.5,187.5Zm5.143,0h-2.572a0.858,0.858,0,0,1,0-1.715h2.572A0.858,0.858,0,0,1,202.643,187.5Z"
+						transform="translate(-185.5 -175.5)"></path>
+				</svg>
+				<p>联系我们 </p>
+			</div>
+
+		</a>
+		<a class="pop_a cur2">
+			<div class="pop_a_img">
+				<svg xmlns="http://www.w3.org/2000/svg" width="24" height="15.5" viewBox="0 0 24 15.5"
+					data-inject-url="" loading="lazy">
+					<defs>
+						<style>
+							.cls-1 {
+								fill: #fff;
+								fill-rule: evenodd;
+							}
+						</style>
+					</defs>
+					<path id="形状_721--inject-48" data-name="形状 721" class="cls-1" d=""
+						transform="translate(-185.563 -248.781)"></path>
+				</svg>
+				<p>回到顶部 </p>
+			</div>
+
+		</a>
+	</div>
+
+
+	<!-- 公共 -->
+	<!--<script src="https://res.zvo.cn/module/layui/layui.js?v=2.4.5"></script>-->
+	<script src="./index_files/layui.js"></script>
+	<script src="./index_files/extend.js" type="text/javascript"></script>
+	<script src="./index_files/public.js" type="text/javascript"></script>
+	<script src="./index_files/jquery.pjax.js" type="text/javascript"></script>
+	<!-- 公共结束 -->
+
+	<script>
+		$(document).on('click', 'a', function () {
+			href = $(this).attr('href');
+			if ($(this).attr('href') == '') {
+				event.preventDefault();
+			} else if (href.startsWith('http://') || href.startsWith('https://')) {
+				$(this).attr('target', '_blank');
+			}
+		})
+
+	</script>
+
+
+	<script src="./index_files/jquery.liMarquee.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+
+		// banner
+		var swip = new Swiper('.h_banner_smswi .swiper-container', {
+			speed: 1800,
+			autoplay: {
+				delay: 3000,
+				stopOnLastSlide: false,
+				disableOnInteraction: false,
+			},
+			watchOverflow: true,//仅有1个slide，swiper无效
+			loop: true,
+			slidesPerView: 1.4,
+			loopedSlides: 4,
+			spaceBetween: 1,
+			// roundLengths : true,
+			navigation: {
+				nextEl: '.pub_next1',
+				prevEl: '.pub_prev1',
+			},
+			breakpoints: {
+				991: {
+					slidesPerView: 1,
+					spaceBetween: 10,
+				},
+				767: {
+					slidesPerView: 1,
+					spaceBetween: 10,
+				}
+			},
+		});
+
+		// 移动端不设置全屏Banner，使用CSS固定高度
+		if ($(window).width() < 767) {
+			// HiSetClientHeight($(".h_banner"), $(".new-nav-wrap").outerHeight());
+		}
+
+		// 第三屏
+		function xxkh2(dj, x_id, x_id2) {
+			$(x_id).hide();
+			$(x_id).eq(0).show();
+			$(x_id2).hide();
+			$(x_id2).eq(0).show();
+			// $(x_id).removeClass('on');
+			// $(x_id).eq(0).addClass('on');
+			$(dj).hover(function () {
+				$(this).addClass('on').siblings().removeClass('on');
+				$(x_id).hide();
+				$(x_id).eq($(this).index()).show();
+				$(x_id2).hide();
+				$(x_id2).eq($(this).index()).show();
+				// $(x_id).removeClass('on');
+				// $(x_id).eq($(this).index()).addClass('on');
+			})
+		}
+
+		// 第四屏
+
+
+		// 第五屏
+
+		var oHeight = $(window).height();
+		var oWidth = $('.hfi_num_box').width();
+		// var _left =  - oWidth ;
+		$(".hfi_num_box").css("transform", "translateX(" + oWidth + "px)");
+
+
+		function UV() {
+			var hfiNum = $(".hfi .box .hfi_num");
+			var hfiNumBox = $(".hfi_num_box");
+			if (!hfiNum.length || !hfiNumBox.length) return;
+			
+			var controller = new ScrollMagic.Controller();
+
+			var move1 = TweenMax.to(hfiNumBox, .5, {
+				transform: 'translateX(0px)',
+				ease: Linear.easeNone
+
+			});
+			var Scene1 = new ScrollMagic.Scene({
+
+				offset: hfiNum.offset().top - oHeight * 1.1,
+				duration: oHeight * 0.7,
+			})
+				.setTween(move1)
+				.addTo(controller);
+
+
+		};
+
+		if ($(window).width() > 767) {
+			UV();
+		}
+
+
+		// 第六屏
+		var swip = new Swiper('.hsi .swiper-container', {
+			speed: 1800,
+			autoplay: {
+				delay: 3000,
+				stopOnLastSlide: false,
+				disableOnInteraction: false,
+			},
+			watchOverflow: true,//仅有1个slide，swiper无效
+			loop: true,
+			slidesPerView: 3.6,
+			loopedSlides: 8,
+			spaceBetween: 45,
+			// roundLengths : true,
+			breakpoints: {
+				991: {
+					slidesPerView: 2.2,
+				},
+				767: {
+					slidesPerView: 1,
+				}
+			},
+		});
+
+		$(document).ready(function () {
+			$('.hfo .box .hfo_box .gr').matchHeight();
+		});
+
+		var swip3 = new Swiper('.htw .box .box_b .swiper-container', {
+			speed: 1800,
+			autoplay: {
+				delay: 5000,
+				stopOnLastSlide: false,
+				disableOnInteraction: false,
+				pauseOnMouseEnter: true,
+			},
+			watchOverflow: true,//仅有1个slide，swiper无效
+			loop: true,
+			slidesPerView: 3,
+			spaceBetween: 20,
+			// roundLengths : true,
+			breakpoints: {
+				991: {
+					slidesPerView: 2,
+					spaceBetween: 15,
+				},
+				767: {
+					slidesPerView: 1,
+					spaceBetween: 10,
+				}
+			},
+			pagination: {
+				el: '.htw .box .box_b .swip2_pag',
+				clickable: true,
+			},
+		});
+
+		//鼠标覆盖停止自动切换
+		swip3.el.onmouseover = function () {
+			swip3.autoplay.stop();
+		}
+
+		//鼠标离开开始自动切换
+		swip3.el.onmouseout = function () {
+			swip3.autoplay.start();
+		}
+	</script>
+
+
+	<script type="text/javascript">
+			(function () {
+				var traceTabTit = document.getElementById('think_page_trace_tab_tit');
+				if (!traceTabTit) return;
+				var tab_tit = traceTabTit.getElementsByTagName('span');
+				var tab_cont = document.getElementById('think_page_trace_tab_cont').getElementsByTagName('div');
+				var open = document.getElementById('think_page_trace_open');
+				var close = document.getElementById('think_page_trace_close').children[0];
+				var trace = document.getElementById('think_page_trace_tab');
+				var cookie = document.cookie.match(/thinkphp_show_page_trace=(\d\|\d)/);
+				var history = (cookie && typeof cookie[1] != 'undefined' && cookie[1].split('|')) || [0, 0];
+				open.onclick = function () {
+					trace.style.display = 'block';
+					this.style.display = 'none';
+					close.parentNode.style.display = 'block';
+					history[0] = 1;
+					document.cookie = 'thinkphp_show_page_trace=' + history.join('|')
+				}
+				close.onclick = function () {
+					trace.style.display = 'none';
+					this.parentNode.style.display = 'none';
+					open.style.display = 'block';
+					history[0] = 0;
+					document.cookie = 'thinkphp_show_page_trace=' + history.join('|')
+				}
+				for (var i = 0; i < tab_tit.length; i++) {
+					tab_tit[i].onclick = (function (i) {
+						return function () {
+							for (var j = 0; j < tab_cont.length; j++) {
+								tab_cont[j].style.display = 'none';
+								tab_tit[j].style.color = '#999';
+							}
+							tab_cont[i].style.display = 'block';
+							tab_tit[i].style.color = '#000';
+							history[1] = i;
+							document.cookie = 'thinkphp_show_page_trace=' + history.join('|')
+						}
+					})(i)
+				}
+				parseInt(history[0]) && open.click();
+				tab_tit[history[1]].click();
+			})();
+	</script>
+
+	<script>
+		document.addEventListener('DOMContentLoaded', async function () {
+			console.log('🚀 页面加载完成，开始按页面位置顺序调用接口...');
+
+			await loadNewsData();
+
+			await loadProductData();
+
+			await loadCoreTechData();
+
+			await loadSceneData();
+
+			console.log('🎉 所有接口调用完成！');
+		});
+	</script>
+
+
+</body>
+
+</html>

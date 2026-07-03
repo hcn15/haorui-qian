@@ -1,0 +1,2459 @@
+一、首页
+1、资讯动态
+  左侧4个新闻，右侧对应图片（新闻允许没有图片）
+  1.1 新闻字段
+      ID，日期，标题，正文，标题图片，正文图片1，正文图片2，正文图片3
+  1.2 可以添加多条新闻，但只能显示4条，按ID的先后顺序显示
+
+2、产品服务
+  2.1 7个栏目，可以修改，不能删除和新增
+
+  2.2 栏目内容
+      ID,小引题，大标题，项目1，项目2，项目3，项目4，项目5，项目6，项目7，项目8，项目9，项目10
+      比如，智能平台：
+                小引题：智能平台
+                大标题：五大智能平台，驱动零碳未来
+                项目1：能碳协同管理平台
+                项目2：智能粮仓监测平台
+                项目3：智能煤炭检测平台
+                项目4：安全预警管理平台
+                项目5：智慧工地管理平台
+
+3、核心技术
+  2.1左图
+        更换左图（图带文字，不能单独修改文字）
+  2.2右图
+        更换右图（图带文字，不能单独修改文字）
+        更换右图文字：
+        ID，大标题，项目1，项目1的值，项目2，项目2的值，项目3，项目3的值，项目4，项目4的值，项目5，项目5的值，项目6，项目6的值，项目7，项目7的值，项目8，项目8的值，项目9，项目9的值，项目10，项目10的值
+
+        比如右图：
+              大标题：无电制冷技术参数
+              项目1：太阳光反射率高达                       ，项目1的值：97%
+              项目2：中红外辐射率可达                       ，项目2的值：96%
+              项目3：与常规涂层浅色屋顶温差可达       ，项目3的值：11℃
+              项目4：与常规涂层深色屋顶温差可达       ，项目4的值：28℃
+              项目5：与金属基层浅色屋顶温差可达       ，项目5的值：25℃
+              项目6：与金属基层深色屋顶温差可达       ，项目6的值：30℃ 
+
+  2.3下面滚动图
+             滚动图片N张，每张对应1张说明图片
+             内容：ID,标题图片，说明图片
+
+4、应用场景
+            滚动图片N张，每张对应1张说明图片
+            内容：ID,标题图片，内容大类，内容标题，内容文字行1，内容文字行2，内容文字行3，内容文字行4，内容文字行5，说明图片（用户点击探索更多看到的说明文字）
+            比如：
+                    标题图片
+                    内容大类：无电制冷涂层
+                    内容标题：粮仓应用场景
+                    内容文字行1：喷涂无电制冷涂料后；
+                    内容文字行2：粮仓外墙表面温度降低约6-10℃；
+                    内容文字行3：粮食内温度降低3-5℃；
+                    内容文字行4：制冷系统节电率高达9-10%。
+
+5、联系我们
+           内容：ID，公司名称，公司地址1，公司地址2，公司地址3，电话，业务咨询邮箱，市场及合作邮箱
+
+           比如：
+                北京总部：北京市朝阳区百子湾东里大成国际9层  智慧生态前沿研究院
+                海南公司：海南省海口市澄迈县海南生态软件园号A-22  浩瑞数智软件科技
+                电话咨询：+86-17301808315（CN）
+               业务咨询：tech@jnsco.cn
+               市场及合作：tech@jnsco.cn
+
+
+
+
+================一、新闻资讯，后台化===========================
+
+--必填字段
+title，新闻标题
+summary，新闻摘要
+content，新闻正文
+date，发布日期
+image_url，标题图片URL
+status，状态：0-禁用，1-启用
+content_url_one，正文图片1
+content_url_two，正文图片2
+content_url_three，正文图片3
+
+
+第一.一部分，新闻资讯，栏目制作
+-------------------------------------------------------------
+
+现在，我要用方案2的方式改造我的前端代码，首先将数据库中获取的数据赋值给新闻资讯内的变量
+请替我修改代码、增加js代码，实现这个功能
+-----------需求规则------------------------------------
+1、发送POST登录消息，获取token ---不用，直接把/website/news放进了免拦截
+
+${SERVER_BASE_URL}/user/login?username=mazhenmin&password=123456
+
+返回：
+{
+    "code": 0,
+    "message": "操作成功",
+    "data": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGFpbXMiOnsiaWQiOjEsInVzZXJuYW1lIjoibWF6aGVubWluIn0sImV4cCI6MTc3OTMzNzIwOX0.DJybaT9h9ez9RGogLN1wrTRNnhZiiqQxld16IVdonEc"
+}
+
+其中data是token
+
+
+2、使用“查询新闻列表”，查询最近4条新闻数据
+
+2.1 GET查询新闻列表说明 ---/website/news免拦截，不带token即可
+- 方法: GET
+- 路径: `/website/news`
+
+请求参数:
+| 参数     | 类型      | 必填 | 说明                     |
+| ------ | ------- | -- | ---------------------- |
+| tag    | String  | 否  | 按标签筛选                  |
+| all    | Boolean | 否  | 是否查询全部（默认false，只查启用状态） |
+| latest | Boolean | 否  | 是否查询最近4条启用状态新闻         |
+
+注意，要在消息头带上token
+
+2.2 实际发送消息（不需要token）
+发送：
+      GET ${SERVER_BASE_URL}/website/news
+  
+返回：
+{
+    "code": 0,
+    "message": "操作成功",
+    "data": [
+        {
+            "id": 4,
+            "title": "11零碳工厂迎来国家级“施工图”（美丽中国·寻找零碳先锋）",
+            "summary": null,
+            "content": "。。。",
+            "date": "2026-01-29",
+            "tag": null,
+            "imageUrl": null,
+            "sortOrder": 0,
+            "status": 1,
+            "createdAt": "2026-05-12T16:03:51",
+            "updatedAt": "2026-05-12T16:28:04",
+            "contentUrlOne": null,
+            "contentUrlTwo": null,
+            "contentUrlThree": null
+        },
+        {
+            "id": 3,
+            "title": "2025，大国粮仓家底更厚！",
+            "summary": null,
+            "content": "。。。",
+            "date": "2026-01-23",
+            "tag": null,
+            "imageUrl": null,
+            "sortOrder": 0,
+            "status": 1,
+            "createdAt": "2026-05-12T16:03:27",
+            "updatedAt": "2026-05-12T16:03:27",
+            "contentUrlOne": null,
+            "contentUrlTwo": null,
+            "contentUrlThree": null
+        },
+        {
+            "id": 2,
+            "title": "坚持“双碳”引领，推动全面绿色转型 稳中求进、提质增效 实现“十五五”良好开局",
+            "summary": null,
+            "content": "。。。",
+            "date": "2026-01-20",
+            "tag": null,
+            "imageUrl": null,
+            "sortOrder": 0,
+            "status": 1,
+            "createdAt": "2026-05-12T16:03:02",
+            "updatedAt": "2026-05-12T16:03:02",
+            "contentUrlOne": null,
+            "contentUrlTwo": null,
+            "contentUrlThree": null
+        },
+        {
+            "id": 1,
+            "title": "五部门联合印发《关于开展零碳工厂建设工作的指导意见》",
+            "summary": null,
+            "content": "。。。",
+            "date": "2026-01-19",
+            "tag": null,
+            "imageUrl": null,
+            "sortOrder": 0,
+            "status": 1,
+            "createdAt": "2026-05-12T16:01:55",
+            "updatedAt": "2026-05-12T16:01:55",
+            "contentUrlOne": null,
+            "contentUrlTwo": null,
+            "contentUrlThree": null
+        }
+    ]
+}
+
+3、将上述4条数据，分别更新到新闻资讯模块内的变量上
+
+3.1当id=4时：更新到代码中最上面一条数据
+
+先更新这个位置：<!-- 左侧新闻列表 -->
+获取date（发布日期）的值：
+获取月日，赋值给“05-19”的变量
+获取年，赋值给“2026”的变量
+
+获取title（新闻标题）的值：
+将title的内容，赋值给“【应用探讨】辐射制冷涂料应用：别再混淆「单一产品」和「功能叠加组合」”的变量；
+
+获取summary（新闻摘要）的值，赋值给“很多项目应用辐射制冷涂层降温时，都会陷入一个误区：只看反射率、发射率数据高低...”的变量
+
+再更新这个位置：<!-- 右侧轮播图 → 固定 宽800px / 高630px -->
+获取image_url（标题图片URL）的值：赋值给“./img/news4.jpg”的变量；
+将summary（新闻摘要）的值，赋值给“【应用探讨】辐射制冷涂料应用：别再混淆「单一产品」和「功能叠加组合」”的变量；
+
+这样，当id=4处理结束；
+
+3.2当id=3时，赋值给代码内上数第二条数据
+3.2当id=2时，赋值给代码内上数第三条数据
+3.2当id=1时，赋值给代码内上数第四条数据
+
+此时，代码处理完毕
+
+
+第一.二部分，新闻资讯 新闻页面制作
+-------------------------------------------------------------
+第0条 → news-4.html
+第1条 → news-3.html
+第2条 → news-2.html
+第3条 → news-1.html
+
+上面已经根据数据库内容，制作了新闻资讯栏目；
+现在我们再把新闻对应的文章内容制作出来，规则如下：
+左侧新闻第0条 → news-4.html
+左侧新闻第1条 → news-3.html
+左侧新闻第2条 → news-2.html
+左侧新闻第3条 → news-1.html
+
+
+现在制作 news-4.html 的文章生成JS：
+替换在代码内的“<!-- 文章内容区域 -->”
+
+1、发送：GET ${SERVER_BASE_URL}/website/news
+      获取ID最大的一条数据对应的如下数据：
+      	
+	获取title（新闻标题）的值：制作文章标题，（格式与代码内的案例一致）
+	获取date（发布日期）的值：制作文章标题下方的时间，（格式与代码内的案例一致）
+	获取image_url（标题图片URL）的值：截取文件名，制作图片显示；
+
+	获取content（新闻正文）的值：显示在正文位置，（格式与代码内的案例一致）
+                            注意，content内有自然段的，显示出的正文也必须有自然段；（格式与代码内的案例一致）
+                            另外要求，文章内的自然段，段前空2个空格；
+                                             文章内有“一二三”或“123”等小标题的，标题加黑；
+                                             文章的标题，把底纹去掉；
+
+现在制作 news-3.html 的文章生成JS：
+替换在代码内的“<!-- 文章内容区域 -->”
+
+1、发送：GET ${SERVER_BASE_URL}/website/news
+      获取ID第二大的一条数据对应的如下数据：（后面内容跟news-4.html的制作完全一致 ）
+      1、文章标题，请相对于底纹居中显示；
+      2、时间下面的图片，请限定在宽500px和高500px
+
+
+现在制作 news-2.html 的文章生成JS：
+替换在代码内的“<!-- 文章内容区域 -->”
+
+1、发送：GET ${SERVER_BASE_URL}/website/news
+      获取ID第三大的一条数据对应的如下数据：（后面内容跟news-3.html的制作完全一致 ）
+
+      1、文章标题，请相对于底纹居中显示；
+      2、时间下面的图片，请限定在宽500px和高500px
+
+
+
+现在制作 news-1.html 的文章生成JS：
+替换在代码内的“<!-- 文章内容区域 -->”
+
+1、发送：GET ${SERVER_BASE_URL}/website/news
+      获取ID第三大的一条数据对应的如下数据：（后面内容跟news-2.html的制作完全一致 ）
+
+
+
+第一.三部分，新闻资讯--英文版--新闻栏目制作
+-------------------------------------------------------------
+CREATE TABLE `website_news`  (
+  `id` bigint(0) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+  `title` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '新闻标题',
+  `summary` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL COMMENT '新闻摘要',
+  `content` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL COMMENT '新闻正文',
+  `date` date NOT NULL COMMENT '发布日期',
+  `tag` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '标签/分类',
+  `image_url` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL COMMENT '标题图片URL',
+  `sort_order` int(0) NULL DEFAULT 0 COMMENT '排序号',
+  `status` tinyint(0) NULL DEFAULT 1 COMMENT '状态：0-禁用，1-启用',
+  `created_at` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `updated_at` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
+  `content_url_one` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL COMMENT '正文图片1',
+  `content_url_two` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL COMMENT '正文图片2',
+  `content_url_three` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL COMMENT '正文图片3'
+) ;
+
+--新增字段
+title_en， varchar(500) ,英文新闻标题
+summary_en，text ,英文新闻摘要
+content_en，longtext ,英文新闻正文
+image_url_en，longtext ,英文标题图片URL
+content_url_one_en，longtext， 英文正文图片1
+content_url_two_en，longtext， 英文正文图片2
+content_url_three_en，longtext， 英文正文图片3
+content_url_4_en，longtext， 英文正文图片4
+content_url_5_en，longtext， 英文正文图片5
+content_url_6_en，longtext， 英文正文图片6
+content_url_7_en，longtext， 英文正文图片7
+content_url_8_en，longtext， 英文正文图片8
+content_url_9_en，longtext， 英文正文图片9
+content_url_10_en，longtext， 英文正文图片10
+content_url_4，longtext， 英文正文图片4
+content_url_5，longtext， 英文正文图片5
+content_url_6，longtext， 英文正文图片6
+content_url_7，longtext， 英文正文图片7
+content_url_8，longtext， 英文正文图片8
+content_url_9，longtext， 英文正文图片9
+content_url_10，longtext， 英文正文图片10
+
+
+-- 给 website_news 新增字段（不删数据、安全执行）
+ALTER TABLE website_news
+ADD COLUMN content_url_4 longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL COMMENT '正文图片4',
+ADD COLUMN content_url_5 longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL COMMENT '正文图片5',
+ADD COLUMN content_url_6 longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL COMMENT '正文图片6',
+ADD COLUMN content_url_7 longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL COMMENT '正文图片7',
+ADD COLUMN content_url_8 longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL COMMENT '正文图片8',
+ADD COLUMN content_url_9 longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL COMMENT '正文图片9',
+ADD COLUMN content_url_10 longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL COMMENT '正文图片10',
+
+ADD COLUMN title_en varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL COMMENT '英文新闻标题',
+ADD COLUMN summary_en text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL COMMENT '英文新闻摘要',
+ADD COLUMN content_en longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL COMMENT '英文新闻正文',
+ADD COLUMN image_url_en longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL COMMENT '英文标题图片URL',
+
+ADD COLUMN content_url_one_en longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL COMMENT '英文正文图片1',
+ADD COLUMN content_url_two_en longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL COMMENT '英文正文图片2',
+ADD COLUMN content_url_three_en longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL COMMENT '英文正文图片3',
+ADD COLUMN content_url_4_en longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL COMMENT '英文正文图片4',
+ADD COLUMN content_url_5_en longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL COMMENT '英文正文图片5',
+ADD COLUMN content_url_6_en longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL COMMENT '英文正文图片6',
+ADD COLUMN content_url_7_en longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL COMMENT '英文正文图片7',
+ADD COLUMN content_url_8_en longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL COMMENT '英文正文图片8',
+ADD COLUMN content_url_9_en longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL COMMENT '英文正文图片9',
+ADD COLUMN content_url_10_en longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL COMMENT '英文正文图片10';
+
+---当我对表结构做了修改之后，我需要对后端程序的相应代码做处理吗？
+比如WebsiteNewsMapper.xml，WebsiteNews，WebsiteNewsController，WebsiteNewsMapper，WebsiteNewsService，WebsiteNewsServiceImpl
+还是不处理，对应的对外链接也可使用？
+修改三个文件：WebsiteNewsMapper.xml，WebsiteNews，WebsiteNewsController
+
+
+现在我们修改 news-4.html 的文章生成JS：
+增加对文章段落图片的处理：
+当如下字段有值时，表示有段落图片，我们需要将对应图片放到段落的后面：
+content_url_one，
+content_url_two，
+content_url_three，
+content_url_4，
+content_url_5，
+content_url_6，
+content_url_7，
+content_url_8，
+content_url_9，
+content_url_10
+上述字段无论哪一个有值，我们都按照如下规则处理：
+比如：
+news4-1.jpg：表示第1段后面需要放置此图片
+news4-4.jpg：表示第4段后面需要放置此图片
+news4-6.jpg：表示第6段后面需要放置此图片
+news4-22.jpg：表示第22段后面需要放置此图片
+以此类推。
+
+
+
+第一.四部分，新闻资讯--英文版--新闻栏目
+-------------------------------------------------------------
+现在，我们要把新闻资讯模块代码，从中文版修改为英文版；
+英文版规则相同，但是数据库返回的参数独立使用（date共用）
+
+title，新闻标题
+summary，新闻摘要
+content，新闻正文
+image_url，标题图片URL
+content_url_one，英文正文图片1
+content_url_two，英文正文图片2
+content_url_three，英文正文图片3
+content_url_4，英文正文图片4
+content_url_5，英文正文图片5
+content_url_6，英文正文图片6
+content_url_7，英文正文图片7
+content_url_8，英文正文图片8
+content_url_9，英文正文图片9
+content_url_10，英文正文图片10
+--中文版采用的字段
+
+title_en，,英文新闻标题
+summary_en，,英文新闻摘要
+content_en，,英文新闻正文
+image_url_en，,英文标题图片URL
+content_url_one_en，英文正文图片1
+content_url_two_en，英文正文图片2
+content_url_three_en，英文正文图片3
+content_url_4_en，英文正文图片4
+content_url_5_en，英文正文图片5
+content_url_6_en，英文正文图片6
+content_url_7_en，英文正文图片7
+content_url_8_en，英文正文图片8
+content_url_9_en，英文正文图片9
+content_url_10_en，英文正文图片10
+--英文版采用的字段
+
+date，发布日期
+--共用
+
+第一.五部分，新闻资讯--英文版--新闻页面制作
+-------------------------------------------------------------
+现在，我们要把news-4.html 的文章JS，从中文版修改为英文版，给news-4-en.html使用 ；
+英文版规则相同，但是数据库返回的参数独立使用（date共用）
+-------------news-4.html 的文章JS----------------
+
+
+同样的，我们要把news-3.html 的文章JS，从中文版修改为英文版，给news-3-en.html使用 ；
+英文版规则相同，但是数据库返回的参数独立使用（date共用）
+-------------news-3.html 的文章JS----------------
+
+
+同样的，我们要把news-2.html 的文章JS，从中文版修改为英文版，给news-2-en.html使用 ；
+英文版规则相同，但是数据库返回的参数独立使用（date共用）
+-------------news-2.html 的文章JS----------------
+
+
+同样的，我们要把news-1.html 的文章JS，从中文版修改为英文版，给news-1-en.html使用 ；
+英文版规则相同，但是数据库返回的参数独立使用（date共用）
+-------------news-1.html 的文章JS----------------
+
+==========新闻资讯部分结束=================================
+
+
+
+
+
+
+
+
+
+=========产品服务 部分开始==================================
+
+2、产品服务
+  2.1 7个栏目，可以修改，不能删除和新增
+
+  2.2 栏目内容
+      ID,小引题，大标题，图片，项目1，项目2，项目3，项目4，项目5，项目6，项目7，项目8，项目9，项目10
+      比如，智能平台：
+                小引题：智能平台
+                大标题：五大智能平台，驱动零碳未来
+                项目1：能碳协同管理平台
+                项目2：智能粮仓监测平台
+                项目3：智能煤炭检测平台
+                项目4：安全预警管理平台
+                项目5：智慧工地管理平台
+
+
+desc website_product;
+
+bigint unsigned	id
+varchar(200)	name	--小引题
+text		title	--大标题
+longtext		image_url	--图片
+int		sort_order
+tinyint		status
+datetime		created_at
+datetime		updated_at
+varchar(255)	item_one
+varchar(255)	item_two	--项目1
+varchar(255)	item_three--项目2
+varchar(255)	item_four
+varchar(255)	item_five
+varchar(255)	item_six
+varchar(255)	item_seven
+varchar(255)	item_eight
+varchar(255)	item_nine
+varchar(255)	item_ten
+
+================二.1、产品服务，后台化===========================
+
+--必填字段
+bigint unsigned	id	--ID，取值1-7
+varchar(200)	name	--小引题
+text		title	--大标题
+longtext		image_url	--图片
+
+varchar(255)	item_one	--项目1
+varchar(255)	item_two	--项目2
+varchar(255)	item_three
+varchar(255)	item_four
+varchar(255)	item_five
+varchar(255)	item_six
+varchar(255)	item_seven
+varchar(255)	item_eight
+varchar(255)	item_nine
+varchar(255)	item_ten
+
+
+第二.2部分，产品服务，栏目制作
+-------------------------------------------------------------
+
+现在，我们不再用前面的生成代码的方式，我们用循环赋值的方式生成代码：
+连接数据库获取的7条数据循环生成前端代码
+请替我修改html代码、js代码，实现这个功能；
+注意，我是让你把我的前端静态代码，改写成动态获取数据的循环产生的代码，不是只是输出静态html代码
+
+-----------需求规则------------------------------------
+1、已在后台把链接/website/product放进了免拦截
+
+
+2、使用“查询产品列表链接”，查询全部7条产品数据
+
+2.1 GET查询产品列表说明 ---/website/product免拦截，不带token即可
+
+- **方法**: GET
+- **路径**: `/website/product`
+
+请求参数:
+无
+
+
+
+2.2 实际发送消息（不需要token）
+发送：
+      GET ${SERVER_BASE_URL}/website/product
+  
+返回：
+{
+    "code": 0,
+    "message": "操作成功",
+    "data": [
+        {
+            "id": 1,
+            "name": "无电制冷",
+            "title": "无电制冷大标题",
+            "imageUrl": "./index_files/14843a49ffe3818603b2ac86202c9534.jpg",
+            "sortOrder": 0,
+            "status": 1,
+            "createdAt": "2026-05-14T17:23:25",
+            "updatedAt": "2026-05-26T16:50:22",
+            "itemOne": "储粮",
+            "itemTwo": "光伏",
+            "itemThree": "厂房",
+            "itemFour": "商场",
+            "itemFive": "仓库",
+            "itemSix": "农业",
+            "itemSeven": null,
+            "itemEight": null,
+            "itemNine": null,
+            "itemTen": null
+        },
+        {
+            "id": 2,
+            "name": "智能平台",
+            "title": "五大智能平台，驱动零碳未来",
+            "imageUrl": "./index_files/70c73f383464cbcc769a1b3987b08a01.jpg",
+            "sortOrder": 0,
+            "status": 1,
+            "createdAt": "2026-05-26T16:52:37",
+            "updatedAt": "2026-05-26T17:01:34",
+            "itemOne": "能碳协同管理平台",
+            "itemTwo": "智能粮仓监测平台",
+            "itemThree": "智能煤炭检测平台",
+            "itemFour": "安全预警管理平台",
+            "itemFive": "智慧工地管理平台",
+            "itemSix": "...",
+            "itemSeven": null,
+            "itemEight": null,
+            "itemNine": null,
+            "itemTen": null
+        },
+        {
+            "id": 3,
+            "name": "安全无线",
+            "title": "安全侦测 ，烟火侦测",
+            "imageUrl": "./index_files/75c4a045fae75bfaceffd97629b60bcd.jpg",
+            "sortOrder": 0,
+            "status": 1,
+            "createdAt": "2026-05-26T16:54:27",
+            "updatedAt": "2026-05-26T17:01:30",
+            "itemOne": "步态识别",
+            "itemTwo": "无线对讲",
+            "itemThree": "无线自组网",
+            "itemFour": "...",
+            "itemFive": null,
+            "itemSix": null,
+            "itemSeven": null,
+            "itemEight": null,
+            "itemNine": null,
+            "itemTen": null
+        },
+        {
+            "id": 4,
+            "name": "AI机器人",
+            "title": "AI智能无人设备",
+            "imageUrl": "./index_files/939d25f481a0642fb2866e3e1926b0c2.jpg",
+            "sortOrder": 0,
+            "status": 1,
+            "createdAt": "2026-05-26T16:55:56",
+            "updatedAt": "2026-05-26T17:01:25",
+            "itemOne": "无人机",
+            "itemTwo": "机器人",
+            "itemThree": "机器狗",
+            "itemFour": "...",
+            "itemFive": null,
+            "itemSix": null,
+            "itemSeven": null,
+            "itemEight": null,
+            "itemNine": null,
+            "itemTen": null
+        },
+        {
+            "id": 5,
+            "name": "低空经济",
+            "title": "低空智能应用与服务",
+            "imageUrl": "./index_files/307d85832af63b001a80c1030baa8af6.jpg",
+            "sortOrder": 0,
+            "status": 1,
+            "createdAt": "2026-05-26T16:57:18",
+            "updatedAt": "2026-05-26T17:01:24",
+            "itemOne": "低空飞行",
+            "itemTwo": "低空安防",
+            "itemThree": "低空物流",
+            "itemFour": "低空监测",
+            "itemFive": "...",
+            "itemSix": null,
+            "itemSeven": null,
+            "itemEight": null,
+            "itemNine": null,
+            "itemTen": null
+        },
+        {
+            "id": 6,
+            "name": "大宗商品",
+            "title": "大宗商品交易",
+            "imageUrl": "./index_files/d400332c0069ac12d9a7e3e771efa1d7.jpg",
+            "sortOrder": 0,
+            "status": 1,
+            "createdAt": "2026-05-26T16:59:35",
+            "updatedAt": "2026-05-26T17:01:23",
+            "itemOne": "能源",
+            "itemTwo": "农业",
+            "itemThree": "化工",
+            "itemFour": "矿产",
+            "itemFive": "...",
+            "itemSix": null,
+            "itemSeven": null,
+            "itemEight": null,
+            "itemNine": null,
+            "itemTen": null
+        },
+        {
+            "id": 7,
+            "name": "生态协作",
+            "title": "欢迎国内外企业洽谈合作",
+            "imageUrl": "./index_files/5239d962f378e41ec439580151d0afd9.jpg",
+            "sortOrder": 0,
+            "status": 1,
+            "createdAt": "2026-05-26T17:01:12",
+            "updatedAt": "2026-05-26T17:01:12",
+            "itemOne": "机械设备",
+            "itemTwo": "通信设备",
+            "itemThree": "电子产品",
+            "itemFour": "矿藏",
+            "itemFive": "农业",
+            "itemSix": "...",
+            "itemSeven": null,
+            "itemEight": null,
+            "itemNine": null,
+            "itemTen": null
+        }
+    ]
+}
+
+3、将上述7条数据，“依次轮询”更新到产品服务模块内
+
+3.1 id从1到7：依次更新
+
+以id=1为例：
+{
+            "id": 1,
+            "name": "无电制冷",
+            "title": "无电制冷大标题",
+            "imageUrl": "./index_files/14843a49ffe3818603b2ac86202c9534.jpg",
+            "sortOrder": 0,
+            "status": 1,
+            "createdAt": "2026-05-14T17:23:25",
+            "updatedAt": "2026-05-26T16:50:22",
+            "itemOne": "储粮",
+            "itemTwo": "光伏",
+            "itemThree": "厂房",
+            "itemFour": "商场",
+            "itemFive": "仓库",
+            "itemSix": "农业",
+            "itemSeven": null,
+            "itemEight": null,
+            "itemNine": null,
+            "itemTen": null
+        },
+
+"name": "无电制冷"，更新到如下位置：
+更新到代码中“无电制冷小标题”、“无电制冷分类标题1”和“无电制冷分类标题2”的位置；
+
+"title": "无电制冷大标题",更新到如下位置：
+更新到代码中“无电制冷大标题”的位置；
+
+"imageUrl": "./index_files/14843a49ffe3818603b2ac86202c9534.jpg",更新到如下位置：
+更新这两个位置：
+.box imgbj_box .imgbj_box的第一条数据，获取imageUrl的值（./index_files/14843a49ffe3818603b2ac86202c9534.jpg），赋值给src
+.box imgbj_box .imgbj_img的第一条数据，获取imageUrl的值（./index_files/14843a49ffe3818603b2ac86202c9534.jpg），赋值给src
+--这两条数据相同
+
+
+剩下的这些数据：
+"itemOne": "储粮",
+"itemTwo": "光伏",
+"itemThree": "厂房",
+"itemFour": "商场",
+"itemFive": "仓库",
+"itemSix": "农业",
+"itemSeven": null,
+"itemEight": null,
+"itemNine": null,
+"itemTen": null
+
+分别更新到这个位置：
+.box .box_txt .container .hth_txt下的第一段数据：
+
+下面的：
+获取itemOne的值：
+将itemOne的内容，赋值给当前为“储粮”的变量；
+
+获取itemTwo的值：
+将itemTwo的内容，赋值给当前为“光伏”的变量；
+
+获取itemThree的值：
+将itemThree的内容，赋值给当前为“厂房”的变量；
+
+获取itemFour的值：
+将itemFour的内容，赋值给当前为“商场”的变量；
+
+获取itemFive的值：
+将itemFive的内容，赋值给当前为“仓库”的变量；
+
+获取itemSix的值：
+将itemSix的内容，赋值给当前为“农业”的变量；
+
+其他的（"itemSeven"、"itemEight"、"itemNine"、"itemTen"）没有值，不用再渲染输出
+
+这样，当id=1（无电制冷）处理结束；
+
+然后再循环赋值，输出id=2 至id=7的代码
+
+此时，中文版代码处理完毕
+
+
+
+第二.3部分，产品服务--英文版
+-------------------------------------------------------------
+desc website_product;
+
+id	bigint unsigned	--ID，取值1-7
+name	varchar(200)	--中文小引题
+title	text	--中文大标题
+image_url	longtext	--中文图片
+sort_order	int
+status	tinyint
+created_at	datetime
+updated_at	datetime
+item_one	varchar(255)	--中文项目1
+item_two	varchar(255)	--中文项目2
+item_three	varchar(255)	--中文项目3
+item_four	varchar(255)	--中文项目4
+item_five	varchar(255)	--中文项目5
+item_six	varchar(255)	--中文项目6
+item_seven	varchar(255)	--中文项目7
+item_eight	varchar(255)	--中文项目8
+item_nine	varchar(255)	--中文项目9
+item_ten	varchar(255)	--中文项目10
+
+
+增加英文字段：
+
+name_en	varchar(200)	--英文小引题
+title_en	text		--英文大标题
+image_url_en	longtext	--英文图片
+item_one_en	varchar(255)	--英文项目1
+item_two_en	varchar(255)	--英文项目2
+item_three_en	varchar(255)	--英文项目3
+item_four_en	varchar(255)	--英文项目4
+item_five_en	varchar(255)	--英文项目5
+item_six_en	varchar(255)	--英文项目6
+item_seven_en	varchar(255)	--英文项目7
+item_eight_en	varchar(255)	--英文项目8
+item_nine_en	varchar(255)	--英文项目9
+item_ten_en	varchar(255)	--英文项目10
+
+ALTER TABLE website_product
+ADD COLUMN name_en VARCHAR(200) COMMENT '英文小引题',
+ADD COLUMN title_en TEXT COMMENT '英文大标题',
+ADD COLUMN image_url_en LONGTEXT COMMENT '英文图片',
+ADD COLUMN item_one_en VARCHAR(255) COMMENT '英文项目1',
+ADD COLUMN item_two_en VARCHAR(255) COMMENT '英文项目2',
+ADD COLUMN item_three_en VARCHAR(255) COMMENT '英文项目3',
+ADD COLUMN item_four_en VARCHAR(255) COMMENT '英文项目4',
+ADD COLUMN item_five_en VARCHAR(255) COMMENT '英文项目5',
+ADD COLUMN item_six_en VARCHAR(255) COMMENT '英文项目6',
+ADD COLUMN item_seven_en VARCHAR(255) COMMENT '英文项目7',
+ADD COLUMN item_eight_en VARCHAR(255) COMMENT '英文项目8',
+ADD COLUMN item_nine_en VARCHAR(255) COMMENT '英文项目9',
+ADD COLUMN item_ten_en VARCHAR(255) COMMENT '英文项目10';
+
+
+
+----增加了这些字段，请直接给我修改在文件里
+----请为我修改WebsiteProductMapper.xml和WebsiteProduct.java
+
+
+
+
+第二.4部分，产品服务--英文版
+-------------------------------------------------------------
+现在，我们要把产品服务模块代码，从中文版修改为英文版；
+英文版规则相同，但是数据库返回的参数，要选择英文版的使用：
+
+id	bigint unsigned	--ID，取值1-7
+name	varchar(200)	--中文小引题
+title	text	--中文大标题
+image_url	longtext	--中文图片
+item_one	varchar(255)	--中文项目1
+item_two	varchar(255)	--中文项目2
+item_three	varchar(255)	--中文项目3
+item_four	varchar(255)	--中文项目4
+item_five	varchar(255)	--中文项目5
+item_six	varchar(255)	--中文项目6
+item_seven	varchar(255)	--中文项目7
+item_eight	varchar(255)	--中文项目8
+item_nine	varchar(255)	--中文项目9
+item_ten	varchar(255)	--中文项目10
+--中文版采用的字段
+
+
+id	bigint unsigned	--ID，取值1-7
+name_en	varchar(200)	--英文小引题
+title_en	text		--英文大标题
+image_url_en	longtext	--英文图片
+item_one_en	varchar(255)	--英文项目1
+item_two_en	varchar(255)	--英文项目2
+item_three_en	varchar(255)	--英文项目3
+item_four_en	varchar(255)	--英文项目4
+item_five_en	varchar(255)	--英文项目5
+item_six_en	varchar(255)	--英文项目6
+item_seven_en	varchar(255)	--英文项目7
+item_eight_en	varchar(255)	--英文项目8
+item_nine_en	varchar(255)	--英文项目9
+item_ten_en	varchar(255)	--英文项目10
+--英文版采用的字段
+
+
+
+期初数据获取不到，后面才发现是返回的字段名称跟代码写得名称不一致，到时无法获取数据；
+修改代码内的字段名称后正常。
+
+
+
+第二.5部分，产品服务--产品维护（增删改查）
+-------------------------------------------------------------
+1、安全无线
+
+website_product_item;
+
+id	bigint unsigned	--ID，取值1-7
+item_id	bigint unsigned	--item_id，取值1-5
+name	varchar(200)	--中文标题
+title	text		--中文小标题
+image_url	longtext		--中文标题图片
+product_url	longtext	--中文产品介绍图片
+
+name_en	varchar(200)	--英文标题
+title_en	text		--英文小标题
+image_url_en	longtext	--英文标题图片
+product_url_en	longtext	--英文产品介绍图片
+
+aboutus_url	longtext	--关于我们图片
+sort_order	int	--排序
+status	tinyint		--状态
+created_at	datetime	--创建时间
+updated_at	datetime	--更新时间
+
+
+CREATE TABLE `website_product_item` (
+  `id` bigint unsigned NOT NULL COMMENT 'ID，取值1-7',
+  `item_id` bigint unsigned NOT NULL COMMENT 'item_id，取值1-5',
+  `name` varchar(200) DEFAULT NULL COMMENT '中文标题',
+  `title` text DEFAULT NULL COMMENT '中文小标题',
+  `image_url` longtext DEFAULT NULL COMMENT '中文标题图片',
+  `product_url` longtext DEFAULT NULL COMMENT '中文产品介绍图片',
+  `name_en` varchar(200) DEFAULT NULL COMMENT '英文标题',
+  `title_en` text DEFAULT NULL COMMENT '英文小标题',
+  `image_url_en` longtext DEFAULT NULL COMMENT '英文标题图片',
+  `product_url_en` longtext DEFAULT NULL COMMENT '英文产品介绍图片',
+  `aboutus_url` longtext DEFAULT NULL COMMENT '关于我们图片',
+  `sort_order` int DEFAULT NULL COMMENT '排序',
+  `status` tinyint DEFAULT NULL COMMENT '状态',
+  `created_at` datetime DEFAULT NULL COMMENT '创建时间',
+  `updated_at` datetime DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='产品子项表';
+
+
+请帮我写出基于表website_product_item的
+springboot+mybatis各个文件，包括：websiteProductItemMapper.xml，websiteProductItem，websiteProductItemController，websiteProductItemMapper，websiteProductItemService，websiteProductItemServiceImpl
+
+其中Controller中：
+对外提供服务的链接是：/website/product_item；
+
+请求参数:
+| 参数   | 类型        | 必填 | 说明                     |
+| ------ | -------    | --  | --------------------- |
+| tag    | String     | 否  | 按标签筛选                 |
+| all      | Boolean | 否  | 是否查询全部              |
+| id      | bigint     | 否  | 是否查询id=x的数据    |
+缺省参数all=true
+
+请参考下述参考文件创建各个文件；
+
+参考文件：
+WebsiteProductMapper.xml，WebsiteProduct，WebsiteProductController，WebsiteProductMapper，WebsiteProductService，WebsiteProductServiceImpl
+
+
+我的表website_product_item的字段如下：
+CREATE TABLE `website_product_item` (
+  `id` bigint unsigned NOT NULL COMMENT 'ID，取值1-7',
+  `item_id` bigint unsigned NOT NULL COMMENT 'item_id，取值1-5',
+  `name` varchar(200) DEFAULT NULL COMMENT '中文标题',
+  `title` text DEFAULT NULL COMMENT '中文小标题',
+  `image_url` longtext DEFAULT NULL COMMENT '中文标题图片',
+  `product_url` longtext DEFAULT NULL COMMENT '中文产品介绍图片',
+  `name_en` varchar(200) DEFAULT NULL COMMENT '英文标题',
+  `title_en` text DEFAULT NULL COMMENT '英文小标题',
+  `image_url_en` longtext DEFAULT NULL COMMENT '英文标题图片',
+  `product_url_en` longtext DEFAULT NULL COMMENT '英文产品介绍图片',
+  `aboutus_url` longtext DEFAULT NULL COMMENT '关于我们图片',
+  `sort_order` int DEFAULT NULL COMMENT '排序',
+  `status` tinyint DEFAULT NULL COMMENT '状态',
+  `created_at` datetime DEFAULT NULL COMMENT '创建时间',
+  `updated_at` datetime DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='产品子项表';
+
+请根据表website_product_item的实际字段，修改上述文件中所涉及的字段；
+请依据实际表字段，重新生成上述6个文件
+
+/website/product_item测试已正常！
+
+
+---------------写动态代码----------------------------------------
+
+现在，我们将下述源代码（静态html），修改为从数据库查询数据再用循环赋值的方式生成的代码（html+JS）：
+请替我修改html代码、js代码，实现这个功能；
+注意，我是让你把我的前端静态代码，改写成动态获取数据的循环产生的代码，不是只是输出静态html代码
+
+-----------需求规则------------------------------------
+1、已在后台把链接/website/product_item放进了免拦截
+
+2、使用“查询产品item列表链接”，查询id=3的全部数据
+
+2.1 GET查询产品列表说明 ---/website/product_item免拦截，不带token即可
+
+2.2 实际发送消息（不需要token）
+发送：
+      GET ${SERVER_BASE_URL}/website/product_item?id=3
+  
+返回：
+{
+    "code": 0,
+    "message": "操作成功",
+    "data": [
+        {
+            "id": 3,
+            "itemId": 1,
+            "name": "无线自组网",
+            "title": "无线集群通信技术",
+            "imageUrl": "./img/chanpin-aqwx1.jpg",
+            "productUrl": "./img/chanpin1-aqwx-cpjs1.png",
+            "nameEn": null,
+            "titleEn": null,
+            "imageUrlEn": null,
+            "productUrlEn": null,
+            "aboutusUrl": null,
+            "firstUrl": "./img/1909398f30d64adda7a0b7eb978f5d131-aqwx.jpeg",
+            "firstUrlEn": null,
+            "sortOrder": null,
+            "status": null,
+            "createdAt": null,
+            "updatedAt": null
+        },
+        {
+            "id": 3,
+            "itemId": 2,
+            "name": "无线光侨",
+            "title": "新一代自由空间光通信技术",
+            "imageUrl": "./img/chanpin-aqwx2.jpg",
+            "productUrl": "./img/chanpin1-aqwx-cpjs2.png",
+            "nameEn": null,
+            "titleEn": null,
+            "imageUrlEn": null,
+            "productUrlEn": null,
+            "aboutusUrl": null,
+            "firstUrl": "./img/1909398f30d64adda7a0b7eb978f5d131-aqwx.jpeg",
+            "firstUrlEn": null,
+            "sortOrder": null,
+            "status": null,
+            "createdAt": null,
+            "updatedAt": null
+        },
+        {
+            "id": 3,
+            "itemId": 3,
+            "name": "无线光侨",
+            "title": "新一代自由空间光通信技术",
+            "imageUrl": "./img/chanpin-aqwx2.jpg",
+            "productUrl": "./img/chanpin1-aqwx-cpjs2.png",
+            "nameEn": null,
+            "titleEn": null,
+            "imageUrlEn": null,
+            "productUrlEn": null,
+            "aboutusUrl": null,
+            "firstUrl": "./img/1909398f30d64adda7a0b7eb978f5d131-aqwx.jpeg",
+            "firstUrlEn": null,
+            "sortOrder": null,
+            "status": null,
+            "createdAt": null,
+            "updatedAt": null
+        },
+        {
+            "id": 3,
+            "itemId": 4,
+            "name": "无线光侨",
+            "title": "新一代自由空间光通信技术",
+            "imageUrl": "./img/chanpin-aqwx2.jpg",
+            "productUrl": "./img/chanpin1-aqwx-cpjs2.png",
+            "nameEn": null,
+            "titleEn": null,
+            "imageUrlEn": null,
+            "productUrlEn": null,
+            "aboutusUrl": null,
+            "firstUrl": "./img/1909398f30d64adda7a0b7eb978f5d131-aqwx.jpeg",
+            "firstUrlEn": null,
+            "sortOrder": null,
+            "status": null,
+            "createdAt": null,
+            "updatedAt": null
+        }
+    ]
+}
+
+3、将上述2条数据，“依次轮询”更新到产品服务模块内
+
+3.1 id从1到2：依次更新
+
+以id=1为例：
+{
+            "id": 3,
+            "itemId": 1,
+            "name": "无线自组网",
+            "title": "无线集群通信技术",
+            "imageUrl": "./img/chanpin-aqwx1.jpg",
+            "productUrl": "./img/chanpin1-aqwx-cpjs1.png",
+            "nameEn": null,
+            "titleEn": null,
+            "imageUrlEn": null,
+            "productUrlEn": null,
+            "aboutusUrl": null,
+            "sortOrder": null,
+            "status": null,
+            "createdAt": null,
+            "updatedAt": null
+        },
+
+"itemId": 1,--说明这是第一个产品
+
+"name": "无线自组网",  --第一个产品的大标题
+更新到代码中"无线自组网"的位置；
+
+"title": "无线集群通信技术",--第一个产品的小标题
+更新到代码中"无线集群通信技术"的位置；
+
+"imageUrl": "./img/chanpin-aqwx1.jpg",--第一个产品的标题图片
+更新到代码中"./img/chanpin-aqwx1.jpg"的位置；
+
+"productUrl": "./img/chanpin1-aqwx-cpjs1.png",--第一个产品的产品介绍图片
+更新到代码中"./img/chanpin1-aqwx-cpjs1.png"的位置；
+
+
+这样，当id=3且itemId=1 处理结束；
+
+然后再循环赋值，处理id=3且itemId=2-5的数据，生成代码
+
+此时，中文版代码处理完毕
+请为我生成动态html+js代码；
+
+---------------
+如上处理后还是不行，点击 关于我们 没有跳转；
+下面是我的全部代码，请通读代码寻找问题，并继续处理
+--最后是因为跳转位置的图没显示出来导致，调整显示出来后，跳转就正常了
+
+我在数据库增加字段，用以存放首图的名称：
+表：website_product_item
+新增字段：first_url	longtext
+
+
+
+现在，我们的“AI机器人”页面的静态页面转动态页面的功能已经完成了；
+那么请按照这个转换方式，把“大宗商品”的静态页面也转换了；
+请注意：
+1、“大宗商品”的静态页面目前没有产品，转换后请让其支持产品的加载；
+2、 调用接口不同，“大宗商品”查询 id=6 的产品数据：
+            fetch(`${SERVER_BASE_URL}/website/product_item?id=6'
+
+下面是待转换的“低空经济”的静态页面，和“AI机器人”的动态页面的代码；
+请参照修改
+
+--------------------“大宗商品”（请修改）------------------------------------
+<!-- 首图 -->
+
+--------------------“AI机器人”（供参考）----------------------------------
+<!-- 首图 -->
+ 
+
+
+
+               产品服务--英文版
+-------------------------------------------------------------
+现在，我们把产品服务的“低空经济”页面中文版的代码，从中文版修改为英文版；
+英文版规则相同，但是数据库返回的参数，要选择英文版的使用：
+
+  `id`          bigint(0)  COMMENT 'ID，取值1-7',
+  `item_id` bigint(0)  COMMENT 'item_id，取值1-5',
+--中英文共用的字段
+
+  `name`    varchar(200) COMMENT '中文标题',
+  `title`       text               COMMENT '中文小标题',
+  `first_url`     longtext    COMMENT '中文-首图',
+  `image_url` longtext    COMMENT '中文标题图片',
+  `product_url` longtext COMMENT '中文产品介绍图片',
+--中文版采用的字段
+
+  `name_en`     varchar(200) COMMENT '英文标题',
+  `title_en`        text               COMMENT  '英文小标题',
+  `first_url_en`  longtext        COMMENT  '英文-首图',
+  `image_url_en` longtext     COMMENT  '英文标题图片',
+  `product_url_en` longtext  COMMENT  '英文产品介绍图片',
+--英文版采用的字段
+
+
+---------“低空经济”页面 中文版代码-----------------------------
+
+
+
+====================================================
+3、核心技术
+  3.1左图
+        更换左图（图带文字，可以单独修改文字）
+  3.2右图
+        更换右图（图带文字，可以单独修改文字）
+        更换右图文字：
+        ID，大标题，项目1，项目1的值，项目2，项目2的值，项目3，项目3的值，项目4，项目4的值，项目5，项目5的值，项目6，项目6的值，项目7，项目7的值，项目8，项目8的值，项目9，项目9的值，项目10，项目10的值
+
+        比如右图：
+              大标题：无电制冷技术参数
+              项目1：太阳光反射率高达                       ，项目1的值：97%
+              项目2：中红外辐射率可达                       ，项目2的值：96%
+              项目3：与常规涂层浅色屋顶温差可达       ，项目3的值：11℃
+              项目4：与常规涂层深色屋顶温差可达       ，项目4的值：28℃
+              项目5：与金属基层浅色屋顶温差可达       ，项目5的值：25℃
+              项目6：与金属基层深色屋顶温差可达       ，项目6的值：30℃ 
+
+  3.3下面滚动图
+             滚动图片N张，每张对应1张说明图片
+             内容：ID,标题图片，说明图片
+
+----------接口信息---------------------------------------------
+三、核心技术主信息接口 (website\tech\main)
+
+ 1.  查询技术信息
+
+- 方法: GET
+- 路径: `/website/techMain/{id}`
+
+ 2.查询所有技术信息
+
+- 方法: GET
+- 路径: `/website/techMain`
+
+
+
+
+四、技术轮播展示接口 (website\tech\scrolling)
+
+ 1. 查询轮播
+
+- 方法: GET
+- 路径: `/website/techScrolling/{id}`
+
+ 2. 查询轮播列表
+
+- 方法: GET
+- 路径: `/website/techScrolling`
+
+请求参数:
+
+| 参数  | 类型      | 必填 | 说明                     |
+| --- | ------- | -- | ---------------------- |
+| all | Boolean | 否  | 是否查询全部（默认false，只查启用状态） |
+
+
+表website_tech_main：
+新增2个字段：
+title_left	varchar(255)
+image_url_left	longtext
+
+
+现在，我在数据库表中增加了字段，用以存放left的数据：
+表website_tech_main：
+新增2个字段：
+title_left	varchar(255)
+image_url_left	longtext
+
+请依据表的新增字段，重新生成相关的6个文件（WebsiteTechMainMapper.xml，WebsiteTechMain，WebsiteTechMainController，WebsiteTechMainMapper，WebsiteTechMainService，WebsiteTechMainServiceImpl）
+注意：只输出有变化的文件即可，无变化的不用输出
+
+
+
+-----------生成动态代码，中文版-------------------------------
+现在，我们将下述源代码（静态html），修改为从数据库查询数据并赋值的动态代码（html+JS）：
+请替我修改html代码、js代码，实现这个功能；
+注意，我是让你把我的前端静态代码，改写成动态获取数据的代码，不是只是输出静态html代码
+
+-----------需求规则------------------
+1、已在后台把链接/website/techMain放进了免拦截
+
+2、使用“查询核心技术列表链接”，查询全部数据
+
+2.1 GET查询产品列表说明 ---/website/techMain免拦截，不带token即可
+
+2.2 实际发送消息（不需要token）
+发送：
+      GET ${SERVER_BASE_URL}/website/techMain
+  
+返回：
+{
+    "code": 0,
+    "message": "操作成功",
+    "data": [
+        {
+            "id": 1,
+            "title": "无电制冷技术参数",
+            "imageUrl": "./img/20260407170002_127_117.png",
+            "createdAt": "2026-05-14T17:23:40",
+            "updatedAt": "2026-05-29T11:03:05",
+            "itemOne": "太阳光反射率高达",
+            "itemOneValue": "97%",
+            "itemTwo": "中红外辐射率可达",
+            "itemTwoValue": "96%",
+            "itemThree": "与常规涂层浅色屋顶温差可达",
+            "itemThreeValue": "11℃",
+            "itemFour": "与常规涂层深色屋顶温差可达",
+            "itemFourValue": "28℃",
+            "itemFive": "与金属基层浅色屋顶温差可达",
+            "itemFiveValue": "25℃",
+            "itemSix": "与金属基层深色屋顶温差可达",
+            "itemSixValue": "30℃",
+            "itemSeven": null,
+            "itemSevenValue": null,
+            "itemEight": null,
+            "itemEightValue": null,
+            "itemNine": null,
+            "itemNineValue": null,
+            "itemTen": null,
+            "itemTenValue": null,
+            "titleLeft": "无线自组网技术参数",
+            "imageUrlLeft": "./img/20260407170002_127_116.png"
+        }
+    ]
+}
+
+3、将上述1条数据，依次读取并更新到核心技术模块内
+
+"titleLeft": "无线自组网技术参数",
+更新到代码中"无线自组网技术参数"的位置；
+
+"imageUrlLeft": "./img/20260407170002_127_116.png"
+更新到代码中"./img/20260407170002_127_116.png"的位置；
+
+"title": "无电制冷技术参数",
+更新到代码中"无电制冷技术参数"的位置；
+
+"imageUrl": "./img/20260407170002_127_117.png",
+更新到代码中"./img/20260407170002_127_117.png"的位置；
+
+"itemOne": "太阳光反射率高达",
+更新到代码中"太阳光反射率高达"的位置；
+
+"itemOneValue": "97%",
+更新到代码中"97%"的位置；
+
+"itemTwo": "中红外辐射率可达",
+更新到代码中"中红外辐射率可达"的位置；
+
+"itemTwoValue": "96%",
+更新到代码中"96%"的位置；
+
+"itemThree": "与常规涂层浅色屋顶温差可达",
+更新到代码中"与常规涂层浅色屋顶温差可达"的位置；
+
+"itemThreeValue": "11℃",
+更新到代码中"11℃"的位置；
+
+"itemFour": "与常规涂层深色屋顶温差可达",
+更新到代码中"与常规涂层深色屋顶温差可达"的位置；
+
+"itemFourValue": "28℃",
+更新到代码中"28℃"的位置；
+
+"itemFive": "与金属基层浅色屋顶温差可达",
+更新到代码中"与金属基层浅色屋顶温差可达"的位置；
+
+"itemFiveValue": "25℃",
+更新到代码中"25℃"的位置；
+
+"itemSix": "与金属基层深色屋顶温差可达",
+更新到代码中"与金属基层深色屋顶温差可达"的位置；
+
+"itemSixValue": "30℃",
+更新到代码中"30℃"的位置；
+
+此时，中文版代码处理完毕；
+请为我生成动态html+js代码；
+
+------------核心技术模块代码-------------------------------
+
+
+现在，我在数据库表中增加了字段，用以存放href的数据：
+表website_tech_scrolling：
+新增2个字段：
+href_to	longtext
+href_to_image_url	longtext
+
+请依据表的新增字段，重新生成相关的6个文件（WebsiteTechScrollingMapper.xml，WebsiteTechScrolling，WebsiteTechScrollingController，WebsiteTechScrollingMapper，WebsiteTechScrollingService，WebsiteTechScrollingServiceImpl）
+注意：只输出有变化的文件即可，无变化的不用输出
+附件是源代码文件，请直接在源代码上修改，使我复制即可使用
+--ok
+
+现在，我又在数据库表中增加了字段，用以存放href的数据：
+表website_tech_scrolling：
+新增2个字段：
+href_to_title	varchar(255)
+href_to_date	date
+请依据表的新增字段，重新生成相关的6个文件（WebsiteTechScrollingMapper.xml，WebsiteTechScrolling，WebsiteTechScrollingController，WebsiteTechScrollingMapper，WebsiteTechScrollingService，WebsiteTechScrollingServiceImpl）
+注意：只输出有变化的文件即可，无变化的不用输出
+附件是源代码文件，请直接在源代码上修改，使我复制即可使用
+
+现在，我又在数据库表中增加了字段，用以存放href的数据：
+表website_tech_scrolling：
+新增2个字段：
+href_to_first_image_url	longtext
+请依据表的新增字段，重新生成相关的6个文件（WebsiteTechScrollingMapper.xml，WebsiteTechScrolling，WebsiteTechScrollingController，WebsiteTechScrollingMapper，WebsiteTechScrollingService，WebsiteTechScrollingServiceImpl）
+注意：只输出有变化的文件即可，无变化的不用输出
+附件是源代码文件，请直接在源代码上修改，使我复制即可使用
+
+
+
+----------动态化--核心技术------------------
+
+下面，我们再将这段代码中的轮播区域的代码，由静态代码改造成动态代码
+代码位置：<!-- 轮播区域（纯静态，保留原有逻辑不变） -->
+
+请修改静态代码，输出从数据库查询数据并循环赋值的动态代码（html+JS）：
+请替我修改html代码、js代码，实现这个功能；
+注意，我是让你把我的前端静态代码，改写成动态获取数据并循环赋值的动态代码，不是只是输出静态html代码
+
+
+-----------需求规则------------------
+1、已在后台把链接/website/techScrolling放进了免拦截
+
+2、使用“查询轮番列表链接”，查询全部数据
+
+2.1 GET查询说明 ---/website/techScrolling免拦截，不带token即可
+
+2.2 实际发送消息（不需要token）
+发送：
+      GET ${SERVER_BASE_URL}/website/techScrolling
+  
+返回：
+{
+    "code": 0,
+    "message": "操作成功",
+    "data": [
+        {
+            "id": 3,
+            "title": "无电制冷防水膜",
+            "imageUrl": "./index_files/1e3accde7e88c2d3d1658aeef6a41a23.jpg",
+            "sortOrder": 0,
+            "status": 1,
+            "createdAt": "2026-05-29T13:44:46",
+            "updatedAt": "2026-05-29T13:45:20",
+            "hrefTo": "./cpxn-fsm.html",
+            "hrefToImageUrl": null,
+            "hrefToTitle": null,
+            "hrefToDate": null
+        },
+        {
+            "id": 2,
+            "title": "无电制冷光伏伴侣",
+            "imageUrl": "./index_files/ded3a1a2c69e2395e6e35a7d4ebd6982.jpg",
+            "sortOrder": 0,
+            "status": 1,
+            "createdAt": "2026-05-29T13:43:32",
+            "updatedAt": "2026-05-29T13:44:19",
+            "hrefTo": "./cpxn-gfbl.html",
+            "hrefToImageUrl": null,
+            "hrefToTitle": null,
+            "hrefToDate": null
+        },
+        {
+            "id": 1,
+            "title": "无电制冷涂料",
+            "imageUrl": "./index_files/f0afeac099f67cd141ab472658a71317.jpg",
+            "sortOrder": 0,
+            "status": 1,
+            "createdAt": "2026-05-14T17:23:48",
+            "updatedAt": "2026-05-29T13:31:29",
+            "hrefTo": "./cpxn-wdzl.html",
+            "hrefToImageUrl": null,
+            "hrefToTitle": null,
+            "hrefToDate": null
+        }
+    ]
+}
+
+3、将上述3条数据，循环读取并赋值到核心技术图片轮播区
+
+程序先处理和渲染id=1的代码，并依次循环处理
+比如id=1的赋值规则是：
+{
+            "id": 1,
+            "title": "无电制冷涂料",
+            "imageUrl": "./index_files/f0afeac099f67cd141ab472658a71317.jpg",
+            "sortOrder": 0,
+            "status": 1,
+            "createdAt": "2026-05-14T17:23:48",
+            "updatedAt": "2026-05-29T13:31:29",
+            "hrefTo": "./cpxn-wdzl.html",
+            "hrefToImageUrl": null,
+            "hrefToTitle": null,
+            "hrefToDate": null
+        }
+
+
+"id": 1,
+表示第1个渲染代码
+
+"title": "无电制冷涂料",
+更新到代码中"无电制冷涂料"的位置；
+
+"imageUrl": "./index_files/f0afeac099f67cd141ab472658a71317.jpg",
+更新到代码中"./index_files/f0afeac099f67cd141ab472658a71317.jpg"的位置；
+
+"hrefTo": "./cpxn-wdzl.html",
+更新到代码中"./cpxn-wdzl.html"的位置；
+
+
+此时，id=1处理完毕，再循环处理其他条数据；
+请为我生成动态html+js代码；
+
+
+------------核心技术模块代码（请修改“轮播区”的代码）-------------------------------
+
+--ok
+
+
+----------动态化---核心技术-各个页面-----------------
+
+下面，我们再将子页的这段静态代码，由静态代码改造成动态代码
+
+请修改静态代码，输出从数据库查询数据并赋值到页面的动态代码（html+JS）：
+请替我修改html代码、js代码，实现这个功能；
+注意，我是让你把我的前端静态代码，改写成动态获取数据并赋值的动态代码，不是只是输出静态html代码
+
+
+-----------需求规则------------------
+1、已在后台把链接/website/techScrolling放进了免拦截
+
+2、使用“查询轮番列表链接”，查询全部数据
+
+2.1 GET查询说明 ---/website/techScrolling免拦截，不带token即可
+
+2.2 实际发送消息（不需要token）
+发送：
+      GET ${SERVER_BASE_URL}/website/techScrolling
+  
+返回：
+{
+    "code": 0,
+    "message": "操作成功",
+    "data": [
+        {
+            "id": 3,
+            "title": "无电制冷防水膜",
+            "imageUrl": "./index_files/1e3accde7e88c2d3d1658aeef6a41a23.jpg",
+            "sortOrder": 0,
+            "status": 1,
+            "createdAt": "2026-05-29T13:44:46",
+            "updatedAt": "2026-05-29T14:47:48",
+            "hrefTo": "./cpxn-fsm.html",
+            "hrefToImageUrl": "./img/cpxn-fsm1.jpg",
+            "hrefToTitle": "无电制冷防水膜产品说明",
+            "hrefToDate": "2025-09-26",
+            "hrefToFirstImageUrl": "./img/1909398f30d64adda7a0b7eb978f5d13.jpeg"
+        },
+        {
+            "id": 2,
+            "title": "无电制冷光伏伴侣",
+            "imageUrl": "./index_files/ded3a1a2c69e2395e6e35a7d4ebd6982.jpg",
+            "sortOrder": 0,
+            "status": 1,
+            "createdAt": "2026-05-29T13:43:32",
+            "updatedAt": "2026-05-29T14:46:53",
+            "hrefTo": "./cpxn-gfbl.html",
+            "hrefToImageUrl": "./img/cpxn-gfbl1.jpg",
+            "hrefToTitle": "无电制冷光伏伴侣产品说明",
+            "hrefToDate": "2025-09-26",
+            "hrefToFirstImageUrl": "./img/1909398f30d64adda7a0b7eb978f5d13.jpeg"
+        },
+        {
+            "id": 1,
+            "title": "无电制冷涂料",
+            "imageUrl": "./index_files/f0afeac099f67cd141ab472658a71317.jpg",
+            "sortOrder": 0,
+            "status": 1,
+            "createdAt": "2026-05-14T17:23:48",
+            "updatedAt": "2026-05-29T14:44:21",
+            "hrefTo": "./cpxn-wdzl.html",
+            "hrefToImageUrl": "./img/cpxn-wdzl.jpg",
+            "hrefToTitle": "无电制冷涂料技术指标",
+            "hrefToDate": "2025-09-26",
+            "hrefToFirstImageUrl": "./img/1909398f30d64adda7a0b7eb978f5d13.jpeg"
+        }
+    ]
+}
+
+3、将上述数据中，查询"hrefTo"= "./cpxn-wdzl.html"的行，进行如下赋值处理
+
+"hrefTo"= "./cpxn-wdzl.html"的行，数据如下：
+
+  {
+            "id": 1,
+            "title": "无电制冷涂料",
+            "imageUrl": "./index_files/f0afeac099f67cd141ab472658a71317.jpg",
+            "sortOrder": 0,
+            "status": 1,
+            "createdAt": "2026-05-14T17:23:48",
+            "updatedAt": "2026-05-29T14:44:21",
+            "hrefTo": "./cpxn-wdzl.html",
+            "hrefToImageUrl": "./img/cpxn-wdzl.jpg",
+            "hrefToTitle": "无电制冷涂料技术指标",
+            "hrefToDate": "2025-09-26",
+            "hrefToFirstImageUrl": "./img/1909398f30d64adda7a0b7eb978f5d13.jpeg"
+        }
+
+
+"hrefTo"= "./cpxn-wdzl.html"，表示这是页面cpxn-wdzl.html的数据，对应修改cpxn-wdzl.html页面的代码；
+
+赋值处理：
+
+"hrefToImageUrl": "./img/cpxn-wdzl.jpg",
+更新到代码中"./img/cpxn-wdzl.jpg"的位置；
+
+"hrefToTitle": "无电制冷涂料技术指标",
+更新到代码中"无电制冷涂料技术指标"的位置；
+
+"hrefToDate": "2025-09-26",
+更新到代码中"2025-09-26"的位置；
+
+"hrefToFirstImageUrl": "./img/1909398f30d64adda7a0b7eb978f5d13.jpeg"
+更新到代码中"./img/1909398f30d64adda7a0b7eb978f5d13.jpeg"的位置；
+
+
+此时，本页面处理完毕；
+请为我生成动态html+js代码；
+
+
+------------页面./cpxn-wdzl.html的对应代码（请修改成动态页面）-------------------------------
+
+--ok
+
+
+
+-----------------增加英文字段------------------------------
+
+desc website_tech_main
+id	bigint unsigned
+title	varchar(255)
+title_left	varchar(255)
+image_url	longtext
+image_url_left	longtext
+created_at	datetime
+updated_at	datetime
+item_one	varchar(255)
+item_one_value	varchar(255)
+item_two	varchar(255)
+item_two_value	varchar(255)
+item_three	varchar(255)
+item_three_value	varchar(255)
+item_four	varchar(255)
+item_four_value	varchar(255)
+item_five	varchar(255)
+item_five_value	varchar(255)
+item_six	varchar(255)
+item_six_value	varchar(255)
+item_seven	varchar(255)
+item_seven_value	varchar(255)
+item_eight	varchar(255)
+item_eight_value	varchar(255)
+item_nine	varchar(255)
+item_nine_value	varchar(255)
+item_ten	varchar(255)
+item_ten_value	varchar(255)
+
+
+增加字段：website_tech_main
+title_en	varchar(255)
+title_left_en	varchar(255)
+image_url_en	longtext
+image_url_left_en	longtext
+item_one_en	varchar(255)
+item_one_value_en	varchar(255)
+item_two_en	varchar(255)
+item_two_value_en	varchar(255)
+item_three_en	varchar(255)
+item_three_value_en	varchar(255)
+item_four_en	varchar(255)
+item_four_value_en	varchar(255)
+item_five_en	varchar(255)
+item_five_value_en	varchar(255)
+item_six_en	varchar(255)
+item_six_value_en	varchar(255)
+item_seven_en	varchar(255)
+item_seven_value_en	varchar(255)
+item_eight_en	varchar(255)
+item_eight_value_en	varchar(255)
+item_nine_en	varchar(255)
+item_nine_value_en	varchar(255)
+item_ten_en	varchar(255)
+item_ten_value_en	varchar(255)
+
+我要给表website_tech_main，增加如下字段，sql语句怎么写？
+ALTER TABLE website_tech_main
+ADD COLUMN title_en VARCHAR(255) COMMENT '英文标题',
+ADD COLUMN title_left_en VARCHAR(255) COMMENT '英文左侧标题',
+ADD COLUMN image_url_en LONGTEXT COMMENT '英文主图',
+ADD COLUMN image_url_left_en LONGTEXT COMMENT '英文左侧图',
+ADD COLUMN item_one_en VARCHAR(255) COMMENT '英文项目1',
+ADD COLUMN item_one_value_en VARCHAR(255) COMMENT '英文项目1值',
+ADD COLUMN item_two_en VARCHAR(255) COMMENT '英文项目2',
+ADD COLUMN item_two_value_en VARCHAR(255) COMMENT '英文项目2值',
+ADD COLUMN item_three_en VARCHAR(255) COMMENT '英文项目3',
+ADD COLUMN item_three_value_en VARCHAR(255) COMMENT '英文项目3值',
+ADD COLUMN item_four_en VARCHAR(255) COMMENT '英文项目4',
+ADD COLUMN item_four_value_en VARCHAR(255) COMMENT '英文项目4值',
+ADD COLUMN item_five_en VARCHAR(255) COMMENT '英文项目5',
+ADD COLUMN item_five_value_en VARCHAR(255) COMMENT '英文项目5值',
+ADD COLUMN item_six_en VARCHAR(255) COMMENT '英文项目6',
+ADD COLUMN item_six_value_en VARCHAR(255) COMMENT '英文项目6值',
+ADD COLUMN item_seven_en VARCHAR(255) COMMENT '英文项目7',
+ADD COLUMN item_seven_value_en VARCHAR(255) COMMENT '英文项目7值',
+ADD COLUMN item_eight_en VARCHAR(255) COMMENT '英文项目8',
+ADD COLUMN item_eight_value_en VARCHAR(255) COMMENT '英文项目8值',
+ADD COLUMN item_nine_en VARCHAR(255) COMMENT '英文项目9',
+ADD COLUMN item_nine_value_en VARCHAR(255) COMMENT '英文项目9值',
+ADD COLUMN item_ten_en VARCHAR(255) COMMENT '英文项目10',
+ADD COLUMN item_ten_value_en VARCHAR(255) COMMENT '英文项目10值';
+
+
+
+表website_tech_scrolling：增加如下字段：
+  `title_en` 	varchar(200)  	COMMENT '轮播标题',
+  `image_url_en` 	longtext  	COMMENT '轮播图片URL',
+  `href_to_en` 	longtext  	COMMENT '跳转页面',
+  `href_to_title_en` 	varchar(255)  	COMMENT '跳转页面-标题',
+  `href_to_date_en` 	date  		COMMENT '跳转页面-日期',
+  `href_to_first_image_url_en` 	longtext   COMMENT '跳转页面-首图',
+  `href_to_image_url_en` 	longtext   COMMENT '跳转页面-图片',
+  
+ALTER TABLE website_tech_scrolling
+ADD COLUMN `title_en` varchar(200) COMMENT '轮播标题',
+ADD COLUMN `image_url_en` longtext COMMENT '轮播图片URL',
+ADD COLUMN `href_to_en` longtext COMMENT '跳转页面',
+ADD COLUMN `href_to_title_en` varchar(255) COMMENT '跳转页面-标题',
+ADD COLUMN `href_to_date_en` date COMMENT '跳转页面-日期',
+ADD COLUMN `href_to_first_image_url_en` longtext COMMENT '跳转页面-首图',
+ADD COLUMN `href_to_image_url_en` longtext COMMENT '跳转页面-图片';
+
+
+
+现在，我又在数据库表中增加了字段，用以存放英文版的数据：
+表website_tech_main，新增字段：
+title_en VARCHAR(255)
+title_left_en VARCHAR(255) 
+image_url_en LONGTEXT 
+image_url_left_en LONGTEXT 
+item_one_en VARCHAR(255) 
+item_one_value_en VARCHAR(255) 
+item_two_en VARCHAR(255) 
+item_two_value_en VARCHAR(255) 
+item_three_en VARCHAR(255) 
+item_three_value_en VARCHAR(255) 
+ item_four_en VARCHAR(255) 
+item_four_value_en VARCHAR(255)
+item_five_en VARCHAR(255) 
+item_five_value_en VARCHAR(255) 
+item_six_en VARCHAR(255) 
+item_six_value_en VARCHAR(255) 
+item_seven_en VARCHAR(255) 
+item_seven_value_en VARCHAR(255) 
+item_eight_en VARCHAR(255) 
+item_eight_value_en VARCHAR(255)
+item_nine_en VARCHAR(255) 
+item_nine_value_en VARCHAR(255)
+item_ten_en VARCHAR(255)
+item_ten_value_en VARCHAR(255) 
+
+请依据表的新增字段，重新生成相关的6个文件（WebsiteTechMainMapper.xml，WebsiteTechMain，WebsiteTechMainController，WebsiteTechMainMapper，WebsiteTechMainService，WebsiteTechMainServiceImpl）
+注意：只输出有变化的文件即可，无变化的不用输出
+附件是源代码文件，请直接在源代码上修改，使我复制即可使用
+
+
+
+
+现在，我又在数据库表中增加了字段，用以存放英文版的数据：
+表website_tech_scrolling，新增字段：
+
+`title_en` 		varchar(200) 
+`image_url_en` 	longtext 
+`href_to_en`	 longtext 
+`href_to_title_en` 	varchar(255) 
+`href_to_date_en` 	date 
+`href_to_first_image_url_en` 	longtext 
+`href_to_image_url_en` 	longtext
+
+请依据表的新增字段，重新生成相关的6个文件（WebsiteTechScrollingMapper.xml，WebsiteTechScrolling，WebsiteTechScrollingController，WebsiteTechScrollingMapper，WebsiteTechScrollingService，WebsiteTechScrollingServiceImpl）
+注意：只输出有变化的文件即可，无变化的不用输出
+附件是源代码文件，请直接在源代码上修改，使我复制即可使用
+
+
+
+
+
+-----------------核心技术--英文版--------------------------
+现在，我们把核心技术模块中文版的代码，从中文版修改为英文版；
+英文版规则相同，但是数据库返回的参数，要选择英文版的使用：
+
+表website_tech_main：
+
+id	bigint unsigned
+--中英文共用字段
+
+title	varchar(255)
+title_left	varchar(255)
+image_url	longtext
+image_url_left	longtext
+created_at	datetime
+updated_at	datetime
+item_one	varchar(255)
+item_one_value	varchar(255)
+item_two	varchar(255)
+item_two_value	varchar(255)
+item_three	varchar(255)
+item_three_value	varchar(255)
+item_four	varchar(255)
+item_four_value	varchar(255)
+item_five	varchar(255)
+item_five_value	varchar(255)
+item_six	varchar(255)
+item_six_value	varchar(255)
+item_seven	varchar(255)
+item_seven_value	varchar(255)
+item_eight	varchar(255)
+item_eight_value	varchar(255)
+item_nine	varchar(255)
+item_nine_value	varchar(255)
+item_ten	varchar(255)
+item_ten_value	varchar(255)
+--中文版采用的字段
+
+title_en	varchar(255)
+title_left_en	varchar(255)
+image_url_en	longtext
+image_url_left_en	longtext
+item_one_en	varchar(255)
+item_one_value_en	varchar(255)
+item_two_en	varchar(255)
+item_two_value_en	varchar(255)
+item_three_en	varchar(255)
+item_three_value_en	varchar(255)
+item_four_en	varchar(255)
+item_four_value_en	varchar(255)
+item_five_en	varchar(255)
+item_five_value_en	varchar(255)
+item_six_en	varchar(255)
+item_six_value_en	varchar(255)
+item_seven_en	varchar(255)
+item_seven_value_en	varchar(255)
+item_eight_en	varchar(255)
+item_eight_value_en	varchar(255)
+item_nine_en	varchar(255)
+item_nine_value_en	varchar(255)
+item_ten_en	varchar(255)
+item_ten_value_en	varchar(255)
+--英文版采用的字段
+
+
+表website_tech_scrolling：
+
+id	bigint unsigned
+--中英文共用的字段
+
+title	varchar(200)
+image_url	longtext
+href_to	longtext
+href_to_title	varchar(255)
+href_to_date	date
+href_to_first_image_url	longtext
+href_to_image_url	longtext
+--中文版采用的字段
+
+title_en	varchar(200)
+image_url_en	longtext
+href_to_en	longtext
+href_to_title_en	varchar(255)
+href_to_date_en	date
+href_to_first_image_url_en	longtext
+href_to_image_url_en	longtext
+--英文版采用的字段
+
+
+---------------核心技术模块 中文版代码----------------
+--ok
+
+
+
+
+-----------------核心技术--子页，英文版--------------------------
+现在，我们把核心技术模块子页的中文版的代码，从中文版修改为英文版；
+英文版规则相同，但是数据库返回的参数，要选择英文版的使用：
+
+表website_tech_scrolling：
+
+id	bigint unsigned
+--中英文共用的字段
+
+title	varchar(200)
+image_url	longtext
+href_to	longtext
+href_to_title	varchar(255)
+href_to_date	date
+href_to_first_image_url	longtext
+href_to_image_url	longtext
+--中文版采用的字段
+
+title_en	varchar(200)
+image_url_en	longtext
+href_to_en	longtext
+href_to_title_en	varchar(255)
+href_to_date_en	date
+href_to_first_image_url_en	longtext
+href_to_image_url_en	longtext
+--英文版采用的字段
+
+
+---------------核心技术模块 -子页- 中文版代码----------------
+
+
+
+
+==============================================
+
+4、应用场景
+            滚动图片N张，每张对应1张说明图片
+            内容：ID,标题图片，内容大类，内容标题，内容文字行1，内容文字行2，内容文字行3，内容文字行4，内容文字行5，说明图片（用户点击探索更多看到的说明文字）
+            比如：
+                    标题图片
+                    内容大类：无电制冷涂层
+                    内容标题：粮仓应用场景
+                    内容文字行1：喷涂无电制冷涂料后；
+                    内容文字行2：粮仓外墙表面温度降低约6-10℃；
+                    内容文字行3：粮食内温度降低3-5℃；
+                    内容文字行4：制冷系统节电率高达9-10%。
+
+desc website_scene：
+id	bigint unsigned
+title	varchar(200)
+type	varchar(500)
+image_url	longtext
+status	tinyint
+created_at	datetime
+updated_at	datetime
+text_one	longtext
+text_two	longtext
+text_three	longtext
+text_four	longtext
+text_five	longtext
+image	longtext
+
+
+website_scene
+
+  `href_to` 	longtext COMMENT '跳转页面',
+  `href_to_title` 	varchar(255) COMMENT '跳转页面-标题',
+  `href_to_date` 	date COMMENT '跳转页面-日期',
+  `href_to_first_image_url` 	longtext COMMENT '跳转页面-首图',
+  `href_to_image_url` 	longtext COMMENT '跳转页面-图片',
+
+ALTER TABLE website_scene
+ADD COLUMN `href_to` longtext COMMENT '跳转页面',
+ADD COLUMN `href_to_title` varchar(255) COMMENT '跳转页面-标题',
+ADD COLUMN `href_to_date` date COMMENT '跳转页面-日期',
+ADD COLUMN `href_to_first_image_url` longtext COMMENT '跳转页面-首图',
+ADD COLUMN `href_to_image_url` longtext COMMENT '跳转页面-图片';
+
+请依据表website_scene的新增字段，重新生成相关的6个文件（WebsiteSceneMapper.xml，WebsiteScene，WebsiteSceneController，WebsiteSceneMapper，WebsiteSceneService，WebsiteSceneServiceImpl）
+注意：只输出有变化的文件即可，无变化的不用输出
+附件是源代码文件，请直接在源代码上修改，使我复制即可使用
+
+
+
+五、应用场景接口 (website\scene)
+
+ 1. 查询场景
+
+- 方法: GET
+- 路径: `/website/scene/{id}`
+
+ 2. 查询场景列表
+
+- 方法: GET
+- 路径: `/website/scene`
+
+请求参数:
+
+| 参数  | 类型      | 必填 | 说明                     |
+| --- | ------- | -- | ---------------------- |
+| all | Boolean | 否  | 是否查询全部（默认false，只查启用状态） |
+
+
+
+----------动态化--应用案例------------------
+
+下面，我们再将这段静态代码，由静态代码改造成动态代码
+请修改静态代码，输出从数据库查询数据并循环赋值的动态代码（html+JS）：
+请替我修改html代码、js代码，实现这个功能；
+注意，我是让你把我的前端静态代码，改写成动态获取数据并循环赋值的动态代码，不是只是输出静态html代码
+
+
+-----------需求规则------------------
+1、已在后台把链接/website/scene放进了免拦截
+
+2、使用“查询应用场景列表链接”，查询全部数据
+
+2.1 GET查询说明 ---/website/scene免拦截，不带token即可
+
+2.2 实际发送消息（不需要token）
+发送：
+      GET ${SERVER_BASE_URL}/website/scene
+
+返回：
+{
+    "code": 0,
+    "message": "操作成功",
+    "data": [
+        {
+            "id": 1,
+            "title": "无电制冷涂层材料",
+            "type": "应用场景",
+            "imageUrl": "./img/yyal20260417-125233.jpg",
+            "status": 1,
+            "createdAt": "2026-05-14T17:24:00",
+            "updatedAt": "2026-06-01T10:39:29",
+            "textOne": "城市建筑、体育场馆、储粮储能",
+            "textTwo": "数据中心、光伏发电、农业养殖",
+            "textThree": "通信基站、冷链物流、石油化工",
+            "textFour": null,
+            "textFive": null,
+            "image": null,
+            "hrefTo": null,
+            "hrefToTitle": null,
+            "hrefToDate": null,
+            "hrefToFirstImageUrl": null,
+            "hrefToImageUrl": null
+        },
+        {
+            "id": 2,
+            "title": "无电制冷涂层",
+            "type": "粮仓应用场景",
+            "imageUrl": "./img/yyal20260417-1252331.jpg",
+            "status": 1,
+            "createdAt": "2026-05-14T17:24:00",
+            "updatedAt": "2026-06-01T10:42:53",
+            "textOne": "喷涂无电制冷涂料后；",
+            "textTwo": "粮仓外墙表面温度降低约6-10℃；",
+            "textThree": "粮食内温度降低3-5℃；",
+            "textFour": "制冷系统节电率高达9-10%。",
+            "textFive": null,
+            "image": null,
+            "hrefTo": "./yyal-lc.html",
+            "hrefToTitle": null,
+            "hrefToDate": null,
+            "hrefToFirstImageUrl": null,
+            "hrefToImageUrl": null
+        },
+        {
+            "id": 3,
+            "title": "无电制冷涂层",
+            "type": "光伏电站应用场景",
+            "imageUrl": "./img/yyal20260417-1252332.jpg",
+            "status": 1,
+            "createdAt": "2026-06-01T11:01:40",
+            "updatedAt": "2026-06-01T11:03:28",
+            "textOne": "光伏发电增发率：8-13%；",
+            "textTwo": "年减少碳排放约36吨；",
+            "textThree": "投资回收期：3年；",
+            "textFour": "传统的光伏降温方案，只是‘不加热’；",
+            "textFive": null,
+            "image": null,
+            "hrefTo": "./yyal-gfdz.html",
+            "hrefToTitle": null,
+            "hrefToDate": null,
+            "hrefToFirstImageUrl": null,
+            "hrefToImageUrl": null
+        },
+        {
+            "id": 4,
+            "title": "无电制冷涂层",
+            "type": "储能柜/变电站应用场景",
+            "imageUrl": "./img/yyal20260417-1252333.jpg",
+            "status": 1,
+            "createdAt": "2026-06-01T11:07:28",
+            "updatedAt": "2026-06-01T11:07:28",
+            "textOne": "电池工作温度降低，热失控风险下降；",
+            "textTwo": "空调负荷减少，节能效果显著；",
+            "textThree": "降温更均匀且稳定,电池循环寿命延长。",
+            "textFour": null,
+            "textFive": null,
+            "image": null,
+            "hrefTo": "./yyal-cndz.html",
+            "hrefToTitle": null,
+            "hrefToDate": null,
+            "hrefToFirstImageUrl": null,
+            "hrefToImageUrl": null
+        },
+        {
+            "id": 5,
+            "title": "无电制冷涂层",
+            "type": "农培基地应用场景",
+            "imageUrl": "./img/yyal20260417-1252334.jpg",
+            "status": 1,
+            "createdAt": "2026-06-01T11:08:51",
+            "updatedAt": "2026-06-01T11:09:28",
+            "textOne": "30%综合节电率，直接降低空调/通风系统能耗；",
+            "textTwo": "适用于恒温恒湿的真菌培养环境，长期可节省大量电力成本；",
+            "textThree": "减少设备负荷：延长制冷设备寿命，降低维护成本。",
+            "textFour": null,
+            "textFive": null,
+            "image": null,
+            "hrefTo": "./yyal-nyjd.html",
+            "hrefToTitle": null,
+            "hrefToDate": null,
+            "hrefToFirstImageUrl": null,
+            "hrefToImageUrl": null
+        },
+        {
+            "id": 6,
+            "title": "无线自组网",
+            "type": "应用场景",
+            "imageUrl": "./img/yyal-wxzzw.jpg",
+            "status": 1,
+            "createdAt": "2026-06-01T11:11:13",
+            "updatedAt": "2026-06-01T11:11:13",
+            "textOne": "应急专用场景、城市消防救援、地质灾害救援；",
+            "textTwo": "野外围捕、安保安防、海上通信 ；",
+            "textThree": "赛事保障、能源化工、室外施工作业。",
+            "textFour": null,
+            "textFive": null,
+            "image": null,
+            "hrefTo": null,
+            "hrefToTitle": null,
+            "hrefToDate": null,
+            "hrefToFirstImageUrl": null,
+            "hrefToImageUrl": null
+        },
+        {
+            "id": 7,
+            "title": "无线自组网",
+            "type": "应急专用场景",
+            "imageUrl": "./img/yyal-wxzzw-yjzy.jpg",
+            "status": 1,
+            "createdAt": "2026-06-01T11:12:19",
+            "updatedAt": "2026-06-01T11:12:34",
+            "textOne": "无中心组网，灵活快速部署；",
+            "textTwo": "通信覆盖更全；",
+            "textThree": "操作更便捷。",
+            "textFour": null,
+            "textFive": null,
+            "image": null,
+            "hrefTo": "./yyal-wxzzw1.html",
+            "hrefToTitle": null,
+            "hrefToDate": null,
+            "hrefToFirstImageUrl": null,
+            "hrefToImageUrl": null
+        },
+        {
+            "id": 8,
+            "title": "无线自组网",
+            "type": "消防救援场景",
+            "imageUrl": "./img/yyal-wxzzw-xfjy.jpg",
+            "status": 1,
+            "createdAt": "2026-06-01T11:13:37",
+            "updatedAt": "2026-06-01T11:14:09",
+            "textOne": "在具有潜在爆炸性气体环境中进行抢险救援作业时；",
+            "textTwo": "保障消防员的通信安全。",
+            "textThree": null,
+            "textFour": null,
+            "textFive": null,
+            "image": null,
+            "hrefTo": "./yyal-wxzzw2.html",
+            "hrefToTitle": null,
+            "hrefToDate": null,
+            "hrefToFirstImageUrl": null,
+            "hrefToImageUrl": null
+        }
+    ]
+}
+
+3、将上述8条数据，循环读取并赋值到图片轮播区
+
+程序先处理和渲染id=1的代码，并依次循环处理
+比如id=1的赋值规则是：
+{
+            "id": 1,
+            "title": "无电制冷涂层",
+            "type": "应用场景",
+            "imageUrl": "./img/yyal20260417-125233.jpg",
+            "status": 1,
+            "createdAt": "2026-05-14T17:24:00",
+            "updatedAt": "2026-06-01T10:39:29",
+            "textOne": "城市建筑、体育场馆、储粮储能",
+            "textTwo": "数据中心、光伏发电、农业养殖",
+            "textThree": "通信基站、冷链物流、石油化工",
+            "textFour": null,
+            "textFive": null,
+            "image": null,
+            "hrefTo": null,
+            "hrefToTitle": null,
+            "hrefToDate": null,
+            "hrefToFirstImageUrl": null,
+            "hrefToImageUrl": null
+        },
+
+
+"id": 1,
+表示第1个渲染代码
+
+
+"title": "无电制冷涂层",
+更新到代码中"无电制冷涂料"的位置；
+
+"type": "应用场景",
+更新到代码中"应用场景"的位置；
+
+"imageUrl": "./img/yyal20260417-125233.jpg",
+更新到代码中"./img/yyal20260417-125233.jpg"的位置；
+
+"textOne": "城市建筑、体育场馆、储粮储能",
+更新到代码中"城市建筑、体育场馆、储粮储能"的位置；
+
+"textTwo": "数据中心、光伏发电、农业养殖",
+更新到代码中"数据中心、光伏发电、农业养殖"的位置；
+
+"textThree": "通信基站、冷链物流、石油化工",
+更新到代码中"通信基站、冷链物流、石油化工"的位置；
+
+"hrefTo": null,
+注意：
+当"hrefTo"有值时，比如"hrefTo"= "./yyal-wxzzw2.html"（id=2时的数据），更新到代码中"./yyal-wxzzw2.html"的位置；渲染和输出“探索更多”模块的内容（<a></a>标签内的内容）；
+当"hrefTo"=null时，不渲染和输出“探索更多”模块的内容（<a></a>标签内的内容）；
+
+目前的8条数据中，2条（id=1和6）不需要渲染和输出“探索更多”模块的内容；其余6条需要输出。
+
+此时，id=1处理完毕，请再循环处理其他条数据；
+请为我生成动态html+js代码；
+
+
+------------应用案例模块代码---------------------
+
+--ok
+
+
+
+----------动态化---应用场景-各个页面-----------------
+
+下面，我们再将应用场景各个子页的静态代码，由静态代码改造成动态代码
+
+请修改静态代码，输出从数据库查询数据并赋值到页面的动态代码（html+JS）：
+请替我修改html代码、js代码，实现这个功能；
+注意，我是让你把我的前端静态代码，改写成动态获取数据并赋值的动态代码，不是只是输出静态html代码
+
+
+-----------需求规则------------------
+1、已在后台把链接/website/scene放进了免拦截
+
+2、使用“查询应用场景列表链接”，查询全部数据
+
+2.1 GET查询说明 ---/website/scene免拦截，不带token即可
+
+2.2 实际发送消息（不需要token）
+发送：
+      GET ${SERVER_BASE_URL}/website/scene
+  
+返回：
+{
+    "code": 0,
+    "message": "操作成功",
+    "data": [
+        {
+            "id": 1,
+            "title": "无电制冷涂层材料",
+            "type": "应用场景",
+            "imageUrl": "./img/yyal20260417-125233.jpg",
+            "status": 1,
+            "createdAt": "2026-05-14T17:24:00",
+            "updatedAt": "2026-06-01T10:39:29",
+            "textOne": "城市建筑、体育场馆、储粮储能",
+            "textTwo": "数据中心、光伏发电、农业养殖",
+            "textThree": "通信基站、冷链物流、石油化工",
+            "textFour": null,
+            "textFive": null,
+            "image": null,
+            "hrefTo": null,
+            "hrefToTitle": null,
+            "hrefToDate": null,
+            "hrefToFirstImageUrl": null,
+            "hrefToImageUrl": null
+        },
+        {
+            "id": 2,
+            "title": "无电制冷涂层",
+            "type": "粮仓应用场景",
+            "imageUrl": "./img/yyal20260417-1252331.jpg",
+            "status": 1,
+            "createdAt": "2026-05-14T17:24:00",
+            "updatedAt": "2026-06-01T15:10:53",
+            "textOne": "喷涂无电制冷涂料后；",
+            "textTwo": "粮仓外墙表面温度降低约6-10℃；",
+            "textThree": "粮食内温度降低3-5℃；",
+            "textFour": "制冷系统节电率高达9-10%。",
+            "textFive": null,
+            "image": null,
+            "hrefTo": "./yyal-lc.html",
+            "hrefToTitle": "粮仓应用场景",
+            "hrefToDate": "2025-09-26",
+            "hrefToFirstImageUrl": "./img/1909398f30d64adda7a0b7eb978f5d13.jpeg",
+            "hrefToImageUrl": "./img/yyal-lc.jpg"
+        },
+        {
+            "id": 3,
+            "title": "无电制冷涂层",
+            "type": "光伏电站应用场景",
+            "imageUrl": "./img/yyal20260417-1252332.jpg",
+            "status": 1,
+            "createdAt": "2026-06-01T11:01:40",
+            "updatedAt": "2026-06-01T15:27:06",
+            "textOne": "光伏发电增发率：8-13%；",
+            "textTwo": "年减少碳排放约36吨；",
+            "textThree": "投资回收期：3年；",
+            "textFour": "传统的光伏降温方案，只是‘不加热’；",
+            "textFive": null,
+            "image": null,
+            "hrefTo": "./yyal-gfdz.html",
+            "hrefToTitle": "光伏电站应用场景",
+            "hrefToDate": "2025-09-26",
+            "hrefToFirstImageUrl": "./img/1909398f30d64adda7a0b7eb978f5d13.jpeg",
+            "hrefToImageUrl": "./img/yyal-gfdz1.jpg"
+        },
+        {
+            "id": 4,
+            "title": "无电制冷涂层",
+            "type": "储能柜/变电站应用场景",
+            "imageUrl": "./img/yyal20260417-1252333.jpg",
+            "status": 1,
+            "createdAt": "2026-06-01T11:07:28",
+            "updatedAt": "2026-06-01T15:31:37",
+            "textOne": "电池工作温度降低，热失控风险下降；",
+            "textTwo": "空调负荷减少，节能效果显著；",
+            "textThree": "降温更均匀且稳定,电池循环寿命延长。",
+            "textFour": null,
+            "textFive": null,
+            "image": null,
+            "hrefTo": "./yyal-cndz.html",
+            "hrefToTitle": "储能柜/变电站应用场景",
+            "hrefToDate": "2025-09-26",
+            "hrefToFirstImageUrl": "./img/1909398f30d64adda7a0b7eb978f5d13.jpeg",
+            "hrefToImageUrl": "./img/yyal-cndz.jpg"
+        },
+        {
+            "id": 5,
+            "title": "无电制冷涂层",
+            "type": "农培基地应用场景",
+            "imageUrl": "./img/yyal20260417-1252334.jpg",
+            "status": 1,
+            "createdAt": "2026-06-01T11:08:51",
+            "updatedAt": "2026-06-01T15:33:11",
+            "textOne": "30%综合节电率，直接降低空调/通风系统能耗；",
+            "textTwo": "适用于恒温恒湿的真菌培养环境，长期可节省大量电力成本；",
+            "textThree": "减少设备负荷：延长制冷设备寿命，降低维护成本。",
+            "textFour": null,
+            "textFive": null,
+            "image": null,
+            "hrefTo": "./yyal-nyjd.html",
+            "hrefToTitle": "农业基地应用场景",
+            "hrefToDate": "2025-09-26",
+            "hrefToFirstImageUrl": "./img/1909398f30d64adda7a0b7eb978f5d13.jpeg",
+            "hrefToImageUrl": "./img/yyal-nyjd.jpg"
+        },
+        {
+            "id": 6,
+            "title": "无线自组网",
+            "type": "应用场景",
+            "imageUrl": "./img/yyal-wxzzw.jpg",
+            "status": 1,
+            "createdAt": "2026-06-01T11:11:13",
+            "updatedAt": "2026-06-01T11:11:13",
+            "textOne": "应急专用场景、城市消防救援、地质灾害救援；",
+            "textTwo": "野外围捕、安保安防、海上通信 ；",
+            "textThree": "赛事保障、能源化工、室外施工作业。",
+            "textFour": null,
+            "textFive": null,
+            "image": null,
+            "hrefTo": null,
+            "hrefToTitle": null,
+            "hrefToDate": null,
+            "hrefToFirstImageUrl": null,
+            "hrefToImageUrl": null
+        },
+        {
+            "id": 7,
+            "title": "无线自组网",
+            "type": "应急专用场景",
+            "imageUrl": "./img/yyal-wxzzw-yjzy.jpg",
+            "status": 1,
+            "createdAt": "2026-06-01T11:12:19",
+            "updatedAt": "2026-06-01T15:35:37",
+            "textOne": "无中心组网，灵活快速部署；",
+            "textTwo": "通信覆盖更全；",
+            "textThree": "操作更便捷。",
+            "textFour": null,
+            "textFive": null,
+            "image": null,
+            "hrefTo": "./yyal-wxzzw1.html",
+            "hrefToTitle": "应急专用场景",
+            "hrefToDate": "2025-09-26",
+            "hrefToFirstImageUrl": "./img/1909398f30d64adda7a0b7eb978f5d13.jpeg",
+            "hrefToImageUrl": "./img/yyal-wxzzw-1.jpg"
+        },
+        {
+            "id": 8,
+            "title": "无线自组网",
+            "type": "消防救援场景",
+            "imageUrl": "./img/yyal-wxzzw-xfjy.jpg",
+            "status": 1,
+            "createdAt": "2026-06-01T11:13:37",
+            "updatedAt": "2026-06-01T15:36:45",
+            "textOne": "在具有潜在爆炸性气体环境中进行抢险救援作业时；",
+            "textTwo": "保障消防员的通信安全。",
+            "textThree": null,
+            "textFour": null,
+            "textFive": null,
+            "image": null,
+            "hrefTo": "./yyal-wxzzw2.html",
+            "hrefToTitle": "消防救援场景",
+            "hrefToDate": "2025-09-26",
+            "hrefToFirstImageUrl": "./img/1909398f30d64adda7a0b7eb978f5d13.jpeg",
+            "hrefToImageUrl": "./img/yyal-wxzzw-2.jpg"
+        }
+    ]
+}
+
+3、将上述数据中，查询"hrefTo"= "./yyal-lc.html"的行，进行如下赋值处理
+
+"hrefTo"= "./yyal-lc.html"的行，数据如下：
+
+{
+            "id": 2,
+            "title": "无电制冷涂层",
+            "type": "粮仓应用场景",
+            "imageUrl": "./img/yyal20260417-1252331.jpg",
+            "status": 1,
+            "createdAt": "2026-05-14T17:24:00",
+            "updatedAt": "2026-06-01T15:10:53",
+            "textOne": "喷涂无电制冷涂料后；",
+            "textTwo": "粮仓外墙表面温度降低约6-10℃；",
+            "textThree": "粮食内温度降低3-5℃；",
+            "textFour": "制冷系统节电率高达9-10%。",
+            "textFive": null,
+            "image": null,
+            "hrefTo": "./yyal-lc.html",
+            "hrefToTitle": "粮仓应用场景",
+            "hrefToDate": "2025-09-26",
+            "hrefToFirstImageUrl": "./img/1909398f30d64adda7a0b7eb978f5d13.jpeg",
+            "hrefToImageUrl": "./img/yyal-lc.jpg"
+        },
+
+
+"hrefTo"= "./yyal-lc.html"，表示这是页面./yyal-lc.html的数据，对应修改./yyal-lc.html页面的代码；
+
+赋值处理：
+
+"hrefToImageUrl": "./img/yyal-lc.jpg",
+更新到代码中"./img/yyal-lc.jpg"的位置；
+
+"hrefToTitle": "粮仓应用场景",
+更新到代码中"粮仓应用场景"的位置；
+
+"hrefToDate": "2025-09-26",
+更新到代码中"2025-09-26"的位置；
+
+"hrefToFirstImageUrl": "./img/1909398f30d64adda7a0b7eb978f5d13.jpeg"
+更新到代码中"./img/1909398f30d64adda7a0b7eb978f5d13.jpeg"的位置；
+
+
+此时，本页面处理完毕；
+请为我生成动态html+js代码；
+
+
+------------页面./yyal-lc.html的对应代码（请修改成动态页面）-------------------------------
+
+--ok
+
+
+
+
+

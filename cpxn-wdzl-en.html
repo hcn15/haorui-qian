@@ -23,6 +23,7 @@
     <link rel="stylesheet" type="text/css" href="./index_files/style.css">
     <link rel="stylesheet" type="text/css" href="./index_files/g-style.css">
     <link rel="stylesheet" type="text/css" href="./index_files/f-style.css">
+	<link rel="stylesheet" type="text/css" href="./components/nav.css">
     <script src="./index_files/hm.js"></script>
 	<script src="./config1.js"></script>
     <script src="./index_files/svg-inject.min.js" type="text/javascript"></script>
@@ -478,14 +479,13 @@
         }
 
         /* 搜索按钮样式 */
-        .nav_search {
-            cursor: pointer;
+        .nav_search { display: none !important; cursor: pointer;
             padding-left: 22px;
             border-left: 1px solid rgba(255, 255, 255, 0.4);
         }
 
         /* 搜索框样式 */
-        .new-nav-search-box {
+        .new-nav-search-box { display: none !important;
             position: absolute;
             top: 100%;
             right: 22px;
@@ -525,135 +525,56 @@
         }
     </style>
 
-    <div class="new-nav-wrap">
-        <div class="new-nav-logo">
-            <a href="./index-en.html">
-                <img src="./img/JSlogo-beb0d75f.png" alt="logo">
-            </a>
+    <div id="nav-container"></div>
+	<script src="./components/load-components.js"></script>
+	<script>
+		loadComponent('nav-container', './components/nav-en.html', function() {
+			initNav();
+		});
+	</script>
+        <div class="mobile-nav-lang">
+            <a href="./cpxn-wdzl.html">中文</a>
+            <a href="./cpxn-wdzl-en.html" class="active">EN</a>
         </div>
-
-        <div class="new-nav-main">
-            <ul class="new-nav-list">
-                <li class="new-nav-item no-dropdown">
-                    <a href="./index-en.html" class="new-nav-link">Home</a>
-                </li>
-                <li class="new-nav-item">
-                    <a href="#" class="new-nav-link">Products & Services</a>
-                    <div class="new-nav-sub">
-                        <div class="new-nav-sub-item"><a href="./chanpin1-en.html?id=1" class="new-nav-sub-link">Off-Grid
-                                Cooling</a></div>
-                        <div class="new-nav-sub-item"><a href="./chanpin1-en.html?id=2"
-                                class="new-nav-sub-link">Intelligent Platform</a></div>
-                        <div class="new-nav-sub-item"><a href="./chanpin1-en.html?id=3" class="new-nav-sub-link">Secure
-                                Wireless</a></div>
-                        <div class="new-nav-sub-item"><a href="./chanpin1-en.html?id=4" class="new-nav-sub-link">AI
-                                Robot</a></div>
-                        <div class="new-nav-sub-item"><a href="./chanpin1-en.html?id=5"
-                                class="new-nav-sub-link">Low-Altitude Economy</a></div>
-                        <div class="new-nav-sub-item"><a href="./chanpin1-en.html?id=6"
-                                class="new-nav-sub-link">Commodity</a></div>
-                    </div>
-                </li>
-                <li class="new-nav-item">
-                    <a href="javascript:void(0);" class="new-nav-link">Application Scenarios</a>
-                    <div class="new-nav-sub">
-                        <div class="new-nav-sub-item"><a href="./index-en.html#yycj" class="new-nav-sub-link">Off-Grid
-                                Cooling</a></div>
-                        <div class="new-nav-sub-item"><a href="./index-en.html#yycj" class="new-nav-sub-link">Wireless
-                                Ad Hoc Network</a></div>
-                    </div>
-                </li>
-                <li class="new-nav-item no-dropdown">
-                    <a href="./index-en.html#cpxn" class="new-nav-link">Core Technology</a>
-                </li>
-                <li class="new-nav-item no-dropdown">
-                    <a href="#lxwm" class="new-nav-link">Contact Us</a>
-                </li>
-            </ul>
-
-            <div class="new-nav-right">
-                <div class="nav_lan">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20.84" height="20.812" viewBox="0 0 20.84 20.812">
-                        <defs>
-                            <style>
-                                .cls-1 {
-                                    fill: #fff;
-                                    fill-rule: evenodd;
-                                }
-                            </style>
-                        </defs>
-                        <path class="cls-1"
-                            d="M1743.42,40.832a10.417,10.417,0,1,0,10.41,10.416A10.427,10.427,0,0,0,1743.42,40.832Zm7.42,6.314h-3.62a17.821,17.821,0,0,0-.67-2.883c-0.12-.357-0.25-0.7-0.4-1.046A8.534,8.534,0,0,1,1750.84,47.145Zm-8.72-2.275c0.58-1.747,1.17-2.1,1.3-2.1s0.72,0.358,1.3,2.106a14.836,14.836,0,0,1,.54,2.274h-3.69A16.191,16.191,0,0,1,1742.12,44.87Zm-7.19,6.377a8.356,8.356,0,0,1,.29-2.167h4.18c-0.06.705-.09,1.43-0.09,2.167s0.03,1.463.09,2.17h-4.18A8.377,8.377,0,0,1,1734.93,51.247Zm1.06,4.1h3.62a18.943,18.943,0,0,0,.67,2.884,9.871,9.871,0,0,0,.41,1.046A8.544,8.544,0,0,1,1735.99,55.35Zm4.29-11.088a18.956,18.956,0,0,0-.67,2.883h-3.62a8.548,8.548,0,0,1,4.7-3.929A9.873,9.873,0,0,0,1740.28,44.262Zm4.44,13.363c-0.58,1.748-1.18,2.105-1.3,2.105s-0.72-.358-1.3-2.105a16.074,16.074,0,0,1-.55-2.275h3.69A14.783,14.783,0,0,1,1744.72,57.625Zm0.78-4.208h-4.17c-0.05-.7-0.08-1.428-0.08-2.17s0.03-1.467.08-2.167h4.17c0.06,0.7.08,1.426,0.08,2.167S1745.56,52.716,1745.5,53.417Zm0.65,5.863c0.15-.341.28-0.69.4-1.046a17.823,17.823,0,0,0,.67-2.884h3.62A8.559,8.559,0,0,1,1746.15,59.28Zm1.29-5.863c0.05-.706.08-1.431,0.08-2.17s-0.03-1.462-.08-2.167h4.18a8.346,8.346,0,0,1,.28,2.167,8.82,8.82,0,0,1-.28,2.17h-4.18Z"
-                            transform="translate(-1733 -40.844)"></path>
-                    </svg>
-                    <div class="nav_lan_box">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="8" height="4" viewBox="0 0 6 3">
-                            <defs>
-                                <style>
-                                    .cls-1 {
-                                        fill: #fff;
-                                        fill-rule: evenodd;
-                                    }
-                                </style>
-                            </defs>
-                            <path class="cls-1" d="M231,51l-3-3h6Z" transform="translate(-228 -48)"></path>
-                        </svg>
-                    </div>
-                    <div class="nav_lan_sel">
-                        <a href="./index-en.html">EN</a>
-                        <a href="./index.html">简</a>
-                    </div>
-                </div>
-
-                <div class="nav_search" id="searchBtn">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20.44" height="20.469" viewBox="0 0 20.44 20.469">
-                        <defs>
-                            <style>
-                                .cls-1 {
-                                    fill: #fff;
-                                    fill-rule: evenodd;
-                                }
-                            </style>
-                        </defs>
-                        <path class="cls-1"
-                            d="M1865.38,57.236l-3.93-3.932a9,9,0,1,0-1.71,1.715l3.92,3.931A1.214,1.214,0,0,0,1865.38,57.236Zm-15.73-4.725a6.6,6.6,0,0,1,0-9.308A6.583,6.583,0,1,1,1849.65,52.51Z"
-                            transform="translate(-1845.31 -38.844)"></path>
-                    </svg>
-                </div>
-
-                <div class="new-nav-search-box" id="searchBox">
-                    <form action="./search.html" method="get">
-                        <input type="text" name="keyword" class="new-nav-search-input" placeholder="Enter keywords...">
-                        <button type="submit" class="new-nav-search-submit">Search</button>
-                    </form>
-                </div>
+        <div class="mobile-nav-item">
+            <a href="./index-en.html" class="mobile-nav-link">Home</a>
+        </div>
+        <div class="mobile-nav-item">
+            <a href="#" class="mobile-nav-link">Products & Services
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M6 9l6 6 6-6"/>
+                </svg>
+            </a>
+            <div class="mobile-nav-sub" id="mobileNavProductSub">
+                <div class="mobile-nav-sub-item"><a href="./chanpin1-cp1-en.html" class="mobile-nav-sub-link">Advanced Materials</a></div>
+                <div class="mobile-nav-sub-item"><a href="./chanpin1-en.html?id=2" class="mobile-nav-sub-link">Digital Services & Platform</a></div>
+                <div class="mobile-nav-sub-item"><a href="./chanpin1-en.html?id=3" class="mobile-nav-sub-link">Communications & Network</a></div>
+                <div class="mobile-nav-sub-item"><a href="./chanpin1-ai-en.html" class="mobile-nav-sub-link">AI Robotics</a></div>
+                <div class="mobile-nav-sub-item"><a href="./chanpin1-en.html?id=5" class="mobile-nav-sub-link">Low Altitude Economy</a></div>
+                <div class="mobile-nav-sub-item"><a href="./chanpin1-en.html?id=6" class="mobile-nav-sub-link">Commodity Trading</a></div>
+                <div class="mobile-nav-sub-item"><a href="./chanpin1-en.html?id=7" class="mobile-nav-sub-link">Cultural & Creative IP</a></div>
             </div>
+        </div>
+        <div class="mobile-nav-item">
+            <a href="#" class="mobile-nav-link">Application Scenarios
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M6 9l6 6 6-6"/>
+                </svg>
+            </a>
+            <div class="mobile-nav-sub">
+                <div class="mobile-nav-sub-item"><a href="./index-en.html#yycj" class="mobile-nav-sub-link">Power-free Cooling</a></div>
+                <div class="mobile-nav-sub-item"><a href="./index-en.html#yycj" class="mobile-nav-sub-link">Wireless Ad Hoc Network</a></div>
+            </div>
+        </div>
+        <div class="mobile-nav-item">
+            <a href="./index-en.html#cpxn" class="mobile-nav-link">Core Technology</a>
+        </div>
+        <div class="mobile-nav-item">
+            <a href="#lxwm" class="mobile-nav-link">Contact Us</a>
         </div>
     </div>
 
-    <script>
-        const searchBtn = document.getElementById('searchBtn');
-        const searchBox = document.getElementById('searchBox');
-
-        // 搜索框点击事件
-        searchBtn.addEventListener('click', function (e) {
-            e.stopPropagation();
-            searchBox.classList.toggle('active');
-            if (searchBox.classList.contains('active')) {
-                searchBox.querySelector('input').focus();
-            }
-        });
-
-        // 点击页面其他地方关闭搜索框
-        document.addEventListener('click', function () {
-            searchBox.classList.remove('active');
-        });
-
-        // 点击搜索框内部不关闭
-        searchBox.addEventListener('click', function (e) {
-            e.stopPropagation();
-        });
-    </script>
+    
 
 
     <!-- 首图 -->
@@ -788,37 +709,10 @@
     <!-- 底部 -->
 		<!-- 包含：联系我们标题、公司信息（北京总部/海南公司/电话/邮箱） -->
 	<!-- ====================================================== -->
-	<footer style="background: url(./img/footer.jpg);background-size: cover; padding: 25px 0 0px;" id="lxwm">
-		<div class="container" style="color:#fff; padding:0 20px;">
-			<div class="gt" style="display:flex; justify-content:center; margin-bottom:15px;">
-				<h2 class="font50" style="font-size:28px; line-height:1.2; margin:0;"><bdo>Contact Us</bdo></h2>
-			</div>
-
-			<div class="gm" style="display:flex; justify-content:center; margin-bottom:-90px;">
-
-				<div class="gm_r" style="text-align:center;">
-					<h3 class="font30 font-m" style="font-size:18px; margin:0 0 10px;">HARVEST Green Technology Group</h3>
-					<div class="g_p" style="font-size:13px; line-height:1.5;">
-						<p style="margin:0 0 5px;">Beijing Headquarters：<bdo>Frontier Research Institute of Smart Ecosystem, 9/F, Dacheng International, Bailizi East Lane, Chaoyang District, Beijing, China</bdo></p>
-						<p style="margin:0 0 5px;">Hainan Branch：<bdo>Harvest Digital Intelligence Software Technology Co., Ltd., A-22, Hainan Ecological Software Park, Chengmai County, Haikou, Hainan, China</bdo></p>
-						<p style="margin:0;">Tel: <bdo>+86-13811080709 (CN)</bdo> | Business: <bdo>jwong@jnsco.cn</bdo></p>
-					</div>
-				</div>
-			</div>
-			<div class="gb" style="display:flex; justify-content:space-between; align-items:center; border-top:1px solid rgba(255,255,255,0.15); padding-top:15px; font-size:12px;">
-				<div class="gb_l">
-					<p style="margin:0;">Copyright © HARVEST Green Technology  </p>
-					<a style="color:white;" href="https://beian.miit.gov.cn/#/Integrated/index" target="_blank">京ICP备2026036471号</a>
-				</div>
-				<div class="gb_r">
-					<a href=" "></a>
-					<a href=" " target="_blank">Privacy Policy</a>
-					<a href=" " target="_blank">Disclaimer</a>
-				</div>
-			</div>
-		</div>
-
-	</footer>
+	<div id="footer-container"></div>
+	<script>
+		loadComponent('footer-container', './components/footer-en.html');
+	</script>
     <!-- 右侧浮窗 -->
 
 

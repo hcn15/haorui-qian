@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html xml:lang="zh" lang="zh" style="--color: #005CE6; --vh: 708px; scroll-behavior: auto;">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="format-detection" content="telephone=no,telephone=no,email=no,adress=no">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <title>CRAF 力控系列 - 浩瑞绿色科技</title>
+    <meta name="keywords" content="CRAF,力控机器人,协作机器人,智能力控">
+    <meta name="description" content="CRAF 智能力控协作机器人，一体化内嵌传感器，实现开箱即用的智控新范式">
+    <link rel="shortcut icon" href="">
+    <link rel="stylesheet" type="text/css" href="./index_files/extend.css">
+    <link rel="stylesheet" type="text/css" href="./index_files/style.css">
+    <link rel="stylesheet" type="text/css" href="./index_files/g-style.css">
+    <link rel="stylesheet" type="text/css" href="./index_files/f-style.css">
+	<link rel="stylesheet" type="text/css" href="./components/nav.css">
+    <link rel="stylesheet" type="text/css" href="./index_files/common.css">
+    <script src="./index_files/hm.js"></script>
+    <script src="./config1.js"></script>
+    <script src="./index_files/svg-inject.min.js" type="text/javascript"></script>
+    <style type="text/css">
+        img[onload^="SVGInject("] {
+            visibility: hidden;
+        }
+    </style>
+    <link rel="stylesheet" href="./index_files/yang-product.css">
+    <link rel="stylesheet" href="./index_files/zstyle.css">
+    <link rel="stylesheet" href="./index_files/layui.css">
+    <link rel="stylesheet" href="./index_files/share.min.css">
+    <link rel="stylesheet" type="text/css" href="./index_files/liMarquee.css">
+    <link rel="stylesheet" type="text/css" href="./index_files/mobile.css">
+
+    <style>
+        html, body {
+            max-width: 100vw;
+            overflow-x: hidden;
+            margin: 0;
+            padding: 0;
+            background: #fff;
+            color: #333;
+            font-family: "Microsoft YaHei", "SimSun", "宋体", sans-serif;
+        }
+
+        .product-detail {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .hero-section {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 160px 40px;
+            background: linear-gradient(135deg, #f5f8fc 0%, #e8f0fe 100%);
+            border-radius: 16px;
+            margin-bottom: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 55%;
+            height: 100%;
+            background-image: url('https://aka.doubaocdn.com/s/a9ZC1wkCyj');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+            opacity: 0.85;
+        }
+
+        .hero-section .hero-content {
+            flex: 1;
+            text-align: left;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-section h1 {
+            font-size: 42px;
+            font-weight: bold;
+            color: #0a3a8f;
+            margin: 0 0 15px;
+        }
+
+        .hero-section .subtitle {
+            font-size: 20px;
+            color: #1967c2;
+            margin: 0 0 20px;
+        }
+
+        .hero-section .description {
+            font-size: 16px;
+            color: #666;
+            line-height: 1.8;
+            margin: 0 0 30px;
+            max-width: 600px;
+        }
+
+        .section-title {
+            font-size: 28px;
+            font-weight: bold;
+            color: #0a3a8f;
+            margin: 0 0 25px;
+            text-align: center;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .section-title::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, #004a99, #1967c2);
+            border-radius: 2px;
+        }
+
+        .about-section {
+            text-align: center;
+            padding: 50px 20px;
+            margin-bottom: 50px;
+        }
+
+        .about-section p {
+            font-size: 16px;
+            color: #444;
+            line-height: 2;
+            margin: 0 0 15px;
+            max-width: 800px;
+            display: inline-block;
+            text-align: justify;
+        }
+
+        .versions-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-bottom: 50px;
+        }
+
+        .version-card {
+            background: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+            border: 1px solid #e8e8e8;
+            transition: all 0.3s ease;
+        }
+
+        .version-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+        }
+
+        .version-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: contain;
+            background: #f5f8fc;
+        }
+
+        .version-card .version-info {
+            padding: 20px;
+        }
+
+        .version-card .version-info h3 {
+            font-size: 20px;
+            font-weight: bold;
+            color: #0a3a8f;
+            margin: 0 0 10px;
+        }
+
+        .version-card .version-info .spec-item {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.8;
+            margin: 0 0 5px;
+        }
+
+        .version-card .version-info .spec-item strong {
+            color: #1967c2;
+        }
+
+        .features-section {
+            background: #f5f8fc;
+            padding: 50px 20px;
+            border-radius: 12px;
+            margin-bottom: 50px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .feature-card {
+            background: #fff;
+            border-radius: 12px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+            border: 1px solid #e8e8e8;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-card img {
+            width: 100%;
+            max-height: 150px;
+            object-fit: contain;
+            margin-bottom: 15px;
+        }
+
+        .feature-card h3 {
+            font-size: 18px;
+            font-weight: bold;
+            color: #0a3a8f;
+            margin: 0 0 10px;
+        }
+
+        .feature-card p {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.6;
+            margin: 0;
+            text-align: left;
+        }
+
+        .force-control-section {
+            margin-bottom: 50px;
+        }
+
+        .force-control-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+        }
+
+        .force-control-item {
+            background: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+            border: 1px solid #e8e8e8;
+        }
+
+        .force-control-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .force-control-item .content {
+            padding: 20px;
+        }
+
+        .force-control-item h3 {
+            font-size: 18px;
+            font-weight: bold;
+            color: #0a3a8f;
+            margin: 0 0 10px;
+        }
+
+        .force-control-item p {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .applications-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-bottom: 50px;
+        }
+
+        .application-card {
+            background: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+            border: 1px solid #e8e8e8;
+            transition: all 0.3s ease;
+        }
+
+        .application-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+        }
+
+        .application-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .application-card .content {
+            padding: 20px;
+        }
+
+        .application-card h3 {
+            font-size: 18px;
+            font-weight: bold;
+            color: #0a3a8f;
+            margin: 0 0 10px;
+        }
+
+        .application-card p {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .specs-section {
+            margin-bottom: 50px;
+        }
+
+        .specs-section h3 {
+            font-size: 20px;
+            font-weight: bold;
+            color: #0a3a8f;
+            margin: 0 0 20px;
+        }
+
+        .spec-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+            border: 1px solid #e8e8e8;
+        }
+
+        .spec-table th {
+            background: linear-gradient(90deg, #004a99, #1967c2);
+            color: #fff;
+            padding: 12px 15px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 14px;
+            white-space: nowrap;
+        }
+
+        .spec-table td {
+            padding: 10px 15px;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 14px;
+            color: #444;
+            text-align: center;
+        }
+
+        .spec-table tr:nth-child(even) td {
+            background: #fafafa;
+        }
+
+        .spec-table tr:hover td {
+            background: #f0f5fc;
+        }
+
+        .nav-back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.2);
+            color: #fff;
+            padding: 8px 20px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            margin-right: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .nav-back-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        @media (max-width: 900px) {
+            .hero-section {
+                flex-direction: column;
+                padding: 40px 20px;
+            }
+
+            .hero-section .hero-content {
+                text-align: center;
+            }
+
+            .hero-section::before {
+                width: 100%;
+                height: 50%;
+                background-position: center center;
+                top: auto;
+                bottom: 0;
+            }
+
+            .hero-section h1 {
+                font-size: 32px;
+            }
+
+            .versions-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .force-control-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .applications-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .versions-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .applications-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-section h1 {
+                font-size: 28px;
+            }
+
+            .section-title {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="nav-container"></div>
+	<script src="./components/load-components.js"></script>
+	<script>
+		loadComponent('nav-container', './components/nav-zh.html', function() {
+			initNav();
+		});
+	</script>
+
+    <script>
+        const searchBtn = document.getElementById('searchBtn');
+        const searchBox = document.getElementById('searchBox');
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const mobileNavPanel = document.getElementById('mobileNavPanel');
+
+        function toggleMobileMenu() {
+            if (mobileMenuBtn && mobileNavPanel) {
+                mobileMenuBtn.classList.toggle('active');
+                mobileNavPanel.classList.toggle('active');
+            }
+        }
+
+        searchBtn.addEventListener('click', function (e) {
+            e.stopPropagation();
+            searchBox.classList.toggle('active');
+            if (searchBox.classList.contains('active')) {
+                searchBox.querySelector('input').focus();
+            }
+        });
+
+        document.addEventListener('click', function () {
+            searchBox.classList.remove('active');
+            if (mobileMenuBtn && mobileNavPanel) {
+                mobileMenuBtn.classList.remove('active');
+                mobileNavPanel.classList.remove('active');
+            }
+        });
+
+        searchBox.addEventListener('click', function (e) {
+            e.stopPropagation();
+        });
+    </script>
+
+    <div class="product-detail">
+        <div class="hero-section">
+            <div class="hero-content">
+                <h1>CRAF 力控系列</h1>
+                <p class="subtitle">产品详情 产品参数</p>
+                <p class="description">在高端制造领域中，精密装配、复杂打磨、焊接、医疗自动化等应用场景，对机器人的柔顺性、安全性和智能力控能力提出了更高要求。</p>
+            </div>
+        </div>
+
+        <div class="about-section">
+            <h2 class="section-title">关于 CRAF 力控系列</h2>
+            <p>在高端制造领域中，精密装配、复杂打磨、焊接、医疗自动化等应用场景，对机器人的柔顺性、安全性和智能力控能力提出了更高要求。面对复杂场景中拖拽示教、恒力打磨、精密装配等需求，越疆升级推出行业领先的新一代 CRAF 智能力控协作机器人。</p>
+            <p>如何让机器人真正"有触觉"？如何让力控从"能用"走向"精准与智能的融合应用"？越疆机器人全新升级的 CRAF 智能力控协作机器人，以自研智控算法为核心，一体化内嵌传感器，全面革新力控协作体验，"0安装、0部署"，实现开箱即用的"智控新范式"。</p>
+        </div>
+
+        <h2 class="section-title">产品型号</h2>
+        <div class="versions-grid">
+            <div class="version-card">
+                <img src="https://aka.doubaocdn.com/s/z9Zr1wkCyj" alt="CR5AF">
+                <div class="version-info">
+                    <h3>CR5AF</h3>
+                    <div class="spec-item"><strong>最大负载:</strong> 5kg</div>
+                    <div class="spec-item"><strong>工作半径:</strong> 900mm</div>
+                    <div class="spec-item"><strong>重复定位精度:</strong> ±0.02mm</div>
+                </div>
+            </div>
+            <div class="version-card">
+                <img src="https://aka.doubaocdn.com/s/VVHd1wkCyj" alt="CR10AF">
+                <div class="version-info">
+                    <h3>CR10AF</h3>
+                    <div class="spec-item"><strong>最大负载:</strong> 10kg</div>
+                    <div class="spec-item"><strong>工作半径:</strong> 1,300mm</div>
+                    <div class="spec-item"><strong>重复定位精度:</strong> ±0.03mm</div>
+                </div>
+            </div>
+            <div class="version-card">
+                <img src="https://aka.doubaocdn.com/s/rVBP1wkCyj" alt="CR20AF">
+                <div class="version-info">
+                    <h3>CR20AF</h3>
+                    <div class="spec-item"><strong>最大负载:</strong> 20kg</div>
+                    <div class="spec-item"><strong>工作半径:</strong> 1,700mm</div>
+                    <div class="spec-item"><strong>重复定位精度:</strong> ±0.05mm</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="features-section">
+            <h2 class="section-title">前所未有的柔顺性与精准度</h2>
+            <p style="text-align:center; color:#666; margin-bottom:30px;">力控一体化 0安装 0部署</p>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <img src="https://aka.doubaocdn.com/s/MJ701wkCyj" alt="法兰/传感器一体化设计">
+                    <h3>法兰/传感器一体化设计</h3>
+                    <p>CRAF 力控系列产品是在 CRA 系列的基础上，在法兰末端内置了高精度六维力传感器，实现了前所未有的柔顺性与精准度并且在出厂时已经过精密标定，为用户创造"0安装、0部署"的便捷体验。</p>
+                </div>
+                <div class="feature-card">
+                    <img src="https://aka.doubaocdn.com/s/ap5o1wkCyj" alt="法兰配置环形状态灯">
+                    <h3>法兰配置环形状态灯</h3>
+                    <p>法兰新增环形状态灯，机器人状态更加可视化；机器人末端自带按压式拖拽按钮，松开按钮停止拖拽，增加拖拽安全性。</p>
+                </div>
+                <div class="feature-card">
+                    <img src="https://aka.doubaocdn.com/s/4Pcm1wkCyj" alt="接口零占用">
+                    <h3>接口零占用</h3>
+                    <p>不占用工具端RS485、I/O接口，提升与外部设备（如电动夹爪、VX500智能相机等）的兼容性。</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="force-control-section">
+            <h2 class="section-title">智能力控，安全可靠</h2>
+            <p style="text-align:center; color:#666; margin-bottom:30px;">一根吸管就能"带走"的 CRAF 力控机器人</p>
+            <div class="force-control-grid">
+                <div class="force-control-item">
+                    <img src="https://aka.doubaocdn.com/s/LID71wkCyj" alt="柔顺拖拽">
+                    <div class="content">
+                        <h3>柔顺拖拽，轻松上手零门槛</h3>
+                        <p>全法兰面拖拽：全法兰面均为拖拽有效区域，拖拽示教更便捷</p>
+                    </div>
+                </div>
+                <div class="force-control-item">
+                    <img src="https://aka.doubaocdn.com/s/vvUi1wkCyj" alt="方向智能锁定">
+                    <div class="content">
+                        <h3>方向智能锁定</h3>
+                        <p>用户可自定义锁定机器人姿态或位置，实现精准示教</p>
+                    </div>
+                </div>
+                <div class="force-control-item">
+                    <img src="https://aka.doubaocdn.com/s/dRto1wkCyj" alt="微力牵引">
+                    <div class="content">
+                        <h3>微力牵引</h3>
+                        <p>拖拽启动力 < 2N，一根吸管就能"带走"CRAF 机器人，轻松实现毫米级精准拖拽示教，对点精度达到0.1mm。</p>
+                    </div>
+                </div>
+                <div class="force-control-item">
+                    <img src="https://aka.doubaocdn.com/s/ECwb1wkCyj" alt="恒力控制">
+                    <div class="content">
+                        <h3>精准作业，力感更准也更稳</h3>
+                        <p>恒力控制精度达±3N：可自动补偿工件尺寸误差与轨迹偏差，轻松应对汽车车身打磨、精密抛光等高难度任务</p>
+                    </div>
+                </div>
+                <div class="force-control-item">
+                    <img src="https://aka.doubaocdn.com/s/BkYC1wkCyj" alt="智能感知">
+                    <div class="content">
+                        <h3>智能感知外部环境</h3>
+                        <p>机器人可实时感知外部环境（如台面高低变化等），自动搜寻平面，使机器人能够根据环境和任务做出正确的动作。</p>
+                    </div>
+                </div>
+                <div class="force-control-item">
+                    <img src="https://aka.doubaocdn.com/s/BPFc1wkCyj" alt="安全可靠">
+                    <div class="content">
+                        <h3>安全可靠，拓宽人机协作边界</h3>
+                        <p>采用力传感器碰撞检测方式后，机器人碰撞力得到有效降低（最小可检测到 1 N的碰撞力）。CRAF产品极大增强抗冲击能力至 2000N，有效应对实际作业应用中频发的异常冲击、干涉碰撞等问题。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="section-title">触感精准，拖拽超轻</h2>
+        <p style="text-align:center; color:#666; margin-bottom:30px;">拓宽高端医疗、装配、焊接等应用边界</p>
+        <div class="applications-grid">
+            <div class="application-card">
+                <img src="https://aka.doubaocdn.com/s/wqoY1wkCyj" alt="工业打磨">
+                <div class="content">
+                    <h3>工业打磨</h3>
+                    <p>力控协作机器人通过柔顺力控技术实现高精度恒力输出（±3N误差），自动补偿工件尺寸误差和轨迹偏差，适应复杂曲面打磨（如车身、全面金属件等）</p>
+                </div>
+            </div>
+            <div class="application-card">
+                <img src="https://aka.doubaocdn.com/s/xhff1wkCyj" alt="精密装配">
+                <div class="content">
+                    <h3>精密装配</h3>
+                    <p>在精密装配中，力控协作机器人通过微小力感知与自适应调整，解决精密零件组装中的柔性需求。机器人通过实时监测接触力，防止因刚性碰撞导致零件损坏</p>
+                </div>
+            </div>
+            <div class="application-card">
+                <img src="https://aka.doubaocdn.com/s/64YK1wkCyj" alt="智能焊接">
+                <div class="content">
+                    <h3>智能焊接</h3>
+                    <p>针对小批量、多品种焊接场景，力控协作机器人具备柔顺的拖拽功能可大大降低现场操作人员的编程难度。</p>
+                </div>
+            </div>
+            <div class="application-card">
+                <img src="https://aka.doubaocdn.com/s/atYf1wkCyj" alt="医疗辅助">
+                <div class="content">
+                    <h3>医疗辅助</h3>
+                    <p>在医疗场景中，力控协作机器人通过安全柔顺交互实现精准操作，如在四肢康复场景下，机器人带动病人手臂或者腿部完成牵拉等康复工作。</p>
+                </div>
+            </div>
+            <div class="application-card">
+                <img src="https://aka.doubaocdn.com/s/rG9J1wkCyj" alt="其他协作场景">
+                <div class="content">
+                    <h3>其他协作场景</h3>
+                    <p>广泛人机协作模式下对碰撞安全要求较高的作业场景，如传统机械臂由于本体比较粗重，依靠电流环实际碰撞力仍然比较大，使用末端力传感器以后，可显著降低机器人碰撞力。</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="specs-section">
+            <h3>产品参数</h3>
+            <table class="spec-table">
+                <thead>
+                    <tr>
+                        <th colspan="2">产品名称</th>
+                        <th>CR5AF</th>
+                        <th>CR10AF</th>
+                        <th>CR20AF</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td colspan="2"><strong>本体重量</strong></td><td>25.5kg</td><td>40.5kg</td><td>74kg</td></tr>
+                    <tr><td colspan="2"><strong>最大负载</strong></td><td>5kg</td><td>10kg</td><td>20kg</td></tr>
+                    <tr><td colspan="2"><strong>工作半径(mm)</strong></td><td>900mm</td><td>1300mm</td><td>1700mm</td></tr>
+                    <tr><td colspan="2"><strong>最大直线速度</strong></td><td>2 m/s</td><td>2 m/s</td><td>2 m/s</td></tr>
+                    <tr><td rowspan="6"><strong>关节活动范围</strong></td><td>J1</td><td>±360°</td><td>±360°</td><td>±360°</td></tr>
+                    <tr><td>J2</td><td>±360°</td><td>±360°</td><td>±360°</td></tr>
+                    <tr><td>J3</td><td>±160°</td><td>±160°</td><td>±160°</td></tr>
+                    <tr><td>J4</td><td>±360°</td><td>±360°</td><td>±360°</td></tr>
+                    <tr><td>J5</td><td>±360°</td><td>±360°</td><td>±360°</td></tr>
+                    <tr><td>J6</td><td>±360°</td><td>±360°</td><td>±360°</td></tr>
+                    <tr><td rowspan="4"><strong>力传感器</strong></td><td>量程</td><td>力(Fx/Fy/Fz)：150N<br>力矩(Mx/My/Mz)：15Nm</td><td>力(Fx/Fy/Fz)：300N<br>力矩(Mx/My/Mz)：30Nm</td><td>力(Fx/Fy/Fz)：500N<br>力矩(Mx/My/Mz)：50Nm</td></tr>
+                    <tr><td>过载</td><td>500% F.S.</td><td>500% F.S.</td><td>500% F.S.</td></tr>
+                    <tr><td>准度</td><td>1% F.S.</td><td>1% F.S.</td><td>1% F.S.</td></tr>
+                    <tr><td>精度</td><td>0.5% F.S.</td><td>0.5% F.S.</td><td>0.5% F.S.</td></tr>
+                    <tr><td rowspan="4"><strong>末端 I/O</strong></td><td>DI</td><td>2路</td><td>2路</td><td>2路</td></tr>
+                    <tr><td>DO</td><td>2路</td><td>2路</td><td>2路</td></tr>
+                    <tr><td>AI</td><td>2路（与RS485复用）</td><td>2路（与RS485复用）</td><td>2路（与RS485复用）</td></tr>
+                    <tr><td>RS485</td><td>支持</td><td>支持</td><td>支持</td></tr>
+                    <tr><td colspan="2"><strong>重复定位精度（mm）</strong></td><td>±0.02mm</td><td>±0.03mm</td><td>±0.05mm</td></tr>
+                    <tr><td colspan="2"><strong>噪声</strong></td><td>70dB(A)</td><td>70dB(A)</td><td>70dB(A)</td></tr>
+                    <tr><td colspan="2"><strong>温度范围</strong></td><td>0 ℃～ 50 ℃</td><td>0 ℃～ 50 ℃</td><td>0 ℃～ 50 ℃</td></tr>
+                    <tr><td colspan="2"><strong>典型功耗</strong></td><td>150W</td><td>350W</td><td>500W</td></tr>
+                    <tr><td colspan="2"><strong>安装方式</strong></td><td colspan="3">正装</td></tr>
+                    <tr><td colspan="2"><strong>材质</strong></td><td colspan="3">铝合金，ABS 塑料</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div id="footer-container"></div>
+	<script>
+		loadComponent('footer-container', './components/footer-zh.html');
+	</script>
+
+    <div class="gpop" style="display: block;">
+        <a href="#lxwm" class="pop_a cur1">
+            <div class="pop_a_img">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" data-inject-url="https://www.i2cool.com.cn/static/cms/images/pop_r_svg.svg" loading="lazy">
+                    <defs>
+                        <style>
+                            .cls-1 {
+                                fill: #2260bc;
+                                fill-rule: evenodd;
+                            }
+                        </style>
+                    </defs>
+                    <path class="cls-1" d="M186.357,199.5a0.858,0.858,0,0,1-.857-0.858V178.071a2.571,2.571,0,0,1,2.571-2.571h18.857a2.571,2.571,0,0,1,2.572,2.571v13.714a2.572,2.572,0,0,1-2.572,2.572H192.991a0.861,0.861,0,0,0-.558.206l-5.519,4.73a0.862,0.862,0,0,1-.557.207h0Zm1.714-22.286a0.857,0.857,0,0,0-.857.857v18.708l4.1-3.514a2.571,2.571,0,0,1,1.673-.623h13.937a0.856,0.856,0,0,0,.857-0.857V178.071a0.857,0.857,0,0,0-.857-0.857H188.071Zm14.572,6H192.357a0.857,0.857,0,0,1,0-1.714h10.286A0.857,0.857,0,0,1,202.643,183.214ZM197.5,187.5h-5.143a0.858,0.858,0,0,1,0-1.715H197.5A0.858,0.858,0,0,1,197.5,187.5Zm5.143,0h-2.572a0.858,0.858,0,0,1,0-1.715h2.572A0.858,0.858,0,0,1,202.643,187.5Z" transform="translate(-185.5 -175.5)"></path>
+                </svg>
+                <p>联系我们 </p>
+            </div>
+        </a>
+        <a class="pop_a cur2">
+            <div class="pop_a_img">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="15.5" viewBox="0 0 24 15.5" data-inject-url="" loading="lazy">
+                    <defs>
+                        <style>
+                            .cls-1 {
+                                fill: #2260bc;
+                                fill-rule: evenodd;
+                            }
+                        </style>
+                    </defs>
+                    <path class="cls-1" d="M245.179,175.5a0.857,0.857,0,0,1-.857.857H232.857a0.857,0.857,0,0,1-.857-.857V172.143a0.857,0.857,0,0,1,.857-.857H244.321a0.857,0.857,0,0,1,.857.857Zm0-8.571a0.857,0.857,0,0,1-.857.857H232.857a0.857,0.857,0,0,1-.857-.857V163.571a0.857,0.857,0,0,1,.857-.857H244.321a0.857,0.857,0,0,1,.857.857Zm0-8.571a0.857,0.857,0,0,1-.857.857H232.857a0.857,0.857,0,0,1-.857-.857V155a0.857,0.857,0,0,1,.857-.857H244.321a0.857,0.857,0,0,1,.857.857Z" transform="translate(-232 -154.143)"></path>
+                </svg>
+                <p>返回顶部</p>
+            </div>
+        </a>
+    </div>
+
+    <script>
+        document.querySelector('.pop_a.cur2').addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    </script>
+
+    <script src="./index_files/layui.js"></script>
+    <script src="./index_files/extend.js" type="text/javascript"></script>
+    <script src="./index_files/public.js" type="text/javascript"></script>
+    <script src="./index_files/jquery.pjax.js" type="text/javascript"></script>
+    <script>
+        $(document).on('click', 'a', function () {
+            href = $(this).attr('href');
+            if ($(this).attr('href') == '') {
+                event.preventDefault();
+            } else if (href.startsWith('http://') || href.startsWith('https://')) {
+                $(this).attr('target', '_blank');
+            }
+        })
+    </script>
+
+    <script src="./index_files/jquery.liMarquee.js" type="text/javascript" charset="utf-8"></script>
+</body>
+</html>

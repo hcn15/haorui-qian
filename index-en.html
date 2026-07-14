@@ -25,6 +25,7 @@
 	<link rel="stylesheet" type="text/css" href="./index_files/style.css">
 	<link rel="stylesheet" type="text/css" href="./index_files/g-style.css">
 	<link rel="stylesheet" type="text/css" href="./index_files/f-style.css">
+	<link rel="stylesheet" type="text/css" href="./components/nav.css">
 	<script src="./index_files/hm.js"></script>
 	<script src="./config1.js"></script>
 	<script src="./index_files/svg-inject.min.js" type="text/javascript"></script>
@@ -481,13 +482,14 @@
 
 		/* 搜索按钮样式 */
 		.nav_search {
+			display: none !important;
 			cursor: pointer;
 			padding-left: 22px;
 			border-left: 1px solid rgba(255, 255, 255, 0.4);
 		}
 
 		/* 搜索框样式 */
-		.new-nav-search-box {
+		.new-nav-search-box { display: none !important;
 			position: absolute;
 			top: 100%;
 			right: 22px;
@@ -946,256 +948,14 @@
 		}
 	</style>
 
-	<div class="new-nav-wrap">
-		<div class="new-nav-logo">
-			<a href="./index-en.html">
-				<img src="./img/JSlogo-beb0d75f.png" alt="logo">
-			</a>
-		</div>
-
-		<div class="new-nav-main">
-			<ul class="new-nav-list">
-				<li class="new-nav-item no-dropdown">
-					<a href="./index-en.html" class="new-nav-link">Home</a>
-				</li>
-				<li class="new-nav-item">
-					<a href="#" class="new-nav-link">Products & Services</a>
-					<div class="new-nav-sub">
-						<div class="new-nav-sub-item"><a href="./chanpin1-en.html?id=6"
-								class="new-nav-sub-link">Bulk Trade</a></div>
-						<div class="new-nav-sub-item"><a href="./chanpin1-en.html?id=1" class="new-nav-sub-link">Frontier
-								Materials</a></div>
-						<div class="new-nav-sub-item"><a href="./chanpin1-en.html?id=4" class="new-nav-sub-link">AI &
-								Robotics</a></div>
-						<div class="new-nav-sub-item"><a href="./chanpin1-en.html?id=5"
-								class="new-nav-sub-link">Low-Altitude Economy</a></div>
-						<div class="new-nav-sub-item"><a href="./chanpin1-en.html?id=3" class="new-nav-sub-link">Communication
-								& Networking</a></div>
-						<div class="new-nav-sub-item"><a href="./chanpin1-en.html?id=1"
-								class="new-nav-sub-link">New Energy & Energy Storage</a></div>
-						<div class="new-nav-sub-item"><a href="./chanpin1-en.html?id=3" class="new-nav-sub-link">Security
-								& Identification</a></div>
-						<div class="new-nav-sub-item"><a href="./yyal-nyjd-en.html"
-								class="new-nav-sub-link">Smart Agriculture & Grain Storage</a></div>
-						<div class="new-nav-sub-item"><a href="./chanpin1-en.html?id=2"
-								class="new-nav-sub-link">Digital Services & Platforms</a></div>
-						<div class="new-nav-sub-item"><a href="./chanpin1-en.html?id=7"
-								class="new-nav-sub-link">Cultural & Creative IP</a></div>
-					</div>
-				</li>
-				<li class="new-nav-item">
-					<a href="javascript:void(0);" class="new-nav-link">Application Scenarios</a>
-					<div class="new-nav-sub">
-						<div class="new-nav-sub-item"><a href="./index-en.html#yycj" class="new-nav-sub-link">Off-Grid
-								Cooling</a></div>
-						<div class="new-nav-sub-item"><a href="./index-en.html#yycj" class="new-nav-sub-link">Wireless
-								Ad Hoc Network</a></div>
-					</div>
-				</li>
-				<li class="new-nav-item no-dropdown">
-					<a href="./index-en.html#cpxn" class="new-nav-link">Core Technology</a>
-				</li>
-				<li class="new-nav-item no-dropdown">
-					<a href="#lxwm" class="new-nav-link">Contact Us</a>
-				</li>
-			</ul>
-
-			<div class="new-nav-right">
-				<div class="nav_lan">
-					<svg xmlns="http://www.w3.org/2000/svg" width="20.84" height="20.812" viewBox="0 0 20.84 20.812">
-						<defs>
-							<style>
-								.cls-1 {
-									fill: #fff;
-									fill-rule: evenodd;
-								}
-							</style>
-						</defs>
-						<path class="cls-1"
-							d="M1743.42,40.832a10.417,10.417,0,1,0,10.41,10.416A10.427,10.427,0,0,0,1743.42,40.832Zm7.42,6.314h-3.62a17.821,17.821,0,0,0-.67-2.883c-0.12-.357-0.25-0.7-0.4-1.046A8.534,8.534,0,0,1,1750.84,47.145Zm-8.72-2.275c0.58-1.747,1.17-2.1,1.3-2.1s0.72,0.358,1.3,2.106a14.836,14.836,0,0,1,.54,2.274h-3.69A16.191,16.191,0,0,1,1742.12,44.87Zm-7.19,6.377a8.356,8.356,0,0,1,.29-2.167h4.18c-0.06.705-.09,1.43-0.09,2.167s0.03,1.463.09,2.17h-4.18A8.377,8.377,0,0,1,1734.93,51.247Zm1.06,4.1h3.62a18.943,18.943,0,0,0,.67,2.884,9.871,9.871,0,0,0,.41,1.046A8.544,8.544,0,0,1,1735.99,55.35Zm4.29-11.088a18.956,18.956,0,0,0-.67,2.883h-3.62a8.548,8.548,0,0,1,4.7-3.929A9.873,9.873,0,0,0,1740.28,44.262Zm4.44,13.363c-0.58,1.748-1.18,2.105-1.3,2.105s-0.72-.358-1.3-2.105a16.074,16.074,0,0,1-.55-2.275h3.69A14.783,14.783,0,0,1,1744.72,57.625Zm0.78-4.208h-4.17c-0.05-.7-0.08-1.428-0.08-2.17s0.03-1.467.08-2.167h4.17c0.06,0.7.08,1.426,0.08,2.167S1745.56,52.716,1745.5,53.417Zm0.65,5.863c0.15-.341.28-0.69.4-1.046a17.823,17.823,0,0,0,.67-2.884h3.62A8.559,8.559,0,0,1,1746.15,59.28Zm1.29-5.863c0.05-.706.08-1.431,0.08-2.17s-0.03-1.462-.08-2.167h4.18a8.346,8.346,0,0,1,.28,2.167,8.82,8.82,0,0,1-.28,2.17h-4.18Z"
-							transform="translate(-1733 -40.844)"></path>
-					</svg>
-					<div class="nav_lan_box">
-						<svg xmlns="http://www.w3.org/2000/svg" width="8" height="4" viewBox="0 0 6 3">
-							<defs>
-								<style>
-									.cls-1 {
-										fill: #fff;
-										fill-rule: evenodd;
-									}
-								</style>
-							</defs>
-							<path class="cls-1" d="M231,51l-3-3h6Z" transform="translate(-228 -48)"></path>
-						</svg>
-					</div>
-					<div class="nav_lan_sel">
-						<a href="./index-en.html">EN</a>
-						<a href="./index.html">简</a>
-					</div>
-				</div>
-
-				<div class="nav_search" id="searchBtn">
-					<svg xmlns="http://www.w3.org/2000/svg" width="20.44" height="20.469" viewBox="0 0 20.44 20.469">
-						<defs>
-							<style>
-								.cls-1 {
-									fill: #fff;
-									fill-rule: evenodd;
-								}
-							</style>
-						</defs>
-						<path class="cls-1"
-							d="M1865.38,57.236l-3.93-3.932a9,9,0,1,0-1.71,1.715l3.92,3.931A1.214,1.214,0,0,0,1865.38,57.236Zm-15.73-4.725a6.6,6.6,0,0,1,0-9.308A6.583,6.583,0,1,1,1849.65,52.51Z"
-							transform="translate(-1845.31 -38.844)"></path>
-					</svg>
-				</div>
-
-				<div class="new-nav-search-box" id="searchBox">
-					<form action="./search.html" method="get">
-						<input type="text" name="keyword" class="new-nav-search-input" placeholder="Enter keywords...">
-						<button type="submit" class="new-nav-search-submit">Search</button>
-					</form>
-				</div>
-			</div>
-
-			<div class="mobile-menu-btn" id="mobileMenuBtn">
-				<span></span>
-				<span></span>
-				<span></span>
-			</div>
-		</div>
-	</div>
-
-	<div class="mobile-nav-overlay" id="mobileNavOverlay"></div>
-
-	<div class="mobile-nav-drawer" id="mobileNavDrawer">
-		<div class="mobile-nav-lang">
-			<a href="./index-en.html" class="active">EN</a>
-			<a href="./index.html">中文</a>
-		</div>
-		<div class="mobile-nav-item">
-			<a href="./index-en.html" class="mobile-nav-link">Home</a>
-		</div>
-		<div class="mobile-nav-item">
-			<a href="#" class="mobile-nav-link">Products & Services
-				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-					<path d="M6 9l6 6 6-6"/>
-				</svg>
-			</a>
-			<div class="mobile-nav-sub">
-				<div class="mobile-nav-sub-item"><a href="./chanpin1-en.html?id=6" class="mobile-nav-sub-link">Bulk Trade</a></div>
-				<div class="mobile-nav-sub-item"><a href="./chanpin1-en.html?id=1" class="mobile-nav-sub-link">Frontier Materials</a></div>
-				<div class="mobile-nav-sub-item"><a href="./chanpin1-en.html?id=4" class="mobile-nav-sub-link">AI & Robotics</a></div>
-				<div class="mobile-nav-sub-item"><a href="./chanpin1-en.html?id=5" class="mobile-nav-sub-link">Low-Altitude Economy</a></div>
-				<div class="mobile-nav-sub-item"><a href="./chanpin1-en.html?id=3" class="mobile-nav-sub-link">Communication & Networking</a></div>
-				<div class="mobile-nav-sub-item"><a href="./chanpin1-en.html?id=1" class="mobile-nav-sub-link">New Energy & Energy Storage</a></div>
-				<div class="mobile-nav-sub-item"><a href="./chanpin1-en.html?id=3" class="mobile-nav-sub-link">Security & Identification</a></div>
-				<div class="mobile-nav-sub-item"><a href="./yyal-nyjd-en.html" class="mobile-nav-sub-link">Smart Agriculture & Grain Storage</a></div>
-				<div class="mobile-nav-sub-item"><a href="./chanpin1-en.html?id=2" class="mobile-nav-sub-link">Digital Services & Platforms</a></div>
-				<div class="mobile-nav-sub-item"><a href="./chanpin1-en.html?id=7" class="mobile-nav-sub-link">Cultural & Creative IP</a></div>
-			</div>
-		</div>
-		<div class="mobile-nav-item">
-			<a href="#" class="mobile-nav-link">Application Scenarios
-				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-					<path d="M6 9l6 6 6-6"/>
-				</svg>
-			</a>
-			<div class="mobile-nav-sub">
-				<div class="mobile-nav-sub-item"><a href="./index-en.html#yycj" class="mobile-nav-sub-link">Off-Grid Cooling</a></div>
-				<div class="mobile-nav-sub-item"><a href="./index-en.html#yycj" class="mobile-nav-sub-link">Wireless Ad Hoc Network</a></div>
-			</div>
-		</div>
-		<div class="mobile-nav-item">
-			<a href="./index-en.html#cpxn" class="mobile-nav-link">Core Technology</a>
-		</div>
-		<div class="mobile-nav-item">
-			<a href="#lxwm" class="mobile-nav-link">Contact Us</a>
-		</div>
-	</div>
-
+	<div id="nav-container"></div>
+	<script src="./components/load-components.js"></script>
 	<script>
-		const searchBtn = document.getElementById('searchBtn');
-		const searchBox = document.getElementById('searchBox');
-
-		// 搜索框点击事件
-		searchBtn.addEventListener('click', function (e) {
-			e.stopPropagation();
-			searchBox.classList.toggle('active');
-			if (searchBox.classList.contains('active')) {
-				searchBox.querySelector('input').focus();
-			}
+		loadComponent('nav-container', './components/nav-en.html', function() {
+			initNav();
 		});
-
-		// 点击页面其他地方关闭搜索框
-		document.addEventListener('click', function () {
-			searchBox.classList.remove('active');
-		});
-
-		// 点击搜索框内部不关闭
-		searchBox.addEventListener('click', function (e) {
-			e.stopPropagation();
-		});
-
-		// ========== 移动端菜单交互 ==========
-		const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-		const mobileNavOverlay = document.getElementById('mobileNavOverlay');
-		const mobileNavDrawer = document.getElementById('mobileNavDrawer');
-		const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
-
-		function toggleMobileMenu() {
-			mobileMenuBtn.classList.toggle('active');
-			mobileNavOverlay.classList.toggle('active');
-			mobileNavDrawer.classList.toggle('active');
-		}
-
-		function closeMobileMenu() {
-			mobileMenuBtn.classList.remove('active');
-			mobileNavOverlay.classList.remove('active');
-			mobileNavDrawer.classList.remove('active');
-			document.querySelectorAll('.mobile-nav-item').forEach(item => {
-				item.classList.remove('open');
-			});
-		}
-
-		mobileMenuBtn.addEventListener('click', function (e) {
-			e.stopPropagation();
-			toggleMobileMenu();
-		});
-
-		mobileNavOverlay.addEventListener('click', function () {
-			closeMobileMenu();
-		});
-
-		mobileNavLinks.forEach(function (link) {
-			link.addEventListener('click', function (e) {
-				const hasSub = this.nextElementSibling && this.nextElementSibling.classList.contains('mobile-nav-sub');
-				if (hasSub) {
-					e.preventDefault();
-					this.parentElement.classList.toggle('open');
-				} else {
-					closeMobileMenu();
-				}
-			});
-		});
-
-		document.querySelectorAll('.mobile-nav-sub-link').forEach(function (link) {
-			link.addEventListener('click', function () {
-				closeMobileMenu();
-			});
-		});
-
-		document.querySelectorAll('.mobile-nav-lang a').forEach(function (link) {
-			link.addEventListener('click', function () {
-				closeMobileMenu();
-			});
-		});
-
-		window.addEventListener('resize', function () {
-			if (window.innerWidth >= 768) {
-				closeMobileMenu();
-			}
-		});
+	</script>
+		
 	</script>
 
 	<!-- 首图 -->
@@ -1324,7 +1084,7 @@
             transition: opacity 0.8s ease;
             cursor: pointer;
         `;
-				const imgUrl = news.imageUrlEn || '';
+				const imgUrl = getImageUrl(news.imageUrlEn || '');
 				const enTitle = news.titleEn || "No Title";
 
 				div.innerHTML = `
@@ -1408,7 +1168,14 @@
 		function setG1() { sessionStorage.setItem('G', '1'); }
 
 		function goProduct(id) {
-			if (getG() === 1) { window.location.href = './chanpin1-en.html?id=' + id } else { setG1(); window.location.href = './index-aboutus-en.html?id=' + id }
+			if (id === 4) {
+				window.location.href = './chanpin1-ai-en.html';
+			} else if (getG() === 1) {
+				window.location.href = './chanpin1-en.html?id=' + id;
+			} else {
+				setG1();
+				window.location.href = './index-aboutus-en.html?id=' + id;
+			}
 		}
 
 		// 容器获取
@@ -1442,7 +1209,7 @@
 						// 【关键】严格匹配接口返回的字段名
 						const nameEn = item.nameEn || '';
 						const titleEn = item.titleEn || '';
-						const imageUrlEn = item.imageUrlEn || '';
+						const imageUrlEn = getImageUrl(item.imageUrlEn || '');
 						const itemOneEn = item.itemOneEn || '';
 						const itemTwoEn = item.itemTwoEn || '';
 						const itemThreeEn = item.itemThreeEn || '';
@@ -1547,6 +1314,8 @@
 				});
 		}
 
+		let currentProductIndex = 0;
+
 		function bindSwitchEvent() {
 			const iconItems = document.querySelectorAll('.cp-icon-item');
 			iconItems.forEach(item => {
@@ -1556,12 +1325,17 @@
 				});
 				item.addEventListener('click', function () {
 					const index = parseInt(this.getAttribute('data-index'));
-					switchToItem(index);
+					if (index === currentProductIndex) {
+						goProduct(productListData[index].id);
+					} else {
+						switchToItem(index);
+					}
 				});
 			});
 		}
 
 		function switchToItem(index) {
+			currentProductIndex = index;
 			document.querySelectorAll('.cp-icon-item').forEach((el, idx) => {
 				el.classList.toggle('on', idx === index);
 			});
@@ -1694,8 +1468,7 @@
 		</div>
 	</div>
 
-	<!-- 轮播依赖 -->
-	<script src="https://cdn.bootcdn.net/ajax/libs/Swiper/4.5.1/js/swiper.min.js"></script>
+	
 
 	<script>
 		// 核心技术英文轮播全局实例
@@ -1732,7 +1505,7 @@
 							const imgLeftXsEl = document.getElementById('imgLeftXs');
 							const imgLeftYcEl = document.getElementById('imgLeftYc');
 							if (imgLeftXsEl && imgLeftYcEl) {
-								const leftImgUrl = data.imageUrlLeftEn || data.imageUrlLeft || '';
+								const leftImgUrl = getImageUrl(data.imageUrlLeftEn || data.imageUrlLeft || '');
 								imgLeftXsEl.src = leftImgUrl;
 								imgLeftYcEl.src = leftImgUrl;
 								console.log('左侧图片地址:', leftImgUrl);
@@ -1748,7 +1521,7 @@
 							const imgRightXsEl = document.getElementById('imgRightXs');
 							const imgRightYcEl = document.getElementById('imgRightYc');
 							if (imgRightXsEl && imgRightYcEl) {
-								const rightImgUrl = data.imageUrlEn || data.imageUrl || '';
+								const rightImgUrl = getImageUrl(data.imageUrlEn || data.imageUrl || '');
 								imgRightXsEl.src = rightImgUrl;
 								imgRightYcEl.src = rightImgUrl;
 								console.log('右侧图片地址:', rightImgUrl);
@@ -1808,7 +1581,7 @@
                                         style="width:100%; height:auto; overflow:hidden; position:relative; z-index:999;">
                                         <a href="${item.hrefToEn || '#'}" target="_blank"
                                             style="display:block; width:100%; cursor:pointer !important; pointer-events:auto !important;">
-                                            <img loading="lazy" src="${item.imageUrlEn || ''}"
+                                            <img loading="lazy" src="${getImageUrl(item.imageUrlEn || '')}"
                                                 alt="${item.titleEn || ''}"
                                                 style="width:100%; height:260px; object-fit:cover; display:block;">
                                         </a>
@@ -2032,7 +1805,7 @@
                 <div class="swiper-slide" style="width: 1249px; margin-right: 1px;">
                     <div class="hfo_box" style="display: flex; align-items: flex-start; height: 500px;">
                         <div class="public-img" style="width: 50%; height: 100%; overflow: hidden;">
-                            <img loading="lazy" src="${item.imageUrlEn || ''}" alt="${item.typeEn || ''}"
+                            <img loading="lazy" src="${getImageUrl(item.imageUrlEn || '')}" alt="${item.typeEn || ''}"
                                 style="width:100%;height:100%;object-fit: cover;object-position: center;">
                         </div>
                         <div class="gr" style="width:50%;height:100%;display: flex; flex-direction: column; align-items: flex-start !important; justify-content: flex-start; padding-left: 40px; padding-top: 80px; box-sizing: border-box;">

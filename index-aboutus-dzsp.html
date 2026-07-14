@@ -23,6 +23,7 @@
 	<link rel="stylesheet" type="text/css" href="./index_files/style.css">
 	<link rel="stylesheet" type="text/css" href="./index_files/g-style.css">
 	<link rel="stylesheet" type="text/css" href="./index_files/f-style.css">
+	<link rel="stylesheet" type="text/css" href="./components/nav.css">
 	<script src="./index_files/hm.js"></script>
 	<script src="./config1.js"></script>
 	<script src="./index_files/svg-inject.min.js" type="text/javascript"></script>
@@ -478,14 +479,13 @@
 		}
 
 		/* 搜索按钮样式 */
-		.nav_search {
-			cursor: pointer;
+		.nav_search { display: none !important; cursor: pointer;
 			padding-left: 22px;
 			border-left: 1px solid rgba(255, 255, 255, 0.4);
 		}
 
 		/* 搜索框样式 */
-		.new-nav-search-box {
+		.new-nav-search-box { display: none !important;
 			position: absolute;
 			top: 100%;
 			right: 22px;
@@ -740,38 +740,10 @@
 	<!-- 底部 -->
 		<!-- 包含：联系我们标题、公司信息（北京总部/海南公司/电话/邮箱） -->
 	<!-- ====================================================== -->
-	<footer style="background: url(./img/footer.jpg);background-size: cover; padding: 25px 0 0px;" id="lxwm">
-		<div class="container" style="color:#fff; padding:0 20px;">
-			<div class="gt" style="display:flex; justify-content:center; margin-bottom:15px;">
-				<h2 class="font50" style="font-size:28px; line-height:1.2; margin:0;"><bdo>联系我们</bdo></h2>
-			</div>
-
-			<div class="gm" style="display:flex; justify-content:center; margin-bottom:-90px;">
-
-				<div class="gm_r" style="text-align:center;">
-					<h3 class="font30 font-m" style="font-size:18px; margin:0 0 10px;">浩瑞绿色科技集团</h3>
-					<div class="g_p" style="font-size:13px; line-height:1.5;">
-						<p style="margin:0 0 5px;">北京总部：<bdo>北京市朝阳区百子湾东里大成国际9层 智慧生态前沿研究院</bdo></p>
-						<p style="margin:0 0 5px;">海南公司：<bdo>海南省海口市澄迈县海南生态软件园号A-22 浩瑞数智软件科技</bdo></p>
-						<p style="margin:0;">电 话：<bdo>+86-17301808315（CN）</bdo> | 业务咨询：<bdo>tech@jnsco.cn</bdo></p>
-					</div>
-				</div>
-			</div>
-			<div class="gb" style="display:flex; justify-content:space-between; align-items:center; border-top:1px solid rgba(255,255,255,0.15); padding-top:15px; font-size:12px;">
-				<div class="gb_l">
-					<p style="margin:0;">版权所有 浩瑞绿色科技  </p>
-					<a style="color:white;" href="https://beian.miit.gov.cn/#/Integrated/index"
-						target="_blank">京ICP备2026036471号</a>
-				</div>
-				<div class="gb_r">
-					<a href=" "></a>
-					<a href=" " target="_blank">隐私政策</a>
-					<a href=" " target="_blank">免责声明</a>
-				</div>
-			</div>
-		</div>
-
-	</footer>
+	<div id="footer-container"></div>
+	<script>
+		loadComponent('footer-container', './components/footer-zh.html');
+	</script>
 
 	<!-- 右侧浮窗 -->
 

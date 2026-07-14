@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html xml:lang="zh" lang="zh" style="--color: #005CE6; --vh: 708px; scroll-behavior: auto;">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="format-detection" content="telephone=no,telephone=no,email=no,adress=no">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <title>CRA-IP68 系列协作机器人 - 浩瑞绿色科技</title>
+    <meta name="keywords" content="CRA-IP68,协作机器人,防水防尘,IP68防护">
+    <meta name="description" content="CRA-IP68 系列协作机器人，IP68防护等级，专为高粉尘和高湿度的恶劣环境设计">
+    <link rel="shortcut icon" href="">
+    <link rel="stylesheet" type="text/css" href="./index_files/extend.css">
+    <link rel="stylesheet" type="text/css" href="./index_files/style.css">
+    <link rel="stylesheet" type="text/css" href="./index_files/g-style.css">
+    <link rel="stylesheet" type="text/css" href="./index_files/f-style.css">
+	<link rel="stylesheet" type="text/css" href="./components/nav.css">
+    <link rel="stylesheet" type="text/css" href="./index_files/common.css">
+    <script src="./index_files/hm.js"></script>
+    <script src="./config1.js"></script>
+    <script src="./index_files/svg-inject.min.js" type="text/javascript"></script>
+    <style type="text/css">
+        img[onload^="SVGInject("] {
+            visibility: hidden;
+        }
+    </style>
+    <link rel="stylesheet" href="./index_files/yang-product.css">
+    <link rel="stylesheet" href="./index_files/zstyle.css">
+    <link rel="stylesheet" href="./index_files/layui.css">
+    <link rel="stylesheet" href="./index_files/share.min.css">
+    <link rel="stylesheet" type="text/css" href="./index_files/liMarquee.css">
+    <link rel="stylesheet" type="text/css" href="./index_files/mobile.css">
+
+    <style>
+        html, body {
+            max-width: 100vw;
+            overflow-x: hidden;
+            margin: 0;
+            padding: 0;
+            background: #fff;
+            color: #333;
+            font-family: "Microsoft YaHei", "SimSun", "宋体", sans-serif;
+        }
+
+        .product-detail {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .hero-section {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 160px 40px;
+            background: linear-gradient(135deg, #f5f8fc 0%, #e8f0fe 100%);
+            border-radius: 16px;
+            margin-bottom: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 55%;
+            height: 100%;
+            background-image: url('https://aka.doubaocdn.com/s/jUct1wleN1');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+            opacity: 0.85;
+        }
+
+        .hero-section .hero-content {
+            flex: 1;
+            text-align: left;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-section h1 {
+            font-size: 42px;
+            font-weight: bold;
+            color: #0a3a8f;
+            margin: 0 0 15px;
+        }
+
+        .hero-section .subtitle {
+            font-size: 20px;
+            color: #1967c2;
+            margin: 0 0 20px;
+        }
+
+        .hero-section .description {
+            font-size: 16px;
+            color: #666;
+            line-height: 1.8;
+            margin: 0 0 30px;
+            max-width: 600px;
+        }
+
+        .section-title {
+            font-size: 28px;
+            font-weight: bold;
+            color: #0a3a8f;
+            margin: 0 0 25px;
+            text-align: center;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .section-title::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, #004a99, #1967c2);
+            border-radius: 2px;
+        }
+
+        .about-section {
+            text-align: center;
+            padding: 50px 20px;
+            margin-bottom: 50px;
+        }
+
+        .about-section p {
+            font-size: 16px;
+            color: #444;
+            line-height: 2;
+            margin: 0 0 15px;
+            max-width: 800px;
+            display: inline-block;
+            text-align: justify;
+        }
+
+        .versions-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-bottom: 50px;
+        }
+
+        .version-card {
+            background: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+            border: 1px solid #e8e8e8;
+            transition: all 0.3s ease;
+        }
+
+        .version-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+        }
+
+        .version-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: contain;
+            background: #f5f8fc;
+        }
+
+        .version-card .version-info {
+            padding: 20px;
+        }
+
+        .version-card .version-info h3 {
+            font-size: 20px;
+            font-weight: bold;
+            color: #0a3a8f;
+            margin: 0 0 10px;
+        }
+
+        .version-card .version-info .spec-item {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.8;
+            margin: 0 0 5px;
+        }
+
+        .version-card .version-info .spec-item strong {
+            color: #1967c2;
+        }
+
+        .features-section {
+            background: #f5f8fc;
+            padding: 50px 20px;
+            border-radius: 12px;
+            margin-bottom: 50px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .feature-card {
+            background: #fff;
+            border-radius: 12px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+            border: 1px solid #e8e8e8;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-card img {
+            width: 100%;
+            max-height: 150px;
+            object-fit: contain;
+            margin-bottom: 15px;
+        }
+
+        .feature-card h3 {
+            font-size: 18px;
+            font-weight: bold;
+            color: #0a3a8f;
+            margin: 0 0 10px;
+        }
+
+        .feature-card p {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.6;
+            margin: 0;
+            text-align: left;
+        }
+
+        .protection-section {
+            margin-bottom: 50px;
+        }
+
+        .protection-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+        }
+
+        .protection-item {
+            background: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+            border: 1px solid #e8e8e8;
+        }
+
+        .protection-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .protection-item .content {
+            padding: 20px;
+        }
+
+        .protection-item h3 {
+            font-size: 18px;
+            font-weight: bold;
+            color: #0a3a8f;
+            margin: 0 0 10px;
+        }
+
+        .protection-item p {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .performance-section {
+            background: linear-gradient(135deg, #004a99 0%, #1967c2 100%);
+            padding: 50px 20px;
+            border-radius: 12px;
+            margin-bottom: 50px;
+            color: #fff;
+        }
+
+        .performance-section .section-title {
+            color: #fff;
+        }
+
+        .performance-section .section-title::after {
+            background: #fff;
+        }
+
+        .performance-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            text-align: center;
+        }
+
+        .performance-item {
+            padding: 20px;
+        }
+
+        .performance-item .value {
+            font-size: 48px;
+            font-weight: bold;
+            margin: 0 0 10px;
+        }
+
+        .performance-item .label {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.8);
+            margin: 0;
+        }
+
+        .specs-section {
+            margin-bottom: 50px;
+        }
+
+        .specs-section h3 {
+            font-size: 20px;
+            font-weight: bold;
+            color: #0a3a8f;
+            margin: 0 0 20px;
+        }
+
+        .spec-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+            border: 1px solid #e8e8e8;
+        }
+
+        .spec-table th {
+            background: linear-gradient(90deg, #004a99, #1967c2);
+            color: #fff;
+            padding: 12px 15px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 14px;
+            white-space: nowrap;
+        }
+
+        .spec-table td {
+            padding: 10px 15px;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 14px;
+            color: #444;
+            text-align: center;
+        }
+
+        .spec-table tr:nth-child(even) td {
+            background: #fafafa;
+        }
+
+        .spec-table tr:hover td {
+            background: #f0f5fc;
+        }
+
+        .nav-back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.2);
+            color: #fff;
+            padding: 8px 20px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            margin-right: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .nav-back-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        @media (max-width: 900px) {
+            .hero-section {
+                flex-direction: column;
+                padding: 40px 20px;
+            }
+
+            .hero-section .hero-content {
+                text-align: center;
+            }
+
+            .hero-section::before {
+                width: 100%;
+                height: 50%;
+                background-position: center center;
+                top: auto;
+                bottom: 0;
+            }
+
+            .hero-section h1 {
+                font-size: 32px;
+            }
+
+            .versions-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .protection-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .performance-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .versions-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-section h1 {
+                font-size: 28px;
+            }
+
+            .section-title {
+                font-size: 22px;
+            }
+
+            .performance-item .value {
+                font-size: 36px;
+            }
+
+            .spec-table th,
+            .spec-table td {
+                padding: 8px 6px;
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="nav-container"></div>
+	<script src="./components/load-components.js"></script>
+	<script>
+		loadComponent('nav-container', './components/nav-zh.html', function() {
+			initNav();
+		});
+	</script>
+
+    <script>
+        const searchBtn = document.getElementById('searchBtn');
+        const searchBox = document.getElementById('searchBox');
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const mobileNavPanel = document.getElementById('mobileNavPanel');
+
+        function toggleMobileMenu() {
+            if (mobileMenuBtn && mobileNavPanel) {
+                mobileMenuBtn.classList.toggle('active');
+                mobileNavPanel.classList.toggle('active');
+            }
+        }
+
+        searchBtn.addEventListener('click', function (e) {
+            e.stopPropagation();
+            searchBox.classList.toggle('active');
+            if (searchBox.classList.contains('active')) {
+                searchBox.querySelector('input').focus();
+            }
+        });
+
+        document.addEventListener('click', function () {
+            searchBox.classList.remove('active');
+            if (mobileMenuBtn && mobileNavPanel) {
+                mobileMenuBtn.classList.remove('active');
+                mobileNavPanel.classList.remove('active');
+            }
+        });
+
+        searchBox.addEventListener('click', function (e) {
+            e.stopPropagation();
+        });
+    </script>
+
+    <div class="product-detail">
+        <div class="hero-section">
+            <div class="hero-content">
+                <h1>CRA-IP68 系列协作机器人</h1>
+                <p class="subtitle">极致防护 历久弥坚</p>
+                <p class="description">CRA-IP68 系列通过提高防护标准增强了环境适应性，专为高粉尘和高湿度的恶劣环境设计。通过 SGS 的 IEC 60529 认证，符合 IP68 防水标准。</p>
+            </div>
+        </div>
+
+        <div class="about-section">
+            <h2 class="section-title">关于 CRA-IP68 系列</h2>
+            <p>CRA-IP68 系列通过提高防护标准增强了环境适应性，专为高粉尘和高湿度的恶劣环境设计。它支持拖拽式教学控制、图形编程和代码编程，操作人员无需专业背景，即可快速上手。</p>
+            <p>CRA-IP68 系列延续了 CRA 系列广受好评的性能、功能、可靠性和易用性，完美适配高湿度、多尘、水雾作业环境，满足切割、打磨等多种多尘环境应用。</p>
+        </div>
+
+        <h2 class="section-title">产品型号</h2>
+        <div class="versions-grid">
+            <div class="version-card">
+                <img src="https://aka.doubaocdn.com/s/0M3N1wleN1" alt="CR5AP">
+                <div class="version-info">
+                    <h3>CR5AP</h3>
+                    <div class="spec-item"><strong>最大负载:</strong> 5kg</div>
+                    <div class="spec-item"><strong>工作半径:</strong> 900mm</div>
+                    <div class="spec-item"><strong>防护等级:</strong> IP68</div>
+                </div>
+            </div>
+            <div class="version-card">
+                <img src="https://aka.doubaocdn.com/s/DfI41wleN1" alt="CR10AP">
+                <div class="version-info">
+                    <h3>CR10AP</h3>
+                    <div class="spec-item"><strong>最大负载:</strong> 10kg</div>
+                    <div class="spec-item"><strong>工作半径:</strong> 1,300mm</div>
+                    <div class="spec-item"><strong>防护等级:</strong> IP68</div>
+                </div>
+            </div>
+            <div class="version-card">
+                <img src="https://aka.doubaocdn.com/s/xau81wleN1" alt="CR20AP">
+                <div class="version-info">
+                    <h3>CR20AP</h3>
+                    <div class="spec-item"><strong>最大负载:</strong> 20kg</div>
+                    <div class="spec-item"><strong>工作半径:</strong> 1,700mm</div>
+                    <div class="spec-item"><strong>防护等级:</strong> IP68</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="features-section">
+            <h2 class="section-title">防护特性</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <img src="https://aka.doubaocdn.com/s/BTGK1wleN1" alt="IP68防护等级">
+                    <h3>IP68 防护等级</h3>
+                    <p>通过 SGS 的 IEC 60529 认证，通过严格的 72 小时测试，符合 IP68 防水标准，可在恶劣环境下稳定运行。</p>
+                </div>
+                <div class="feature-card">
+                    <img src="https://aka.doubaocdn.com/s/qnbn1wleN1" alt="防尘设计">
+                    <h3>防尘设计</h3>
+                    <p>满足切割、打磨等多种多尘环境应用，防止灰尘进入机器人内部影响正常运行。</p>
+                </div>
+                <div class="feature-card">
+                    <img src="https://aka.doubaocdn.com/s/cFyN1wleN1" alt="抗油污设计">
+                    <h3>抗油污设计</h3>
+                    <p>所有外部塑料部件均采用氟橡胶制成，具备卓越的化学稳定性和强大的耐腐蚀性。</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="protection-section">
+            <h2 class="section-title">防护技术详解</h2>
+            <div class="protection-grid">
+                <div class="protection-item">
+                    <img src="https://aka.doubaocdn.com/s/Y5cU1wleN1" alt="正压充气孔">
+                    <div class="content">
+                        <h3>内置气动系统</h3>
+                        <p>可往机器人内部充气保证正压，增强机器人的密封性，有效防止外界粉尘和液体进入。</p>
+                    </div>
+                </div>
+                <div class="protection-item">
+                    <img src="https://aka.doubaocdn.com/s/CQhk1wleN1" alt="IP54控制柜">
+                    <div class="content">
+                        <h3>IP54 等级控制柜</h3>
+                        <p>控制柜采用 IP54 防护等级设计，提高安全性和在极端条件下的适应性，使 CRA-IP68 系列能够完全胜任严苛任务。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="performance-section">
+            <h2 class="section-title">卓越性能，始终如一</h2>
+            <div class="performance-grid">
+                <div class="performance-item">
+                    <div class="value">2 m/s</div>
+                    <div class="label">最大线速度</div>
+                </div>
+                <div class="performance-item">
+                    <div class="value">&lt; 0.4 mm</div>
+                    <div class="label">绝对定位精度</div>
+                </div>
+                <div class="performance-item">
+                    <div class="value">±0.02 mm</div>
+                    <div class="label">重复定位精度高达</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="specs-section">
+            <h3>产品参数</h3>
+            <table class="spec-table">
+                <thead>
+                    <tr>
+                        <th colspan="2">产品名称</th>
+                        <th>CR5AP</th>
+                        <th>CR10AP</th>
+                        <th>CR20AP</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td colspan="2"><strong>本体重量</strong></td><td>25.5kg</td><td>40.5kg</td><td>74kg</td></tr>
+                    <tr><td colspan="2"><strong>最大负载</strong></td><td>5kg</td><td>10kg</td><td>20kg</td></tr>
+                    <tr><td colspan="2"><strong>工作半径(mm)</strong></td><td>900mm</td><td>1300mm</td><td>1700mm</td></tr>
+                    <tr><td colspan="2"><strong>最大直线速度</strong></td><td>2 m/s</td><td>2 m/s</td><td>2 m/s</td></tr>
+                    <tr><td colspan="2"><strong>绝对定位精度</strong></td><td>&lt; 0.4 mm</td><td>&lt; 0.4 mm</td><td>&lt; 0.4 mm</td></tr>
+                    <tr><td colspan="2"><strong>重复定位精度</strong></td><td>±0.02mm</td><td>±0.03mm</td><td>±0.05mm</td></tr>
+                    <tr><td colspan="2"><strong>防护等级</strong></td><td>IP68</td><td>IP68</td><td>IP68</td></tr>
+                    <tr><td colspan="2"><strong>控制柜防护等级</strong></td><td colspan="3">IP54</td></tr>
+                    <tr><td colspan="2"><strong>噪声</strong></td><td>70dB(A)</td><td>70dB(A)</td><td>70dB(A)</td></tr>
+                    <tr><td colspan="2"><strong>温度范围</strong></td><td>0 ℃～ 50 ℃</td><td>0 ℃～ 50 ℃</td><td>0 ℃～ 50 ℃</td></tr>
+                    <tr><td colspan="2"><strong>安装方式</strong></td><td colspan="3">正装</td></tr>
+                    <tr><td colspan="2"><strong>材质</strong></td><td colspan="3">铝合金、氟橡胶、ABS 塑料</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div id="footer-container"></div>
+	<script>
+		loadComponent('footer-container', './components/footer-zh.html');
+	</script>
+
+    <div class="gpop" style="display: block;">
+        <a href="#lxwm" class="pop_a cur1">
+            <div class="pop_a_img">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" data-inject-url="https://www.i2cool.com.cn/static/cms/images/pop_r_svg.svg" loading="lazy">
+                    <defs>
+                        <style>
+                            .cls-1 {
+                                fill: #2260bc;
+                                fill-rule: evenodd;
+                            }
+                        </style>
+                    </defs>
+                    <path class="cls-1" d="M186.357,199.5a0.858,0.858,0,0,1-.857-0.858V178.071a2.571,2.571,0,0,1,2.571-2.571h18.857a2.571,2.571,0,0,1,2.572,2.571v13.714a2.572,2.572,0,0,1-2.572,2.572H192.991a0.861,0.861,0,0,0-.558.206l-5.519,4.73a0.862,0.862,0,0,1-.557.207h0Zm1.714-22.286a0.857,0.857,0,0,0-.857.857v18.708l4.1-3.514a2.571,2.571,0,0,1,1.673-.623h13.937a0.856,0.856,0,0,0,.857-0.857V178.071a0.857,0.857,0,0,0-.857-0.857H188.071Zm14.572,6H192.357a0.857,0.857,0,0,1,0-1.714h10.286A0.857,0.857,0,0,1,202.643,183.214ZM197.5,187.5h-5.143a0.858,0.858,0,0,1,0-1.715H197.5A0.858,0.858,0,0,1,197.5,187.5Zm5.143,0h-2.572a0.858,0.858,0,0,1,0-1.715h2.572A0.858,0.858,0,0,1,202.643,187.5Z" transform="translate(-185.5 -175.5)"></path>
+                </svg>
+                <p>联系我们 </p>
+            </div>
+        </a>
+        <a class="pop_a cur2">
+            <div class="pop_a_img">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="15.5" viewBox="0 0 24 15.5" data-inject-url="" loading="lazy">
+                    <defs>
+                        <style>
+                            .cls-1 {
+                                fill: #2260bc;
+                                fill-rule: evenodd;
+                            }
+                        </style>
+                    </defs>
+                    <path class="cls-1" d="M245.179,175.5a0.857,0.857,0,0,1-.857.857H232.857a0.857,0.857,0,0,1-.857-.857V172.143a0.857,0.857,0,0,1,.857-.857H244.321a0.857,0.857,0,0,1,.857.857Zm0-8.571a0.857,0.857,0,0,1-.857.857H232.857a0.857,0.857,0,0,1-.857-.857V163.571a0.857,0.857,0,0,1,.857-.857H244.321a0.857,0.857,0,0,1,.857.857Zm0-8.571a0.857,0.857,0,0,1-.857.857H232.857a0.857,0.857,0,0,1-.857-.857V155a0.857,0.857,0,0,1,.857-.857H244.321a0.857,0.857,0,0,1,.857.857Z" transform="translate(-232 -154.143)"></path>
+                </svg>
+                <p>返回顶部</p>
+            </div>
+        </a>
+    </div>
+
+    <script>
+        document.querySelector('.pop_a.cur2').addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    </script>
+
+    <script src="./index_files/layui.js"></script>
+    <script src="./index_files/extend.js" type="text/javascript"></script>
+    <script src="./index_files/public.js" type="text/javascript"></script>
+    <script src="./index_files/jquery.pjax.js" type="text/javascript"></script>
+    <script>
+        $(document).on('click', 'a', function () {
+            href = $(this).attr('href');
+            if ($(this).attr('href') == '') {
+                event.preventDefault();
+            } else if (href.startsWith('http://') || href.startsWith('https://')) {
+                $(this).attr('target', '_blank');
+            }
+        })
+    </script>
+
+    <script src="./index_files/jquery.liMarquee.js" type="text/javascript" charset="utf-8"></script>
+</body>
+</html>

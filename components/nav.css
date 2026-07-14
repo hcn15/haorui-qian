@@ -1,0 +1,683 @@
+/**
+ * 导航栏样式文件
+ * 包含桌面端导航和移动端导航的完整样式定义
+ * 主色调：蓝紫色渐变 (#004a99 -> #1967c2)
+ */
+
+/* ==================== 基础重置样式 ==================== */
+.new-nav-wrap * {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	list-style: none;
+	text-decoration: none;
+	font-family: "Microsoft YaHei", "SimSun", "宋体", sans-serif !important;
+}
+
+/* ==================== 桌面端导航 ==================== */
+
+/**
+ * 导航栏主容器
+ * 宽度100%，固定高度60px，蓝紫色渐变背景
+ */
+.new-nav-wrap {
+	width: 100%;
+	background: linear-gradient(90deg, #004a99, #1967c2);
+	height: 60px;
+	display: flex;
+	align-items: center;
+	padding: 0 22px;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+	position: relative;
+	z-index: 9999;
+}
+
+/**
+ * Logo容器
+ * 左侧定位，flex布局垂直居中
+ */
+.new-nav-logo {
+	display: flex;
+	align-items: center;
+	height: 60px;
+	margin-right: 30px;
+	margin-left: 50px;
+}
+
+/**
+ * Logo图片
+ * 固定高度28px，宽度自适应
+ */
+.new-nav-logo img {
+	height: 28px;
+	width: auto;
+}
+
+/**
+ * 导航主内容区域
+ * flex:1占满剩余空间，靠右对齐
+ */
+.new-nav-main {
+	flex: 1;
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+	height: 60px;
+}
+
+/**
+ * 导航项列表
+ * 水平排列，间距36px，禁止换行
+ */
+.new-nav-list {
+	display: flex;
+	align-items: center;
+	gap: 36px;
+	white-space: nowrap;
+	height: 60px;
+}
+
+/**
+ * 单个导航项
+ * 相对定位（用于下拉菜单定位），高度60px
+ */
+.new-nav-item {
+	height: 60px;
+	display: flex;
+	align-items: center;
+	position: relative;
+	padding: 0 10px;
+}
+
+/**
+ * 导航链接样式
+ * 白色文字，17px字号，flex布局居中对齐
+ */
+.new-nav-link {
+	display: flex;
+	align-items: center;
+	gap: 5px;
+	color: #f0f7ff;
+	font-size: 17px;
+	transition: all 0.25s ease;
+	text-decoration: none;
+}
+
+/**
+ * 导航链接悬停状态
+ * 文字变为纯白，去除下划线
+ */
+.new-nav-link:hover {
+	color: #ffffff;
+	border-bottom: none;
+	padding-bottom: 0;
+}
+
+/**
+ * 下拉菜单箭头（伪元素）
+ * 使用border绘制向下的小三角
+ */
+.new-nav-link::after {
+	content: "";
+	display: block !important;
+	width: 0;
+	height: 0;
+	border-left: 4px solid transparent;
+	border-right: 4px solid transparent;
+	border-top: 4px solid #f0f7ff;
+	opacity: 1 !important;
+	visibility: visible !important;
+	pointer-events: none;
+	transition: transform 0.2s;
+}
+
+/**
+ * 导航项悬停时箭头旋转180度
+ * 表示菜单展开
+ */
+.new-nav-item:hover .new-nav-link::after {
+	border-top-color: #fff;
+	transform: rotate(180deg);
+}
+
+/**
+ * 无子菜单的导航项隐藏箭头
+ */
+.new-nav-item.no-dropdown .new-nav-link::after {
+	display: none !important;
+}
+
+/**
+ * 下拉菜单容器
+ * 绝对定位在导航项下方，白色背景，圆角阴影
+ */
+.new-nav-sub {
+	position: absolute;
+	top: 100%;
+	left: 0;
+	background: #ffffff;
+	padding: 12px 0;
+	display: none;
+	min-width: 140px;
+	border-radius: 4px;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+	z-index: 99999;
+}
+
+/**
+ * 鼠标悬停时显示下拉菜单
+ */
+.new-nav-item:hover .new-nav-sub {
+	display: block;
+}
+
+/**
+ * 下拉菜单项
+ * 内边距9px 18px，悬停背景变化
+ */
+.new-nav-sub-item {
+	padding: 9px 18px;
+	transition: background 0.2s;
+}
+
+/**
+ * 下拉菜单项悬停状态
+ * 浅灰色背景
+ */
+.new-nav-sub-item:hover {
+	background: #f5f8fc;
+}
+
+/**
+ * 下拉菜单链接
+ * 深灰色文字，15px字号
+ */
+.new-nav-sub-link {
+	color: #222222;
+	font-size: 15px;
+	text-decoration: none;
+}
+
+/**
+ * 导航右侧区域（语言切换、搜索）
+ * 靠右排列，间距22px
+ */
+.new-nav-right {
+	display: flex;
+	align-items: center;
+	gap: 22px;
+	height: 60px;
+	margin-left: 32px;
+}
+
+/**
+ * 语言切换按钮
+ * 相对定位（用于下拉菜单定位）
+ */
+.nav_lan {
+	position: relative;
+	display: flex;
+	align-items: center;
+	cursor: pointer;
+	gap: 6px;
+}
+
+/**
+ * 语言切换下拉菜单
+ * 白色背景，圆角阴影，默认隐藏
+ */
+.nav_lan_sel {
+	position: absolute;
+	top: 100%;
+	left: 0;
+	background: #fff;
+	display: none;
+	border-radius: 4px;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+	z-index: 99999;
+}
+
+/**
+ * 悬停显示语言切换菜单
+ */
+.nav_lan:hover .nav_lan_sel {
+	display: block;
+}
+
+/**
+ * 语言切换链接
+ * 深色文字，15px字号，块状显示
+ */
+.nav_lan_sel a {
+	display: block;
+	padding: 7px 10px;
+	color: #222;
+	font-size: 15px;
+	text-decoration: none;
+}
+
+/**
+ * 语言切换链接悬停状态
+ */
+.nav_lan_sel a:hover {
+	background: #f5f8fc;
+}
+
+/**
+ * 搜索按钮（已隐藏）
+ */
+.nav_search {
+	display: none !important;
+	cursor: pointer;
+	padding-left: 22px;
+	border-left: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+/**
+ * 搜索框（已隐藏）
+ */
+.new-nav-search-box {
+	display: none !important;
+	position: absolute;
+	top: 100%;
+	right: 22px;
+	background: #ffffff;
+	padding: 10px;
+	border-radius: 4px;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+	display: none;
+	z-index: 99999;
+}
+
+/**
+ * 搜索框激活状态（已隐藏）
+ */
+.new-nav-search-box.active {
+	display: block;
+}
+
+/**
+ * 搜索输入框样式
+ */
+.new-nav-search-input {
+	width: 220px;
+	padding: 8px 12px;
+	border: 1px solid #ddd;
+	border-radius: 4px;
+	font-size: 15px;
+	outline: none;
+}
+
+/**
+ * 搜索输入框聚焦状态
+ */
+.new-nav-search-input:focus {
+	border-color: #1967c2;
+}
+
+/**
+ * 搜索提交按钮
+ */
+.new-nav-search-submit {
+	background: #1967c2;
+	color: #fff;
+	border: none;
+	padding: 8px 16px;
+	border-radius: 4px;
+	cursor: pointer;
+	margin-left: 6px;
+}
+
+/* ==================== 移动端导航（屏幕宽度≤767px） ==================== */
+
+@media (max-width: 767px) {
+	/**
+	 * 移动端导航栏容器
+	 * 高度缩小为48px，居中对齐
+	 */
+	.new-nav-wrap {
+		height: 48px !important;
+		padding: 0 10px !important;
+		margin-left: 0 !important;
+		margin-right: 0 !important;
+		flex: 1 !important;
+		justify-content: center !important;
+	}
+
+	/**
+	 * 移动端Logo图片
+	 * 高度缩小为20px
+	 */
+	.new-nav-logo img {
+		height: 20px !important;
+	}
+
+	/**
+	 * 移动端导航主区域
+	 * 绝对定位在右侧，高度48px
+	 */
+	.new-nav-main {
+		height: 48px !important;
+		position: absolute !important;
+		right: 10px !important;
+		top: 0 !important;
+	}
+
+	/**
+	 * 隐藏桌面端导航列表
+	 */
+	.new-nav-list {
+		display: none !important;
+	}
+
+	/**
+	 * 隐藏桌面端右侧区域（语言切换、搜索）
+	 */
+	.new-nav-right {
+		display: none !important;
+	}
+
+	/**
+	 * 移动端菜单按钮（汉堡菜单）
+	 * 显示为三个横线，点击展开侧边栏
+	 */
+	.mobile-menu-btn {
+		display: flex !important;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		width: 40px;
+		height: 40px;
+		cursor: pointer;
+		z-index: 10001;
+	}
+
+	/**
+	 * 汉堡菜单横线
+	 * 白色线条，间距3px
+	 */
+	.mobile-menu-btn span {
+		display: block;
+		width: 24px;
+		height: 2px;
+		background: #fff;
+		margin: 3px 0;
+		transition: all 0.3s;
+	}
+
+	/**
+	 * 汉堡菜单激活状态（变换为叉号）
+	 * 第一条横线旋转45度
+	 */
+	.mobile-menu-btn.active span:nth-child(1) {
+		transform: rotate(45deg) translateY(8px);
+	}
+
+	/**
+	 * 汉堡菜单激活状态
+	 * 中间横线隐藏
+	 */
+	.mobile-menu-btn.active span:nth-child(2) {
+		opacity: 0;
+	}
+
+	/**
+	 * 汉堡菜单激活状态
+	 * 第三条横线旋转-45度
+	 */
+	.mobile-menu-btn.active span:nth-child(3) {
+		transform: rotate(-45deg) translateY(-8px);
+	}
+
+	/**
+	 * 移动端导航遮罩层
+	 * 半透明黑色背景，默认隐藏
+	 */
+	.mobile-nav-overlay {
+		display: none;
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background: rgba(0, 0, 0, 0.6);
+		z-index: 9998;
+	}
+
+	/**
+	 * 遮罩层显示状态
+	 */
+	.mobile-nav-overlay.active {
+		display: block;
+	}
+
+	/**
+	 * 移动端侧边导航抽屉
+	 * 固定定位在右侧，默认移出屏幕
+	 */
+	.mobile-nav-drawer {
+		position: fixed;
+		top: 0;
+		right: -100%;
+		width: 85%;
+		max-width: 300px;
+		height: 100%;
+		background: #ffffff;
+		z-index: 9999;
+		transition: right 0.3s ease;
+		overflow-y: auto;
+		padding-top: 60px;
+	}
+
+	/**
+	 * 侧边导航抽屉显示状态
+	 * 从右侧滑入
+	 */
+	.mobile-nav-drawer.active {
+		right: 0;
+	}
+
+	/**
+	 * 移动端导航项
+	 * 底部边框分隔
+	 */
+	.mobile-nav-item {
+		border-bottom: 1px solid #f0f0f0;
+	}
+
+	/**
+	 * 最后一个导航项去除底部边框
+	 */
+	.mobile-nav-item:last-child {
+		border-bottom: none;
+	}
+
+	/**
+	 * 移动端导航链接
+	 * 左右布局，深色文字，16px字号
+	 */
+	.mobile-nav-link {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding: 15px 20px;
+		color: #333;
+		font-size: 16px;
+		text-decoration: none;
+		background: none;
+	}
+
+	/**
+	 * 移动端导航链接点击状态
+	 */
+	.mobile-nav-link:active {
+		background: #f5f5f5;
+	}
+
+	/**
+	 * 移动端导航链接箭头图标
+	 */
+	.mobile-nav-link svg {
+		width: 16px;
+		height: 16px;
+		fill: #999;
+		transition: transform 0.3s;
+	}
+
+	/**
+	 * 导航项展开时箭头旋转180度
+	 */
+	.mobile-nav-item.open .mobile-nav-link svg {
+		transform: rotate(180deg);
+	}
+
+	/**
+	 * 移动端子导航区域
+	 * 默认隐藏，浅灰色背景
+	 */
+	.mobile-nav-sub {
+		display: none;
+		background: #f9f9f9;
+	}
+
+	/**
+	 * 子导航展开状态
+	 */
+	.mobile-nav-item.open .mobile-nav-sub {
+		display: block;
+	}
+
+	/**
+	 * 移动端子导航项
+	 * 缩进40px，底部边框分隔
+	 */
+	.mobile-nav-sub-item {
+		padding: 12px 20px 12px 40px;
+		border-bottom: 1px solid #f0f0f0;
+	}
+
+	/**
+	 * 最后一个子导航项去除边框
+	 */
+	.mobile-nav-sub-item:last-child {
+		border-bottom: none;
+	}
+
+	/**
+	 * 移动端子导航链接
+	 * 灰色文字，14px字号
+	 */
+	.mobile-nav-sub-link {
+		color: #666;
+		font-size: 14px;
+		text-decoration: none;
+		display: block;
+	}
+
+	/**
+	 * 子导航链接点击状态
+	 */
+	.mobile-nav-sub-link:active {
+		color: #1967c2;
+	}
+
+	/**
+	 * 移动端导航关闭按钮
+	 * 右上角定位，36px正方形
+	 */
+	.mobile-nav-close-btn {
+		position: absolute;
+		top: 15px;
+		right: 15px;
+		width: 36px;
+		height: 36px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		cursor: pointer;
+		color: #999;
+		transition: color 0.2s;
+		z-index: 10000;
+	}
+
+	/**
+	 * 关闭按钮悬停状态
+	 */
+	.mobile-nav-close-btn:hover {
+		color: #333;
+	}
+
+	/**
+	 * 关闭按钮图标
+	 */
+	.mobile-nav-close-btn svg {
+		width: 24px;
+		height: 24px;
+	}
+
+	/**
+	 * 移动端语言切换区域
+	 * 底部边框分隔，flex布局
+	 */
+	.mobile-nav-lang {
+		padding: 15px 20px;
+		border-bottom: 1px solid #f0f0f0;
+		display: flex;
+		gap: 10px;
+	}
+
+	/**
+	 * 语言切换按钮
+	 * 灰色边框，圆角4px
+	 */
+	.mobile-nav-lang a {
+		color: #333;
+		font-size: 15px;
+		text-decoration: none;
+		padding: 5px 10px;
+		border: 1px solid #ddd;
+		border-radius: 4px;
+	}
+
+	/**
+	 * 当前语言激活状态
+	 * 蓝色背景，白色文字
+	 */
+	.mobile-nav-lang a.active {
+		background: #1967c2;
+		color: #fff;
+		border-color: #1967c2;
+	}
+}
+
+/* ==================== 桌面端响应式（屏幕宽度≥768px） ==================== */
+
+@media (min-width: 768px) {
+	/**
+	 * 隐藏移动端菜单按钮
+	 */
+	.mobile-menu-btn {
+		display: none !important;
+	}
+
+	/**
+	 * 隐藏移动端遮罩层
+	 */
+	.mobile-nav-overlay {
+		display: none !important;
+	}
+
+	/**
+	 * 隐藏移动端侧边导航抽屉
+	 */
+	.mobile-nav-drawer {
+		display: none !important;
+	}
+}
+
+/**
+ * 默认隐藏移动端菜单按钮（桌面端）
+ */
+.mobile-menu-btn {
+	display: none;
+}

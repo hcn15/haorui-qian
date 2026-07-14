@@ -1,9 +1,7 @@
-<!DOCTYPE html>
+﻿﻿﻿<!DOCTYPE html>
+
 <html xml:lang="zh" lang="zh" style="--color: #005CE6; --vh: 708px; scroll-behavior: auto;">
-<!-- ====================================================== -->
-<!-- 产品中心 - 通用产品子项页面 - chanpin1.html -->
-<!-- 通过URL参数 id 指定产品服务ID -->
-<!-- ====================================================== -->
+<!-- en --><!-- xml:lang="en" lang="en" -->
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -18,27 +16,32 @@
     <title>浩瑞绿色科技</title>
     <meta name="keywords" content="无电制冷技术,被动辐射制冷技术,节能新材料,降温制冷,绿色低碳">
     <meta name="description" content="">
+    <!-- ico -->
     <link rel="shortcut icon" href="">
+    <!-- 公共 -->
     <link rel="stylesheet" type="text/css" href="./index_files/extend.css">
     <link rel="stylesheet" type="text/css" href="./index_files/style.css">
     <link rel="stylesheet" type="text/css" href="./index_files/g-style.css">
     <link rel="stylesheet" type="text/css" href="./index_files/f-style.css">
+	<link rel="stylesheet" type="text/css" href="./components/nav.css">
     <script src="./index_files/hm.js"></script>
-    <script src="./config1.js"></script>
+	<script src="./config1.js"></script>
     <script src="./index_files/svg-inject.min.js" type="text/javascript"></script>
     <style type="text/css">
         img[onload^="SVGInject("] {
             visibility: hidden;
         }
     </style>
+    <!-- 公共结束 -->
     <link rel="stylesheet" href="./index_files/yang-product.css">
     <link rel="stylesheet" href="./index_files/zstyle.css">
     <link rel="stylesheet" href="./index_files/layui.css">
+
     <link rel="stylesheet" href="./index_files/share.min.css">
     <link rel="stylesheet" type="text/css" href="./index_files/liMarquee.css">
-    <link rel="stylesheet" type="text/css" href="./index_files/mobile.css">
 
     <script>
+        <meta name="baidu-site-verification" content="codeva-LR64T0uUwL" />
         var _hmt = _hmt || [];
         (function () {
             var hm = document.createElement("script");
@@ -47,7 +50,7 @@
             s.parentNode.insertBefore(hm, s);
         })();
     </script>
-    <script>
+    <script>https://tongji.baidu.com/main/homepage/10000676506
         var _hmt = _hmt || [];
         (function () {
             var hm = document.createElement("script");
@@ -56,6 +59,7 @@
             s.parentNode.insertBefore(hm, s);
         })();
     </script>
+
 
     <style>
         .join-box1 .container .right {
@@ -77,719 +81,16 @@
     <link id="layuicss-laydate" rel="stylesheet" href="./index_files/laydate.css" media="all">
     <link id="layuicss-layer" rel="stylesheet" href="./index_files/layer.css" media="all">
     <link id="layuicss-skincodecss" rel="stylesheet" href="./index_files/code.css" media="all">
-    <style>
-        /* 核心：下拉正常弹出，不被挤压 */
-        .nav_on,
-        .nav_on * {
-            overflow: visible !important;
-            -webkit-transform: translateZ(0);
-            transform: translateZ(0);
-        }
-
-        .nav_on li.on2,
-        .nav_on li {
-            position: relative !important;
-            padding: 0 !important;
-            margin: 0 !important;
-        }
-
-        .pro_nav2 {
-            position: absolute !important;
-            top: 100% !important;
-            left: 0 !important;
-            transform: none !important;
-            z-index: 9999999 !important;
-            margin-left: 0 !important;
-            top: 9999px !important;
-        }
-
-        .nav_on li:hover .pro_nav2 {
-            top: 100% !important;
-        }
-
-        /* 语言框基础样式 */
-        .nav_lan {
-            position: relative !important;
-            z-index: 1 !important;
-        }
-
-        .nav_lan_box {
-            background: transparent !important;
-            border: none !important;
-            outline: none !important;
-            box-shadow: none !important;
-        }
-
-        .nav_on li a {
-            position: relative !important;
-        }
-
-        .nav_on li a svg {
-            display: none !important;
-        }
-
-        /* 三角样式 */
-        .nav_on li.on2>a::after,
-        .nav_on li:nth-child(2)>a::after {
-            content: "" !important;
-            position: absolute !important;
-            right: -8px !important;
-            top: 50% !important;
-            transform: translateY(-50%) !important;
-            width: 0 !important;
-            height: 0 !important;
-            border-left: 4px solid transparent !important;
-            border-right: 4px solid transparent !important;
-            border-top: 4px solid #fff !important;
-            will-change: auto !important;
-            transform-origin: center !important;
-        }
-
-        /* 【终极强制：任何状态、任何鼠标操作，三角永久显示】 */
-        .nav_on li a::after,
-        .nav_on li:hover a::after,
-        .nav_on li:active a::after,
-        .nav_on li:focus a::after,
-        .nav_on li:visited a::after,
-        body:hover .nav_on li a::after {
-            opacity: 1 !important;
-            visibility: visible !important;
-            display: block !important;
-            pointer-events: none !important;
-        }
-
-        html,
-        body {
-            max-width: 100vw;
-            overflow-x: hidden;
-        }
-
-        @media (max-width: 768px) {
-            .new-nav-wrap {
-                padding: 0 10px;
-                height: 50px;
-            }
-            
-            .new-nav-logo {
-                margin-left: 0;
-                margin-right: 15px;
-                height: 50px;
-            }
-            
-            .new-nav-logo img {
-                height: 22px;
-            }
-            
-            .new-nav-list {
-                display: none;
-            }
-            
-            .new-nav-right {
-                margin-left: auto;
-                gap: 10px;
-                height: 50px;
-            }
-            
-            .nav_search {
-                border-left: none;
-                padding-left: 0;
-            }
-            
-            .nav_lan svg:first-child {
-                width: 16px;
-                height: 16px;
-            }
-            
-            .mobile-menu-btn {
-                display: flex;
-                position: absolute;
-                right: 10px;
-            }
-            
-            #fixedBanner {
-                height: 200px;
-            }
-            
-            #breadcrumb {
-                padding: 10px 15px;
-                font-size: 14px;
-            }
-            
-            #pageTitle {
-                font-size: 24px !important;
-            }
-            
-            #productItemBox {
-                width: 100% !important;
-                flex-wrap: nowrap !important;
-                overflow-x: auto !important;
-                -webkit-overflow-scrolling: touch;
-                justify-content: flex-start !important;
-                padding: 0 10px;
-                gap: 10px !important;
-            }
-            
-            #productItemBox .item {
-                flex: 0 0 auto !important;
-                width: 120px !important;
-            }
-            
-            .item .g_h3 svg {
-                width: 40px;
-                height: 40px;
-            }
-            
-            .item .txt h3 {
-                font-size: 14px !important;
-            }
-            
-            .item .txt p {
-                font-size: 12px !important;
-            }
-            
-            #tabBar {
-                gap: 20px !important;
-                padding: 0 15px;
-            }
-            
-            #tabBar > div:first-child {
-                gap: 20px !important;
-                font-size: 14px !important;
-            }
-            
-            #tabBar .tab-underline {
-                bottom: -8px !important;
-                height: 2px !important;
-            }
-            
-            #productImages img {
-                width: 100% !important;
-                height: auto !important;
-                object-fit: contain !important;
-            }
-            
-            #gywm img {
-                width: 100%;
-                height: auto;
-            }
-            
-            footer .container {
-                padding: 0 10px !important;
-            }
-            
-            footer .g_p {
-                font-size: 11px !important;
-            }
-            
-            .h_banner.on .h_b_box img {
-                margin-top: 30px !important;
-            }
-            
-            .h_banner.on .h_b_txt h1 {
-                font-size: 24px !important;
-            }
-            
-            .h_banner.on .h_b_txt p {
-                font-size: 14px !important;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            #fixedBanner {
-                height: 150px;
-            }
-            
-            #pageTitle {
-                font-size: 20px !important;
-            }
-            
-            #productItemBox .item {
-                width: 100px !important;
-            }
-            
-            #tabBar {
-                gap: 15px !important;
-            }
-            
-            #tabBar > div:first-child {
-                gap: 15px !important;
-                font-size: 13px !important;
-            }
-            
-            .h_banner.on .h_b_txt h1 {
-                font-size: 18px !important;
-            }
-            
-            .h_banner.on .h_b_txt p {
-                font-size: 12px !important;
-            }
-        }
-
-        /* ===================== 永久修复三角消失问题 ===================== */
-        .nav_on li.on2>a::after {
-            display: block !important;
-            opacity: 1 !important;
-            visibility: visible !important;
-            transition: none !important;
-            animation: none !important;
-        }
-    </style>
-
-    <style>
-        .h_banner {
-            position: relative;
-            z-index: 1;
-        }
-
-        /* 全新顶级命名空间，杜绝旧样式污染 */
-        .new-nav-wrap * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            list-style: none;
-            text-decoration: none;
-            font-family: "Microsoft YaHei", "SimSun", "宋体", sans-serif !important;
-        }
-
-        .new-nav-wrap {
-            width: 100%;
-            background: linear-gradient(90deg, #004a99, #1967c2);
-            height: 60px;
-            display: flex;
-            align-items: center;
-            padding: 0 22px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-            /* 关键：给父级导航设置相对定位，为子菜单做定位基准 */
-            position: relative;
-            z-index: 9999;
-        }
-
-        .new-nav-logo {
-            display: flex;
-            align-items: center;
-            height: 60px;
-            margin-right: 30px;
-            margin-left: 50px;
-        }
-
-        .new-nav-logo img {
-            height: 28px;
-            width: auto;
-        }
-
-        .new-nav-main {
-            flex: 1;
-            display: flex;
-            justify-content: flex-end;
-            align-items: center;
-            height: 60px;
-        }
-
-        .new-nav-list {
-            display: flex;
-            align-items: center;
-            gap: 36px;
-            white-space: nowrap;
-            height: 60px;
-        }
-
-        .new-nav-item {
-            height: 60px;
-            display: flex;
-            align-items: center;
-            position: relative;
-            padding: 0 10px;
-        }
-
-        .new-nav-link {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            color: #f0f7ff;
-            font-size: 17px;
-            transition: all 0.25s ease;
-            /* 去掉默认下划线 */
-            text-decoration: none;
-        }
-
-        .new-nav-link:hover {
-            color: #ffffff;
-            /* 去掉hover时的下划线 */
-            border-bottom: none;
-            padding-bottom: 0;
-        }
-
-        .new-nav-link::after {
-            content: "";
-            display: block !important;
-            width: 0;
-            height: 0;
-            border-left: 4px solid transparent;
-            border-right: 4px solid transparent;
-            border-top: 4px solid #f0f7ff;
-            opacity: 1 !important;
-            visibility: visible !important;
-            pointer-events: none;
-            transition: transform 0.2s;
-        }
-
-        .new-nav-item:hover .new-nav-link::after {
-            border-top-color: #fff;
-            transform: rotate(180deg);
-        }
-
-        .new-nav-item.no-dropdown .new-nav-link::after {
-            display: none !important;
-        }
-
-        .new-nav-sub {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            background: #ffffff;
-            padding: 12px 0;
-            display: none;
-            min-width: 140px;
-            border-radius: 4px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
-            /* 确保子菜单层级足够高 */
-            z-index: 99999;
-        }
-
-        .new-nav-item:hover .new-nav-sub {
-            display: block;
-        }
-
-        .new-nav-sub-item {
-            padding: 9px 18px;
-            transition: background 0.2s;
-        }
-
-        .new-nav-sub-item:hover {
-            background: #f5f8fc;
-        }
-
-        .new-nav-sub-link {
-            color: #222222;
-            font-size: 15px;
-            text-decoration: none;
-        }
-
-        .new-nav-right {
-            display: flex;
-            align-items: center;
-            gap: 22px;
-            height: 60px;
-            margin-left: 32px;
-        }
-
-        /* 语言下拉菜单样式 */
-        .nav_lan {
-            position: relative;
-            display: flex;
-            align-items: center;
-            cursor: pointer;
-            /* 保持和之前一致的间距 */
-            gap: 6px;
-        }
-
-        .nav_lan_sel {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            background: #fff;
-            display: none;
-            border-radius: 4px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
-            /* 关键：设置足够高的层级，确保在所有内容之上 */
-            z-index: 99999;
-        }
-
-        .nav_lan:hover .nav_lan_sel {
-            display: block;
-        }
-
-        .nav_lan_sel a {
-            display: block;
-            padding: 7px 10px;
-            color: #222;
-            font-size: 15px;
-            text-decoration: none;
-        }
-
-        .nav_lan_sel a:hover {
-            background: #f5f8fc;
-        }
-
-        /* 搜索按钮样式 */
-        .nav_search {
-            cursor: pointer;
-            padding-left: 22px;
-            border-left: 1px solid rgba(255, 255, 255, 0.4);
-        }
-
-        /* 搜索框样式 */
-        .new-nav-search-box {
-            position: absolute;
-            top: 100%;
-            right: 22px;
-            background: #ffffff;
-            padding: 10px;
-            border-radius: 4px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
-            display: none;
-            z-index: 99999;
-        }
-
-        .new-nav-search-box.active {
-            display: block;
-        }
-
-        .new-nav-search-input {
-            width: 220px;
-            padding: 8px 12px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 15px;
-            outline: none;
-        }
-
-        .new-nav-search-input:focus {
-            border-color: #1967c2;
-        }
-
-        .new-nav-search-submit {
-            background: #1967c2;
-            color: #fff;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 4px;
-            cursor: pointer;
-            margin-left: 6px;
-        }
-        
-        .mobile-menu-btn {
-            display: none;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            width: 40px;
-            height: 40px;
-            background: none;
-            border: none;
-            cursor: pointer;
-            padding: 0;
-            margin-right: 10px;
-        }
-        
-        .mobile-menu-btn span {
-            display: block;
-            width: 24px;
-            height: 2px;
-            background: #fff;
-            margin: 3px 0;
-            transition: all 0.3s ease;
-        }
-        
-        .mobile-menu-btn.active span:nth-child(1) {
-            transform: rotate(-45deg) translate(-5px, 6px);
-        }
-        
-        .mobile-menu-btn.active span:nth-child(2) {
-            opacity: 0;
-        }
-        
-        .mobile-menu-btn.active span:nth-child(3) {
-            transform: rotate(45deg) translate(-5px, -6px);
-        }
-        
-        .mobile-nav-panel {
-            display: none;
-            position: fixed;
-            top: 50px;
-            left: 0;
-            width: 100%;
-            background: #004a99;
-            z-index: 9998;
-            padding: 15px 0;
-        }
-        
-        .mobile-nav-panel.active {
-            display: block;
-        }
-        
-        .mobile-nav-list {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-        
-        .mobile-nav-list li {
-            padding: 12px 20px;
-        }
-        
-        .mobile-nav-list li a {
-            color: #fff;
-            text-decoration: none;
-            font-size: 16px;
-        }
-        
-        .mobile-nav-list li a:hover {
-            color: #e0e0e0;
-        }
-    </style>
 </head>
 
-<body>
-    <div class="new-nav-wrap">
-        <div class="new-nav-logo">
-            <a href="./index.html">
-                <img src="./img/JSlogo-beb0d75f.png" alt="logo">
-            </a>
-        </div>
-
-        <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
-            <span></span>
-            <span></span>
-            <span></span>
-        </button>
-
-        <div class="mobile-nav-panel" id="mobileNavPanel">
-            <ul class="mobile-nav-list">
-                <li><a href="./index.html">首页</a></li>
-                <li><a href="./index.html#cpfw">产品服务</a></li>
-                <li><a href="./index.html#yycj">应用场景</a></li>
-                <li><a href="./index.html#cpxn">核心技术</a></li>
-                <li><a href="#lxwm">联系我们</a></li>
-                <li style="border-top:1px solid rgba(255,255,255,0.1); margin-top:10px; padding-top:10px;">
-                    <a href="./chanpin1-en.html">EN</a>
-                </li>
-            </ul>
-        </div>
-
-        <div class="new-nav-main">
-            <ul class="new-nav-list">
-                <li class="new-nav-item no-dropdown">
-                    <a href="./index.html" class="new-nav-link">首页</a>
-                </li>
-                <li class="new-nav-item">
-                    <a href="#" class="new-nav-link">产品服务</a>
-                    <div class="new-nav-sub" id="navProductSub"></div>
-                </li>
-                <li class="new-nav-item">
-                    <a href="javascript:void(0);" class="new-nav-link">应用场景</a>
-                    <div class="new-nav-sub">
-                        <div class="new-nav-sub-item"><a href="./index.html#yycj" class="new-nav-sub-link">无电制冷</a></div>
-                        <div class="new-nav-sub-item"><a href="./index.html#yycj" class="new-nav-sub-link">无线自组网</a></div>
-                    </div>
-                </li>
-                <li class="new-nav-item no-dropdown">
-                    <a href="./index.html#cpxn" class="new-nav-link">核心技术</a>
-                </li>
-                <li class="new-nav-item no-dropdown">
-                    <a href="#lxwm" class="new-nav-link">联系我们</a>
-                </li>
-            </ul>
-
-            <div class="new-nav-right">
-                <!-- 完全原样搬入对方的语言栏代码，三角尺寸已调整为和菜单其他下拉箭头一致 -->
-                <div class="nav_lan">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20.84" height="20.812" viewBox="0 0 20.84 20.812">
-                        <defs>
-                            <style>
-                                .cls-1 {
-                                    fill: #fff;
-                                    fill-rule: evenodd;
-                                }
-                            </style>
-                        </defs>
-                        <path class="cls-1"
-                            d="M1743.42,40.832a10.417,10.417,0,1,0,10.41,10.416A10.427,10.427,0,0,0,1743.42,40.832Zm7.42,6.314h-3.62a17.821,17.821,0,0,0-.67-2.883c-0.12-.357-0.25-0.7-0.4-1.046A8.534,8.534,0,0,1,1750.84,47.145Zm-8.72-2.275c0.58-1.747,1.17-2.1,1.3-2.1s0.72,0.358,1.3,2.106a14.836,14.836,0,0,1,.54,2.274h-3.69A16.191,16.191,0,0,1,1742.12,44.87Zm-7.19,6.377a8.356,8.356,0,0,1,.29-2.167h4.18c-0.06.705-.09,1.43-0.09,2.167s0.03,1.463.09,2.17h-4.18A8.377,8.377,0,0,1,1734.93,51.247Zm1.06,4.1h3.62a18.943,18.943,0,0,0,.67,2.884,9.871,9.871,0,0,0,.41,1.046A8.544,8.544,0,0,1,1735.99,55.35Zm4.29-11.088a18.956,18.956,0,0,0-.67,2.883h-3.62a8.548,8.548,0,0,1,4.7-3.929A9.873,9.873,0,0,0,1740.28,44.262Zm4.44,13.363c-0.58,1.748-1.18,2.105-1.3,2.105s-0.72-.358-1.3-2.105a16.074,16.074,0,0,1-.55-2.275h3.69A14.783,14.783,0,0,1,1744.72,57.625Zm0.78-4.208h-4.17c-0.05-.7-0.08-1.428-0.08-2.17s0.03-1.467.08-2.167h4.17c0.06,0.7.08,1.426,0.08,2.167S1745.56,52.716,1745.5,53.417Zm0.65,5.863c0.15-.341.28-0.69.4-1.046a17.823,17.823,0,0,0,.67-2.884h3.62A8.559,8.559,0,0,1,1746.15,59.28Zm1.29-5.863c0.05-.706.08-1.431,0.08-2.17s-0.03-1.462-.08-2.167h4.18a8.346,8.346,0,0,1,.28,2.167,8.82,8.82,0,0,1-.28,2.17h-4.18Z"
-                            transform="translate(-1733 -40.844)"></path>
-                    </svg>
-                    <div class="nav_lan_box">
-                        <!-- 三角尺寸调整为 width="8" height="4"，和菜单其他下拉箭头视觉大小一致 -->
-                        <svg xmlns="http://www.w3.org/2000/svg" width="8" height="4" viewBox="0 0 6 3">
-                            <defs>
-                                <style>
-                                    .cls-1 {
-                                        fill: #fff;
-                                        fill-rule: evenodd;
-                                    }
-                                </style>
-                            </defs>
-                            <path class="cls-1" d="M231,51l-3-3h6Z" transform="translate(-228 -48)"></path>
-                        </svg>
-                    </div>
-                    <div class="nav_lan_sel">
-                        <a href="./chanpin1-en.html">EN</a>
-                        <a href="./chanpin1.html">简</a>
-                    </div>
-                </div>
-
-                <!-- 完全原样搬入对方的搜索框代码 -->
-                <div class="nav_search" id="searchBtn">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20.44" height="20.469" viewBox="0 0 20.44 20.469">
-                        <defs>
-                            <style>
-                                .cls-1 {
-                                    fill: #fff;
-                                    fill-rule: evenodd;
-                                }
-                            </style>
-                        </defs>
-                        <path class="cls-1"
-                            d="M1865.38,57.236l-3.93-3.932a9,9,0,1,0-1.71,1.715l3.92,3.931A1.214,1.214,0,0,0,1865.38,57.236Zm-15.73-4.725a6.6,6.6,0,0,1,0-9.308A6.583,6.583,0,1,1,1849.65,52.51Z"
-                            transform="translate(-1845.31 -38.844)"></path>
-                    </svg>
-                </div>
-
-                <div class="new-nav-search-box" id="searchBox">
-                    <form action="./search.html" method="get">
-                        <input type="text" name="keyword" class="new-nav-search-input" placeholder="请输入搜索关键词...">
-                        <button type="submit" class="new-nav-search-submit">搜索</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        const searchBtn = document.getElementById('searchBtn');
-        const searchBox = document.getElementById('searchBox');
-        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-        const mobileNavPanel = document.getElementById('mobileNavPanel');
-
-        function toggleMobileMenu() {
-            if (mobileMenuBtn && mobileNavPanel) {
-                mobileMenuBtn.classList.toggle('active');
-                mobileNavPanel.classList.toggle('active');
-            }
-        }
-
-        // 搜索框点击事件
-        searchBtn.addEventListener('click', function (e) {
-            e.stopPropagation();
-            searchBox.classList.toggle('active');
-            if (searchBox.classList.contains('active')) {
-                searchBox.querySelector('input').focus();
-            }
-        });
-
-        // 点击页面其他地方关闭搜索框和移动端菜单
-        document.addEventListener('click', function () {
-            searchBox.classList.remove('active');
-            if (mobileMenuBtn && mobileNavPanel) {
-                mobileMenuBtn.classList.remove('active');
-                mobileNavPanel.classList.remove('active');
-            }
-        });
-
-        // 点击搜索框内部不关闭
-        searchBox.addEventListener('click', function (e) {
-            e.stopPropagation();
-        });
-    </script>
+<body style="">
+    <div id="nav-container"></div>
+	<script src="./components/load-components.js"></script>
+	<script>
+		loadComponent('nav-container', './components/nav-zh.html', function() {
+			initNav();
+		});
+	</script>
 
     <div id="fixedBanner" style="width:100%; height:300px; position:relative; overflow:hidden; background:#000;">
         <img id="bannerImg" alt=""
@@ -856,7 +157,7 @@
         let productId = '';
 
         const urlParams = new URLSearchParams(window.location.search);
-        productId = urlParams.get('id') || '1';
+        productId = urlParams.get('id') || '2';
 
         const svgIconList = [
             `<i><svg xmlns="http://www.w3.org/2000/svg" width="73.875" height="73.88" viewBox="0 0 73.875 73.88" loading="lazy"><defs><style>.cls-1{fill:#1ca1ee;fill-rule:evenodd;}</style></defs><path class="cls-1" d="M123.544,1320.67l0.192-.62,2.2,0.06,0.107-1.99-2.179-.12-0.149-.69a6.325,6.325,0,0,0-.534-1.62l-0.278-.55,1.581-1.5-1.346-1.49-1.644,1.45-0.577-.39a5.671,5.671,0,0,0-1.537-.74l-0.6-.2,0.064-2.2-2.008-.1-0.107,2.18-0.662.12a6.348,6.348,0,0,0-1.623.56l-0.576.3-1.5-1.6-1.5,1.32,1.452,1.6-0.363.58a6.056,6.056,0,0,0-.747,1.56l-0.214.59-2.178-.04-0.128,1.99,2.2,0.13,0.128,0.68a6.214,6.214,0,0,0,.556,1.62l0.277,0.56-1.58,1.49,1.324,1.5,1.623-1.43,0.555,0.36a7,7,0,0,0-1.559.77l-0.6.19-0.064,2.18,2.008.11,0.106-2.18,0.662-.13a7.3,7.3,0,0,0,1.623-.55l0.577-.28,1.516,1.56,1.5-1.33-1.452-1.62,0.385-.56A7.313,7.313,0,0,1,123.544,1320.67Zm-2.99,1.34a4.644,4.644,0,0,1-3.182,1.26h-0.149a4.639,4.639,0,0,1-3.054-8.01,4.549,4.549,0,0,1,3.31-1.28H117.5a4.69,4.69,0,0,1,3.246,1.45,4.6,4.6,0,0,1,1.26,3.34A4.666,4.666,0,0,1,120.554,1322.01Zm25.264,2.8-6.278-6.45a16.056,16.056,0,0,0,1.473-3.67,15.714,15.714,0,0,0-29.9-9.55,15.432,15.432,0,0,0-.854,3.4,3.466,3.466,0,0,1,3.267-.39,12.538,12.538,0,1,1,14.458,14.89,3.172,3.172,0,0,1-.683.36,3.56,3.56,0,0,1-.428,2.97,15.731,15.731,0,0,0,7.518-2.48l6.022,6.22a0.778,0.778,0,0,0,1.047,0l4.356-4.23A0.791,0.791,0,0,0,145.818,1324.81Zm-4.805,4.7-6.492-6.73-0.6.39a14.659,14.659,0,0,1-5.723,2.19,4.375,4.375,0,0,0,.064-1.49,0.043,0.043,0,0,0,.042-0.02,13.385,13.385,0,1,0-15.4-16.74,4.287,4.287,0,0,0-1.517.04,12.02,12.02,0,0,1,.534-1.71,14.853,14.853,0,0,1,28.746,4.8,14.951,14.951,0,0,1-.492,4.25,14.4,14.4,0,0,1-1.388,3.46l-0.3.56,6.727,6.75Zm21.121-17.41h-3.288l-0.043-.81a32.533,32.533,0,0,0-30.5-30.5l-0.811-.04v-3.29a1.154,1.154,0,0,0-2.307,0v3.29l-0.811-.04a32.532,32.532,0,0,0-30.5,30.5l-0.043.81H90.549a1.155,1.155,0,0,0,0,2.31h3.289l0.043,0.81a32.532,32.532,0,0,0,30.5,30.5l0.811,0.04v3.29a1.154,1.154,0,0,0,2.307,0v-3.29l0.811-.04a32.533,32.533,0,0,0,30.5-30.5l0.043-.81h3.288A1.155,1.155,0,0,0,162.134,1312.1Z" transform="translate(-89.406 -1276.31)"></path></svg></i>`,
@@ -884,32 +185,7 @@
         document.addEventListener('DOMContentLoaded', function () {
             loadProductInfo(productId);
             loadProductItem(productId);
-            loadProductNav();
         });
-
-        function loadProductNav() {
-            fetch(`${SERVER_BASE_URL}/website/product`)
-                .then(res => res.json())
-                .then(resData => {
-                    if (resData.code === 0 && Array.isArray(resData.data)) {
-                        const navProductSub = document.getElementById('navProductSub');
-                        if (navProductSub) {
-                            let navHtml = '';
-                            resData.data.forEach(item => {
-                                navHtml += `
-                                    <div class="new-nav-sub-item">
-                                        <a href="./chanpin1.html?id=${item.id}" class="new-nav-sub-link">${item.name}</a>
-                                    </div>
-                                `;
-                            });
-                            navProductSub.innerHTML = navHtml;
-                        }
-                    }
-                })
-                .catch(err => {
-                    console.error("加载产品导航失败：", err);
-                });
-        }
 
         function loadProductInfo(productId) {
             fetch(`${SERVER_BASE_URL}/website/product/${productId}`)
@@ -926,7 +202,7 @@
                         if (pageTitleEl) pageTitleEl.textContent = product.name || '产品服务';
                         if (titleEl) titleEl.textContent = product.name ? `${product.name} - 浩瑞绿色科技` : '浩瑞绿色科技';
                         if (bannerImg && (product.imageUrl || product.imgUrl || product.firstUrl)) {
-                            bannerImg.src = product.imageUrl || product.imgUrl || product.firstUrl;
+                            bannerImg.src = getImageUrl(product.imageUrl || product.imgUrl || product.firstUrl);
                         }
                         
                         const langLinks = document.querySelectorAll('.nav_lan_sel a');
@@ -1050,20 +326,20 @@
 
             const bannerImg = document.getElementById('bannerImg');
             if (bannerImg && currData.firstUrl) {
-                bannerImg.src = currData.firstUrl;
+                bannerImg.src = getImageUrl(currData.firstUrl);
             }
 
             document.querySelectorAll('.h_banner.on').forEach(el => el.remove());
             document.querySelectorAll('.product-intro-anchor').forEach(el => el.remove());
             const tabBar = document.getElementById('tabBar');
-            const prodImg = currData.productUrl || '';
+            const prodImg = getImageUrl(currData.productUrl || '');
             if (prodImg) {
                 const detailHtml = `
             <div class="h_banner on" style="margin:0; padding:0; width:100%; float:none; clear:both;" id="anchor${idx}">
                 <div class="h_banner_swi" style="margin:0; padding:0;">
                     <div class="h_b_box" style="margin:0; padding:0; position:relative; width:100%; height:auto;">
                         <img src="${prodImg}" alt="${currData.name || '产品介绍'}" 
-                            style="display:block; width:100%; height:auto; border:none; outline:none; margin-top:50px;">
+                            style="display:block; width:65%; height:auto; border:none; outline:none; margin: 50px auto 0; margin-top:50px;">
                     </div>
                 </div>
             </div>
@@ -1075,14 +351,14 @@
 
             const imgBox = document.getElementById('productImages');
             if (!imgBox) return;
-            const imgUrl = currData.imageUrl || '';
+            const imgUrl = getImageUrl(currData.imageUrl || '');
             if (!imgUrl) {
                 imgBox.innerHTML = '';
                 return;
             }
             imgBox.innerHTML = `
-        <div style="width:1000px; height:300px; display:block;">
-            <img src="${imgUrl}" style="width:1000px;height:300px;object-fit:fill;border-radius:4px;" alt="${currData.name || ''}">
+        <div style="width:100%; max-width:1000px; height:auto; display:block;">
+            <img src="${imgUrl}" style="width:100%;height:auto;object-fit:contain;border-radius:4px;" alt="${currData.name || ''}">
         </div>`;
             showImagesWithDelay();
         }
@@ -1127,35 +403,10 @@
 
     <div style="clear:both; width:100%; height:0; overflow:hidden;"></div>
 
-    <footer style="background: url(./img/footer.jpg);background-size: cover; padding: 25px 0 0px;" id="lxwm">
-        <div class="container" style="color:#fff; padding:0 20px;">
-            <div class="gt" style="display:flex; justify-content:center; margin-bottom:15px;">
-                <h2 class="font50" style="font-size:28px; line-height:1.2; margin:0;"><bdo>联系我们</bdo></h2>
-            </div>
-            <div class="gm" style="display:flex; justify-content:center; margin-bottom:-90px;">
-                <div class="gm_r" style="text-align:center;">
-                    <h3 class="font30 font-m" style="font-size:18px; margin:0 0 10px;">浩瑞绿色科技集团</h3>
-                    <div class="g_p" style="font-size:13px; line-height:1.5;">
-                        <p style="margin:0 0 5px;">北京总部：<bdo>北京市朝阳区百子湾东里大成国际9层 智慧生态前沿研究院</bdo></p>
-                        <p style="margin:0 0 5px;">海南公司：<bdo>海南省海口市澄迈县海南生态软件园号A-22 浩瑞数智软件科技</bdo></p>
-                        <p style="margin:0;">电 话：<bdo>+86-17301808315（CN）</bdo> | 业务咨询：<bdo>tech@jnsco.cn</bdo></p>   
-                    </div>
-                </div>
-            </div>
-            <div class="gb" style="display:flex; justify-content:space-between; align-items:center; border-top:1px solid rgba(255,255,255,0.15); padding-top:15px; font-size:12px;">
-                <div class="gb_l">
-                    <p style="margin:0;">版权所有 浩瑞绿色科技  </p>
-                    <a style="color:white;" href="https://beian.miit.gov.cn/#/Integrated/index"
-                        target="_blank">京ICP备2026036471号</a>
-                </div>
-                <div class="gb_r">
-                    <a href=" "></a>
-                    <a href=" " target="_blank">隐私政策</a>
-                    <a href=" " target="_blank">免责声明</a>
-                </div>
-            </div>
-        </div>
-    </footer>
+    <div id="footer-container"></div>
+	<script>
+		loadComponent('footer-container', './components/footer-zh.html');
+	</script>
 
     <div class="gpop" style="display: block;">
         <a href="#lxwm" class="pop_a cur1">

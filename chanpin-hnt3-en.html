@@ -23,6 +23,7 @@
     <link rel="stylesheet" type="text/css" href="./index_files/style.css">
     <link rel="stylesheet" type="text/css" href="./index_files/g-style.css">
     <link rel="stylesheet" type="text/css" href="./index_files/f-style.css">
+	<link rel="stylesheet" type="text/css" href="./components/nav.css">
     <script src="./index_files/hm.js"></script>
 	<script src="./config1.js"></script>
     <script src="./index_files/svg-inject.min.js" type="text/javascript"></script>
@@ -524,7 +525,134 @@
                 </div>
             </div>
         </div>
+        <div class="mobile-menu-btn" id="mobileMenuBtn">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
+    <div class="mobile-nav-overlay" id="mobileNavOverlay"></div>
+
+    <div class="mobile-nav-drawer" id="mobileNavDrawer">
+        <div class="mobile-nav-close-btn" id="mobileNavCloseBtn">
+            <span></span>
+            <span></span>
+        </div>
+        <div class="mobile-nav-lang">
+            <a href="./chanpin-hnt3.html">中文</a>
+            <a href="./chanpin-hnt3-en.html" class="active">EN</a>
+        </div>
+        <div class="mobile-nav-item">
+            <a href="./index-en.html" class="mobile-nav-link">Home</a>
+        </div>
+        <div class="mobile-nav-item">
+            <a href="#" class="mobile-nav-link">Products & Services
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M6 9l6 6 6-6"/>
+                </svg>
+            </a>
+            <div class="mobile-nav-sub" id="mobileNavProductSub">
+                <div class="mobile-nav-sub-item"><a href="./chanpin1-cp1-en.html" class="mobile-nav-sub-link">Advanced Materials</a></div>
+                <div class="mobile-nav-sub-item"><a href="./chanpin1-en.html?id=2" class="mobile-nav-sub-link">Digital Services & Platform</a></div>
+                <div class="mobile-nav-sub-item"><a href="./chanpin1-en.html?id=3" class="mobile-nav-sub-link">Communications & Network</a></div>
+                <div class="mobile-nav-sub-item"><a href="./chanpin1-ai-en.html" class="mobile-nav-sub-link">AI Robotics</a></div>
+                <div class="mobile-nav-sub-item"><a href="./chanpin1-en.html?id=5" class="mobile-nav-sub-link">Low Altitude Economy</a></div>
+                <div class="mobile-nav-sub-item"><a href="./chanpin1-en.html?id=6" class="mobile-nav-sub-link">Commodity Trading</a></div>
+                <div class="mobile-nav-sub-item"><a href="./chanpin1-en.html?id=7" class="mobile-nav-sub-link">Cultural & Creative IP</a></div>
+            </div>
+        </div>
+        <div class="mobile-nav-item">
+            <a href="#" class="mobile-nav-link">Application Scenarios
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M6 9l6 6 6-6"/>
+                </svg>
+            </a>
+            <div class="mobile-nav-sub">
+                <div class="mobile-nav-sub-item"><a href="./index-en.html#yycj" class="mobile-nav-sub-link">Power-free Cooling</a></div>
+                <div class="mobile-nav-sub-item"><a href="./index-en.html#yycj" class="mobile-nav-sub-link">Wireless Ad Hoc Network</a></div>
+            </div>
+        </div>
+        <div class="mobile-nav-item">
+            <a href="./index-en.html#cpxn" class="mobile-nav-link">Core Technology</a>
+        </div>
+        <div class="mobile-nav-item">
+            <a href="#lxwm" class="mobile-nav-link">Contact Us</a>
+        </div>
+    </div>
+
     </nav>
+
+    <script>
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileNavOverlay = document.getElementById('mobileNavOverlay');
+    const mobileNavDrawer = document.getElementById('mobileNavDrawer');
+    const mobileNavCloseBtn = document.getElementById('mobileNavCloseBtn');
+    const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+
+    function toggleMobileMenu() {
+        mobileMenuBtn.classList.toggle('active');
+        mobileNavOverlay.classList.toggle('active');
+        mobileNavDrawer.classList.toggle('active');
+    }
+
+    function closeMobileMenu() {
+        mobileMenuBtn.classList.remove('active');
+        mobileNavOverlay.classList.remove('active');
+        mobileNavDrawer.classList.remove('active');
+        document.querySelectorAll('.mobile-nav-item').forEach(item => {
+            item.classList.remove('open');
+        });
+    }
+
+    if (mobileMenuBtn) {
+        mobileMenuBtn.addEventListener('click', function (e) {
+            e.stopPropagation();
+            toggleMobileMenu();
+        });
+    }
+
+    if (mobileNavOverlay) {
+        mobileNavOverlay.addEventListener('click', function () {
+            closeMobileMenu();
+        });
+    }
+
+    if (mobileNavCloseBtn) {
+        mobileNavCloseBtn.addEventListener('click', function () {
+            closeMobileMenu();
+        });
+    }
+
+    mobileNavLinks.forEach(function (link) {
+        link.addEventListener('click', function (e) {
+            const hasSub = this.nextElementSibling && this.nextElementSibling.classList.contains('mobile-nav-sub');
+            if (hasSub) {
+                e.preventDefault();
+                this.parentElement.classList.toggle('open');
+            } else {
+                closeMobileMenu();
+            }
+        });
+    });
+
+    document.querySelectorAll('.mobile-nav-sub-link').forEach(function (link) {
+        link.addEventListener('click', function () {
+            closeMobileMenu();
+        });
+    });
+
+    document.querySelectorAll('.mobile-nav-lang a').forEach(function (link) {
+        link.addEventListener('click', function () {
+            closeMobileMenu();
+        });
+    });
+
+    window.addEventListener('resize', function () {
+        if (window.innerWidth >= 768) {
+            closeMobileMenu();
+        }
+    });
+    </script>
 
     <div class="h_banner on" style="position:relative; z-index: 1 !important;">
         <div class="h_banner_swi">
@@ -583,37 +711,10 @@
     <!-- 底部 -->
     	<!-- 包含：联系我们标题、公司信息（北京总部/海南公司/电话/邮箱） -->
 	<!-- ====================================================== -->
-	<footer style="background: url(./img/footer.jpg);background-size: cover; padding: 25px 0 0px;" id="lxwm">
-		<div class="container" style="color:#fff; padding:0 20px;">
-			<div class="gt" style="display:flex; justify-content:center; margin-bottom:15px;">
-				<h2 class="font50" style="font-size:28px; line-height:1.2; margin:0;"><bdo>Contact Us</bdo></h2>
-			</div>
-
-			<div class="gm" style="display:flex; justify-content:center; margin-bottom:-90px;">
-
-				<div class="gm_r" style="text-align:center;">
-					<h3 class="font30 font-m" style="font-size:18px; margin:0 0 10px;">HARVEST Green Technology Group</h3>
-					<div class="g_p" style="font-size:13px; line-height:1.5;">
-						<p style="margin:0 0 5px;">Beijing Headquarters：<bdo>Frontier Research Institute of Smart Ecosystem, 9/F, Dacheng International, Bailizi East Lane, Chaoyang District, Beijing, China</bdo></p>
-						<p style="margin:0 0 5px;">Hainan Branch：<bdo>Harvest Digital Intelligence Software Technology Co., Ltd., A-22, Hainan Ecological Software Park, Chengmai County, Haikou, Hainan, China</bdo></p>
-						<p style="margin:0;">Tel: <bdo>+86-13811080709 (CN)</bdo> | Business: <bdo>jwong@jnsco.cn</bdo></p>
-					</div>
-				</div>
-			</div>
-			<div class="gb" style="display:flex; justify-content:space-between; align-items:center; border-top:1px solid rgba(255,255,255,0.15); padding-top:15px; font-size:12px;">
-				<div class="gb_l">
-					<p style="margin:0;">Copyright © HARVEST Green Technology  </p>
-					<a style="color:white;" href="https://beian.miit.gov.cn/#/Integrated/index" target="_blank">京ICP备2026036471号</a>
-				</div>
-				<div class="gb_r">
-					<a href=" "></a>
-					<a href=" " target="_blank">Privacy Policy</a>
-					<a href=" " target="_blank">Disclaimer</a>
-				</div>
-			</div>
-		</div>
-
-	</footer>
+	<div id="footer-container"></div>
+	<script>
+		loadComponent('footer-container', './components/footer-en.html');
+	</script>
 
     <!-- 右侧浮窗 -->
 

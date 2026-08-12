@@ -1,0 +1,1282 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>购物车 - 浩瑞科技</title>
+    <meta name="keywords" content="购物车,浩瑞科技,智能机器人,数字平台,新能源,新材料">
+    <meta name="description" content="浩瑞科技购物车 - 查看已加入购物车的产品">
+    <link rel="stylesheet" type="text/css" href="./index_files/g-style.css">
+    <link rel="stylesheet" type="text/css" href="./index_files/f-style.css">
+    <link rel="stylesheet" type="text/css" href="./index_files/style.css">
+    <link rel="stylesheet" type="text/css" href="./index_files/extend.css">
+    <script src="./config1.js"></script>
+    <script src="./cart.js"></script>
+    <link rel="stylesheet" type="text/css" href="./mobile.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif;
+            color: #333;
+            background: #f7f9fc;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        a {
+            text-decoration: none;
+            color: #333;
+        }
+
+        ul,
+        ol {
+            list-style: none;
+        }
+
+        img {
+            border: none;
+            vertical-align: middle;
+        }
+
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f0f2f5;
+            border-radius: 3px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #c0c8d4;
+            border-radius: 3px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #0a4db4;
+        }
+
+        /* ===== 顶部条 ===== */
+        .top-bar {
+            background: #f7f9fc;
+            border-bottom: 1px solid #e8ecf1;
+            font-size: 12px;
+            color: #666;
+        }
+
+        .top-bar-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 6px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .top-bar a {
+            color: #666;
+            margin: 0 10px;
+        }
+
+        .top-bar a:hover {
+            color: #0a4db4;
+        }
+
+        /* ===== Header ===== */
+        .header {
+            background: #fff;
+            border-bottom: 2px solid #0a4db4;
+        }
+
+        .header-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 18px 20px;
+            display: flex;
+            align-items: center;
+            gap: 40px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+        }
+
+        .logo .logo-icon {
+            width: 48px;
+            height: 48px;
+            object-fit: contain;
+        }
+
+        .logo-text .brand {
+            font-size: 22px;
+            font-weight: bold;
+            color: #0a4db4;
+        }
+
+        .logo-text .brand .highlight {
+            color: #f5a623;
+        }
+
+        .logo-text .tagline {
+            font-size: 12px;
+            color: #999;
+            letter-spacing: 1px;
+        }
+
+        .search-box {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            max-width: 560px;
+        }
+
+        .search-box .cat-select {
+            height: 40px;
+            padding: 0 12px;
+            border: 1px solid #d0d5dd;
+            border-radius: 4px 0 0 4px;
+            background: #fff;
+            font-size: 14px;
+            outline: none;
+        }
+
+        .search-box input {
+            flex: 1;
+            height: 40px;
+            padding: 0 16px;
+            border: 1px solid #d0d5dd;
+            border-radius: 0;
+            font-size: 14px;
+            outline: none;
+        }
+
+        .search-box button {
+            height: 40px;
+            padding: 0 20px;
+            border: none;
+            border-radius: 0 4px 4px 0;
+            background: #0a4db4;
+            color: #fff;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex-shrink: 0;
+        }
+
+        .header-right .eccee-btn {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: #fff;
+            font-weight: bold;
+            padding: 9px 16px;
+            border: none;
+            border-radius: 4px;
+            background: linear-gradient(135deg, #f5a623, #e8941a);
+            cursor: pointer;
+            font-size: 14px;
+            text-decoration: none;
+        }
+
+        .header-right .publish-btn {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: #fff;
+            font-weight: bold;
+            padding: 9px 18px;
+            border: none;
+            border-radius: 4px;
+            background: linear-gradient(135deg, #0a4db4, #1e6fd9);
+            cursor: pointer;
+            font-size: 14px;
+            text-decoration: none;
+        }
+
+        .header-right .cart-btn {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: #0a4db4;
+            font-weight: bold;
+            font-size: 14px;
+            line-height: 1.5;
+            white-space: nowrap;
+            padding: 8px 16px;
+            border: 1px solid #0a4db4;
+            border-radius: 4px;
+            background: #fff;
+            cursor: pointer;
+            overflow: visible;
+            flex-shrink: 0;
+        }
+
+        .header-right .cart-btn:hover {
+            background: #e8f0fe;
+        }
+
+        /* ===== 主导航 ===== */
+        .main-nav {
+            background: #fff;
+            border-bottom: 1px solid #eef2f7;
+        }
+
+        .main-nav-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            gap: 6px;
+            overflow-x: auto;
+        }
+
+        .main-nav .nav-item {
+            padding: 14px 18px;
+            font-size: 14px;
+            color: #333;
+            cursor: pointer;
+            white-space: nowrap;
+            border-bottom: 2px solid transparent;
+        }
+
+        .main-nav .nav-item:hover {
+            color: #0a4db4;
+        }
+
+        .main-nav .nav-item.active {
+            color: #0a4db4;
+            border-bottom-color: #0a4db4;
+            font-weight: bold;
+        }
+
+        /* ===== 面包屑 ===== */
+        .breadcrumb-wrap {
+            background: #fff;
+            border-bottom: 1px solid #eef2f7;
+        }
+
+        .breadcrumb {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 14px 20px;
+            font-size: 13px;
+            color: #999;
+        }
+
+        .breadcrumb a {
+            color: #999;
+        }
+
+        .breadcrumb a:hover {
+            color: #0a4db4;
+        }
+
+        .breadcrumb .sep {
+            margin: 0 8px;
+            color: #ddd;
+        }
+
+        .breadcrumb .current {
+            color: #333;
+        }
+
+        /* ===== 购物车主体 ===== */
+        .cart-container {
+            max-width: 1200px;
+            margin: 24px auto;
+            padding: 0 20px;
+        }
+
+        .cart-page-title {
+            font-size: 22px;
+            font-weight: bold;
+            color: #222;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .cart-page-title .count {
+            font-size: 14px;
+            color: #888;
+            font-weight: normal;
+        }
+
+        .cart-page-title .count span {
+            color: #e4393c;
+            font-weight: bold;
+        }
+
+        .cart-card {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+        }
+
+        /* 表格 */
+        .cart-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .cart-table thead {
+            background: #fafbfc;
+        }
+
+        .cart-table th {
+            padding: 14px 12px;
+            font-size: 13px;
+            color: #666;
+            font-weight: 600;
+            text-align: left;
+            border-bottom: 1px solid #eef2f7;
+        }
+
+        .cart-table td {
+            padding: 16px 12px;
+            border-bottom: 1px solid #f0f2f5;
+            vertical-align: middle;
+        }
+
+        .cart-table tbody tr:hover {
+            background: #fafbfc;
+        }
+
+        .cart-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .col-img .img-box {
+            width: 88px;
+            height: 88px;
+            border: 1px solid #eee;
+            border-radius: 6px;
+            overflow: hidden;
+            background: #f9f9fb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .col-img .img-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .col-img .img-box .img-ph {
+            font-size: 32px;
+            opacity: 0.5;
+        }
+
+        .col-name .name {
+            font-size: 14px;
+            color: #222;
+            font-weight: 500;
+            margin-bottom: 4px;
+            line-height: 1.4;
+        }
+
+        .col-name .spec {
+            font-size: 12px;
+            color: #888;
+            margin-bottom: 4px;
+        }
+
+        .col-name .link {
+            font-size: 12px;
+            color: #0a4db4;
+        }
+
+        .col-name .link:hover {
+            text-decoration: underline;
+        }
+
+        .col-price {
+            color: #e4393c;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .col-subtotal {
+            color: #e4393c;
+            font-weight: bold;
+            white-space: nowrap;
+        }
+
+        .qty-control {
+            display: inline-flex;
+            align-items: center;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .qty-control .qty-btn {
+            width: 30px;
+            height: 32px;
+            border: none;
+            background: #f5f7fa;
+            color: #333;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .qty-control .qty-btn:hover {
+            background: #e8f0fe;
+            color: #0a4db4;
+        }
+
+        .qty-control .qty-input {
+            width: 50px;
+            height: 32px;
+            border: none;
+            border-left: 1px solid #ddd;
+            border-right: 1px solid #ddd;
+            text-align: center;
+            font-size: 14px;
+            outline: none;
+            -moz-appearance: textfield;
+        }
+
+        .qty-control .qty-input::-webkit-outer-spin-button,
+        .qty-control .qty-input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        .btn-remove {
+            padding: 5px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background: #fff;
+            color: #666;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        .btn-remove:hover {
+            border-color: #e4393c;
+            color: #e4393c;
+            background: #fff5f5;
+        }
+
+        .th-img,
+        .col-img {
+            width: 110px;
+            text-align: center;
+        }
+
+        .th-price,
+        .col-price {
+            width: 130px;
+        }
+
+        .th-qty,
+        .col-qty {
+            width: 150px;
+            text-align: center;
+        }
+
+        .col-qty {
+            text-align: center;
+        }
+
+        .th-subtotal,
+        .col-subtotal {
+            width: 130px;
+        }
+
+        .th-op,
+        .col-op {
+            width: 90px;
+            text-align: center;
+        }
+
+        .col-op {
+            text-align: center;
+        }
+
+        /* 结算条 */
+        .cart-bar {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+            margin-top: 16px;
+            padding: 18px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .cart-bar-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .cart-bar-left .link-clear {
+            color: #888;
+            font-size: 13px;
+            cursor: pointer;
+        }
+
+        .cart-bar-left .link-clear:hover {
+            color: #e4393c;
+        }
+
+        .cart-bar-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .cart-bar-right .total-label {
+            font-size: 13px;
+            color: #666;
+        }
+
+        .cart-bar-right .total-price {
+            font-size: 26px;
+            color: #e4393c;
+            font-weight: bold;
+        }
+
+        .btn-continue {
+            padding: 10px 22px;
+            border: 1px solid #0a4db4;
+            border-radius: 4px;
+            background: #fff;
+            color: #0a4db4;
+            font-size: 14px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .btn-continue:hover {
+            background: #e8f0fe;
+        }
+
+        .btn-checkout {
+            padding: 11px 36px;
+            border: none;
+            border-radius: 4px;
+            background: linear-gradient(135deg, #e4393c, #f5222d);
+            color: #fff;
+            font-size: 15px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 2px 8px rgba(228, 57, 60, 0.35);
+        }
+
+        .btn-checkout:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(228, 57, 60, 0.45);
+        }
+
+        /* 空状态 */
+        .cart-empty {
+            padding: 80px 20px;
+            text-align: center;
+        }
+
+        .cart-empty .empty-icon {
+            font-size: 72px;
+            opacity: 0.4;
+            margin-bottom: 16px;
+        }
+
+        .cart-empty .empty-text {
+            font-size: 15px;
+            color: #888;
+            margin-bottom: 24px;
+        }
+
+        .cart-empty .btn-go-shop {
+            display: inline-block;
+            padding: 11px 36px;
+            border: none;
+            border-radius: 4px;
+            background: linear-gradient(135deg, #0a4db4, #1e6fd9);
+            color: #fff;
+            font-size: 15px;
+            font-weight: 500;
+        }
+
+        .cart-empty .btn-go-shop:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(10, 77, 180, 0.4);
+        }
+
+        /* ===== Footer ===== */
+        .footer {
+            background: #1f2a44;
+            color: #cbd2dc;
+            padding: 40px 0 0;
+            margin-top: 40px;
+        }
+
+        .footer-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px 28px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+        }
+
+        .footer-col {
+            flex: 1;
+            min-width: 160px;
+        }
+
+        .footer-col h4 {
+            font-size: 15px;
+            color: #fff;
+            margin-bottom: 14px;
+            font-weight: 600;
+        }
+
+        .footer-col a {
+            display: block;
+            color: #cbd2dc;
+            font-size: 13px;
+            line-height: 26px;
+        }
+
+        .footer-col a:hover {
+            color: #fff;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #2d3a5a;
+            padding: 16px 20px;
+            text-align: center;
+            font-size: 12px;
+            color: #8a93a3;
+        }
+
+        .footer-bottom a {
+            color: #8a93a3;
+            margin: 0 4px;
+        }
+
+        .footer-bottom a:hover {
+            color: #fff;
+        }
+
+        /* ============================================================
+         * 设计增强：购物车页
+         * ============================================================ */
+        :root {
+            --c-primary: #0a4db4;
+            --c-primary-500: #1e6fd9;
+            --c-primary-400: #4a9eff;
+            --c-accent: #f5a623;
+            --c-danger: #e4393c;
+            --c-danger-600: #cf1322;
+            --c-success: #52c41a;
+            --c-bg: #f7f9fc;
+            --c-text: #1f2937;
+            --c-text-2: #4b5563;
+            --c-text-3: #8b95a7;
+            --c-border: #e5e9f0;
+            --radius: 8px;
+            --radius-lg: 12px;
+            --shadow-sm: 0 1px 3px rgba(10,40,95,.06);
+            --shadow: 0 4px 18px rgba(10,40,95,.08);
+            --shadow-lg: 0 16px 36px rgba(10,40,95,.12);
+            --shadow-danger: 0 6px 20px rgba(228,57,60,.32);
+            --ease: cubic-bezier(.22,1,.36,1);
+        }
+
+        body {
+            background: var(--c-bg);
+            color: var(--c-text);
+            /* 细腻的点状噪点背景 */
+            background-image:
+                radial-gradient(rgba(10,77,180,.035) 1px, transparent 1px),
+                radial-gradient(rgba(10,77,180,.02) 1px, transparent 1px);
+            background-size: 22px 22px, 40px 40px;
+            background-position: 0 0, 11px 11px;
+        }
+
+        /* Header sticky + 滚动阴影 */
+        .header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            transition: box-shadow .35s var(--ease), background .35s var(--ease);
+        }
+        .header.scrolled {
+            box-shadow: 0 6px 24px rgba(10,40,95,.08);
+            backdrop-filter: saturate(160%) blur(8px);
+            background: rgba(255,255,255,.94);
+        }
+        .logo .brand {
+            background: linear-gradient(135deg, var(--c-primary) 0%, var(--c-primary-500) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 800;
+        }
+
+        /* 页头标题：左侧蓝色装饰条 */
+        .cart-page-title {
+            position: relative;
+            padding-left: 14px;
+        }
+        .cart-page-title::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 4px;
+            height: 26px;
+            background: linear-gradient(180deg, var(--c-primary), var(--c-primary-400));
+            border-radius: 2px;
+        }
+
+        /* 购物车卡片：更高级的阴影 + 入场 */
+        .cart-card {
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow);
+            transition: box-shadow .4s var(--ease);
+            overflow: hidden;
+            position: relative;
+            animation: cardIn .5s var(--ease) both;
+        }
+        .cart-card:hover {
+            box-shadow: var(--shadow-lg);
+        }
+        @keyframes cardIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to   { opacity: 1; transform: none; }
+        }
+
+        /* 表格头：精致渐变底纹 */
+        .cart-table thead {
+            background:
+                linear-gradient(180deg, rgba(10,77,180,.03), rgba(10,77,180,0)),
+                #fafbfc;
+        }
+        .cart-table th {
+            font-size: 12px;
+            letter-spacing: 1px;
+            color: var(--c-text-2);
+            font-weight: 600;
+        }
+
+        /* 表格行：逐行浅淡条纹 + 行高光 */
+        .cart-table tbody tr {
+            transition: background .25s var(--ease), transform .25s var(--ease);
+            position: relative;
+        }
+        .cart-table tbody tr:nth-child(even) {
+            background: rgba(247, 249, 252, 0.4);
+        }
+        .cart-table tbody tr:hover {
+            background: rgba(10, 77, 180, 0.04);
+            transform: translateX(2px);
+        }
+        .cart-table tbody tr::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 0;
+            background: linear-gradient(180deg, var(--c-primary), var(--c-primary-400));
+            transition: width .3s var(--ease);
+            border-radius: 0 2px 2px 0;
+        }
+        .cart-table tbody tr:hover::before {
+            width: 3px;
+        }
+
+        /* 商品图片框：柔光效果 */
+        .col-img .img-box {
+            border-radius: 8px;
+            border: 1px solid var(--c-border);
+            transition: transform .35s var(--ease), box-shadow .35s var(--ease);
+            background: linear-gradient(180deg, #fff, #fafbfc);
+        }
+        .cart-table tbody tr:hover .col-img .img-box {
+            transform: scale(1.03);
+            box-shadow: 0 4px 14px rgba(10,40,95,.12);
+        }
+
+        /* 商品链接：下划线渐变 */
+        .col-name .link {
+            position: relative;
+            display: inline-block;
+            font-weight: 500;
+        }
+        .col-name .link::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -1px;
+            width: 100%;
+            height: 1px;
+            background: currentColor;
+            transform: scaleX(0);
+            transform-origin: right center;
+            transition: transform .3s var(--ease);
+        }
+        .col-name .link:hover::after {
+            transform: scaleX(1);
+            transform-origin: left center;
+        }
+
+        /* 数量控件：拟态化 */
+        .qty-control {
+            border: 1px solid var(--c-border);
+            border-radius: var(--radius);
+            background: #fff;
+            box-shadow: inset 0 1px 2px rgba(10,40,95,.04);
+            transition: box-shadow .25s var(--ease), border-color .25s var(--ease);
+        }
+        .qty-control:focus-within {
+            border-color: var(--c-primary-400);
+            box-shadow: 0 0 0 3px rgba(74,158,255,.15);
+        }
+        .qty-control .qty-btn {
+            background: #fafbfc;
+            color: var(--c-text-2);
+            transition: all .2s var(--ease);
+            font-weight: 600;
+        }
+        .qty-control .qty-btn:hover {
+            background: linear-gradient(180deg, var(--c-primary-500), var(--c-primary));
+            color: #fff;
+        }
+        .qty-control .qty-btn:active {
+            transform: scale(.92);
+        }
+        .qty-control .qty-input {
+            color: var(--c-text);
+            font-weight: 600;
+            border-color: var(--c-border);
+        }
+
+        /* 删除按钮：柔和红色 */
+        .btn-remove {
+            border-radius: 6px;
+            transition: all .2s var(--ease);
+            font-weight: 500;
+        }
+        .btn-remove:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(228,57,60,.2);
+        }
+
+        /* 价格：渐变数字 + 微光泽 */
+        .col-price, .col-subtotal, .cart-bar-right .total-price {
+            background: linear-gradient(180deg, var(--c-danger), var(--c-danger-600));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* 结算条：玻璃反光条 + 阴影 */
+        .cart-bar {
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            position: relative;
+            animation: cardIn .55s var(--ease) .1s both;
+        }
+        .cart-bar::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--c-primary), var(--c-primary-400), var(--c-accent));
+        }
+        .cart-bar-right .total-label {
+            letter-spacing: 1px;
+        }
+        .cart-bar-right .total-price {
+            font-size: 30px;
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
+
+        /* 继续购物按钮 */
+        .btn-continue {
+            border-radius: 6px;
+            position: relative;
+            overflow: hidden;
+            font-weight: 600;
+            transition: all .25s var(--ease);
+        }
+        .btn-continue::after {
+            content: ' ›';
+            opacity: 0;
+            transform: translateX(-4px);
+            transition: all .2s var(--ease);
+            display: inline-block;
+        }
+        .btn-continue:hover {
+            padding-right: 28px;
+            box-shadow: 0 4px 14px rgba(10,77,180,.18);
+        }
+        .btn-continue:hover::after {
+            opacity: 1;
+            transform: none;
+        }
+
+        /* 结算按钮：史诗级 CTA */
+        .btn-checkout {
+            border-radius: 6px;
+            font-weight: 700;
+            position: relative;
+            overflow: hidden;
+            isolation: isolate;
+            letter-spacing: 2px;
+            padding: 12px 40px;
+            font-size: 16px;
+            transition: transform .25s var(--ease), box-shadow .25s var(--ease);
+            box-shadow: var(--shadow-danger);
+        }
+        .btn-checkout::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(120deg, transparent 20%, rgba(255,255,255,.3) 50%, transparent 80%);
+            transform: translateX(-100%);
+            transition: transform .7s var(--ease);
+            z-index: -1;
+        }
+        .btn-checkout:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 26px rgba(228,57,60,.45);
+        }
+        .btn-checkout:hover::before {
+            transform: translateX(100%);
+        }
+        .btn-checkout:active {
+            transform: translateY(0);
+        }
+
+        /* 清空购物车链接 */
+        .cart-bar-left .link-clear {
+            position: relative;
+            padding-left: 16px;
+            transition: color .2s var(--ease);
+        }
+        .cart-bar-left .link-clear::before {
+            content: '🗑';
+            position: absolute;
+            left: 0;
+            opacity: .5;
+        }
+        .cart-bar-left .link-clear:hover {
+            transform: translateX(2px);
+        }
+
+        /* 空状态：更精致 */
+        .cart-empty {
+            position: relative;
+            background: #fff;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            animation: cardIn .5s var(--ease) both;
+        }
+        .cart-empty::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; height: 4px;
+            background: linear-gradient(90deg, var(--c-primary), var(--c-primary-400), var(--c-accent));
+        }
+        .cart-empty .empty-icon {
+            display: inline-block;
+            position: relative;
+            font-size: 80px;
+            opacity: 1;
+            filter: grayscale(0.3);
+            animation: floatIcon 3.5s var(--ease) infinite;
+        }
+        @keyframes floatIcon {
+            0%, 100% { transform: translateY(0); }
+            50%      { transform: translateY(-10px); }
+        }
+        .cart-empty .empty-text {
+            font-weight: 500;
+            color: var(--c-text-3);
+        }
+        .cart-empty .btn-go-shop {
+            border-radius: 6px;
+            letter-spacing: 2px;
+            font-weight: 600;
+            position: relative;
+            overflow: hidden;
+            transition: all .25s var(--ease);
+            box-shadow: 0 6px 16px rgba(10,77,180,.3);
+        }
+        .cart-empty .btn-go-shop:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 24px rgba(10,77,180,.42);
+        }
+
+        /* Footer 装饰条 */
+        .footer {
+            position: relative;
+            overflow: hidden;
+        }
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--c-primary), var(--c-primary-400), var(--c-accent));
+        }
+
+        /* 入场交错（行级） */
+        .cart-table tbody tr {
+            animation: rowIn .55s var(--ease) both;
+        }
+        .cart-table tbody tr:nth-child(1) { animation-delay: .05s; }
+        .cart-table tbody tr:nth-child(2) { animation-delay: .1s; }
+        .cart-table tbody tr:nth-child(3) { animation-delay: .15s; }
+        .cart-table tbody tr:nth-child(4) { animation-delay: .2s; }
+        .cart-table tbody tr:nth-child(5) { animation-delay: .25s; }
+        @keyframes rowIn {
+            from { opacity: 0; transform: translateX(-16px); }
+            to   { opacity: 1; transform: none; }
+        }
+
+        /* 滚动 Header 阴影 + 减少动效 */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation: none !important;
+                transition: none !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ============ 顶部条 ============ -->
+    <div class="top-bar">
+        <div class="top-bar-inner">
+            <div class="top-left">
+                <a href="./login.html" id="authLink">请登录</a>
+                <a href="./login.html?tab=register">注册</a>
+            </div>
+            <div class="top-right">
+                <a href="./neep.html">首页</a>
+                <a href="#">产品服务</a>
+                <a href="#">解决方案</a>
+                <a href="#">新闻资讯</a>
+                <a href="#">关于我们</a>
+                <a href="#">联系我们</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============ Header ============ -->
+    <div class="header">
+        <div class="header-inner">
+            <div class="logo" onclick="window.location.href='./neep.html'">
+                <img class="logo-icon" src="./img/JSlogo-beb0d75f.png" alt="Logo" onerror="this.style.display='none'">
+                <div class="logo-text">
+                    <div class="brand">黑科技 <span class="highlight">商城</span></div>
+                    <div class="tagline">Hi-Tech Bazaar</div>
+                </div>
+            </div>
+            <div class="search-box">
+                <select class="cat-select" id="searchSelect">
+                    <option value="">全部分类</option>
+                    <option value="1">智能机器人</option>
+                    <option value="2">数字平台</option>
+                    <option value="3">新能源应用板块</option>
+                    <option value="4">大宗贸易</option>
+                    <option value="5">应急产品</option>
+                    <option value="6">新材料</option>
+                </select>
+                <input type="text" id="searchInput" placeholder="请输入产品名称、品牌、规格型号...">
+                <button onclick="doSearch()">🔍 搜索</button>
+            </div>
+            <div class="header-right">
+                <a class="eccee-btn" href="./ece.html">🏅 ECEE认证</a>
+                <a class="publish-btn" href="./publish.html">✏️ 发布需求</a>
+                <a class="cart-btn" href="./cart.html">🛒 购物车</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============ 主导航 ============ -->
+    <nav class="main-nav">
+        <div class="main-nav-inner" id="mainNav">
+            <div class="nav-item active" onclick="location.href='./neep.html'">首页</div>
+            <div class="nav-item" onclick="location.href='./chanpin1-ai.html'">智能机器人</div>
+            <div class="nav-item" onclick="location.href='./chanpin1.html'">产品中心</div>
+            <div class="nav-item" onclick="location.href='./index-aboutus.html'">关于我们</div>
+            <div class="nav-item" onclick="location.href='./news-detail.html'">新闻资讯</div>
+        </div>
+    </nav>
+
+    <!-- ============ 面包屑 ============ -->
+    <div class="breadcrumb-wrap">
+        <div class="breadcrumb">
+            <a href="./neep.html">首页</a>
+            <span class="sep">›</span>
+            <span class="current">购物车</span>
+        </div>
+    </div>
+
+    <!-- ============ 购物车主体 ============ -->
+    <div class="cart-container">
+        <h1 class="cart-page-title">
+            🛒 我的购物车
+            <span class="count">共 <span id="cartCount">0</span> 件商品</span>
+        </h1>
+
+        <!-- 商品列表 / 空状态（由 cart.js 渲染） -->
+        <div class="cart-card" id="cartContainer"></div>
+
+        <!-- 结算条 -->
+        <div class="cart-bar" id="cartBar">
+            <div class="cart-bar-left">
+                <a class="link-clear" id="clearCartBtn" onclick="HRCart.clearCartAndRefresh()">🗑 清空购物车</a>
+            </div>
+            <div class="cart-bar-right">
+                <span class="total-label">合计：</span>
+                <span class="total-price" id="cartTotal">¥0</span>
+                <button class="btn-continue" onclick="location.href='./neep.html'">继续购物</button>
+                <button class="btn-checkout" id="checkoutBtn" onclick="HRCart.checkout()">去结算</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============ neep Footer ============ -->
+    <footer class="footer">
+        <div class="footer-inner">
+            <div class="footer-col">
+                <h4>产品服务</h4>
+                <a href="#">人工智能和机器人</a>
+                <a href="#">前沿新材料</a>
+                <a href="#">数字服务与平台</a>
+                <a href="#">通信与网络</a>
+                <a href="#">低空经济</a>
+                <a href="#">大宗贸易</a>
+                <a href="#">文化创意与IP</a>
+                <a href="#">智慧农业与粮储</a>
+                <a href="#">安防与识别</a>
+                <a href="#">新能源与储能</a>
+            </div>
+            <div class="footer-col">
+                <h4>解决方案</h4>
+                <a href="#">智能制造方案</a>
+                <a href="#">低空经济方案</a>
+                <a href="#">AI赋能方案</a>
+            </div>
+            <div class="footer-col">
+                <h4>关于我们</h4>
+                <a href="#">公司介绍</a>
+                <a href="#">发展历程</a>
+                <a href="#">加入我们</a>
+                <a href="#">新闻资讯</a>
+            </div>
+            <div class="footer-col">
+                <h4>联系方式</h4>
+                <a href="#">📞 173-0180-8315</a>
+                <a href="#">📧 tech@jnsco.cn​​​​​​​​​​​​​​​​​​​​​​​​</a>
+                <a href="#">📍 中国 · 北京</a>
+            </div>
+            <div class="footer-col">
+                <h4>关注我们</h4>
+                <a href="#">微信公众号</a>
+                <a href="#">官方微博</a>
+                <a href="#">抖音号</a>
+                <a href="#">视频号</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>
+                <a href="#">关于我们</a>|
+                <a href="#">联系我们</a>|
+                <a href="#">人才招聘</a>|
+                <a href="#">合作伙伴</a>|
+                <a href="#">友情链接</a>|
+                <a href="#">网站地图</a>
+            </p>
+            <p style="margin-top: 8px;">© 2026 浩瑞科技 版权所有 &nbsp;
+                <!-- display:block; -->
+                <a style="color:white;  margin-bottom:5px;" href="https://beian.miit.gov.cn/#/Integrated/index"
+                    target="_blank">京ICP备2026036471号</a>
+                <a style="color:white;" href="https://beian.mps.gov.cn/#/query/webSearch?code=11010502061862"
+                    rel="noreferrer" target="_blank"><img src="images/备案图标.png"
+                        style="height:16px;vertical-align:middle;margin-right:4px;" alt="公安备案">京公网安备11010502061862号</a>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        /* 购物车页：DOM 就绪后渲染（cart.js 已在 head 引入并监听 DOMContentLoaded），
+           这里再保险调用一次，确保购物车内容在脚本加载顺序异常时也能渲染。 */
+        function doSearch() {
+            var kw = document.getElementById('searchInput').value.trim();
+            if (kw) { location.href = './neep.html?kw=' + encodeURIComponent(kw); }
+        }
+        function updateAuthLink() {
+            var token = localStorage.getItem('token');
+            var user = null;
+            try { user = JSON.parse(localStorage.getItem('user') || 'null'); } catch (e) { }
+            var authLink = document.getElementById('authLink');
+            if (token && user && user.username) {
+                authLink.textContent = '👤 ' + user.username;
+                authLink.href = './login.html';
+            }
+        }
+        updateAuthLink();
+        // 渲染购物车（cart.js 的 init 也会渲染，这里避免时序问题）
+        if (window.HRCart) { window.HRCart.renderCartPage(); window.HRCart.updateCartBadges(); }
+
+        // Header 滚动阴影
+        (function () {
+            var header = document.querySelector('.header');
+            if (!header) return;
+            function onScroll() {
+                if (window.pageYOffset > 8) header.classList.add('scrolled');
+                else header.classList.remove('scrolled');
+            }
+            window.addEventListener('scroll', onScroll, { passive: true });
+            onScroll();
+        })();
+    </script>
+
+</body>
+
+</html>

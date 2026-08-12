@@ -1,0 +1,400 @@
+/* ============================================================
+ * mobile.css  ——  全站移动端适配样式
+ * 适用于 neep.html / cart.html / product-detail-*.html
+ * ------------------------------------------------------------
+ * 引入方式：在 <head> 中（其他样式之后）添加：
+ *   <link rel="stylesheet" type="text/css" href="./mobile.css">
+ * ============================================================ */
+
+/* ---------- 通用：防止横向溢出 ---------- */
+* { -webkit-tap-highlight-color: transparent; }
+html, body { overflow-x: hidden; max-width: 100vw; }
+img, table { max-width: 100%; }
+
+/* ================================================================
+ *  ≤ 768px  ——  手机竖屏
+ * ================================================================ */
+@media (max-width: 768px) {
+
+    /* ============ 通用导航/Header ============ */
+    .top-bar { display: none !important; }
+
+    .header-inner {
+        flex-wrap: wrap;
+        gap: 10px;
+        padding: 12px;
+    }
+    .logo { order: 1; }
+    .logo .logo-icon { width: 36px; height: 36px; }
+    .logo .logo-text .brand { font-size: 18px; }
+    .logo .logo-text .tagline { font-size: 10px; letter-spacing: 1px; }
+
+    /* 搜索框换行到第二行 */
+    .search-box {
+        order: 3;
+        width: 100%;
+        max-width: none !important;
+        flex: 1 0 100%;
+        gap: 4px;
+    }
+    .search-box .cat-select { width: 90px; font-size: 12px; padding: 0 6px; }
+    .search-box input { font-size: 13px; padding: 0 10px; height: 36px; }
+    .search-box button { width: 70px; font-size: 13px; letter-spacing: 1px; height: 36px; }
+
+    /* 右侧按钮组 */
+    .header-right {
+        order: 2;
+        gap: 6px;
+        flex-shrink: 0;
+        flex-wrap: nowrap;
+    }
+    .header-right .eccee-btn,
+    .header-right .publish-btn {
+        padding: 7px 10px;
+        font-size: 12px;
+        gap: 4px;
+    }
+    .header-right .cart-btn {
+        padding: 6px 10px;
+        font-size: 12px;
+        gap: 4px;
+    }
+
+    /* 主导航：横向滚动 */
+    .main-nav-inner {
+        flex-wrap: nowrap !important;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+    }
+    .main-nav-inner::-webkit-scrollbar { display: none; }
+    .main-nav .nav-item {
+        padding: 0 12px;
+        line-height: 40px;
+        font-size: 13px;
+        flex-shrink: 0;
+        white-space: nowrap;
+    }
+    .main-nav .nav-item.active::after { width: 40%; }
+
+    /* ============ 首页主体 ============ */
+    .main-container {
+        flex-direction: column;
+        gap: 12px;
+        margin: 12px auto;
+        padding: 0 12px;
+    }
+
+    /* 侧边栏 - 折叠式 */
+    .sidebar {
+        width: 100%;
+        order: 1;
+    }
+    .sidebar-title {
+        padding: 10px 14px;
+        font-size: 13px;
+        cursor: pointer;
+        user-select: none;
+    }
+    .sidebar-title::after {
+        content: '▾';
+        float: right;
+        font-size: 12px;
+        transition: transform 0.3s;
+    }
+    .sidebar.collapsed .sidebar-title::after {
+        transform: rotate(-90deg);
+    }
+    .sidebar-menu {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease;
+    }
+    .sidebar:not(.collapsed) .sidebar-menu {
+        max-height: 600px;
+    }
+    .sidebar-menu .menu-item {
+        padding: 10px 14px;
+        font-size: 14px;
+    }
+
+    .content-area { order: 2; }
+
+    /* Banner */
+    .banner-wrap { flex-direction: column; gap: 12px; }
+    .banner-carousel { height: 200px; border-radius: 8px; }
+    .slide-content { padding: 20px 16px; }
+    .slide-content .main-title { font-size: 18px; line-height: 1.4; }
+    .slide-content .sub-title { font-size: 13px; margin-top: 8px; }
+    .slide-content .desc {
+        font-size: 12px;
+        margin-top: 8px;
+        line-height: 1.6;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+    .carousel-arrow { display: none; }
+    .carousel-dots { bottom: 6px; }
+    .carousel-dots .dot { width: 6px; height: 6px; }
+
+    /* 公告面板 */
+    .notice-panel { width: 100%; }
+    .notice-header { padding: 10px 14px; }
+    .notice-header h3 { font-size: 14px; }
+    .notice-list { padding: 6px 10px; }
+    .notice-item { padding: 8px 6px; font-size: 12px; }
+    .notice-item .tag { font-size: 10px; padding: 1px 5px; }
+
+    /* 产品板块 */
+    .product-zone { margin-bottom: 16px; }
+    .product-zone-header { padding: 12px 14px; }
+    .product-zone-header h3 { font-size: 16px; }
+    .product-zone-body {
+        flex-direction: column !important;
+        gap: 10px;
+        padding: 0 14px 14px;
+    }
+    .product-zone-image { width: 100%; padding: 12px; }
+    .product-zone-image img { max-height: 160px; }
+    .product-categories {
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px;
+    }
+    .product-categories .cat-item {
+        padding: 10px 6px;
+        font-size: 12px;
+        text-align: center;
+    }
+    .product-categories .cat-item .cat-icon {
+        display: block;
+        width: 32px;
+        height: 32px;
+        line-height: 32px;
+        margin: 0 auto 4px;
+        font-size: 14px;
+    }
+
+    /* 侧边快捷栏 */
+    .side-shortcut { display: none !important; }
+
+    /* Footer */
+    .footer-inner {
+        flex-direction: column;
+        gap: 20px;
+        padding: 24px 16px;
+    }
+    .footer-col h4 { font-size: 14px; margin-bottom: 10px; }
+    .footer-col a { font-size: 13px; line-height: 24px; }
+    .footer-bottom { padding: 14px 12px; font-size: 11px; }
+    .footer-bottom p { line-height: 1.8; }
+
+    /* ============ 产品详情页 ============ */
+    .breadcrumb-wrap { padding: 10px 12px; }
+    .breadcrumb { font-size: 12px; }
+
+    .product-show {
+        flex-direction: column;
+        padding: 12px;
+        gap: 16px;
+        margin: 12px auto;
+    }
+    .product-gallery {
+        width: 100% !important;
+        max-width: 100%;
+    }
+    .main-image {
+        height: 280px;
+    }
+    .thumbnail-list {
+        flex-wrap: wrap;
+        gap: 6px;
+    }
+    .thumbnail-list .thumb-item {
+        width: 56px;
+        height: 56px;
+    }
+
+    .product-info { width: 100%; }
+    .product-info .product-title { font-size: 20px; line-height: 1.4; }
+    .product-info .product-subtitle { font-size: 13px; margin-top: 6px; }
+    .product-tags { margin-top: 10px; }
+
+    .price-section { padding: 14px 16px; margin-top: 12px; }
+    .price-value { font-size: 22px; }
+
+    .spec-section { margin-top: 14px; }
+    .spec-row {
+        flex-direction: column;
+        gap: 8px;
+        margin-bottom: 12px;
+    }
+    .spec-options { flex-wrap: wrap; gap: 6px; }
+    .spec-option { padding: 6px 12px; font-size: 13px; }
+
+    .quantity-row {
+        flex-direction: column;
+        gap: 8px;
+        align-items: flex-start;
+    }
+
+    .action-buttons {
+        flex-direction: column !important;
+        gap: 10px;
+        margin-top: 14px;
+    }
+    .action-buttons .btn { width: 100%; }
+
+    .related-section { padding: 16px 12px; }
+    .related-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+    .related-card { padding: 12px; }
+    .related-card .card-img { height: 100px; }
+    .related-card .card-title { font-size: 13px; }
+    .related-card .card-price { font-size: 14px; }
+
+    .detail-tabs {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+    }
+
+    /* ============ 购物车页 ============ */
+    .cart-container { margin: 16px auto; padding: 0 12px; }
+    .cart-page-title { font-size: 18px; padding: 0 4px; }
+    .cart-card { border-radius: 6px; }
+
+    /* 购物车表格 → 移动端卡片视图 */
+    .cart-table thead { display: none; }
+    .cart-table, .cart-table tbody { display: block; }
+    .cart-table tbody tr {
+        display: flex !important;
+        flex-wrap: wrap;
+        gap: 8px 12px;
+        padding: 14px 12px;
+        border-bottom: 1px solid #f0f2f5;
+        align-items: flex-start;
+        margin-bottom: 0;
+    }
+    .cart-table tbody tr:last-child { border-bottom: none; }
+
+    .col-img {
+        width: 70px;
+        flex: 0 0 70px;
+    }
+    .col-img .img-box { width: 70px; height: 70px; }
+
+    .col-name {
+        flex: 1;
+        min-width: 0;
+    }
+    .col-name .name { font-size: 14px; font-weight: 500; }
+    .col-name .spec { font-size: 12px; }
+    .col-name .link { font-size: 12px; }
+
+    .col-price {
+        flex: 1 0 calc(50% - 12px);
+        font-size: 13px;
+        color: #999;
+        font-weight: normal;
+        width: auto;
+        text-align: left;
+    }
+    .col-price::before { content: '单价：'; color: #999; }
+
+    .col-subtotal {
+        flex: 1 0 calc(50% - 12px);
+        text-align: right;
+        font-size: 14px;
+        width: auto;
+    }
+    .col-subtotal::before { content: '小计：'; color: #999; font-weight: normal; }
+
+    .col-qty {
+        flex: 1 0 100%;
+        width: auto;
+        padding: 0;
+        border: none;
+        text-align: left;
+    }
+    .col-op {
+        flex: 1 0 100%;
+        width: auto;
+        padding: 0;
+        border: none;
+        text-align: right;
+    }
+
+    .cart-bar {
+        flex-direction: column;
+        padding: 14px 12px;
+        gap: 12px;
+    }
+    .cart-bar-left, .cart-bar-right {
+        width: 100%;
+        justify-content: space-between;
+    }
+    .cart-bar-right .total-price { font-size: 22px; }
+    .btn-checkout { flex: 1; padding: 12px 20px; font-size: 15px; }
+    .btn-continue { width: 100%; }
+
+    .cart-empty { padding: 50px 16px; }
+    .cart-empty .empty-icon { font-size: 56px; }
+}
+
+/* ================================================================
+ *  ≤ 480px  ——  手机小屏
+ * ================================================================ */
+@media (max-width: 480px) {
+
+    .header-inner { padding: 10px; gap: 8px; }
+    .logo .logo-text .brand { font-size: 16px; }
+    .logo .logo-text .tagline { display: none; }
+
+    .header-right .eccee-btn,
+    .header-right .publish-btn { display: none; }
+    .header-right .cart-btn {
+        padding: 6px 8px;
+        font-size: 12px;
+        position: relative;
+    }
+
+    .search-box { gap: 2px; }
+    .search-box .cat-select { width: 75px; font-size: 11px; }
+    .search-box input { font-size: 12px; }
+    .search-box button { width: 58px; font-size: 12px; }
+
+    .main-nav .nav-item { padding: 0 10px; font-size: 12px; line-height: 38px; }
+
+    .banner-carousel { height: 170px; }
+    .slide-content { padding: 16px 12px; }
+    .slide-content .main-title { font-size: 15px; }
+    .slide-content .sub-title { font-size: 12px; }
+    .slide-content .desc { font-size: 11px; -webkit-line-clamp: 1; }
+
+    .product-categories { grid-template-columns: repeat(2, 1fr); }
+    .product-zone-image img { max-height: 130px; }
+
+    /* 详情页小屏 */
+    .main-image { height: 220px; }
+    .product-show { padding: 10px; }
+    .related-grid { grid-template-columns: 1fr; }
+
+    /* 购物车小屏 */
+    .cart-table tbody tr {
+        gap: 6px 10px;
+        padding: 12px 10px;
+    }
+    .col-img { flex: 0 0 60px; width: 60px; }
+    .col-img .img-box { width: 58px; height: 58px; }
+
+    .cart-bar-right { flex-wrap: wrap; gap: 6px; }
+    .cart-bar-right .total-label { font-size: 12px; }
+    .cart-bar-right .total-price { font-size: 20px; }
+}

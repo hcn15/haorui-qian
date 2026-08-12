@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ECEE认证企业专区 - 浩瑞科技</title>
+    <link rel="stylesheet" type="text/css" href="./index_files/g-style.css">
+    <script src="./config1.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif;
+            color: #333; background: #f7f9fc;
+            -webkit-font-smoothing: antialiased;
+            min-height: 100vh;
+        }
+        a { text-decoration: none; color: #333; }
+        ul, ol { list-style: none; }
+
+        /* ===== 顶部导航条 ===== */
+        .top-bar {
+            background: #fff; border-bottom: 1px solid #e8ecf1;
+            position: sticky; top: 0; z-index: 100;
+        }
+        .top-bar-inner {
+            max-width: 1100px; margin: 0 auto; padding: 14px 20px;
+            display: flex; align-items: center; gap: 16px;
+        }
+        .back-btn {
+            display: flex; align-items: center; gap: 4px;
+            color: #0a4db4; font-size: 14px; font-weight: 500;
+            cursor: pointer; padding: 6px 12px; border-radius: 4px;
+            transition: background 0.2s;
+        }
+        .back-btn:hover { background: #e8f0fe; }
+        .page-title {
+            flex: 1; text-align: center; font-size: 17px; font-weight: bold;
+            color: #333; letter-spacing: 1px;
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+        }
+        .page-title .badge {
+            background: linear-gradient(135deg, #f5a623, #e8941a);
+            color: #fff; font-size: 12px; padding: 2px 8px; border-radius: 10px;
+            font-weight: normal;
+        }
+        .search-nav {
+            display: flex; align-items: center; gap: 6px;
+            padding: 6px 12px; border: 1px solid #d9e0ea; border-radius: 20px;
+            cursor: pointer; transition: all 0.2s;
+            background: #f7f9fc;
+        }
+        .search-nav:hover { border-color: #0a4db4; background: #fff; }
+        .search-nav input {
+            border: none; outline: none; background: transparent;
+            font-size: 13px; width: 160px; color: #333;
+        }
+        .search-nav .search-icon { color: #999; }
+
+        /* ===== 主体容器 ===== */
+        .ecee-container {
+            max-width: 1100px; margin: 0 auto; padding: 24px 20px 60px;
+        }
+
+        /* ===== 认证机构Banner ===== */
+        .authority-banner {
+            background: linear-gradient(135deg, #0a4db4 0%, #1e6fd9 60%, #2a7fe0 100%);
+            border-radius: 16px; padding: 28px 32px;
+            color: #fff; position: relative; overflow: hidden;
+            margin-bottom: 24px;
+        }
+        .authority-banner::before {
+            content: ""; position: absolute;
+            top: -50%; right: -10%;
+            width: 300px; height: 300px;
+            background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+        .authority-banner::after {
+            content: ""; position: absolute;
+            bottom: -30%; left: 10%;
+            width: 200px; height: 200px;
+            background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+        .banner-content { position: relative; z-index: 1; }
+        .badge-icon {
+            display: inline-flex; align-items: center; justify-content: center;
+            width: 56px; height: 56px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            margin-bottom: 14px;
+            font-size: 28px;
+        }
+        .banner-title {
+            font-size: 22px; font-weight: bold; margin-bottom: 6px;
+        }
+        .banner-subtitle {
+            font-size: 14px; opacity: 0.9; margin-bottom: 14px;
+        }
+        .banner-stats {
+            display: flex; gap: 24px; align-items: center;
+        }
+        .stat-item {
+            display: flex; align-items: center; gap: 6px;
+            font-size: 13px; opacity: 0.95;
+        }
+        .stat-item .stat-num {
+            font-size: 20px; font-weight: bold;
+        }
+        .stat-divider {
+            width: 1px; height: 20px; background: rgba(255,255,255,0.3);
+        }
+
+        /* ===== 筛选栏 ===== */
+        .filter-bar {
+            display: flex; align-items: center; gap: 10px;
+            padding: 16px 20px;
+            background: #fff; border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(10,77,180,0.06);
+            margin-bottom: 20px;
+        }
+        .filter-label {
+            font-size: 14px; color: #666; font-weight: 500;
+            margin-right: 6px; flex-shrink: 0;
+        }
+        .filter-tabs {
+            display: flex; gap: 8px; flex-wrap: wrap;
+        }
+        .filter-tab {
+            padding: 6px 16px;
+            border: 1px solid #d9e0ea; border-radius: 16px;
+            font-size: 13px; color: #666; cursor: pointer;
+            transition: all 0.2s; background: #fff;
+        }
+        .filter-tab:hover {
+            border-color: #0a4db4; color: #0a4db4;
+        }
+        .filter-tab.active {
+            background: #0a4db4; color: #fff;
+            border-color: #0a4db4;
+        }
+        .filter-count {
+            margin-left: auto;
+            font-size: 13px; color: #999;
+        }
+        .filter-count b { color: #0a4db4; }
+
+        /* ===== 企业卡片 ===== */
+        .enterprise-list {
+            display: flex; flex-direction: column; gap: 16px;
+            margin-bottom: 24px;
+        }
+        .enterprise-card {
+            background: #fff; border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(10,77,180,0.06);
+            overflow: hidden;
+            transition: all 0.25s;
+        }
+        .enterprise-card:hover {
+            box-shadow: 0 6px 24px rgba(10,77,180,0.12);
+            transform: translateY(-2px);
+        }
+        .card-header {
+            display: flex; align-items: flex-start; gap: 16px;
+            padding: 20px 24px 16px;
+            border-bottom: 1px solid #f0f3f7;
+        }
+        .card-logo {
+            width: 56px; height: 56px; flex-shrink: 0;
+            border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 24px; color: #fff; font-weight: bold;
+        }
+        .card-logo.huawei { background: linear-gradient(135deg, #c41e3a, #e84c5e); }
+        .card-logo.cambricon { background: linear-gradient(135deg, #1a5276, #2980b9); }
+        .card-logo.sensetime { background: linear-gradient(135deg, #6c3483, #a569bd); }
+        .card-logo.firm { background: linear-gradient(135deg, #117a65, #1abc9c); }
+        .card-logo.zte { background: linear-gradient(135deg, #d35400, #e67e22); }
+        .card-logo.inspur { background: linear-gradient(135deg, #2874a6, #5dade2); }
+
+        .card-title-area { flex: 1; min-width: 0; }
+        .card-title-row {
+            display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+            margin-bottom: 6px;
+        }
+        .card-title {
+            font-size: 17px; font-weight: bold; color: #333;
+        }
+        .cert-badge {
+            display: inline-flex; align-items: center; gap: 4px;
+            background: linear-gradient(135deg, #f5a623, #e8941a);
+            color: #fff; font-size: 11px; font-weight: 500;
+            padding: 2px 8px; border-radius: 10px;
+        }
+        .cert-id {
+            font-size: 12px; color: #999;
+        }
+        .card-body {
+            display: flex; gap: 32px;
+            padding: 14px 24px 16px;
+            flex-wrap: wrap;
+        }
+        .info-col {
+            flex: 1; min-width: 200px;
+            display: flex; flex-direction: column; gap: 8px;
+        }
+        .info-item {
+            display: flex; align-items: flex-start; gap: 6px;
+            font-size: 13px; color: #666; line-height: 1.5;
+        }
+        .info-item .info-label {
+            color: #999; flex-shrink: 0;
+        }
+        .info-item .info-value {
+            color: #333; font-weight: 500;
+        }
+        .star-rating {
+            color: #f5a623; letter-spacing: 1px;
+        }
+        .deal-amount {
+            color: #c41e3a; font-weight: bold;
+        }
+        .card-footer {
+            display: flex; gap: 12px;
+            padding: 14px 24px;
+            background: #fafbfc;
+            border-top: 1px solid #f0f3f7;
+        }
+        .action-btn {
+            flex: 1; padding: 10px 20px;
+            border-radius: 8px; font-size: 14px; font-weight: 500;
+            cursor: pointer; text-align: center;
+            transition: all 0.2s;
+            display: flex; align-items: center; justify-content: center; gap: 6px;
+        }
+        .action-btn.primary {
+            background: #fff; color: #0a4db4;
+            border: 1px solid #0a4db4;
+        }
+        .action-btn.primary:hover {
+            background: #0a4db4; color: #fff;
+        }
+        .action-btn.secondary {
+            background: linear-gradient(135deg, #0a4db4, #1e6fd9);
+            color: #fff; border: none;
+            box-shadow: 0 2px 8px rgba(10,77,180,0.25);
+        }
+        .action-btn.secondary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(10,77,180,0.35);
+        }
+
+        /* ===== 申请入口 ===== */
+        .apply-banner {
+            background: #fff; border-radius: 16px;
+            box-shadow: 0 2px 16px rgba(10,77,180,0.08);
+            padding: 28px 32px;
+            display: flex; align-items: center; gap: 24px;
+            position: relative; overflow: hidden;
+            border: 2px dashed #d9e0ea;
+            transition: all 0.25s;
+        }
+        .apply-banner:hover {
+            border-color: #0a4db4;
+            background: linear-gradient(135deg, #fff 0%, #f0f5ff 100%);
+        }
+        .apply-icon {
+            width: 64px; height: 64px; flex-shrink: 0;
+            background: linear-gradient(135deg, #0a4db4, #1e6fd9);
+            border-radius: 16px;
+            display: flex; align-items: center; justify-content: center;
+            color: #fff; font-size: 30px;
+            box-shadow: 0 4px 16px rgba(10,77,180,0.3);
+        }
+        .apply-content { flex: 1; }
+        .apply-title {
+            font-size: 17px; font-weight: bold; color: #333;
+            margin-bottom: 6px;
+        }
+        .apply-desc {
+            font-size: 13px; color: #666;
+            line-height: 1.6;
+        }
+        .apply-btn {
+            padding: 14px 32px;
+            background: linear-gradient(135deg, #0a4db4, #1e6fd9);
+            color: #fff; border: none; border-radius: 10px;
+            font-size: 15px; font-weight: bold; cursor: pointer;
+            transition: all 0.25s;
+            box-shadow: 0 4px 16px rgba(10,77,180,0.3);
+            display: flex; align-items: center; gap: 8px;
+            flex-shrink: 0;
+        }
+        .apply-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(10,77,180,0.4);
+        }
+
+        /* ===== 搜索结果提示 ===== */
+        .search-overlay {
+            position: fixed; inset: 0;
+            background: rgba(0,0,0,0.5);
+            display: none; align-items: flex-start; justify-content: center;
+            z-index: 9999; padding-top: 100px;
+        }
+        .search-overlay.show { display: flex; }
+        .search-modal {
+            background: #fff; border-radius: 12px;
+            padding: 24px; width: 90%; max-width: 500px;
+            animation: slideDown 0.25s ease-out;
+        }
+        @keyframes slideDown {
+            from { transform: translateY(-20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .search-modal h3 {
+            font-size: 16px; color: #333; margin-bottom: 14px;
+        }
+        .search-modal input {
+            width: 100%; padding: 12px 14px;
+            border: 1px solid #d9e0ea; border-radius: 8px;
+            font-size: 14px; outline: none;
+        }
+        .search-modal input:focus {
+            border-color: #0a4db4;
+            box-shadow: 0 0 0 3px rgba(10,77,180,0.1);
+        }
+        .search-suggestions {
+            margin-top: 12px;
+            display: flex; gap: 8px; flex-wrap: wrap;
+        }
+        .search-suggestions .tag {
+            padding: 4px 12px; background: #f0f5ff;
+            color: #0a4db4; border-radius: 12px;
+            font-size: 12px; cursor: pointer;
+        }
+        .search-suggestions .tag:hover { background: #e8f0fe; }
+
+        /* ===== 响应式 ===== */
+        @media (max-width: 768px) {
+            .ecee-container { padding: 16px 12px 40px; }
+            .top-bar-inner { padding: 12px 16px; }
+            .page-title { font-size: 15px; }
+            .search-nav input { width: 100px; }
+            .authority-banner { padding: 20px; }
+            .banner-title { font-size: 18px; }
+            .banner-stats { flex-wrap: wrap; gap: 12px; }
+            .filter-bar { padding: 12px 14px; }
+            .filter-tabs { gap: 6px; }
+            .filter-tab { padding: 5px 12px; font-size: 12px; }
+            .card-header { padding: 16px; }
+            .card-body { padding: 12px 16px; gap: 16px; }
+            .card-footer { padding: 12px 16px; }
+            .apply-banner { flex-direction: column; text-align: center; padding: 20px; }
+            .apply-icon { margin: 0 auto; }
+            .apply-btn { width: 100%; justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ============ 顶部导航 ============ -->
+<div class="top-bar">
+    <div class="top-bar-inner">
+        <div class="back-btn" onclick="goBack()">
+            ◀ 返回
+        </div>
+        <div class="page-title">
+            🏅 ECEE认证企业专区
+            <span class="badge">官方认证</span>
+        </div>
+        <div class="search-nav" onclick="openSearch()">
+            <span class="search-icon">🔍</span>
+            <input type="text" placeholder="搜索认证企业..." readonly>
+        </div>
+    </div>
+</div>
+
+<!-- ============ 主体 ============ -->
+<div class="ecee-container">
+
+    <!-- 认证机构Banner -->
+    <div class="authority-banner">
+        <div class="banner-content">
+            <div class="badge-icon">⭐</div>
+            <div class="banner-title">公安部第三研究所 ｜ 国科发2018-01号</div>
+            <div class="banner-subtitle">全国仅 127 家企业通过 ECEE 认证，涵盖人工智能、新材料、通信等前沿科技领域</div>
+            <div class="banner-stats">
+                <div class="stat-item">
+                    <span class="stat-num">127</span>
+                    <span>认证企业</span>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat-item">
+                    <span class="stat-num">5</span>
+                    <span>认证等级</span>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat-item">
+                    <span class="stat-num">10</span>
+                    <span>产品品类</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 筛选栏 -->
+    <div class="filter-bar">
+        <span class="filter-label">品类筛选：</span>
+        <div class="filter-tabs" id="filterTabs">
+            <div class="filter-tab active" data-cat="all" onclick="filterByCategory('all')">全部</div>
+            <div class="filter-tab" data-cat="chip" onclick="filterByCategory('chip')">芯片</div>
+            <div class="filter-tab" data-cat="material" onclick="filterByCategory('material')">材料</div>
+            <div class="filter-tab" data-cat="algorithm" onclick="filterByCategory('algorithm')">算法</div>
+            <div class="filter-tab" data-cat="device" onclick="filterByCategory('device')">设备</div>
+        </div>
+        <div class="filter-count">共 <b id="totalCount">6</b> 家认证企业</div>
+    </div>
+
+    <!-- 企业列表 -->
+    <div class="enterprise-list" id="enterpriseList">
+        <!-- 动态渲染 -->
+    </div>
+
+    <!-- 申请入口 -->
+    <div class="apply-banner">
+        <div class="apply-icon">📋</div>
+        <div class="apply-content">
+            <div class="apply-title">认证企业申请入口（仅限黑科技企业）</div>
+            <div class="apply-desc">提交企业资质、产品检测报告等材料，经 ECEE 审核通过后即可获得官方认证标识，享受平台流量扶持与大宗贸易优先对接。</div>
+        </div>
+        <button class="apply-btn" onclick="goToApply()">
+            立即申请ECEE认证 →
+        </button>
+    </div>
+
+</div>
+
+<!-- ============ 搜索弹窗 ============ -->
+<div class="search-overlay" id="searchOverlay" onclick="closeSearch(event)">
+    <div class="search-modal" onclick="event.stopPropagation()">
+        <h3>🔍 搜索认证企业</h3>
+        <input type="text" id="searchInput" placeholder="输入企业名称、产品、认证编号..." oninput="doSearch()">
+        <div class="search-suggestions">
+            <span class="tag" onclick="quickSearch('华为')">华为</span>
+            <span class="tag" onclick="quickSearch('寒武纪')">寒武纪</span>
+            <span class="tag" onclick="quickSearch('商汤')">商汤</span>
+            <!-- <span class="tag" onclick="quickSearch('AI芯片')">AI芯片</span>
+            <span class="tag" onclick="quickSearch('人脸识别')">人脸识别</span> -->
+        </div>
+    </div>
+</div>
+
+<script>
+/* ============ 企业数据 ============ */
+const ENTERPRISE_DATA = [
+    {
+        id: 'huawei',
+        name: '华为昇腾',
+        certId: 'ECEE-2026-001',
+        logo: '华为',
+        logoClass: 'huawei',
+        products: 'AI训练芯片 / 推理卡',
+        category: 'chip',
+        level: 5,
+        deal: '1.2亿（大宗贸易）',
+        tags: ['昇腾910B', '昇腾310P', 'Atlas 800']
+    },
+    {
+        id: 'cambricon',
+        name: '寒武纪科技',
+        certId: 'ECEE-2026-017',
+        logo: '寒武',
+        logoClass: 'cambricon',
+        products: '边缘AI芯片 / 云端加速卡',
+        category: 'chip',
+        level: 4,
+        deal: '8,700万',
+        tags: ['MLU270', 'MLU370', '边缘智能芯片']
+    },
+    {
+        id: 'sensetime',
+        name: '商汤智能',
+        certId: 'ECEE-2026-023',
+        logo: '商汤',
+        logoClass: 'sensetime',
+        products: '机器视觉算法 / 人脸识别模组',
+        category: 'algorithm',
+        level: 4,
+        deal: '6,500万',
+        tags: ['SenseParcels', '人脸识别', '自动驾驶']
+    // },
+    // {
+    //     id: 'firm',
+    //     name: '固件智能',
+    //     certId: 'ECEE-2026-031',
+    //     logo: '固件',
+    //     logoClass: 'firm',
+    //     products: '工业控制固件 / 嵌入式AI模块',
+    //     category: 'device',
+    //     level: 3,
+    //     deal: '3,200万',
+    //     tags: ['工业物联网', '边缘计算', '固件安全']
+    // },
+    // {
+    //     id: 'zte',
+    //     name: '中兴通讯',
+    //     certId: 'ECEE-2026-045',
+    //     logo: '中兴',
+    //     logoClass: 'zte',
+    //     products: '5G通信设备 / 光传输系统',
+    //     category: 'device',
+    //     level: 5,
+    //     deal: '9,800万',
+    //     tags: ['5G基站', 'OTN光传输', 'SDN/NFV']
+    // },
+    // {
+    //     id: 'inspur',
+    //     name: '浪潮信息',
+    //     certId: 'ECEE-2026-058',
+    //     logo: '浪潮',
+    //     logoClass: 'inspur',
+    //     products: 'AI服务器 / 智能计算平台',
+    //     category: 'device',
+    //     level: 4,
+    //     deal: '5,600万',
+    //     tags: ['GPU服务器', 'AI集群', '智能计算']
+    }
+];
+
+let currentFilter = 'all';
+let currentSearch = '';
+
+/* ============ 渲染企业列表 ============ */
+function renderEnterprises() {
+    const list = document.getElementById('enterpriseList');
+    let data = ENTERPRISE_DATA;
+
+    if (currentFilter !== 'all') {
+        data = data.filter(e => e.category === currentFilter);
+    }
+    if (currentSearch) {
+        const kw = currentSearch.toLowerCase();
+        data = data.filter(e =>
+            e.name.toLowerCase().includes(kw) ||
+            e.products.toLowerCase().includes(kw) ||
+            e.certId.toLowerCase().includes(kw) ||
+            e.tags.some(t => t.toLowerCase().includes(kw))
+        );
+    }
+
+    document.getElementById('totalCount').textContent = data.length;
+
+    if (data.length === 0) {
+        list.innerHTML = `
+            <div style="text-align:center; padding:60px 20px; color:#999; background:#fff; border-radius:12px;">
+                <div style="font-size:48px; margin-bottom:12px;">🔍</div>
+                <div>暂无符合条件的认证企业</div>
+            </div>
+        `;
+        return;
+    }
+
+    list.innerHTML = data.map(e => `
+        <div class="enterprise-card">
+            <div class="card-header">
+                <div class="card-logo ${e.logoClass}">${e.logo}</div>
+                <div class="card-title-area">
+                    <div class="card-title-row">
+                        <span class="card-title">🏅 ${e.name}</span>
+                        <span class="cert-badge">官方认证</span>
+                    </div>
+                    <span class="cert-id">认证编号：${e.certId}</span>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="info-col">
+                    <div class="info-item">
+                        <span class="info-label">认证产品：</span>
+                        <span class="info-value">${e.products}</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">认证等级：</span>
+                        <span class="info-value">
+                            <span class="star-rating">${'★'.repeat(e.level)}${'☆'.repeat(5 - e.level)}</span>
+                            ${e.level === 5 ? '（最高）' : ''}
+                        </span>
+                    </div>
+                </div>
+                <div class="info-col">
+                    <div class="info-item">
+                        <span class="info-label">最近成交：</span>
+                        <span class="info-value deal-amount">${e.deal}</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">技术标签：</span>
+                        <span class="info-value">${e.tags.map(t => `<span style="display:inline-block;padding:2px 8px;margin:2px 4px 0 0;background:#f0f5ff;color:#0a4db4;border-radius:10px;font-size:11px;">${t}</span>`).join('')}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <button class="action-btn primary" onclick="openShop('${e.id}')">
+                    🏪 进入企业店铺
+                </button>
+                <button class="action-btn secondary" onclick="inquiry('${e.id}')">
+                    💬 发起询盘
+                </button>
+            </div>
+        </div>
+    `).join('');
+}
+
+/* ============ 分类筛选 ============ */
+function filterByCategory(cat) {
+    currentFilter = cat;
+    document.querySelectorAll('.filter-tab').forEach(t => {
+        t.classList.toggle('active', t.dataset.cat === cat);
+    });
+    renderEnterprises();
+}
+
+/* ============ 搜索 ============ */
+function openSearch() {
+    document.getElementById('searchOverlay').classList.add('show');
+    setTimeout(() => document.getElementById('searchInput').focus(), 100);
+}
+
+function closeSearch(e) {
+    if (e && e.target !== e.currentTarget) return;
+    document.getElementById('searchOverlay').classList.remove('show');
+    document.getElementById('searchInput').value = '';
+    currentSearch = '';
+    renderEnterprises();
+}
+
+function doSearch() {
+    currentSearch = document.getElementById('searchInput').value.trim();
+    renderEnterprises();
+}
+
+function quickSearch(kw) {
+    document.getElementById('searchInput').value = kw;
+    currentSearch = kw;
+    renderEnterprises();
+}
+
+/* ============ 操作 ============ */
+function openShop(id) {
+    const e = ENTERPRISE_DATA.find(x => x.id === id);
+    alert(`即将跳转到【${e.name}】的企业店铺...`);
+}
+
+function inquiry(id) {
+    const e = ENTERPRISE_DATA.find(x => x.id === id);
+    if (confirm(`确定要向【${e.name}】发起询盘吗？\n\n认证产品：${e.products}`)) {
+        alert('询盘已发送，请等待企业响应！');
+    }
+}
+
+function goToApply() {
+    window.location.href = './publish.html';
+}
+
+function goBack() {
+    if (document.referrer) {
+        history.back();
+    } else {
+        window.location.href = './neep.html';
+    }
+}
+
+/* ============ 初始化 ============ */
+renderEnterprises();
+</script>
+
+</body>
+</html>

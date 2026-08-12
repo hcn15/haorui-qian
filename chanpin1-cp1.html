@@ -39,6 +39,7 @@
 
     <link rel="stylesheet" href="./index_files/share.min.css">
     <link rel="stylesheet" type="text/css" href="./index_files/liMarquee.css">
+    <link rel="stylesheet" type="text/css" href="./index_files/mobile.css">
 
     <script>
         <meta name="baidu-site-verification" content="codeva-LR64T0uUwL" />
@@ -62,6 +63,20 @@
 
 
     <style>
+        html {
+            margin: 0 !important;
+            padding: 0 !important;
+            max-width: 100vw;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+        body {
+            margin: 0 !important;
+            padding: 0 !important;
+            max-width: 100vw;
+            overflow: visible;
+        }
+
         .join-box1 .container .right {
             padding-top: 0;
         }
@@ -76,6 +91,12 @@
 
         .znewslist .box .cn1 .cn3 {
             height: auto;
+        }
+
+        .gpop {
+            display: block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
         }
     </style>
     <link id="layuicss-laydate" rel="stylesheet" href="./index_files/laydate.css" media="all">
@@ -945,7 +966,7 @@
 	</script>
 
 <!-- 右侧浮窗 -->
-	<div class="gpop" style="display: block;">
+	<div id="fixedGpop" class="gpop" style="display: block;">
 		<a href="#lxwm" class="pop_a cur1">
 			<div class="pop_a_img">
 				<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
@@ -968,19 +989,18 @@
 		</a>
 		<a class="pop_a cur2">
 			<div class="pop_a_img">
-				<svg xmlns="http://www.w3.org/2000/svg" width="24" height="15.5" viewBox="0 0 24 15.5"
+				<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
 					data-inject-url="" loading="lazy">
 					<defs>
 						<style>
 							.cls-1 {
-								fill: #fff;
+								fill: #2260bc;
 								fill-rule: evenodd;
 							}
 						</style>
 					</defs>
-					<path id="形状_721--inject-48" data-name="形状 721" class="cls-1"
-						d=""
-						transform="translate(-185.563 -248.781)"></path>
+					<path class="cls-1"
+						d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path>
 				</svg>
 				<p>回到顶部 </p>
 			</div>
@@ -990,27 +1010,47 @@
 
 
     <script>
-        // 强制右侧浮窗始终显示，并阻止原始隐藏脚本执行
-        document.addEventListener('DOMContentLoaded', function () {
+        window.addEventListener('load', function() {
+            function initBackToTop() {
+                var backTopBtn = document.querySelector('.pop_a.cur2');
+                if (backTopBtn) {
+                    backTopBtn.addEventListener('click', function () {
+                        $('body,html').animate({ scrollTop: 0 }, 300);
+                    });
+                }
+            }
+
             var gpop = document.getElementById('fixedGpop');
             if (gpop) {
-                // 强制设置初始样式
                 gpop.style.display = 'block';
                 gpop.style.visibility = 'visible';
                 gpop.style.opacity = '1';
-
-                // 使用捕获模式添加滚动事件监听器，优先级高于冒泡模式的监听器
-                window.addEventListener('scroll', function (event) {
-                    // 强制恢复显示状态
-                    gpop.style.display = 'block';
-                    gpop.style.visibility = 'visible';
-                    gpop.style.opacity = '1';
-
-                    // 阻止事件继续传播，这样原始的隐藏脚本就不会被触发了
-                    event.stopImmediatePropagation();
-                }, true); // 第三个参数为 true，表示使用捕获模式
             }
+
+            $('.pop_a').hover(function(){
+                $(this).addClass('on');
+            }, function(){
+                $(this).removeClass('on');
+            });
+
+            initBackToTop();
         });
+
+        window.addEventListener('scroll', function(event) {
+            var gpop = document.getElementById('fixedGpop');
+            if (gpop) {
+                gpop.style.display = 'block';
+                gpop.style.visibility = 'visible';
+                gpop.style.opacity = '1';
+            }
+        }, true);
+
+        document.addEventListener('wheel', function(e) {
+            if (!e.target.closest('.gpop') && !e.target.closest('.new-nav-wrap')) {
+                var delta = e.deltaY || e.detail || e.wheelDelta;
+                window.scrollBy(0, delta);
+            }
+        }, { passive: true });
     </script>
 
     <!-- 公共 -->

@@ -68,6 +68,12 @@
         .znewslist .box .cn1 .cn3 {
             height: auto;
         }
+
+        .gpop {
+            display: block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+        }
     </style>
     <link id="layuicss-laydate" rel="stylesheet" href="./index_files/laydate.css" media="all">
     <link id="layuicss-layer" rel="stylesheet" href="./index_files/layer.css" media="all">
@@ -281,7 +287,7 @@
 		loadComponent('footer-container', './components/footer-en.html');
 	</script>
 
-    <div class="gpop" style="display: block;">
+    <div id="fixedGpop" class="gpop" style="display: block;">
         <a href="#lxwm" class="pop_a cur1">
             <div class="pop_a_img">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
@@ -301,9 +307,9 @@
                 <p>Contact </p>
             </div>
         </a>
-        <a class="pop_a cur2">
+        <a href="#" class="pop_a cur2" style="cursor: pointer;">
             <div class="pop_a_img">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="15.5" viewBox="0 0 24 15.5"
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                     data-inject-url="" loading="lazy">
                     <defs>
                         <style>
@@ -314,19 +320,12 @@
                         </style>
                     </defs>
                     <path class="cls-1"
-                        d="M245.179,175.5a0.857,0.857,0,0,1-.857.857H232.857a0.857,0.857,0,0,1-.857-.857V172.143a0.857,0.857,0,0,1,.857-.857H244.321a0.857,0.857,0,0,1,.857.857Zm0-8.571a0.857,0.857,0,0,1-.857.857H232.857a0.857,0.857,0,0,1-.857-.857V163.571a0.857,0.857,0,0,1,.857-.857H244.321a0.857,0.857,0,0,1,.857.857Zm0-8.571a0.857,0.857,0,0,1-.857.857H232.857a0.857,0.857,0,0,1-.857-.857V155a0.857,0.857,0,0,1,.857-.857H244.321a0.857,0.857,0,0,1,.857.857Z"
-                        transform="translate(-232 -154.143)"></path>
+                        d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path>
                 </svg>
                 <p>Back to Top</p>
             </div>
         </a>
     </div>
-
-    <script>
-        document.querySelector('.pop_a.cur2').addEventListener('click', function () {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
-    </script>
 
     <script src="./index_files/layui.js"></script>
     <script src="./index_files/extend.js" type="text/javascript"></script>
@@ -344,5 +343,47 @@
     </script>
 
     <script src="./index_files/jquery.liMarquee.js" type="text/javascript" charset="utf-8"></script>
+
+    <script>
+        window.addEventListener('load', function() {
+            var gpop = document.getElementById('fixedGpop');
+            if (gpop) {
+                gpop.style.display = 'block';
+                gpop.style.visibility = 'visible';
+                gpop.style.opacity = '1';
+            }
+
+            $('.pop_a').hover(function(){
+                $(this).addClass('on');
+            }, function(){
+                $(this).removeClass('on');
+            });
+        });
+
+        document.addEventListener('click', function(e) {
+            var target = e.target.closest('.pop_a.cur2');
+            if (target) {
+                e.preventDefault();
+                e.stopPropagation();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        });
+
+        window.addEventListener('scroll', function(event) {
+            var gpop = document.getElementById('fixedGpop');
+            if (gpop) {
+                gpop.style.display = 'block';
+                gpop.style.visibility = 'visible';
+                gpop.style.opacity = '1';
+            }
+        }, true);
+
+        document.addEventListener('wheel', function(e) {
+            if (!e.target.closest('.gpop') && !e.target.closest('.new-nav-wrap')) {
+                var delta = e.deltaY || e.detail || e.wheelDelta;
+                window.scrollBy(0, delta);
+            }
+        }, { passive: true });
+    </script>
 </body>
 </html>

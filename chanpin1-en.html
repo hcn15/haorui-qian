@@ -74,6 +74,12 @@
         .znewslist .box .cn1 .cn3 {
             height: auto;
         }
+
+        .gpop {
+            display: block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+        }
     </style>
     <link id="layuicss-laydate" rel="stylesheet" href="./index_files/laydate.css" media="all">
     <link id="layuicss-layer" rel="stylesheet" href="./index_files/layer.css" media="all">
@@ -488,6 +494,21 @@
             gap: 6px;
         }
 
+        .nav_lan svg:first-child {
+            width: 20.84px;
+            height: 20.812px;
+        }
+
+        .nav_lan .nav_lan_box svg {
+            width: 6px !important;
+            height: 3px !important;
+            flex-shrink: 0;
+        }
+
+        .nav_lan svg path {
+            fill: #ffffff !important;
+        }
+
         .nav_lan_sel {
             position: absolute;
             top: 100%;
@@ -651,6 +672,8 @@
         body {
             background: #fff;
             color: #333;
+            margin: 0 !important;
+            padding: 0 !important;
         }
     </style>
 
@@ -753,10 +776,6 @@
                         if (bannerImg && (product.imageUrlEn || product.imageUrl)) {
                             bannerImg.src = getImageUrl(product.imageUrlEn || product.imageUrl);
                         }
-                        
-                        const langLinks = document.querySelectorAll('.nav_lan_sel a');
-                        if (langLinks[0]) langLinks[0].href = `./chanpin1-en.html?id=${productId}`;
-                        if (langLinks[1]) langLinks[1].href = `./chanpin1.html?id=${productId}`;
                     }
                 })
                 .catch(err => {
@@ -873,10 +892,13 @@
             const bannerImg = document.getElementById('bannerImg');
             if (bannerImg && (currData.firstUrlEn || currData.firstUrl)) {
                 bannerImg.src = getImageUrl(currData.firstUrlEn || currData.firstUrl);
+            } else if (bannerImg) {
+                bannerImg.src = '';
             }
 
-            document.querySelectorAll('.h_banner.on').forEach(el => el.remove());
+            document.querySelectorAll('.h_banner').forEach(el => el.remove());
             document.querySelectorAll('.product-intro-anchor').forEach(el => el.remove());
+
             const tabBar = document.getElementById('tabBar');
             const prodImg = getImageUrl(currData.productUrlEn || currData.productUrl || '');
             if (prodImg) {
@@ -964,51 +986,87 @@
 		loadComponent('footer-container', './components/footer-en.html');
 	</script>
 
-    <div class="gpop" style="display: block;">
-        <a href="#lxwm" class="pop_a cur1">
-            <div class="pop_a_img">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                    data-inject-url="https://www.i2cool.com.cn/static/cms/images/pop_r_svg.svg" loading="lazy">
-                    <defs>
-                        <style>
-                            .cls-1 {
-                                fill: #2260bc;
-                                fill-rule: evenodd;
-                            }
-                        </style>
-                    </defs>
-                    <path class="cls-1"
-                        d="M186.357,199.5a0.858,0.858,0,0,1-.857-0.858V178.071a2.571,2.571,0,0,1,2.571-2.571h18.857a2.571,2.571,0,0,1,2.572,2.571v13.714a2.572,2.572,0,0,1-2.572,2.572H192.991a0.861,0.861,0,0,0-.558.206l-5.519,4.73a0.862,0.862,0,0,1-.557.207h0Zm1.714-22.286a0.857,0.857,0,0,0-.857.857v18.708l4.1-3.514a2.571,2.571,0,0,1,1.673-.623h13.937a0.856,0.856,0,0,0,.857-0.857V178.071a0.857,0.857,0,0,0-.857-0.857H188.071Zm14.572,6H192.357a0.857,0.857,0,0,1,0-1.714h10.286A0.857,0.857,0,0,1,202.643,183.214ZM197.5,187.5h-5.143a0.858,0.858,0,0,1,0-1.715H197.5A0.858,0.858,0,0,1,197.5,187.5Zm5.143,0h-2.572a0.858,0.858,0,0,1,0-1.715h2.572A0.858,0.858,0,0,1,202.643,187.5Z"
-                        transform="translate(-185.5 -175.5)"></path>
-                </svg>
-                <p>Contact Us </p>
-            </div>
-        </a>
-        <a class="pop_a cur2">
-            <div class="pop_a_img">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="15.5" viewBox="0 0 24 15.5"
-                    data-inject-url="" loading="lazy">
-                    <defs>
-                        <style>
-                            .cls-1 {
-                                fill: #2260bc;
-                                fill-rule: evenodd;
-                            }
-                        </style>
-                    </defs>
-                    <path class="cls-1"
-                        d="M245.179,175.5a0.857,0.857,0,0,1-.857.857H232.857a0.857,0.857,0,0,1-.857-.857V172.143a0.857,0.857,0,0,1,.857-.857H244.321a0.857,0.857,0,0,1,.857.857Zm0-8.571a0.857,0.857,0,0,1-.857.857H232.857a0.857,0.857,0,0,1-.857-.857V163.571a0.857,0.857,0,0,1,.857-.857H244.321a0.857,0.857,0,0,1,.857.857Zm0-8.571a0.857,0.857,0,0,1-.857.857H232.857a0.857,0.857,0,0,1-.857-.857V155a0.857,0.857,0,0,1,.857-.857H244.321a0.857,0.857,0,0,1,.857.857Z"
-                        transform="translate(-232 -154.143)"></path>
-                </svg>
-                <p>Back to Top</p>
-            </div>
-        </a>
-    </div>
+<!-- 右侧浮窗 -->
+	<div id="fixedGpop" class="gpop" style="display: block;">
+		<a href="#lxwm" class="pop_a cur1">
+			<div class="pop_a_img">
+				<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+					data-inject-url="https://www.i2cool.com.cn/static/cms/images/pop_r_svg.svg" loading="lazy">
+					<defs>
+						<style>
+							.cls-1 {
+								fill: #2260bc;
+								fill-rule: evenodd;
+							}
+						</style>
+					</defs>
+					<path id="形状_722--inject-47" data-name="形状 722" class="cls-1"
+						d="M186.357,199.5a0.858,0.858,0,0,1-.857-0.858V178.071a2.571,2.571,0,0,1,2.571-2.571h18.857a2.571,2.571,0,0,1,2.572,2.571v13.714a2.572,2.572,0,0,1-2.572,2.572H192.991a0.861,0.861,0,0,0-.558.206l-5.519,4.73a0.862,0.862,0,0,1-.557.207h0Zm1.714-22.286a0.857,0.857,0,0,0-.857.857v18.708l4.1-3.514a2.571,2.571,0,0,1,1.673-.623h13.937a0.856,0.856,0,0,0,.857-.857V178.071a0.857,0.857,0,0,0-.857-0.857H188.071Zm14.572,6H192.357a0.857,0.857,0,0,1,0-1.714h10.286A0.857,0.857,0,0,1,202.643,183.214ZM197.5,187.5h-5.143a0.858,0.858,0,0,1,0-1.715H197.5A0.858,0.858,0,0,1,197.5,187.5Zm5.143,0h-2.572a0.858,0.858,0,0,1,0-1.715h2.572A0.858,0.858,0,0,1,202.643,187.5Z"
+						transform="translate(-185.5 -175.5)"></path>
+				</svg>
+				<p>Contact Us</p>
+			</div>
+		</a>
+		<a href="#" class="pop_a cur2" style="cursor: pointer;">
+			<div class="pop_a_img">
+				<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+					data-inject-url="" loading="lazy">
+					<defs>
+						<style>
+							.cls-1 {
+								fill: #2260bc;
+								fill-rule: evenodd;
+							}
+						</style>
+					</defs>
+					<path class="cls-1"
+						d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path>
+				</svg>
+				<p>Back to Top</p>
+			</div>
+		</a>
+	</div>
 
     <script>
-        document.querySelector('.pop_a.cur2').addEventListener('click', function () {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+        window.addEventListener('load', function() {
+            var gpop = document.getElementById('fixedGpop');
+            if (gpop) {
+                gpop.style.display = 'block';
+                gpop.style.visibility = 'visible';
+                gpop.style.opacity = '1';
+            }
+
+            $('.pop_a').hover(function(){
+                $(this).addClass('on');
+            }, function(){
+                $(this).removeClass('on');
+            });
         });
+
+        document.addEventListener('click', function(e) {
+            var target = e.target.closest('.pop_a.cur2');
+            if (target) {
+                e.preventDefault();
+                e.stopPropagation();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        });
+
+        window.addEventListener('scroll', function(event) {
+            var gpop = document.getElementById('fixedGpop');
+            if (gpop) {
+                gpop.style.display = 'block';
+                gpop.style.visibility = 'visible';
+                gpop.style.opacity = '1';
+            }
+        }, true);
+
+        document.addEventListener('wheel', function(e) {
+            if (!e.target.closest('.gpop') && !e.target.closest('.new-nav-wrap')) {
+                var delta = e.deltaY || e.detail || e.wheelDelta;
+                window.scrollBy(0, delta);
+            }
+        }, { passive: true });
     </script>
 </body>
 </html>

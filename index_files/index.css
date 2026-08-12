@@ -420,71 +420,14 @@
         padding: 0 15px !important;
     }
 
-    footer .gt {
-        margin-bottom: 15px !important;
-    }
-
-    footer .gt h2 {
-        font-size: 20px !important;
-        margin-bottom: 0 !important;
-        line-height: 1.2 !important;
-    }
-
-    footer .gm {
-        margin-bottom: 15px !important;
+    footer > .container > div:first-child {
         flex-direction: column !important;
-        align-items: center !important;
+        gap: 20px !important;
     }
 
-    footer .gm_r {
+    footer .container div div {
+        min-width: 100% !important;
         text-align: center !important;
-        width: 100% !important;
-    }
-
-    footer .gm_r h3 {
-        font-size: 15px !important;
-        margin-bottom: 8px !important;
-        line-height: 1.2 !important;
-    }
-
-    footer .gm_r .g_p {
-        font-size: 11px !important;
-        line-height: 1.5 !important;
-    }
-
-    footer .gm_r .g_p p {
-        margin-bottom: 4px !important;
-        display: block !important;
-        white-space: normal !important;
-        word-break: break-word !important;
-    }
-
-    footer .gb {
-        flex-direction: column !important;
-        text-align: center !important;
-        gap: 8px !important;
-        font-size: 10px !important;
-        padding-top: 12px !important;
-        border-top-width: 1px !important;
-        border-top-style: solid !important;
-        border-top-color: rgba(255,255,255,0.15) !important;
-    }
-
-    footer .gb_l {
-        display: flex !important;
-        flex-direction: column !important;
-        align-items: center !important;
-        gap: 4px !important;
-    }
-
-    footer .gb_l p {
-        margin-bottom: 0 !important;
-    }
-
-    footer .gb_r {
-        display: flex !important;
-        gap: 12px !important;
-        justify-content: center !important;
     }
 
     .h_banner,

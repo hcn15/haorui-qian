@@ -1,4 +1,4 @@
-﻿
+
 <!DOCTYPE html>
 
 <html xml:lang="zh" lang="zh" style="--color: #005CE6; --vh: 708px; scroll-behavior: auto;">
@@ -77,6 +77,12 @@
 
         .znewslist .box .cn1 .cn3 {
             height: auto;
+        }
+
+        .gpop {
+            display: block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
         }
     </style>
     <link id="layuicss-laydate" rel="stylesheet" href="./index_files/laydate.css" media="all">
@@ -928,7 +934,7 @@
 	</script>
 
     <!-- 右侧悬浮 -->
-    <div class="gpop" style="display: block;">
+    <div id="fixedGpop" class="gpop" style="display: block;">
         <a href="#lxwm" class="pop_a cur1" style="cursor: pointer;">
             <div class="pop_a_img">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
@@ -949,20 +955,20 @@
             </div>
 
         </a>
-        <a class="pop_a cur2" style="cursor: pointer;">
+        <a href="#" class="pop_a cur2" style="cursor: pointer;">
             <div class="pop_a_img">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="15.5" viewBox="0 0 24 15.5"
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                     data-inject-url="" loading="lazy">
                     <defs>
                         <style>
                             .cls-1 {
-                                fill: #fff;
+                                fill: #2260bc;
                                 fill-rule: evenodd;
                             }
                         </style>
                     </defs>
-                    <path id="褰㈢姸_721--inject-48" data-name="褰㈢姸 721" class="cls-1" d=""
-                        transform="translate(-185.563 -248.781)"></path>
+                    <path class="cls-1"
+                        d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path>
                 </svg>
                 <p>Back to Top</p>
             </div>
@@ -1232,6 +1238,48 @@
                 parseInt(history[0]) && open.click();
                 tab_tit[history[1]].click();
             })();
+    </script>
+
+    <script>
+        window.addEventListener('load', function() {
+            var gpop = document.getElementById('fixedGpop');
+            if (gpop) {
+                gpop.style.display = 'block';
+                gpop.style.visibility = 'visible';
+                gpop.style.opacity = '1';
+            }
+
+            $('.pop_a').hover(function(){
+                $(this).addClass('on');
+            }, function(){
+                $(this).removeClass('on');
+            });
+        });
+
+        document.addEventListener('click', function(e) {
+            var target = e.target.closest('.pop_a.cur2');
+            if (target) {
+                e.preventDefault();
+                e.stopPropagation();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        });
+
+        window.addEventListener('scroll', function(event) {
+            var gpop = document.getElementById('fixedGpop');
+            if (gpop) {
+                gpop.style.display = 'block';
+                gpop.style.visibility = 'visible';
+                gpop.style.opacity = '1';
+            }
+        }, true);
+
+        document.addEventListener('wheel', function(e) {
+            if (!e.target.closest('.gpop') && !e.target.closest('.new-nav-wrap')) {
+                var delta = e.deltaY || e.detail || e.wheelDelta;
+                window.scrollBy(0, delta);
+            }
+        }, { passive: true });
     </script>
 
 

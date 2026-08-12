@@ -1017,9 +1017,10 @@
                 <p>Contact Us </p>
             </div>
         </a>
-        <a class="pop_a cur2">
+        <a href="#" class="pop_a cur2" style="cursor: pointer;">
             <div class="pop_a_img">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="15.5" viewBox="0 0 24 15.5" data-inject-url="" loading="lazy">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                    data-inject-url="" loading="lazy">
                     <defs>
                         <style>
                             .cls-1 {
@@ -1028,7 +1029,8 @@
                             }
                         </style>
                     </defs>
-                    <path class="cls-1" d="M245.179,175.5a0.857,0.857,0,0,1-.857.857H232.857a0.857,0.857,0,0,1-.857-.857V172.143a0.857,0.857,0,0,1,.857-.857H244.321a0.857,0.857,0,0,1,.857.857Zm0-8.571a0.857,0.857,0,0,1-.857.857H232.857a0.857,0.857,0,0,1-.857-.857V163.571a0.857,0.857,0,0,1,.857-.857H244.321a0.857,0.857,0,0,1,.857.857Zm0-8.571a0.857,0.857,0,0,1-.857.857H232.857a0.857,0.857,0,0,1-.857-.857V155a0.857,0.857,0,0,1,.857-.857H244.321a0.857,0.857,0,0,1,.857.857Z" transform="translate(-232 -154.143)"></path>
+                    <path class="cls-1"
+                        d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path>
                 </svg>
                 <p>Back to Top</p>
             </div>
@@ -1036,8 +1038,13 @@
     </div>
 
     <script>
-        document.querySelector('.pop_a.cur2').addEventListener('click', function () {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+        document.addEventListener('click', function(e) {
+            var target = e.target.closest('.pop_a.cur2');
+            if (target) {
+                e.preventDefault();
+                e.stopPropagation();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
         });
     </script>
 

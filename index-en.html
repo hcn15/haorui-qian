@@ -80,6 +80,12 @@
 		.znewslist .box .cn1 .cn3 {
 			height: auto;
 		}
+
+		.gpop {
+			display: block !important;
+			visibility: visible !important;
+			opacity: 1 !important;
+		}
 	</style>
 	<link id="layuicss-laydate" rel="stylesheet" href="./index_files/laydate.css" media="all">
 	<link id="layuicss-layer" rel="stylesheet" href="./index_files/layer.css" media="all">
@@ -236,6 +242,12 @@
 			box-shadow: none !important;
 		}
 
+		.nav_lan .nav_lan_box svg {
+			width: 6px !important;
+			height: 3px !important;
+			flex-shrink: 0;
+		}
+
 		.nav_on li a {
 			position: relative !important;
 		}
@@ -254,9 +266,9 @@
 			transform: translateY(-50%) !important;
 			width: 0 !important;
 			height: 0 !important;
-			border-left: 4px solid transparent !important;
-			border-right: 4px solid transparent !important;
-			border-top: 4px solid #fff !important;
+			border-left: 1px solid transparent !important;
+			border-right: 1px solid transparent !important;
+			border-top: 1px solid #fff !important;
 			will-change: auto !important;
 			transform-origin: center !important;
 		}
@@ -301,652 +313,7 @@
 		}
 
 		/* 全新顶级命名空间，杜绝旧样式污染 */
-		.new-nav-wrap * {
-			margin: 0;
-			padding: 0;
-			box-sizing: border-box;
-			list-style: none;
-			text-decoration: none;
-			font-family: "Microsoft YaHei", "SimSun", "宋体", sans-serif !important;
-		}
-
-		.new-nav-wrap {
-			width: 100%;
-			background: linear-gradient(90deg, #004a99, #1967c2);
-			height: 60px;
-			display: flex;
-			align-items: center;
-			padding: 0 22px;
-			box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-			/* 关键：给父级导航设置相对定位，为子菜单做定位基准 */
-			position: relative;
-			z-index: 9999;
-		}
-
-		.new-nav-logo {
-			display: flex;
-			align-items: center;
-			height: 60px;
-			margin-right: 30px;
-			margin-left: 50px;
-		}
-
-		.new-nav-logo img {
-			height: 28px;
-			width: auto;
-		}
-
-		.new-nav-main {
-			flex: 1;
-			display: flex;
-			justify-content: flex-end;
-			align-items: center;
-			height: 60px;
-		}
-
-		.new-nav-list {
-			display: flex;
-			align-items: center;
-			gap: 36px;
-			white-space: nowrap;
-			height: 60px;
-		}
-
-		.new-nav-item {
-			height: 60px;
-			display: flex;
-			align-items: center;
-			position: relative;
-			padding: 0 10px;
-		}
-
-		.new-nav-link {
-			display: flex;
-			align-items: center;
-			gap: 5px;
-			color: #f0f7ff;
-			font-size: 17px;
-			transition: all 0.25s ease;
-			/* 去掉默认下划线 */
-			text-decoration: none;
-		}
-
-		.new-nav-link:hover {
-			color: #ffffff;
-			/* 去掉hover时的下划线 */
-			border-bottom: none;
-			padding-bottom: 0;
-		}
-
-		.new-nav-link::after {
-			content: "";
-			display: block !important;
-			width: 0;
-			height: 0;
-			border-left: 4px solid transparent;
-			border-right: 4px solid transparent;
-			border-top: 4px solid #f0f7ff;
-			opacity: 1 !important;
-			visibility: visible !important;
-			pointer-events: none;
-			transition: transform 0.2s;
-		}
-
-		.new-nav-item:hover .new-nav-link::after {
-			border-top-color: #fff;
-			transform: rotate(180deg);
-		}
-
-		.new-nav-item.no-dropdown .new-nav-link::after {
-			display: none !important;
-		}
-
-		.new-nav-sub {
-			position: absolute;
-			top: 100%;
-			left: 0;
-			background: #ffffff;
-			padding: 12px 0;
-			display: none;
-			min-width: 140px;
-			border-radius: 4px;
-			box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
-			/* 确保子菜单层级足够高 */
-			z-index: 99999;
-		}
-
-		.new-nav-item:hover .new-nav-sub {
-			display: block;
-		}
-
-		.new-nav-sub-item {
-			padding: 9px 18px;
-			transition: background 0.2s;
-		}
-
-		.new-nav-sub-item:hover {
-			background: #f5f8fc;
-		}
-
-		.new-nav-sub-link {
-			color: #222222;
-			font-size: 15px;
-			text-decoration: none;
-		}
-
-		.new-nav-right {
-			display: flex;
-			align-items: center;
-			gap: 22px;
-			height: 60px;
-			margin-left: 32px;
-		}
-
-		/* 语言下拉菜单样式 */
-		.nav_lan {
-			position: relative;
-			display: flex;
-			align-items: center;
-			cursor: pointer;
-			/* 保持和之前一致的间距 */
-			gap: 6px;
-		}
-
-		.nav_lan_sel {
-			position: absolute;
-			top: 100%;
-			left: 0;
-			background: #fff;
-			display: none;
-			border-radius: 4px;
-			box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
-			/* 关键：设置足够高的层级，确保在所有内容之上 */
-			z-index: 99999;
-		}
-
-		.nav_lan:hover .nav_lan_sel {
-			display: block;
-		}
-
-		.nav_lan_sel a {
-			display: block;
-			padding: 7px 10px;
-			color: #222;
-			font-size: 15px;
-			text-decoration: none;
-		}
-
-		.nav_lan_sel a:hover {
-			background: #f5f8fc;
-		}
-
-		/* 搜索按钮样式 */
-		.nav_search {
-			display: none !important;
-			cursor: pointer;
-			padding-left: 22px;
-			border-left: 1px solid rgba(255, 255, 255, 0.4);
-		}
-
-		/* 搜索框样式 */
-		.new-nav-search-box { display: none !important;
-			position: absolute;
-			top: 100%;
-			right: 22px;
-			background: #ffffff;
-			padding: 10px;
-			border-radius: 4px;
-			box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
-			display: none;
-			z-index: 99999;
-		}
-
-		.new-nav-search-box.active {
-			display: block;
-		}
-
-		.new-nav-search-input {
-			width: 220px;
-			padding: 8px 12px;
-			border: 1px solid #ddd;
-			border-radius: 4px;
-			font-size: 15px;
-			outline: none;
-		}
-
-		.new-nav-search-input:focus {
-			border-color: #1967c2;
-		}
-
-		.new-nav-search-submit {
-			background: #1967c2;
-			color: #fff;
-			border: none;
-			padding: 8px 16px;
-			border-radius: 4px;
-			cursor: pointer;
-			margin-left: 6px;
-		}
-
-		.mobile-menu-btn {
-			display: none;
-		}
-
-		@media (max-width: 767px) {
-			.new-nav-wrap {
-				padding: 0 10px !important;
-				height: 48px !important;
-				position: relative !important;
-			}
-
-			.new-nav-logo {
-				height: 48px !important;
-				margin-left: 0 !important;
-				margin-right: 0 !important;
-				flex: 1 !important;
-				justify-content: center !important;
-			}
-
-			.new-nav-logo img {
-				height: 20px !important;
-			}
-
-			.new-nav-main {
-				height: 48px !important;
-				position: absolute !important;
-				right: 10px !important;
-				top: 0 !important;
-			}
-
-			.new-nav-list {
-				display: none !important;
-			}
-
-			.new-nav-right {
-				display: none !important;
-			}
-
-			.mobile-menu-btn {
-				display: flex !important;
-				flex-direction: column;
-				justify-content: center;
-				align-items: center;
-				width: 40px;
-				height: 40px;
-				cursor: pointer;
-				z-index: 10001;
-			}
-
-			.mobile-menu-btn span {
-				display: block;
-				width: 24px;
-				height: 2px;
-				background: #fff;
-				margin: 3px 0;
-				transition: all 0.3s;
-			}
-
-			.mobile-menu-btn.active span:nth-child(1) {
-				transform: rotate(45deg) translateY(8px);
-			}
-
-			.mobile-menu-btn.active span:nth-child(2) {
-				opacity: 0;
-			}
-
-			.mobile-menu-btn.active span:nth-child(3) {
-				transform: rotate(-45deg) translateY(-8px);
-			}
-
-			.mobile-nav-overlay {
-				display: none;
-				position: fixed;
-				top: 0;
-				left: 0;
-				width: 100%;
-				height: 100%;
-				background: rgba(0, 0, 0, 0.6);
-				z-index: 9998;
-			}
-
-			.mobile-nav-overlay.active {
-				display: block;
-			}
-
-			.mobile-nav-drawer {
-				position: fixed;
-				top: 0;
-				right: -100%;
-				width: 85%;
-				max-width: 300px;
-				height: 100%;
-				background: #ffffff;
-				z-index: 9999;
-				transition: right 0.3s ease;
-				overflow-y: auto;
-				padding-top: 60px;
-			}
-
-			.mobile-nav-drawer.active {
-				right: 0;
-			}
-
-			.mobile-nav-item {
-				border-bottom: 1px solid #f0f0f0;
-			}
-
-			.mobile-nav-item:last-child {
-				border-bottom: none;
-			}
-
-			.mobile-nav-link {
-				display: flex;
-				justify-content: space-between;
-				align-items: center;
-				padding: 15px 20px;
-				color: #333;
-				font-size: 16px;
-				text-decoration: none;
-				background: none;
-			}
-
-			.mobile-nav-link:active {
-				background: #f5f5f5;
-			}
-
-			.mobile-nav-link svg {
-				width: 16px;
-				height: 16px;
-				fill: #999;
-				transition: transform 0.3s;
-			}
-
-			.mobile-nav-item.open .mobile-nav-link svg {
-				transform: rotate(180deg);
-			}
-
-			.mobile-nav-sub {
-				display: none;
-				background: #f9f9f9;
-			}
-
-			.mobile-nav-item.open .mobile-nav-sub {
-				display: block;
-			}
-
-			.mobile-nav-sub-item {
-				padding: 12px 20px 12px 40px;
-				border-bottom: 1px solid #f0f0f0;
-			}
-
-			.mobile-nav-sub-item:last-child {
-				border-bottom: none;
-			}
-
-			.mobile-nav-sub-link {
-				color: #666;
-				font-size: 14px;
-				text-decoration: none;
-				display: block;
-			}
-
-			.mobile-nav-sub-link:active {
-				color: #1967c2;
-			}
-
-			.mobile-nav-lang {
-				padding: 15px 20px;
-				border-bottom: 1px solid #f0f0f0;
-				display: flex;
-				gap: 10px;
-			}
-
-			.mobile-nav-lang a {
-				color: #333;
-				font-size: 15px;
-				text-decoration: none;
-				padding: 5px 10px;
-				border: 1px solid #ddd;
-				border-radius: 4px;
-			}
-
-			.mobile-nav-lang a.active {
-				background: #1967c2;
-				color: #fff;
-				border-color: #1967c2;
-			}
-
-			.h_banner,
-			.h_banner.on {
-				margin: 0 !important;
-				padding: 0 !important;
-				height: auto !important;
-				min-height: auto !important;
-				max-height: none !important;
-				overflow: visible !important;
-			}
-
-			.h_banner_swi {
-				height: auto !important;
-				min-height: auto !important;
-				max-height: none !important;
-			}
-
-			.h_banner .h_b_box {
-				height: 220px !important;
-				min-height: 220px !important;
-				max-height: 220px !important;
-				overflow: hidden !important;
-				margin-top: 0 !important;
-			}
-
-			.h_b_txt {
-				left: 10px !important;
-				right: 10px !important;
-				text-align: center !important;
-				top: 50% !important;
-				transform: translateY(-50%) !important;
-			}
-
-			.h_b_txt .txt_t h1 {
-				font-size: 16px !important;
-				line-height: 1.4 !important;
-			}
-
-			.h_b_txt .txt_t h1 span {
-				font-size: 16px !important;
-				margin-left: 0 !important;
-				text-align: center !important;
-			}
-
-			.news-section .container {
-				padding: 0 15px !important;
-			}
-
-			.news-section .pub_title h2 {
-				font-size: 20px !important;
-				padding: 15px 0 8px !important;
-			}
-
-			.news-section>div>div:nth-child(3) {
-				flex-direction: column !important;
-				gap: 15px !important;
-			}
-
-			.news-section>div>div:nth-child(3)>div:nth-child(1) {
-				height: auto !important;
-				max-height: 350px !important;
-				width: 100% !important;
-			}
-
-			.news-section>div>div:nth-child(3)>div:nth-child(2) {
-				width: 100% !important;
-				height: 250px !important;
-			}
-
-			#prev-btn, #next-btn {
-				width: 32px !important;
-				height: 32px !important;
-				font-size: 16px !important;
-			}
-
-			#prev-btn {
-				left: 10px !important;
-			}
-
-			#next-btn {
-				right: 10px !important;
-			}
-
-			.slider-container img {
-				width: 100% !important;
-				height: 100% !important;
-				object-fit: cover !important;
-			}
-
-			.hth {
-				padding-top: 0 !important;
-				margin-top: 0 !important;
-			}
-
-			.hth .pub_title {
-				padding: 15px 0 8px !important;
-			}
-
-			.hth .pub_title h2 {
-				font-size: 20px !important;
-			}
-
-			.hth .box {
-				margin-top: 10px !important;
-			}
-
-			.hfo .pub_title_tbox .pub_title h2 {
-				font-size: 20px !important;
-				padding: 20px 0 8px !important;
-			}
-
-			.hfo .box .hfo_box {
-				flex-direction: column !important;
-				height: auto !important;
-			}
-
-			.hfo .box .hfo_box .public-img {
-				width: 100% !important;
-				height: 200px !important;
-			}
-
-			.hfo .box .hfo_box .gr {
-				width: 100% !important;
-				padding: 20px 15px !important;
-				height: auto !important;
-			}
-
-			.swiper-scene .swiper-slide {
-				width: 100% !important;
-				margin-right: 0 !important;
-			}
-
-			.htw .pub_title h2 {
-				font-size: 20px !important;
-			}
-
-			.htw .box .box_t {
-				display: flex !important;
-				flex-direction: column !important;
-				gap: 15px !important;
-			}
-
-			.htw .box .box_t .box_t_con {
-				width: 100% !important;
-			}
-
-			.swiper-tech .swiper-slide {
-				width: 100% !important;
-				margin-right: 10px !important;
-			}
-
-			.swiper-tech .public-img img {
-				height: 180px !important;
-			}
-
-			footer {
-				padding: 25px 0 15px !important;
-				background-size: cover !important;
-				background-position: center !important;
-			}
-
-			footer .container {
-				padding: 0 15px !important;
-			}
-
-			footer .gt h2 {
-				font-size: 20px !important;
-			}
-
-			footer .gm {
-				margin-bottom: 15px !important;
-				flex-direction: column !important;
-				align-items: center !important;
-			}
-
-			footer .gm_r {
-				text-align: center !important;
-				width: 100% !important;
-			}
-
-			footer .gm_r h3 {
-				font-size: 15px !important;
-			}
-
-			footer .gm_r .g_p {
-				font-size: 11px !important;
-			}
-
-			footer .gb {
-				flex-direction: column !important;
-				text-align: center !important;
-				gap: 8px !important;
-				font-size: 10px !important;
-			}
-
-			footer .gb_l {
-				display: flex !important;
-				flex-direction: column !important;
-				align-items: center !important;
-				gap: 4px !important;
-			}
-
-			footer .gb_r {
-				display: flex !important;
-				gap: 12px !important;
-				justify-content: center !important;
-			}
-
-			.gpop {
-				display: none !important;
-			}
-
-			html, body {
-				margin: 0 !important;
-				padding: 0 !important;
-			}
-		}
-
-		@media (min-width: 768px) {
-			.mobile-menu-btn {
-				display: none !important;
-			}
-
-			.mobile-nav-overlay {
-				display: none !important;
-			}
-
-			.mobile-nav-drawer {
-				display: none !important;
-			}
-		}
-	</style>
+		</style>
 
 	<div id="nav-container"></div>
 	<script src="./components/load-components.js"></script>
@@ -977,161 +344,23 @@
 				</div>
 
 				<div class="h_b_txt"
-					style="position:absolute; top:50%; left:60px; right:0; transform: translateY(-50%); z-index:3;">
-					<div class="container">
-						<div class="txt_t">
-							<h1 class="p1" style="font-size: 28px; text-align:left; color:#fff; margin:0;">
-								<span
-									style="display:block; font-size: 28px;margin-left:-70px;text-align:center;">HARVEST
-									Green Technology</span>
-								<span style="display:block; margin-left:-100px;text-align:center;">Global Operator for
-									Green, Smart, Secure and Innovative<br> Black‑Tech Products</span>
-							</h1>
-							<p class="p2 font24"></p>
-						</div>
+					style="position:absolute; top:0; left:0; right:0; bottom:0; z-index:2; display:flex; justify-content:space-between; align-items:center; padding:0 80px;">
+					<div class="txt_t" style="text-align:left;">
+						<h1 class="p1" style="font-size: 38px; color:#fff; margin:0; font-weight:bold;">
+							<span style="display:block; font-size: 38px;">The Ultimate Connector of Global Black Tech</span>
+							<span style="display:block; font-size: 20px; margin-top:10px;">全球黑科技的超级连接器</span>
+						</h1>
+					</div>
+					<div class="txt_t" style="text-align:right;">
+						<h1 class="p1" style="font-size: 42px; color:#fff; margin:0; font-weight:bold;">
+							<span style="display:block; font-size: 42px;">Explore Connect Empower</span>
+							<span style="display:block; font-size: 22px; margin-top:10px;">探索 连接 赋能</span>
+						</h1>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-
-
-	<!-- 资讯动态 -->
-	<section class="news-section" style="background:#f5f5f5; padding: 0;">
-		<div class="container" style="max-width:1200px; margin:0 auto; padding:0 20px;">
-			<div class="pub_title" style="text-align:center;  margin:0; padding:40px 0 20px;">
-				<h2 style="font-size:28px; text-align:center; margin:0;">News & Updates</h2>
-			</div>
-
-			<div style="position:relative; margin-bottom:15px; width:100%;">
-				<div
-					style="color:#c8102e; font-size:18px; font-weight:bold; padding-bottom:10px; border-bottom:2px solid #c8102e; display:inline-block; position:relative; z-index:2;">
-					Group News
-				</div>
-				<div style="position:absolute; left:0; bottom:0; width:100%; height:1px; background:#CCC; z-index:1;">
-				</div>
-			</div>
-
-			<div style="display:flex; gap:30px; align-items:flex-start; position:relative;">
-				<div style="flex:1;">
-					<!-- JS动态渲染：英文新闻列表项 -->
-					<ul id="news-list" style="list-style:none; padding:0; margin:0;"></ul>
-				</div>
-
-				<div
-					style="width:600px; height:510px; border-radius:8px; overflow:hidden; position:relative; flex-shrink:0;">
-					<!-- JS动态渲染：英文新闻图片轮播项 -->
-					<div id="slider-container" style="width:100%; height:100%; position:relative;"></div>
-					<div id="prev-btn"
-						style="position:absolute; left:20px; top:50%; transform:translateY(-50%); width:44px; height:44px; background:rgba(0,0,0,0.4); color:#fff; border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer; z-index:10; font-size:20px;">
-						‹</div>
-					<div id="next-btn"
-						style="position:absolute; right:20px; top:50%; transform:translateY(-50%); width:44px; height:44px; background:rgba(0,0,0,0.4); color:#fff; border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer; z-index:10; font-size:20px;">
-						›</div>
-				</div>
-			</div>
-		</div>
-	</section>
-
-	<script>
-		document.addEventListener('DOMContentLoaded', async function () {
-			const res = await fetch(`${SERVER_BASE_URL}/website/news?latest=true`);
-			const json = await res.json();
-			console.log("✅ Get English News Data：", json);
-			let newsList = json.data || [];
-
-			// ID倒序排序
-			newsList = newsList.sort((a, b) => b.id - a.id);
-
-			// 渲染左侧英文新闻列表
-			const listEl = document.getElementById("news-list");
-			newsList.forEach((news, index) => {
-				const li = document.createElement("li");
-				li.style.cssText = "display:flex; padding:18px 0; border-bottom:1px solid #eee; cursor:pointer;";
-
-				// 取用英文字段，日期共用date
-				const enTitle = news.titleEn || "No Title";
-				const enSummary = news.summaryEn;
-				const enContent = news.contentEn || "";
-				const showSummary = enSummary ? enSummary : (enContent.length > 50 ? enContent.substring(0, 50) + "..." : "No content");
-
-				li.innerHTML = `
-            <div style="width:70px; text-align:center; color:#c8102e; font-weight:bold;">
-                <div style="font-size:16px;">${news.date.split('T')[0]}</div>
-            </div>
-            <div style="flex:1;">
-                <h3 style="margin:0 0 5px; font-size:16px; font-weight:normal;">${enTitle}</h3>
-                <p style="margin:0; font-size:14px; color:#666;">${showSummary}</p>
-            </div>
-        `;
-
-				// 跳转英文详情页
-				li.onclick = () => location.href = `./news-detail-en.html?id=${news.id}`;
-				listEl.appendChild(li);
-			});
-
-			// 右侧轮播图渲染，使用英文标题+英文封面图
-			const sliderEl = document.getElementById("slider-container");
-			const items = [];
-			newsList.forEach((news) => {
-				const div = document.createElement("div");
-				div.style.cssText = `
-            position:absolute; 
-            top:0; 
-            left:0; 
-            width:100%; 
-            height:100%; 
-            transition: opacity 0.8s ease;
-            cursor: pointer;
-        `;
-				const imgUrl = getImageUrl(news.imageUrlEn || '');
-				const enTitle = news.titleEn || "No Title";
-
-				div.innerHTML = `
-            <img src="${imgUrl}" style="width:100%; height:100%; object-fit:cover;">
-            <div style="position:absolute; bottom:0; left:0; right:0; padding:30px 25px; background:linear-gradient(transparent, rgba(0,0,0,0.6));">
-                <span style="background:#c8102e; color:#fff; padding:6px 14px; border-radius:4px; font-size:14px; margin-bottom:12px; display:inline-block;">Group News</span>
-                <h3 style="font-size:22px; color:#fff; margin:0; line-height:1.4;">${enTitle}</h3>
-            </div>
-        `;
-				div.onclick = () => location.href = `./news-detail-en.html?id=${news.id}`;
-				sliderEl.appendChild(div);
-				items.push(div);
-			});
-
-			// 轮播初始化
-			let current = 0;
-			items.forEach((it, i) => it.style.opacity = i === 0 ? 1 : 0);
-			setInterval(() => {
-				const next = (current + 1) % items.length;
-				items[current].style.opacity = 0;
-				items[next].style.opacity = 1;
-				current = next;
-			}, 3000);
-
-			// 左右按钮切换
-			document.getElementById('prev-btn').addEventListener('click', () => {
-				let prev = (current - 1 + items.length) % items.length;
-				items[current].style.opacity = 0;
-				items[prev].style.opacity = 1;
-				current = prev;
-			});
-			document.getElementById('next-btn').addEventListener('click', () => {
-				let next = (current + 1) % items.length;
-				items[current].style.opacity = 0;
-				items[next].style.opacity = 1;
-				current = next;
-			});
-
-			// 轮播点击跳转英文详情
-			items.forEach((item, idx) => {
-				item.onclick = () => {
-					const pageNum = 4 - idx;
-					location.href = `./news-${pageNum}-en.html`;
-				}
-			});
-		});
-	</script>
 
 
 	<!-- 第三屏 放在第二屏上面 产品服务-->
@@ -1359,6 +588,144 @@
 			];
 			return svgList[idx] || '';
 		}
+	</script>
+
+
+	<!-- 资讯动态 -->
+	<section class="news-section" style="background:#f5f5f5; padding: 0;">
+		<div class="container" style="max-width:1200px; margin:0 auto; padding:0 20px;">
+			<div class="pub_title" style="text-align:center;  margin:0; padding:40px 0 20px;">
+				<h2 style="font-size:28px; text-align:center; margin:0;">News & Updates</h2>
+			</div>
+
+			<div style="position:relative; margin-bottom:15px; width:100%;">
+				<div
+					style="color:#c8102e; font-size:18px; font-weight:bold; padding-bottom:10px; border-bottom:2px solid #c8102e; display:inline-block; position:relative; z-index:2;">
+					Group News
+				</div>
+				<div style="position:absolute; left:0; bottom:0; width:100%; height:1px; background:#CCC; z-index:1;">
+				</div>
+			</div>
+
+			<div style="display:flex; gap:30px; align-items:flex-start; position:relative;">
+				<div style="flex:1;">
+					<!-- JS动态渲染：英文新闻列表项 -->
+					<ul id="news-list" style="list-style:none; padding:0; margin:0;"></ul>
+				</div>
+
+				<div
+					style="width:600px; height:510px; border-radius:8px; overflow:hidden; position:relative; flex-shrink:0;">
+					<!-- JS动态渲染：英文新闻图片轮播项 -->
+					<div id="slider-container" style="width:100%; height:100%; position:relative;"></div>
+					<div id="prev-btn"
+						style="position:absolute; left:20px; top:50%; transform:translateY(-50%); width:44px; height:44px; background:rgba(0,0,0,0.4); color:#fff; border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer; z-index:10; font-size:20px;">
+						‹</div>
+					<div id="next-btn"
+						style="position:absolute; right:20px; top:50%; transform:translateY(-50%); width:44px; height:44px; background:rgba(0,0,0,0.4); color:#fff; border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer; z-index:10; font-size:20px;">
+						›</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<script>
+		document.addEventListener('DOMContentLoaded', async function () {
+			const res = await fetch(`${SERVER_BASE_URL}/website/news?latest=true`);
+			const json = await res.json();
+			console.log("✅ Get English News Data：", json);
+			let newsList = json.data || [];
+
+			// ID倒序排序
+			newsList = newsList.sort((a, b) => b.id - a.id);
+
+			// 渲染左侧英文新闻列表
+			const listEl = document.getElementById("news-list");
+			newsList.forEach((news, index) => {
+				const li = document.createElement("li");
+				li.style.cssText = "display:flex; padding:18px 0; border-bottom:1px solid #eee; cursor:pointer;";
+
+				// 取用英文字段，日期共用date
+				const enTitle = news.titleEn || "No Title";
+				const enSummary = news.summaryEn;
+				const enContent = news.contentEn || "";
+				const showSummary = enSummary ? enSummary : (enContent.length > 50 ? enContent.substring(0, 50) + "..." : "No content");
+
+				li.innerHTML = `
+            <div style="width:70px; text-align:center; color:#c8102e; font-weight:bold;">
+                <div style="font-size:16px;">${news.date.split('T')[0]}</div>
+            </div>
+            <div style="flex:1;">
+                <h3 style="margin:0 0 5px; font-size:16px; font-weight:normal;">${enTitle}</h3>
+                <p style="margin:0; font-size:14px; color:#666;">${showSummary}</p>
+            </div>
+        `;
+
+				// 跳转英文详情页
+				li.onclick = () => location.href = `./news-detail-en.html?id=${news.id}`;
+				listEl.appendChild(li);
+			});
+
+			// 右侧轮播图渲染，使用英文标题+英文封面图
+			const sliderEl = document.getElementById("slider-container");
+			const items = [];
+			newsList.forEach((news) => {
+				const div = document.createElement("div");
+				div.style.cssText = `
+            position:absolute; 
+            top:0; 
+            left:0; 
+            width:100%; 
+            height:100%; 
+            transition: opacity 0.8s ease;
+            cursor: pointer;
+        `;
+				const imgUrl = getImageUrl(news.imageUrlEn || '');
+				const enTitle = news.titleEn || "No Title";
+
+				div.innerHTML = `
+            <img src="${imgUrl}" style="width:100%; height:100%; object-fit:cover;">
+            <div style="position:absolute; bottom:0; left:0; right:0; padding:30px 25px; background:linear-gradient(transparent, rgba(0,0,0,0.6));">
+                <span style="background:#c8102e; color:#fff; padding:6px 14px; border-radius:4px; font-size:14px; margin-bottom:12px; display:inline-block;">Group News</span>
+                <h3 style="font-size:22px; color:#fff; margin:0; line-height:1.4;">${enTitle}</h3>
+            </div>
+        `;
+				div.onclick = () => location.href = `./news-detail-en.html?id=${news.id}`;
+				sliderEl.appendChild(div);
+				items.push(div);
+			});
+
+			// 轮播初始化
+			let current = 0;
+			items.forEach((it, i) => it.style.opacity = i === 0 ? 1 : 0);
+			setInterval(() => {
+				const next = (current + 1) % items.length;
+				items[current].style.opacity = 0;
+				items[next].style.opacity = 1;
+				current = next;
+			}, 3000);
+
+			// 左右按钮切换
+			document.getElementById('prev-btn').addEventListener('click', () => {
+				let prev = (current - 1 + items.length) % items.length;
+				items[current].style.opacity = 0;
+				items[prev].style.opacity = 1;
+				current = prev;
+			});
+			document.getElementById('next-btn').addEventListener('click', () => {
+				let next = (current + 1) % items.length;
+				items[current].style.opacity = 0;
+				items[next].style.opacity = 1;
+				current = next;
+			});
+
+			// 轮播点击跳转英文详情
+			items.forEach((item, idx) => {
+				item.onclick = () => {
+					const pageNum = 4 - idx;
+					location.href = `./news-${pageNum}-en.html`;
+				}
+			});
+		});
 	</script>
 
 
@@ -1890,46 +1257,13 @@
 
 
 
-	<!-- 第七屏 联系我们-->
-	<!-- 底部 -->
-		<!-- 包含：联系我们标题、公司信息（北京总部/海南公司/电话/邮箱） -->
-	<!-- ====================================================== -->
-	<footer style="background: url(./img/footer.jpg);background-size: cover; padding: 25px 0 0px;" id="lxwm">
-		<div class="container" style="color:#fff; padding:0 20px;">
-			<div class="gt" style="display:flex; justify-content:center; margin-bottom:15px;">
-				<h2 class="font50" style="font-size:28px; line-height:1.2; margin:0;"><bdo>Contact Us</bdo></h2>
-			</div>
-
-			<div class="gm" style="display:flex; justify-content:center; margin-bottom:-90px;">
-
-				<div class="gm_r" style="text-align:center;">
-					<h3 class="font30 font-m" style="font-size:18px; margin:0 0 10px;">HARVEST Green Technology Group</h3>
-					<div class="g_p" style="font-size:13px; line-height:1.5;">
-						<p style="margin:0 0 5px;">Beijing Headquarters：<bdo>Frontier Research Institute of Smart Ecosystem, 9/F, Dacheng International, Bailizi East Lane, Chaoyang District, Beijing, China</bdo></p>
-						<p style="margin:0 0 5px;">Hainan Branch：<bdo>Harvest Digital Intelligence Software Technology Co., Ltd., A-22, Hainan Ecological Software Park, Chengmai County, Haikou, Hainan, China</bdo></p>
-						<p style="margin:0;">Tel: <bdo>+86-13811080709 (CN)</bdo> | Business: <bdo>jwong@jnsco.cn</bdo></p>
-					</div>
-				</div>
-			</div>
-			<div class="gb" style="display:flex; justify-content:space-between; align-items:center; border-top:1px solid rgba(255,255,255,0.15); padding-top:15px; font-size:12px;">
-				<div class="gb_l">
-					<p style="margin:0;">Copyright © HARVEST Green Technology  </p>
-					<a style="color:white;" href="https://beian.miit.gov.cn/#/Integrated/index" target="_blank">京ICP备2026036471号</a>
-				</div>
-				<div class="gb_r">
-					<a href=" "></a>
-					<a href=" " target="_blank">Privacy Policy</a>
-					<a href=" " target="_blank">Disclaimer</a>
-				</div>
-			</div>
-		</div>
-
-	</footer>
-
-
+	<div id="footer-container"></div>
+	<script>
+		loadComponent('footer-container', './components/footer-en.html');
+	</script>
 
 	<!-- 右侧浮窗 -->
-	<div class="gpop" style="display: block;">
+	<div id="fixedGpop" class="gpop" style="display: block;">
 		<a href="#lxwm" class="pop_a cur1" style="cursor: pointer;">
 			<div class="pop_a_img">
 				<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
@@ -1950,20 +1284,20 @@
 			</div>
 
 		</a>
-		<a class="pop_a cur2" style="cursor: pointer;">
+		<a href="#" class="pop_a cur2" style="cursor: pointer;">
 			<div class="pop_a_img">
-				<svg xmlns="http://www.w3.org/2000/svg" width="24" height="15.5" viewBox="0 0 24 15.5"
+				<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
 					data-inject-url="" loading="lazy">
 					<defs>
 						<style>
 							.cls-1 {
-								fill: #fff;
+								fill: #2260bc;
 								fill-rule: evenodd;
 							}
 						</style>
 					</defs>
-					<path id="形状_721--inject-48" data-name="形状 721" class="cls-1" d=""
-						transform="translate(-185.563 -248.781)"></path>
+					<path class="cls-1"
+						d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path>
 				</svg>
 				<p>Back to Top</p>
 			</div>
@@ -2233,6 +1567,48 @@
 				tab_tit[history[1]].click();
 			})();
 	</script>
+
+	<script>
+        window.addEventListener('load', function() {
+            var gpop = document.getElementById('fixedGpop');
+            if (gpop) {
+                gpop.style.display = 'block';
+                gpop.style.visibility = 'visible';
+                gpop.style.opacity = '1';
+            }
+
+            $('.pop_a').hover(function(){
+                $(this).addClass('on');
+            }, function(){
+                $(this).removeClass('on');
+            });
+        });
+
+        document.addEventListener('click', function(e) {
+            var target = e.target.closest('.pop_a.cur2');
+            if (target) {
+                e.preventDefault();
+                e.stopPropagation();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        });
+
+        window.addEventListener('scroll', function(event) {
+            var gpop = document.getElementById('fixedGpop');
+            if (gpop) {
+                gpop.style.display = 'block';
+                gpop.style.visibility = 'visible';
+                gpop.style.opacity = '1';
+            }
+        }, true);
+
+        document.addEventListener('wheel', function(e) {
+            if (!e.target.closest('.gpop') && !e.target.closest('.new-nav-wrap')) {
+                var delta = e.deltaY || e.detail || e.wheelDelta;
+                window.scrollBy(0, delta);
+            }
+        }, { passive: true });
+    </script>
 
 
 </body>

@@ -20,39 +20,40 @@ function loadComponent(elementId, url, callback) {
 
 /**
  * 根据目标语言获取对应的页面URL
- * 用于中英文页面切换时生成跳转链接
+ * 用于中英文页面切换时生成跳转链接，保留查询参数
  * 
  * @param {string} targetLang - 目标语言('en'表示英文，其他表示中文)
- * @returns {string} 对应的语言版本页面URL
+ * @returns {string} 对应的语言版本页面URL（包含查询参数）
  */
 function getLangUrl(targetLang) {
 	var currentPath = window.location.pathname;
+	var currentQuery = window.location.search;
 	var currentFilename = currentPath.split('/').pop();
 	var baseUrl = currentPath.substring(0, currentPath.length - currentFilename.length);
 	
 	// 如果目标语言是英文
 	if (targetLang === 'en') {
 		if (currentFilename === 'index.html') {
-			return baseUrl + 'index-en.html';
+			return baseUrl + 'index-en.html' + currentQuery;
 		} else if (currentFilename === 'search.html') {
-			return baseUrl + 'search-en.html';
+			return baseUrl + 'search-en.html' + currentQuery;
 		} else if (currentFilename.indexOf('-en.html') !== -1) {
-			return currentPath;
+			return currentPath + currentQuery;
 		} else if (currentFilename.endsWith('.html')) {
-			return baseUrl + currentFilename.replace('.html', '-en.html');
+			return baseUrl + currentFilename.replace('.html', '-en.html') + currentQuery;
 		}
 	} else {
 		if (currentFilename === 'index-en.html') {
-			return baseUrl + 'index.html';
+			return baseUrl + 'index.html' + currentQuery;
 		} else if (currentFilename === 'search-en.html') {
-			return baseUrl + 'search.html';
+			return baseUrl + 'search.html' + currentQuery;
 		} else if (currentFilename.indexOf('-en.html') !== -1) {
-			return baseUrl + currentFilename.replace('-en.html', '.html');
+			return baseUrl + currentFilename.replace('-en.html', '.html') + currentQuery;
 		} else {
-			return currentPath;
+			return currentPath + currentQuery;
 		}
 	}
-	return currentPath;
+	return currentPath + currentQuery;
 }
 
 /**

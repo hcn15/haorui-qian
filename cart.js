@@ -76,6 +76,32 @@
         return m ? parseFloat(m[1]) : 0;
     }
 
+    /* ---------- 获取商品图片/头像（图片失败时回退为文字头像） ---------- */
+    function getItemAvatar(it) {
+        // 如果有图片，尝试加载；加载失败时用文字头像替换
+        if (it.image) {
+            var safeImg = escapeHtml(it.image);
+            var safeName = escapeHtml(it.name || '商');
+            var initial = safeName.charAt(0) || '?';
+            // 根据商品名生成颜色
+            var colors = ['#0a4db4', '#1e6fd9', '#52c41a', '#722ed1', '#fa8c16', '#eb2f96', '#13c2c2', '#faad14', '#2f54eb', '#f5222d'];
+            var colorIdx = 0;
+            for (var ci = 0; ci < safeName.length; ci++) { colorIdx = (colorIdx + safeName.charCodeAt(ci)) % colors.length; }
+            var bg = colors[colorIdx];
+            return '<div class="avatar-wrap">' +
+                '<img src="' + safeImg + '" alt="' + safeName + '" ' +
+                'onerror="this.parentNode.innerHTML=\'<div class=\\\'avatar-fallback\\\' style=\\\'background:' + bg + '\\\'>' + initial + '</div>\'">' +
+                '</div>';
+        }
+        // 无图片：使用带颜色背景的文字头像
+        var name = it.name || '商品';
+        var ch = name.charAt(0) || '?';
+        var colors2 = ['#0a4db4', '#1e6fd9', '#52c41a', '#722ed1', '#fa8c16', '#eb2f96', '#13c2c2', '#faad14', '#2f54eb', '#f5222d'];
+        var idx = 0;
+        for (var k = 0; k < name.length; k++) { idx = (idx + name.charCodeAt(k)) % colors2.length; }
+        return '<div class="avatar-fallback" style="background:' + colors2[idx] + '">' + ch + '</div>';
+    }
+
     /* ============================================================
      * 后端 API 层
      * ============================================================ */
@@ -88,33 +114,67 @@
         return h;
     }
 
-    /* 处理 401：token 失效，回退为游客模式 */
+    /* 处理 401：token 失效，回退为游客模式并清空本地购物车数据 */
     function handleAuthFailure(resp) {
         if (resp && resp.status === 401) {
             try {
                 localStorage.removeItem('token');
                 localStorage.removeItem(SYNCED_FLAG);
             } catch (e) { }
+            // 同标签页不触发 storage 事件，需显式清空购物车并刷新显示
+            try {
+                localStorage.removeItem(STORAGE_KEY);
+            } catch (e) { }
+            writeLocal([]);
+            if (document.getElementById('cartContainer')) { renderCartPage(); }
             return true;
         }
         return false;
     }
 
-    /* 后端 CartItem → 前端购物车项格式 */
+    /* 后端 CartItem → 前端购物车项格式（保留本地已有图片/字段） */
     function fromServerItem(s) {
         var key = s.productKey || (s.productId ? s.productId : '');
+        // 查找本地是否已有该项（保留本地图片等后端可能缺失的字段）
+        var localCart = [];
+        try { localCart = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); } catch (e) { }
+        var existing = null;
+        for (var i = 0; i < localCart.length; i++) {
+            if (String(localCart[i].key) === String(key)) { existing = localCart[i]; break; }
+        }
+
+        // 图片策略：优先使用本地图片（因为本地图片是从详情页正确采集的）
+        // 只有当本地没有有效图片时，才使用后端的图片
+        var localImage = (existing && existing.image) ? existing.image : '';
+        var serverImage = s.image || '';
+        // 验证后端图片是否有效（非空、非data:开头、包含有效URL特征）
+        var validServerImage = isValidImageUrl(serverImage) ? serverImage : '';
+        // 本地图片优先级更高
+        var finalImage = localImage || validServerImage || '';
+
         return {
             key: key,
-            id: s.productId || '',
-            name: s.productName || '未命名商品',
-            price: parseFloat(s.price) || 0,
-            priceText: s.priceText || (s.price ? ('¥' + s.price) : '¥询价'),
-            image: s.image || '',
-            spec: s.spec || '',
-            qty: parseInt(s.quantity, 10) || 1,
-            url: s.url || '',
-            addedAt: s.createdAt ? Date.parse(s.createdAt.replace(' ', 'T')) : Date.now()
+            id: s.productId || (existing && existing.id) || '',
+            name: (existing && existing.name) || s.productName || '未命名商品',
+            price: parseFloat(s.price) || (existing ? existing.price : 0),
+            priceText: (existing && existing.priceText) || s.priceText || (s.price ? ('¥' + s.price) : '¥询价'),
+            image: finalImage,
+            spec: s.spec || (existing && existing.spec) || '',
+            qty: parseInt(s.quantity, 10) || (existing ? (parseInt(existing.qty, 10) || 1) : 1),
+            url: (existing && existing.url) || s.url || '',
+            addedAt: s.createdAt ? Date.parse(s.createdAt.replace(' ', 'T')) : (existing ? existing.addedAt : Date.now())
         };
+    }
+
+    /* ---------- 辅助：验证图片 URL 是否有效 ---------- */
+    function isValidImageUrl(url) {
+        if (!url || typeof url !== 'string') return false;
+        // 排除 data: URI
+        if (url.indexOf('data:') === 0) return false;
+        // 排除空值
+        if (!url.trim()) return false;
+        // 必须包含 http 或 / 等有效路径特征
+        return url.indexOf('http') === 0 || url.indexOf('/') === 0 || url.indexOf('./') === 0;
     }
 
     /* 前端购物车项 → 后端提交体 */
@@ -189,6 +249,14 @@
 
         if (existing) {
             existing.qty = (parseInt(existing.qty, 10) || 0) + (parseInt(item.qty, 10) || 1);
+            // 如果新采集的图片更有效（非空且当前图片无效），更新图片
+            if (item.image && (!existing.image || !isValidImageUrl(existing.image))) {
+                existing.image = item.image;
+            }
+            // 如果名称被修正了，也更新名称
+            if (item.name && item.name !== '未命名商品' && existing.name === '未命名商品') {
+                existing.name = item.name;
+            }
         } else {
             cart.push({
                 key: key,
@@ -207,10 +275,16 @@
 
         //已登录：异步提交后端
         if (isLoggedIn() && !SYNCING) {
+            // 对于已存在的商品，使用PUT更新；对于新商品，使用POST创建
+            var apiMethod = existing ? 'PUT' : 'POST';
+            var apiBody = existing ? { 
+                productKey: key, 
+                quantity: parseInt(item.qty, 10) || 1 
+            } : toServerItem(item);
             fetch(apiUrl(''), {
-                method: 'POST',
+                method: apiMethod,
                 headers: authHeaders(),
-                body: JSON.stringify(toServerItem(item))
+                body: JSON.stringify(apiBody)
             }).then(handleAuthFailure).catch(function () { });
         }
     }
@@ -224,10 +298,71 @@
         var priceText = priceEl ? (priceEl.textContent || '').trim() : '';
         var price = parsePrice(priceText);
 
-        var imgEl = document.querySelector('.main-image img, .product-img img, .main-image img');
+        // 精确采集商品图片：优先级从高到低
         var image = '';
-        if (imgEl) {
-            image = imgEl.getAttribute('src') || imgEl.src || '';
+
+        // 1. 优先使用 ID 选择器 #mainImage（所有详情页都有此ID）
+        var mainImg = document.getElementById('mainImage');
+        if (mainImg && mainImg.tagName === 'IMG') {
+            image = getValidImageSrc(mainImg);
+        }
+
+        // 2. 尝试商品展示区域内的选择器
+        if (!image) {
+            var preciseSelectors = [
+                '.product-show .product-gallery .main-image img',
+                '.product-gallery .main-image img',
+                '.product-show .main-image img',
+                '.product-detail-main img'
+            ];
+            for (var i = 0; i < preciseSelectors.length; i++) {
+                var imgEl = document.querySelector(preciseSelectors[i]);
+                if (imgEl && imgEl.tagName === 'IMG') {
+                    image = getValidImageSrc(imgEl);
+                    if (image) break;
+                }
+            }
+        }
+
+        // 3. 尝试缩略图列表中的第一张
+        if (!image) {
+            var firstThumb = document.querySelector('.thumbnail-list .thumb-item img, .thumb-item img');
+            if (firstThumb && firstThumb.tagName === 'IMG') {
+                image = getValidImageSrc(firstThumb);
+            }
+        }
+
+        // 4. 兜底：在商品展示区域内查找第一张有效图片
+        if (!image) {
+            var productShow = document.querySelector('.product-show, .product-gallery');
+            if (productShow) {
+                var imgsInShow = productShow.querySelectorAll('img');
+                for (var j = 0; j < imgsInShow.length; j++) {
+                    var img = imgsInShow[j];
+                    var src = getValidImageSrc(img);
+                    if (src) {
+                        image = src;
+                        break;
+                    }
+                }
+            }
+        }
+
+        // 5. 最终兜底：取主内容区非装饰性的大图（排除header、footer、logo区域）
+        if (!image) {
+            var mainContent = document.querySelector('.product-show, .product-detail, .content-area, main') || document.body;
+            var allImgs = mainContent.querySelectorAll('img');
+            for (var k = 0; k < allImgs.length; k++) {
+                var imgEl2 = allImgs[k];
+                var src2 = imgEl2.getAttribute('src') || imgEl2.src || '';
+                var w = imgEl2.naturalWidth || imgEl2.offsetWidth;
+                var h = imgEl2.naturalHeight || imgEl2.offsetHeight;
+                // 排除小图标和logo
+                if (w > 80 && h > 80 && src2 && src2.indexOf('icon') === -1 && src2.indexOf('logo') === -1 && src2.indexOf('data:') !== 0) {
+                    image = src2;
+                    break;
+                }
+            }
         }
 
         var qtyEl = document.getElementById('quantityInput') || document.querySelector('input[type=number]');
@@ -238,7 +373,7 @@
 
         var pageId = location.pathname.split('/').pop().replace(/\.html$/i, '') || 'product';
         var id = pageId + (spec ? ('_' + spec) : '');
-        var key = id; // product_key 与 id 一致（已含规格）
+        var key = id;
 
         return {
             key: key,
@@ -251,6 +386,18 @@
             qty: qty,
             url: location.pathname.split('/').pop()
         };
+    }
+
+    /* ---------- 辅助：获取有效的图片 URL ---------- */
+    function getValidImageSrc(imgEl) {
+        if (!imgEl || imgEl.tagName !== 'IMG') return '';
+        var src = imgEl.getAttribute('src') || imgEl.src || '';
+        // 排除 data: URI、空值、装饰性图片
+        if (!src || src.indexOf('data:') === 0 || src.indexOf('icon') !== -1 || src.indexOf('logo') !== -1) {
+            return '';
+        }
+        // 返回完整路径
+        return imgEl.src || src;
     }
 
     /* 详情页 handleAddCart 调用入口 */
@@ -348,7 +495,7 @@
         });
     }
 
-    /* ---------- 购物车页渲染 ---------- */
+    /* ---------- 购物车页渲染（优化版 v3 - 保留表格结构和colgroup） ---------- */
     function renderCartPage() {
         var wrap = document.getElementById('cartContainer');
         if (!wrap) return;
@@ -374,44 +521,96 @@
             return;
         }
 
-        // 表格行
-        var rows = cart.map(function (it) {
-            var subtotal = (parseFloat(it.price) || 0) * (parseInt(it.qty, 10) || 1);
-            var subtotalText = it.price ? ('¥' + subtotal.toLocaleString()) : '¥询价';
+        // 确保表格结构存在（含 colgroup），只更新 tbody
+        var table = wrap.querySelector('table.cart-table');
+        if (!table) {
+            // 首次渲染或从空状态恢复：重建完整结构
+            table = document.createElement('table');
+            table.className = 'cart-table';
+            table.id = 'cartTable';
+            table.innerHTML =
+                '<colgroup>' +
+                '<col class="colgroup-img">' +
+                '<col class="colgroup-name">' +
+                '<col class="colgroup-price">' +
+                '<col class="colgroup-qty">' +
+                '<col class="colgroup-subtotal">' +
+                '<col class="colgroup-op">' +
+                '</colgroup>' +
+                '<thead><tr>' +
+                '<th>商品</th>' +
+                '<th>名称</th>' +
+                '<th>单价</th>' +
+                '<th>数量</th>' +
+                '<th>小计</th>' +
+                '<th>操作</th>' +
+                '</tr></thead>' +
+                '<tbody></tbody>';
+            wrap.innerHTML = '';
+            wrap.appendChild(table);
+        }
+
+        // 构建tbody行数据
+        var rows = cart.map(function (it, index) {
+            var qty = parseInt(it.qty, 10) || 1;
+            var priceVal = parseFloat(it.price);
+            var hasPrice = !isNaN(priceVal) && priceVal > 0;
+            var price = hasPrice ? priceVal : 0;
+            var subtotal = price * qty;
+
+            // 单价显示：有价格时显示纯数字（CSS::before会加¥），无价格时显示"¥询价"
+            var priceDisplay = hasPrice ? price.toLocaleString() : '¥询价';
+            var subtotalDisplay = hasPrice ? subtotal.toLocaleString() : '¥询价';
+            var avatar = getItemAvatar(it);
+
+            // 生成商品详情链接
+            var productLink = '';
+            if (it.url) {
+                productLink = '<a class="link" href="./' + escapeHtml(it.url) + '">查看商品 <span class="arrow">→</span></a>';
+            }
+
+            // 生成规格标签
+            var specTag = '';
+            if (it.spec) {
+                specTag = '<div class="spec">规格：' + escapeHtml(it.spec) + '</div>';
+            }
+
+            var priceClass = hasPrice ? 'col-price has-price' : 'col-price no-price';
+            var subtotalClass = hasPrice ? 'col-subtotal has-price' : 'col-subtotal no-price';
+
             return '' +
-                '<tr data-key="' + escapeHtml(it.key) + '">' +
-                '<td class="col-img"><div class="img-box">' +
-                (it.image ? '<img src="' + escapeHtml(it.image) + '" alt="" onerror="this.style.display=\'none\'">' : '<span class="img-ph">📦</span>') +
-                '</div></td>' +
-                '<td class="col-name"><div class="name">' + escapeHtml(it.name) + '</div>' +
-                (it.spec ? '<div class="spec">规格：' + escapeHtml(it.spec) + '</div>' : '') +
-                (it.url ? '<a class="link" href="./' + escapeHtml(it.url) + '">查看商品 ›</a>' : '') +
+                '<tr data-key="' + escapeHtml(it.key) + '" style="animation-delay: ' + (index * 0.05) + 's">' +
+                '<td class="col-img">' +
+                '<div class="img-box">' + avatar + '</div>' +
                 '</td>' +
-                '<td class="col-price">' + escapeHtml(it.priceText || (it.price ? ('¥' + it.price) : '¥询价')) + '</td>' +
+                '<td class="col-name">' +
+                '<div class="name" title="' + escapeHtml(it.name) + '">' + escapeHtml(it.name) + '</div>' +
+                specTag +
+                productLink +
+                '</td>' +
+                '<td class="' + priceClass + '" data-price="' + (it.price || 0) + '">' + escapeHtml(priceDisplay) + '</td>' +
                 '<td class="col-qty">' +
                 '<div class="qty-control">' +
-                '<button class="qty-btn" onclick="HRCart.changeItemQty(\'' + escapeHtml(it.key) + '\', -1)">-</button>' +
-                '<input class="qty-input" type="number" value="' + it.qty + '" min="1" onchange="HRCart.setItemQty(\'' + escapeHtml(it.key) + '\', this.value)">' +
-                '<button class="qty-btn" onclick="HRCart.changeItemQty(\'' + escapeHtml(it.key) + '\', 1)">+</button>' +
+                '<button class="qty-btn minus" aria-label="减少" onclick="HRCart.changeItemQty(\'' + escapeHtml(it.key) + '\', -1)">−</button>' +
+                '<input class="qty-input" type="number" value="' + qty + '" min="1" max="999" onchange="HRCart.setItemQty(\'' + escapeHtml(it.key) + '\', this.value)">' +
+                '<button class="qty-btn plus" aria-label="增加" onclick="HRCart.changeItemQty(\'' + escapeHtml(it.key) + '\', 1)">+</button>' +
                 '</div>' +
                 '</td>' +
-                '<td class="col-subtotal">' + subtotalText + '</td>' +
-                '<td class="col-op"><button class="btn-remove" onclick="HRCart.removeCartItem(\'' + escapeHtml(it.key) + '\')">删除</button></td>' +
+                '<td class="' + subtotalClass + '" data-subtotal="' + subtotal + '">' + escapeHtml(subtotalDisplay) + '</td>' +
+                '<td class="col-op">' +
+                '<button class="btn-remove" onclick="HRCart.removeCartItem(\'' + escapeHtml(it.key) + '\')">' +
+                '<span class="icon">🗑</span>' +
+                '<span class="text">删除</span>' +
+                '</button>' +
+                '</td>' +
                 '</tr>';
         }).join('');
 
-        wrap.innerHTML =
-            '<table class="cart-table">' +
-            '<thead><tr>' +
-            '<th class="th-img">商品</th>' +
-            '<th class="th-name">名称</th>' +
-            '<th class="th-price">单价</th>' +
-            '<th class="th-qty">数量</th>' +
-            '<th class="th-subtotal">小计</th>' +
-            '<th class="th-op">操作</th>' +
-            '</tr></thead>' +
-            '<tbody>' + rows + '</tbody>' +
-            '</table>';
+        // 只更新 tbody，保留 colgroup 和 thead
+        var tbody = table.querySelector('tbody');
+        if (tbody) {
+            tbody.innerHTML = rows;
+        }
 
         // 合计
         var total = getCartTotal();
@@ -419,6 +618,13 @@
         if (countEl) countEl.textContent = getCartCount();
         if (checkoutBtn) checkoutBtn.style.display = '';
         if (clearBtn) clearBtn.style.display = '';
+
+        // 添加表格完成动画
+        setTimeout(function () {
+            if (table) {
+                table.classList.add('table-ready');
+            }
+        }, 50);
     }
 
     /* ---------- 购物车页：数量加减 / 删除 / 清空 ---------- */
@@ -431,6 +637,26 @@
         });
         writeLocal(cart);
         renderCartPage();
+
+        // 触发数量变更动画
+        setTimeout(function () {
+            var row = document.querySelector('tr[data-key="' + key + '"]');
+            if (row) {
+                var qtyInput = row.querySelector('.qty-input');
+                var subtotalCell = row.querySelector('.col-subtotal');
+                if (qtyInput) {
+                    qtyInput.classList.remove('changed');
+                    // 强制重排以重启动画
+                    void qtyInput.offsetWidth;
+                    qtyInput.classList.add('changed');
+                }
+                if (subtotalCell) {
+                    subtotalCell.classList.remove('changed');
+                    void subtotalCell.offsetWidth;
+                    subtotalCell.classList.add('changed');
+                }
+            }
+        }, 10);
 
         //提交后端（绝对值）
         if (isLoggedIn() && !SYNCING) {
@@ -449,11 +675,109 @@
     function setItemQty(key, qty) {
         updateCartQty(key, qty);
         renderCartPage();
+
+        // 触发数量变更动画
+        setTimeout(function () {
+            var row = document.querySelector('tr[data-key="' + key + '"]');
+            if (row) {
+                var qtyInput = row.querySelector('.qty-input');
+                var subtotalCell = row.querySelector('.col-subtotal');
+                if (qtyInput) {
+                    qtyInput.classList.remove('changed');
+                    void qtyInput.offsetWidth;
+                    qtyInput.classList.add('changed');
+                }
+                if (subtotalCell) {
+                    subtotalCell.classList.remove('changed');
+                    void subtotalCell.offsetWidth;
+                    subtotalCell.classList.add('changed');
+                }
+            }
+        }, 10);
     }
 
     function removeCartItem(key) {
-        removeFromCart(key);
-        renderCartPage();
+        // 获取商品名称用于确认对话框
+        var cart = getCart();
+        var itemName = '';
+        for (var i = 0; i < cart.length; i++) {
+            if (cart[i].key === String(key)) {
+                itemName = cart[i].name || '该商品';
+                break;
+            }
+        }
+
+        // 显示自定义确认对话框
+        showConfirmDialog(
+            '确认删除',
+            '确定要从购物车中删除"' + itemName + '"吗？',
+            function () {
+                // 先执行删除的视觉动画
+                var row = document.querySelector('tr[data-key="' + key + '"]');
+                if (row) {
+                    row.style.transition = 'all 0.3s cubic-bezier(0.55, 0, 1, 0.45)';
+                    row.style.opacity = '0';
+                    row.style.transform = 'translateX(30px)';
+                    row.style.height = '0px';
+                    row.style.marginBottom = '-1px';
+                }
+                // 延迟删除以显示动画
+                setTimeout(function () {
+                    removeFromCart(key);
+                    renderCartPage();
+                    if (typeof showToast === 'function') {
+                        showToast('已从购物车移除', 'success');
+                    }
+                }, 250);
+            }
+        );
+    }
+
+    /* ---------- 自定义确认对话框 ---------- */
+    function showConfirmDialog(title, content, onConfirm) {
+        // 创建对话框
+        var dialog = document.createElement('div');
+        dialog.className = 'confirm-dialog';
+        dialog.innerHTML =
+            '<div class="dialog-box">' +
+            '<div class="dialog-title">' + escapeHtml(title) + '</div>' +
+            '<div class="dialog-content">' + escapeHtml(content) + '</div>' +
+            '<div class="dialog-actions">' +
+            '<button class="btn-cancel">取消</button>' +
+            '<button class="btn-confirm">确认删除</button>' +
+            '</div>' +
+            '</div>';
+
+        // 绑定事件
+        var cancelBtn = dialog.querySelector('.btn-cancel');
+        var confirmBtn = dialog.querySelector('.btn-confirm');
+
+        cancelBtn.addEventListener('click', function () {
+            document.body.removeChild(dialog);
+        });
+
+        confirmBtn.addEventListener('click', function () {
+            document.body.removeChild(dialog);
+            if (onConfirm) onConfirm();
+        });
+
+        // 点击遮罩关闭
+        dialog.addEventListener('click', function (e) {
+            if (e.target === dialog) {
+                document.body.removeChild(dialog);
+            }
+        });
+
+        // ESC键关闭
+        var escHandler = function (e) {
+            if (e.key === 'Escape') {
+                document.body.removeChild(dialog);
+                document.removeEventListener('keydown', escHandler);
+            }
+        };
+        document.addEventListener('keydown', escHandler);
+
+        document.body.appendChild(dialog);
     }
 
     function clearCartAndRefresh() {
@@ -773,6 +1097,10 @@
             localStorage.removeItem(SYNCED_FLAG);
         } catch (e) { }
         writeLocal([]);
+        // 若当前在购物车页，立即重渲染以同步显示空状态
+        if (document.getElementById('cartContainer')) {
+            renderCartPage();
+        }
     }
 
     /* ---------- 暴露到全局 ---------- */
@@ -801,11 +1129,106 @@
     window.HRCart = HRCart;
     window.addToCartFromPage = addToCartFromPage;
 
+    /* ---------- 数据版本号（用于迁移旧数据） ---------- */
+    var CART_DATA_VERSION = 'v2';
+
+    /* ---------- 数据迁移：清理旧的错误购物车数据 ---------- */
+    function migrateCartData() {
+        var currentVersion = '';
+        try { currentVersion = localStorage.getItem('hr_cart_version') || ''; } catch (e) { }
+
+        if (currentVersion === CART_DATA_VERSION) return;
+
+        var cart = getCart();
+        var needsCleanup = false;
+
+        for (var i = 0; i < cart.length; i++) {
+            var item = cart[i];
+            // 检查1：商品名为空或无效
+            if (!item.name || item.name === '未命名商品') {
+                needsCleanup = true;
+                break;
+            }
+            // 检查2：图片URL包含可疑特征（如占位符、错误路径）
+            if (item.image) {
+                var imgUrl = item.image.toLowerCase();
+                // 检查图片是否为占位符
+                if (imgUrl.indexOf('placeholder') !== -1 || imgUrl.indexOf('dummy') !== -1) {
+                    needsCleanup = true;
+                    break;
+                }
+                // 检查图片是否为装饰性图片（header、logo、icon等）
+                if (imgUrl.indexOf('header') !== -1 || imgUrl.indexOf('footer') !== -1 ||
+                    imgUrl.indexOf('banner') !== -1 || imgUrl.indexOf('nav') !== -1) {
+                    needsCleanup = true;
+                    break;
+                }
+            }
+            // 检查3：图片和名称可能不匹配的迹象
+            if (item.name && item.image) {
+                var nameLower = item.name.toLowerCase();
+                var imgLower = item.image.toLowerCase();
+                // 检查图片URL是否包含其他商品的关键字
+                var productKeywords = ['cr30h', 'cr20a', 'craf', 'cra-ip68', 'nova2', 'mg400', 'm1pro', 'atom', 'rover', 'magician', 'es01'];
+                for (var k = 0; k < productKeywords.length; k++) {
+                    var kw = productKeywords[k];
+                    // 如果图片URL包含某个商品关键字，但商品名不包含该关键字，可能是图片错位
+                    if (imgLower.indexOf(kw) !== -1 && nameLower.indexOf(kw.substring(0, 3)) === -1 && nameLower.indexOf(kw.replace('-', ' ')) === -1) {
+                        // 这种情况可能是图片与名称不匹配
+                        // 但为了安全起见，只标记为需要验证
+                        break;
+                    }
+                }
+            }
+        }
+
+        if (needsCleanup) {
+            // 清理购物车数据（因为无法确定正确的图片，需要用户重新添加商品）
+            writeLocal([]);
+            try { localStorage.removeItem(SYNCED_FLAG); } catch (e) { }
+        }
+
+        // 更新版本号
+        try { localStorage.setItem('hr_cart_version', CART_DATA_VERSION); } catch (e) { }
+    }
+
+    /* ---------- 跨标签页登录态同步 ----------
+     * 监听 storage 事件：当其他标签页登录/登出（token 变化）时，
+     * 当前标签页同步角标与购物车列表，避免显示过期数据。 */
+    var lastLoginState = isLoggedIn();
+    window.addEventListener('storage', function (e) {
+        if (e.key === 'token') {
+            var nowLoggedIn = !!e.newValue;
+            // 登录态从 有→无：退出登录，清空本地购物车
+            if (lastLoginState && !nowLoggedIn) {
+                try {
+                    localStorage.removeItem(STORAGE_KEY);
+                    localStorage.removeItem(SYNCED_FLAG);
+                } catch (err) { }
+                writeLocal([]);
+                if (document.getElementById('cartContainer')) { renderCartPage(); }
+            }
+            // 登录态从 无→有：从后端拉取购物车
+            else if (!lastLoginState && nowLoggedIn) {
+                syncFromServer();
+            }
+            lastLoginState = nowLoggedIn;
+        }
+        // 本地购物车数据被其他标签页改动：同步角标与列表
+        else if (e.key === STORAGE_KEY) {
+            updateCartBadges();
+            if (document.getElementById('cartContainer')) { renderCartPage(); }
+        }
+    });
+
     /* ---------- 初始化 ---------- */
     function init() {
         injectBadgeStyle();
         enhanceCartButtons();
         initMobileSidebar();
+
+        // 执行数据迁移
+        migrateCartData();
 
         //检测登录态变化：之前登录过（有SYNCED_FLAG），但现在没token了，说明刚退出登录，清空购物车
         var hadSynced = false;

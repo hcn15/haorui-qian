@@ -333,6 +333,68 @@
         }
         .error-msg.show { display: block; }
 
+        /* 成功提示(与 error-msg 对应,绿色) */
+        .success-msg {
+            color: #2ecc71;
+            font-size: 12px;
+            margin-top: 6px;
+            display: none;
+        }
+        .success-msg.show { display: block; }
+
+        /* 输入框校验状态 */
+        .input-wrapper.valid input { border-color: #2ecc71; }
+        .input-wrapper.invalid input { border-color: #e74c3c; }
+
+        /* 校验规则提示 */
+        .rules-hint {
+            font-size: 11px;
+            color: #9aa5b1;
+            margin-top: 6px;
+            line-height: 1.6;
+        }
+        .rules-hint .rule {
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
+            margin-right: 12px;
+        }
+        .rules-hint .rule::before {
+            content: '○';
+            color: #c5cdd9;
+            font-size: 10px;
+        }
+        .rules-hint .rule.passed::before {
+            content: '✓';
+            color: #2ecc71;
+        }
+        .rules-hint .rule.passed { color: #2ecc71; }
+
+        /* 密码强度条 */
+        .pwd-strength {
+            display: flex;
+            gap: 4px;
+            margin-top: 6px;
+            height: 4px;
+        }
+        .pwd-strength .seg {
+            flex: 1;
+            border-radius: 2px;
+            background: #e8ecf1;
+            transition: background .3s;
+        }
+        .pwd-strength.lv-1 .seg:nth-child(1) { background: #e74c3c; }
+        .pwd-strength.lv-2 .seg:nth-child(-n+2) { background: #f39c12; }
+        .pwd-strength.lv-3 .seg { background: #2ecc71; }
+        .pwd-strength-label {
+            font-size: 11px;
+            margin-top: 4px;
+            color: #9aa5b1;
+        }
+        .pwd-strength-label.lv-1 { color: #e74c3c; }
+        .pwd-strength-label.lv-2 { color: #f39c12; }
+        .pwd-strength-label.lv-3 { color: #2ecc71; }
+
         /* 选项行 */
         .form-options {
             display: flex;
@@ -527,10 +589,10 @@
                             <label>用户名</label>
                             <div class="input-wrapper">
                                 <span class="input-icon">👤</span>
-                                <input type="text" id="loginUsername" placeholder="请输入用户名(5-16位)"
-                                    pattern="^\S{5,16}$" required>
+                                <input type="text" id="loginUsername" placeholder="请输入用户名"
+                                    pattern="^\S+$" required>
                             </div>
-                            <div class="error-msg" id="loginUsernameError">用户名必须为5-16位非空字符</div>
+                            <div class="error-msg" id="loginUsernameError">用户名不能为空且不能包含空格</div>
                         </div>
 
                         <div class="form-group">
@@ -591,34 +653,46 @@
 
                         <div class="form-group">
                             <label>用户名</label>
-                            <div class="input-wrapper">
+                            <div class="input-wrapper" id="regUsernameWrap">
                                 <span class="input-icon">👤</span>
-                                <input type="text" id="regUsername" placeholder="设置用户名(5-16位)"
-                                    pattern="^\S{5,16}$" required>
+                                <input type="text" id="regUsername" placeholder="设置用户名"
+                                    pattern="^\S+$" required autocomplete="username">
                             </div>
-                            <div class="error-msg" id="regUsernameError">用户名必须为5-16位非空字符</div>
+                            <div class="rules-hint">
+                                <span class="rule" id="rule-no-space">不含空格</span>
+                                <span class="rule" id="rule-unique">未被占用</span>
+                            </div>
+                            <div class="error-msg" id="regUsernameError">用户名不能为空且不能包含空格</div>
+                            <div class="success-msg" id="regUsernameOk">用户名可用</div>
                         </div>
 
                         <div class="form-group">
                             <label>密码</label>
-                            <div class="input-wrapper">
+                            <div class="input-wrapper" id="regPasswordWrap">
                                 <span class="input-icon">🔒</span>
                                 <input type="password" id="regPassword" placeholder="设置密码(5-16位)"
-                                    pattern="^\S{5,16}$" required>
+                                    pattern="^\S{5,16}$" required autocomplete="new-password">
                                 <span class="toggle-pwd" onclick="togglePassword('regPassword', this)">👁</span>
                             </div>
+                            <div class="pwd-strength" id="pwdStrength">
+                                <div class="seg"></div>
+                                <div class="seg"></div>
+                                <div class="seg"></div>
+                            </div>
+                            <div class="pwd-strength-label" id="pwdStrengthLabel">密码强度</div>
                             <div class="error-msg" id="regPasswordError">密码必须为5-16位非空字符</div>
                         </div>
 
                         <div class="form-group">
                             <label>确认密码</label>
-                            <div class="input-wrapper">
+                            <div class="input-wrapper" id="regConfirmWrap">
                                 <span class="input-icon">🔐</span>
                                 <input type="password" id="regConfirmPassword" placeholder="再次输入密码"
-                                    pattern="^\S{5,16}$" required>
+                                    pattern="^\S{5,16}$" required autocomplete="new-password">
                                 <span class="toggle-pwd" onclick="togglePassword('regConfirmPassword', this)">👁</span>
                             </div>
                             <div class="error-msg" id="regConfirmError">两次输入的密码不一致</div>
+                            <div class="success-msg" id="regConfirmOk">两次密码一致</div>
                         </div>
 
                         <button type="submit" class="submit-btn" id="registerBtn">立即注册</button>
@@ -677,11 +751,140 @@
         // 清除所有错误提示
         function clearErrors() {
             document.querySelectorAll('.error-msg').forEach(el => el.classList.remove('show'));
+            document.querySelectorAll('.success-msg').forEach(el => el.classList.remove('show'));
         }
 
         // 显示指定错误
         function showError(id, show) {
             document.getElementById(id).classList.toggle('show', show);
+        }
+
+        // 显示指定成功提示
+        function showOk(id, show) {
+            const el = document.getElementById(id);
+            if (el) el.classList.toggle('show', show);
+        }
+
+        // 设置输入框校验状态
+        function setFieldState(wrapId, state) {
+            const wrap = document.getElementById(wrapId);
+            if (!wrap) return;
+            wrap.classList.remove('valid', 'invalid');
+            if (state === 'valid') wrap.classList.add('valid');
+            else if (state === 'invalid') wrap.classList.add('invalid');
+        }
+
+        // ============ 注册实时校验 ============
+        const USERNAME_RE = /^\S+$/;
+        const PASSWORD_RE = /^\S{5,16}$/;
+        let usernameCheckTimer = null;
+        let usernameAvailable = null; // null=未校验 true=可用 false=已占用
+
+        // 用户名校验(防抖)
+        function onRegUsernameInput() {
+            const val = document.getElementById('regUsername').value.trim();
+            const ruleNoSpace = document.getElementById('rule-no-space');
+            const ruleUnique = document.getElementById('rule-unique');
+            setFieldState('regUsernameWrap', '');
+            showOk('regUsernameOk', false);
+            showError('regUsernameError', false);
+            usernameAvailable = null;
+
+            // 规则: 不含空格且非空
+            const noSpaceOk = !/\s/.test(val) && val.length > 0;
+            ruleNoSpace.classList.toggle('passed', noSpaceOk);
+
+            if (!val) {
+                ruleUnique.classList.remove('passed');
+                return;
+            }
+            // 格式不合法,不发请求
+            if (!USERNAME_RE.test(val)) {
+                ruleUnique.classList.remove('passed');
+                setFieldState('regUsernameWrap', 'invalid');
+                showError('regUsernameError', true);
+                return;
+            }
+            // 防抖查重
+            clearTimeout(usernameCheckTimer);
+            usernameCheckTimer = setTimeout(async () => {
+                try {
+                    const resp = await fetch(`${API_BASE}/user/check-username?username=${encodeURIComponent(val)}`);
+                    const result = await resp.json();
+                    if (result.code === 0 && result.data && result.data.available) {
+                        ruleUnique.classList.add('passed');
+                        usernameAvailable = true;
+                        setFieldState('regUsernameWrap', 'valid');
+                        showOk('regUsernameOk', true);
+                    } else {
+                        ruleUnique.classList.remove('passed');
+                        usernameAvailable = false;
+                        setFieldState('regUsernameWrap', 'invalid');
+                        const errEl = document.getElementById('regUsernameError');
+                        errEl.textContent = '该用户名已被占用';
+                        showError('regUsernameError', true);
+                    }
+                } catch (e) {
+                    ruleUnique.classList.remove('passed');
+                }
+            }, 400);
+        }
+
+        // ============ 密码强度 ============
+        function onRegPasswordInput() {
+            const val = document.getElementById('regPassword').value;
+            const strengthBar = document.getElementById('pwdStrength');
+            const label = document.getElementById('pwdStrengthLabel');
+            showError('regPasswordError', false);
+            setFieldState('regPasswordWrap', '');
+
+            if (!val) {
+                strengthBar.className = 'pwd-strength';
+                label.textContent = '密码强度';
+                label.className = 'pwd-strength-label';
+                // 同步触发确认密码校验
+                onRegConfirmInput();
+                return;
+            }
+            if (!/^\S{5,16}$/.test(val)) {
+                strengthBar.className = 'pwd-strength';
+                label.textContent = '密码需5-16位且不含空格';
+                label.className = 'pwd-strength-label lv-1';
+                setFieldState('regPasswordWrap', 'invalid');
+                showError('regPasswordError', true);
+                onRegConfirmInput();
+                return;
+            }
+            setFieldState('regPasswordWrap', 'valid');
+            // 强度计算: 字母+1 数字+1 符号+1
+            let lv = 0;
+            if (/[a-zA-Z]/.test(val)) lv++;
+            if (/\d/.test(val)) lv++;
+            if (/[^a-zA-Z0-9]/.test(val)) lv++;
+            if (lv < 1) lv = 1;
+            const labels = ['', '弱', '中', '强'];
+            strengthBar.className = 'pwd-strength lv-' + lv;
+            label.textContent = '强度: ' + labels[lv];
+            label.className = 'pwd-strength-label lv-' + lv;
+            // 同步触发确认密码校验
+            onRegConfirmInput();
+        }
+
+        // ============ 确认密码 ============
+        function onRegConfirmInput() {
+            const pwd = document.getElementById('regPassword').value;
+            const confirm = document.getElementById('regConfirmPassword').value;
+            showError('regConfirmError', false);
+            showOk('regConfirmOk', false);
+            setFieldState('regConfirmWrap', '');
+            if (!confirm) return;
+            if (pwd !== confirm) {
+                setFieldState('regConfirmWrap', 'invalid');
+                showError('regConfirmError', true);
+            } else if (PASSWORD_RE.test(pwd)) {
+                setFieldState('regConfirmWrap', 'valid');
+                showOk('regConfirmOk', true);
+            }
         }
 
         // 登录处理
@@ -693,7 +896,7 @@
             const password = document.getElementById('loginPassword').value.trim();
 
             // 前端校验
-            if (!/^\S{5,16}$/.test(username)) {
+            if (!/^\S+$/.test(username)) {
                 showError('loginUsernameError', true);
                 return;
             }
@@ -752,19 +955,36 @@
 
             // 前端校验
             let hasError = false;
-            if (!/^\S{5,16}$/.test(username)) {
+            if (!/^\S+$/.test(username)) {
                 showError('regUsernameError', true);
+                setFieldState('regUsernameWrap', 'invalid');
                 hasError = true;
             }
             if (!/^\S{5,16}$/.test(password)) {
                 showError('regPasswordError', true);
+                setFieldState('regPasswordWrap', 'invalid');
                 hasError = true;
             }
             if (password !== confirmPassword) {
                 showError('regConfirmError', true);
+                setFieldState('regConfirmWrap', 'invalid');
+                hasError = true;
+            }
+            // 用户名已被实时校验标记为占用
+            if (usernameAvailable === false) {
+                const errEl = document.getElementById('regUsernameError');
+                errEl.textContent = '该用户名已被占用';
+                showError('regUsernameError', true);
+                setFieldState('regUsernameWrap', 'invalid');
                 hasError = true;
             }
             if (hasError) return;
+
+            // 角色必须选择(默认已选卖方,防御性校验)
+            if (selectedRoleId !== 2 && selectedRoleId !== 3) {
+                showToast('请选择注册角色', 'error');
+                return;
+            }
 
             const btn = document.getElementById('registerBtn');
             btn.disabled = true;
@@ -777,8 +997,10 @@
                 });
                 const result = await response.json();
 
-                if (result.code === 1) {
+                if (result.code === 0) {
                     showToast('注册成功！请登录', 'success');
+                    // 注册成功后重置查重状态
+                    usernameAvailable = null;
                     setTimeout(() => {
                         // 自动切换到登录Tab，填充用户名
                         switchTab('login');
@@ -786,7 +1008,15 @@
                         document.getElementById('loginPassword').focus();
                     }, 1000);
                 } else {
-                    showToast(result.msg || '注册失败', 'error');
+                    showToast(result.message || '注册失败', 'error');
+                    // 后端返回"用户名已被占用"时,同步前端状态
+                    if (result.message && result.message.indexOf('占用') > -1) {
+                        usernameAvailable = false;
+                        setFieldState('regUsernameWrap', 'invalid');
+                        const errEl = document.getElementById('regUsernameError');
+                        errEl.textContent = '该用户名已被占用';
+                        showError('regUsernameError', true);
+                    }
                 }
             } catch (err) {
                 console.error('注册错误:', err);
@@ -804,7 +1034,8 @@
                 if (parts.length === 3) {
                     // Base64解码payload
                     const payload = JSON.parse(atob(parts[1].replace(/-/g, '+').replace(/_/g, '/')));
-                    return payload.roleId || null;
+                    const claims = payload.claims || payload;
+                    return claims.roleId != null ? String(claims.roleId) : null;
                 }
             } catch (e) {
                 console.error('JWT解析失败:', e);
@@ -823,15 +1054,15 @@
 
             const token = localStorage.getItem('token');
             if (token) {
-                // 已登录,询问是否直接跳转
-                if (confirm('您已登录,是否直接进入商城?')) {
-                    window.location.href = './neep.html';
-                }
+                // // 已登录,询问是否直接跳转
+                // if (confirm('您已登录,是否直接进入商城?')) {
+                //     window.location.href = './neep.html';
+                // }
             }
         });
 
-        // 输入时清除对应错误
-        ['loginUsername', 'loginPassword', 'regUsername', 'regPassword', 'regConfirmPassword'].forEach(id => {
+        // 输入时清除对应错误(登录表单)
+        ['loginUsername', 'loginPassword'].forEach(id => {
             const input = document.getElementById(id);
             if (input) {
                 input.addEventListener('input', () => {
@@ -842,6 +1073,11 @@
                 });
             }
         });
+
+        // 注册表单: 绑定实时校验
+        document.getElementById('regUsername').addEventListener('input', onRegUsernameInput);
+        document.getElementById('regPassword').addEventListener('input', onRegPasswordInput);
+        document.getElementById('regConfirmPassword').addEventListener('input', onRegConfirmInput);
     </script>
 </body>
 </html>

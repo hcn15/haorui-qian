@@ -14,6 +14,8 @@
     <script src="./config1.js"></script>
     <script src="./cart.js"></script>
     <link rel="stylesheet" type="text/css" href="./mobile.css">
+	<!-- ===== 去AI味样式覆盖层：工业环保科技风 ===== -->
+	<link rel="stylesheet" type="text/css" href="./index_files/de-ai.css">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
@@ -31,10 +33,263 @@
         ::-webkit-scrollbar-thumb:hover { background: #0a4db4; }
 
         /* ===== 顶部条 ===== */
-        .top-bar { background: #f7f9fc; border-bottom: 1px solid #e8ecf1; font-size: 12px; color: #666; }
-        .top-bar-inner { max-width: 1200px; margin: 0 auto; padding: 6px 20px; display: flex; justify-content: space-between; align-items: center; }
+        .top-bar { background: #f7f9fc; border-bottom: 1px solid #e8ecf1; font-size: 12px; color: #666; position: relative; z-index: 999; }
+        .top-bar-inner { max-width: 1200px; margin: 0 auto; padding: 6px 20px; display: flex; justify-content: space-between; align-items: center; position: relative; }
         .top-bar a { color: #666; margin: 0 10px; }
+        .top-bar .top-right a { position: relative; transition: color 0.2s; }
+        .top-bar a:not(.top-right a) { position: static; }
         .top-bar a:hover { color: #0a4db4; }
+
+        /* ===== 登录/注册组件 ===== */
+        .auth-section {
+            display: flex;
+            align-items: center;
+            height: 100%;
+        }
+
+        /* 未登录 */
+        .auth-guest {
+            gap: 0;
+        }
+
+        .auth-login-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 5px 14px;
+            background: linear-gradient(135deg, #0a4db4, #1e6fd9);
+            color: #fff !important;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+            margin: 0 !important;
+            text-decoration: none;
+            transition: all 0.25s ease;
+            box-shadow: 0 2px 6px rgba(10, 77, 180, 0.2);
+        }
+
+        .auth-login-btn:hover {
+            background: linear-gradient(135deg, #083d94, #1558b8);
+            color: #fff !important;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 10px rgba(10, 77, 180, 0.3);
+        }
+
+        .auth-icon {
+            width: 14px;
+            height: 14px;
+        }
+
+        .auth-divider {
+            color: #d0d7de;
+            margin: 0 8px;
+            font-weight: 300;
+        }
+
+        .auth-register-link {
+            color: #555 !important;
+            font-size: 12px;
+            font-weight: 400;
+            margin: 0 !important;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .auth-register-link:hover {
+            color: #0a4db4 !important;
+        }
+
+        /* 已登录 */
+        .auth-user {
+            position: relative;
+        }
+
+        .user-menu-trigger {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 3px 10px 3px 3px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: background 0.2s;
+            user-select: none;
+        }
+
+        .user-menu-trigger:hover {
+            background: #eef2f7;
+        }
+
+        .user-menu-trigger.active {
+            background: #e3ecf7;
+        }
+
+        .user-avatar {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #0a4db4, #4a9eff);
+            color: #fff;
+            font-size: 11px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .user-name {
+            font-size: 12px;
+            color: #333;
+            font-weight: 500;
+            max-width: 80px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .user-arrow {
+            width: 10px;
+            height: 10px;
+            color: #888;
+            transition: transform 0.25s ease;
+        }
+
+        .user-menu-trigger.active .user-arrow {
+            transform: rotate(180deg);
+        }
+
+        /* 下拉菜单 */
+        .user-dropdown {
+            position: absolute;
+            top: calc(100% + 8px);
+            left: 0;
+            min-width: 210px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.06);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-8px);
+            transition: all 0.22s cubic-bezier(0.22, 1, 0.36, 1);
+            overflow: hidden;
+            z-index: 9999;
+        }
+
+        .user-dropdown.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 16px;
+            background: linear-gradient(135deg, #f0f5ff, #e8f0fe);
+        }
+
+        .dropdown-avatar {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #0a4db4, #4a9eff);
+            color: #fff;
+            font-size: 16px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            box-shadow: 0 2px 8px rgba(10, 77, 180, 0.25);
+        }
+
+        .dropdown-user-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .dropdown-username {
+            font-size: 14px;
+            font-weight: 600;
+            color: #1f2937;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .dropdown-label {
+            font-size: 11px;
+            color: #6b7280;
+            margin-top: 2px;
+        }
+
+        .dropdown-divider {
+            height: 1px;
+            background: #f0f0f0;
+            margin: 4px 0;
+        }
+
+        .dropdown-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 16px;
+            color: #4b5563;
+            font-size: 13px;
+            text-decoration: none;
+            transition: all 0.15s;
+            position: relative;
+        }
+
+        .dropdown-item:hover {
+            background: #f5f8fc;
+            color: #0a4db4;
+        }
+
+        .dropdown-item svg {
+            width: 15px;
+            height: 15px;
+            flex-shrink: 0;
+            color: #6b7280;
+        }
+
+        .dropdown-item:hover svg {
+            color: #0a4db4;
+        }
+
+        .dropdown-item span {
+            flex: 1;
+        }
+
+        .dropdown-logout {
+            color: #dc2626 !important;
+        }
+
+        .dropdown-logout:hover {
+            background: #fef2f2;
+            color: #dc2626 !important;
+        }
+
+        .dropdown-logout svg {
+            color: #dc2626;
+        }
+
+        .dropdown-badge {
+            background: #ef4444;
+            color: #fff;
+            font-size: 10px;
+            font-weight: 600;
+            padding: 1px 6px;
+            border-radius: 8px;
+            min-width: 18px;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .user-name { max-width: 50px; }
+            .user-dropdown { min-width: 180px; }
+        }
 
         /* ===== Header ===== */
         .header { background: #fff; border-bottom: 2px solid #0a4db4; }
@@ -108,6 +363,25 @@
         .btn-cancel:hover { border-color: #f5222d; color: #f5222d; background: #fff5f5; }
         .btn-detail { padding: 6px 16px; border: 1px solid #0a4db4; border-radius: 4px; background: #fff; color: #0a4db4; font-size: 13px; cursor: pointer; }
         .btn-detail:hover { background: #e8f0fe; }
+
+        /* 管理员操作按钮 */
+        .btn-confirm { padding: 6px 16px; border: 1px solid #0a4db4; border-radius: 4px; background: #0a4db4; color: #fff; font-size: 13px; cursor: pointer; transition: all 0.25s ease; }
+        .btn-confirm:hover { background: #083d94; border-color: #083d94; box-shadow: 0 2px 8px rgba(10,77,180,0.3); }
+        .btn-complete { padding: 6px 16px; border: 1px solid #52c41a; border-radius: 4px; background: #52c41a; color: #fff; font-size: 13px; cursor: pointer; transition: all 0.25s ease; }
+        .btn-complete:hover { background: #389e0d; border-color: #389e0d; box-shadow: 0 2px 8px rgba(82,196,26,0.3); }
+        .btn-admin-cancel { padding: 6px 16px; border: 1px solid #ff7a45; border-radius: 4px; background: #fff; color: #ff7a45; font-size: 13px; cursor: pointer; transition: all 0.25s ease; }
+        .btn-admin-cancel:hover { background: #fff2e8; border-color: #fa541c; color: #fa541c; }
+
+        /* 管理员模式切换 */
+        .mode-switcher { display: flex; gap: 0; margin-bottom: 16px; border: 1px solid #ddd; border-radius: 8px; overflow: hidden; width: fit-content; }
+        .mode-btn { padding: 10px 24px; background: #fff; color: #666; font-size: 14px; cursor: pointer; border: none; transition: all 0.25s ease; font-weight: 500; }
+        .mode-btn:hover { color: #0a4db4; }
+        .mode-btn.active { background: linear-gradient(135deg, #0a4db4, #1e6fd9); color: #fff; }
+        .admin-badge { display: inline-block; padding: 2px 8px; background: linear-gradient(135deg, #fa8c16, #faad14); color: #fff; border-radius: 10px; font-size: 11px; font-weight: 600; margin-left: 8px; vertical-align: middle; }
+
+        /* 管理员订单卡片中的用户信息 */
+        .order-user-info { font-size: 12px; color: #0a4db4; font-weight: 500; margin-left: 12px; }
+        .order-contact-info { font-size: 12px; color: #888; margin-top: 4px; }
 
         /* 空状态 */
         .order-empty { padding: 80px 20px; text-align: center; background: #fff; border-radius: 8px; }
@@ -537,19 +811,76 @@
 <body>
 
     <!-- ============ 顶部条 ============ -->
+ <!-- ============ 顶部条 ============ -->
     <div class="top-bar">
         <div class="top-bar-inner">
             <div class="top-left">
-                <a href="./login.html" id="authLink">请登录</a>
-                <a href="./login.html?tab=register">注册</a>
+                <!-- 未登录状态 -->
+                <div class="auth-section auth-guest" id="authGuest">
+                    <a href="./login.html" class="auth-login-btn">
+                        <svg class="auth-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
+                            <polyline points="10 17 15 12 10 7"/>
+                            <line x1="15" y1="12" x2="3" y2="12"/>
+                        </svg>
+                        <span>登录</span>
+                    </a>
+                    <span class="auth-divider">|</span>
+                    <a href="./login.html?tab=register" class="auth-register-link">注册</a>
+                </div>
+                <!-- 已登录状态 -->
+                <div class="auth-section auth-user" id="authUser" style="display:none;">
+                    <div class="user-menu-trigger" id="userMenuTrigger">
+                        <div class="user-avatar" id="userAvatar"></div>
+                        <span class="user-name" id="userName"></span>
+                        <svg class="user-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="6 9 12 15 18 9"/>
+                        </svg>
+                    </div>
+                    <div class="user-dropdown" id="userDropdown">
+                        <div class="dropdown-header">
+                            <div class="dropdown-avatar" id="dropdownAvatar"></div>
+                            <div class="dropdown-user-info">
+                                <div class="dropdown-username" id="dropdownUsername"></div>
+                                <div class="dropdown-label">欢迎回来</div>
+                            </div>
+                        </div>
+                        <div class="dropdown-divider"></div>
+                        <a href="./order.html" class="dropdown-item">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M9 11H5a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7a2 2 0 0 0-2-2h-4"/>
+                                <path d="M9 11V7a3 3 0 0 1 6 0v4"/>
+                            </svg>
+                            <span>我的订单</span>
+                        </a>
+                        <a href="./cart.html" class="dropdown-item">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="9" cy="21" r="1"/>
+                                <circle cx="20" cy="21" r="1"/>
+                                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+                            </svg>
+                            <span>购物车</span>
+                            <span class="dropdown-badge" id="dropdownCartBadge">0</span>
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a href="javascript:void(0)" class="dropdown-item dropdown-logout" id="dropdownLogout">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+                                <polyline points="16 17 21 12 16 7"/>
+                                <line x1="21" y1="12" x2="9" y2="12"/>
+                            </svg>
+                            <span>退出登录</span>
+                        </a>
+                    </div>
+                </div>
             </div>
             <div class="top-right">
                 <a href="./neep.html">首页</a>
                 <a href="#">产品服务</a>
                 <a href="#">解决方案</a>
                 <a href="#">新闻资讯</a>
-                <a href="#">关于我们</a>
-                <a href="#">联系我们</a>
+                <a href="./about-us.html">关于我们</a>
+                <a href="./contact-us.html">联系我们</a>
             </div>
         </div>
     </div>
@@ -570,7 +901,7 @@
         </div>
     </div>
 
-    <!-- ============ 主导航 ============ -->
+    <!-- ============ 主导航 ============
     <nav class="main-nav">
         <div class="main-nav-inner">
             <div class="nav-item" onclick="location.href='./neep.html'">首页</div>
@@ -579,7 +910,7 @@
             <div class="nav-item" onclick="location.href='./index-aboutus.html'">关于我们</div>
             <div class="nav-item" onclick="location.href='./news-detail.html'">新闻资讯</div>
         </div>
-    </nav>
+    </nav> -->
 
     <!-- ============ 面包屑 ============ -->
     <div class="breadcrumb-wrap">
@@ -593,9 +924,15 @@
     <!-- ============ 订单主体 ============ -->
     <div class="order-container">
         <h1 class="order-page-title">
-            📋 我的订单
+            📋 <span id="pageTitle">我的订单</span>
             <span class="count" id="orderCount"></span>
         </h1>
+
+        <!-- 管理员模式切换（仅管理员可见） -->
+        <div class="mode-switcher" id="modeSwitcher" style="display:none;">
+            <button class="mode-btn active" id="modeMyOrders" onclick="HROrder.switchMode(false)">我的订单</button>
+            <button class="mode-btn" id="modeAdmin" onclick="HROrder.switchMode(true)">订单管理<span class="admin-badge">ADMIN</span></button>
+        </div>
 
         <!-- 状态筛选 -->
         <div class="status-tabs" id="statusTabs">
@@ -610,53 +947,55 @@
         <div id="orderList"></div>
     </div>
 
-    <!-- ============ neep Footer ============ -->
+   <!-- ============ Footer ============ -->
     <footer class="footer">
         <div class="footer-inner">
-            <div class="footer-col">
+            <div class="footer-col revealed">
                 <h4>产品服务</h4>
-                <a href="#">人工智能和机器人</a>
-                <a href="#">前沿新材料</a>
-                <a href="#">数字服务与平台</a>
-                <a href="#">通信与网络</a>
-                <a href="#">低空经济</a>
+                <a href="#">智能机器人</a>
+                <a href="#">数字平台</a>
+                <a href="#">新能源应用板块</a>
                 <a href="#">大宗贸易</a>
-                <a href="#">文化创意与IP</a>
-                <a href="#">智慧农业与粮储</a>
-                <a href="#">安防与识别</a>
-                <a href="#">新能源与储能</a>
+                <a href="#">应急产品</a>
+                <a href="#">新材料</a>
+                <a href="#">智慧建材</a>
+                <a href="#">AI文旅</a>
+                <a href="#">技术转移与本地化服务</a>
+                <a href="#">国际贸易会客厅海南</a>
             </div>
-            <div class="footer-col">
+            <div class="footer-col revealed">
                 <h4>解决方案</h4>
-                <a href="#">智能制造方案</a>
-                <a href="#">低空经济方案</a>
-                <a href="#">AI赋能方案</a>
+                <a href="#">智能机器人方案</a>
+                <a href="#">新能源应用方案</a>
+                <a href="#">大宗贸易跨境方案</a>
             </div>
-            <div class="footer-col">
+            <div class="footer-col revealed">
                 <h4>关于我们</h4>
                 <a href="#">公司介绍</a>
                 <a href="#">发展历程</a>
                 <a href="#">加入我们</a>
                 <a href="#">新闻资讯</a>
             </div>
-            <div class="footer-col">
+            <div class="footer-col revealed">
                 <h4>联系方式</h4>
                 <a href="#">📞 173-0180-8315</a>
                 <a href="#">📧 tech@jnsco.cn​​​​​​​​​​​​​​​​​​​​​​​​</a>
                 <a href="#">📍 中国 · 北京</a>
             </div>
-            <div class="footer-col">
+            <div class="footer-col revealed">
                 <h4>关注我们</h4>
-                <a href="#">微信公众号</a>
-                <a href="#">官方微博</a>
-                <a href="#">抖音号</a>
-                <a href="#">视频号</a>
+                <a href="https://weixin.sogou.com/weixin?query=浩瑞科技Harvest+Tech" target="_blank"
+                    rel="noopener noreferrer">微信：浩瑞科技Harvest Tech</a>
+                <a href="https://m.weibo.cn/n/北京浩瑞绿色科技" target="_blank" rel="noopener noreferrer">微博：北京浩瑞绿色科技</a>
+                <a href="https://www.douyin.com/search/北京浩瑞绿色科技?type=user" target="_blank"
+                    rel="noopener noreferrer">抖音：北京浩瑞绿色科技</a>
+                <a href="https://www.baidu.com/s?wd=北京浩瑞绿色科技+视频号" target="_blank" rel="noopener noreferrer">视频号</a>
             </div>
         </div>
         <div class="footer-bottom">
             <p>
-                <a href="#">关于我们</a>|
-                <a href="#">联系我们</a>|
+                <a href="./about-us.html">关于我们</a>
+                <a href="./contact-us.html">联系我们</a>
                 <a href="#">人才招聘</a>|
                 <a href="#">合作伙伴</a>|
                 <a href="#">友情链接</a>|
@@ -679,9 +1018,40 @@
 
         var HROrder = (function () {
             var currentStatus = '';
+            var adminMode = false;
 
             function isLoggedIn() {
                 try { return !!localStorage.getItem('token'); } catch (e) { return false; }
+            }
+
+            function isAdmin() {
+                try {
+                    if (localStorage.getItem('roleId') === '1') return true;
+                    // 兼容：如果 localStorage 中没有 roleId，从 JWT token 中解析
+                    var token = localStorage.getItem('token');
+                    if (token) {
+                        var roleId = parseJwtRoleId(token);
+                        if (roleId !== null) {
+                            localStorage.setItem('roleId', roleId);
+                            return roleId === '1';
+                        }
+                    }
+                    return false;
+                } catch (e) { return false; }
+            }
+
+            function parseJwtRoleId(token) {
+                try {
+                    var parts = token.split('.');
+                    if (parts.length === 3) {
+                        var payload = JSON.parse(atob(parts[1].replace(/-/g, '+').replace(/_/g, '/')));
+                        var claims = payload.claims || payload;
+                        return claims.roleId != null ? String(claims.roleId) : null;
+                    }
+                } catch (e) {
+                    console.error('JWT解析失败:', e);
+                }
+                return null;
             }
 
             function authHeaders() {
@@ -703,6 +1073,23 @@
                 return String(t).replace('T', ' ').substring(0, 19);
             }
 
+            function showToast(msg, type) {
+                var existing = document.getElementById('orderToast');
+                if (existing) existing.remove();
+                var toast = document.createElement('div');
+                toast.id = 'orderToast';
+                toast.style.cssText = 'position:fixed;top:80px;left:50%;transform:translateX(-50%);background:' +
+                    (type === 'success' ? 'rgba(10,77,180,0.95)' : 'rgba(245,34,45,0.95)') +
+                    ';color:#fff;padding:12px 24px;border-radius:8px;font-size:14px;z-index:99999;box-shadow:0 4px 20px rgba(0,0,0,0.2);transition:opacity .3s;opacity:0;';
+                toast.textContent = msg;
+                document.body.appendChild(toast);
+                requestAnimationFrame(function () { toast.style.opacity = '1'; });
+                setTimeout(function () {
+                    toast.style.opacity = '0';
+                    setTimeout(function () { toast.remove(); }, 300);
+                }, 2500);
+            }
+
             function loadOrders() {
                 var wrap = document.getElementById('orderList');
                 if (!isLoggedIn()) {
@@ -718,14 +1105,17 @@
 
                 wrap.innerHTML = '<div class="order-empty"><div class="empty-icon">⏳</div><p class="empty-text">订单加载中...</p></div>';
 
-                var url = API_BASE + '/order';
-                if (currentStatus !== '') { url += '?status=' + currentStatus; }
+                var url = adminMode
+                    ? API_BASE + '/order/admin/list'
+                    : API_BASE + '/order';
+                if (currentStatus !== '') { url += (url.indexOf('?') >= 0 ? '&' : '?') + 'status=' + currentStatus; }
 
                 fetch(url, { headers: authHeaders() })
                     .then(function (resp) {
                         if (resp.status === 401) {
                             localStorage.removeItem('token');
                             localStorage.removeItem('hr_cart_synced');
+                            if (window.HRCart) HRCart.logout();
                             location.reload();
                             throw new Error('未登录');
                         }
@@ -754,8 +1144,8 @@
                     wrap.innerHTML =
                         '<div class="order-empty">' +
                         '<div class="empty-icon">📦</div>' +
-                        '<p class="empty-text">暂无相关订单</p>' +
-                        '<a class="btn-go-shop" href="./neep.html">去购物</a>' +
+                        '<p class="empty-text">' + (adminMode ? '暂无相关订单' : '暂无相关订单') + '</p>' +
+                        (adminMode ? '' : '<a class="btn-go-shop" href="./neep.html">去购物</a>') +
                         '</div>';
                     return;
                 }
@@ -781,7 +1171,35 @@
                     var total = parseFloat(o.totalAmount) || 0;
                     var totalText = total ? ('¥' + total.toLocaleString()) : '¥询价';
                     var statusText = STATUS_MAP[o.status] || '未知';
-                    var canCancel = o.status === 0;
+                    var st = o.status;
+
+                    // 管理员模式下的操作按钮
+                    var actionsHtml = '';
+                    if (adminMode) {
+                        if (st === 0) {
+                            actionsHtml = '<button class="btn-confirm" onclick="HROrder.confirmOrder(' + o.id + ',\'' + escapeHtml(o.orderNo) + '\')">确认订单</button>' +
+                                '<button class="btn-admin-cancel" onclick="HROrder.adminCancelOrder(' + o.id + ',\'' + escapeHtml(o.orderNo) + '\')">取消</button>';
+                        } else if (st === 1) {
+                            actionsHtml = '<button class="btn-complete" onclick="HROrder.completeOrder(' + o.id + ',\'' + escapeHtml(o.orderNo) + '\')">标记完成</button>' +
+                                '<button class="btn-admin-cancel" onclick="HROrder.adminCancelOrder(' + o.id + ',\'' + escapeHtml(o.orderNo) + '\')">取消</button>';
+                        }
+                    } else {
+                        // 普通用户仅可取消待处理订单
+                        if (st === 0) {
+                            actionsHtml = '<button class="btn-cancel" onclick="HROrder.cancelOrder(' + o.id + ',\'' + escapeHtml(o.orderNo) + '\')">取消订单</button>';
+                        }
+                    }
+
+                    // 管理员模式下显示下单用户信息和联系方式
+                    var userInfoHtml = '';
+                    if (adminMode) {
+                        var contactParts = [];
+                        if (o.contactName) contactParts.push(escapeHtml(o.contactName));
+                        if (o.contactPhone) contactParts.push(escapeHtml(o.contactPhone));
+                        userInfoHtml = '<span class="order-user-info">用户ID: ' + escapeHtml(o.userId) + '</span>' +
+                            (contactParts.length ? '<div class="order-contact-info">📞 ' + contactParts.join(' | ') +
+                                (o.contactAddress ? ' | 📍 ' + escapeHtml(o.contactAddress) : '') + '</div>' : '');
+                    }
 
                     return '' +
                         '<div class="order-card">' +
@@ -795,12 +1213,11 @@
                         '<div class="total-info">' +
                         '共 <span class="qty">' + (o.totalQuantity || 0) + '</span> 件商品' +
                         (o.remark ? ' &nbsp;|&nbsp; <span class="remark-text" title="' + escapeHtml(o.remark) + '">备注：' + escapeHtml(o.remark) + '</span>' : '') +
+                        userInfoHtml +
                         '</div>' +
                         '<div style="display:flex;align-items:center;">' +
                         '<span class="total-amount">' + totalText + '</span>' +
-                        '<div class="order-actions">' +
-                        (canCancel ? '<button class="btn-cancel" onclick="HROrder.cancelOrder(' + o.id + ',\'' + escapeHtml(o.orderNo) + '\')">取消订单</button>' : '') +
-                        '</div>' +
+                        '<div class="order-actions">' + actionsHtml + '</div>' +
                         '</div>' +
                         '</div>' +
                         '</div>';
@@ -818,26 +1235,115 @@
                     if (resp.status === 401) {
                         localStorage.removeItem('token');
                         localStorage.removeItem('hr_cart_synced');
+                        if (window.HRCart) HRCart.logout();
                         location.href = './login.html';
                         throw new Error('未登录');
                     }
                     return resp.json();
                 }).then(function (res) {
                     if (res.code === 0) {
-                        if (window.HRCart && typeof showToast === 'undefined') {
-                            alert('订单已取消');
-                        } else if (typeof showToast === 'function') {
-                            showToast('订单已取消', 'success');
-                        } else {
-                            alert('订单已取消');
-                        }
+                        showToast('订单已取消', 'success');
                         loadOrders();
                     } else {
-                        alert(res.message || res.msg || '取消失败');
+                        showToast(res.message || res.msg || '取消失败', 'error');
                     }
                 }).catch(function (err) {
-                    if (err.message !== '未登录') { alert('网络错误，请稍后重试'); }
+                    if (err.message !== '未登录') { showToast('网络错误，请稍后重试', 'error'); }
                 });
+            }
+
+            // ===== 管理员操作 =====
+
+            function confirmOrder(id, orderNo) {
+                if (!confirm('确认订单 ' + orderNo + ' 吗？\n确认后订单将进入"已确认"状态。')) return;
+                fetch(API_BASE + '/order/admin/' + id + '/confirm', {
+                    method: 'PUT',
+                    headers: authHeaders()
+                }).then(function (resp) {
+                    if (resp.status === 401) {
+                        localStorage.removeItem('token');
+                        localStorage.removeItem('hr_cart_synced');
+                        if (window.HRCart) HRCart.logout();
+                        location.href = './login.html';
+                        throw new Error('未登录');
+                    }
+                    return resp.json();
+                }).then(function (res) {
+                    if (res.code === 0) {
+                        showToast('订单已确认', 'success');
+                        loadOrders();
+                    } else {
+                        showToast(res.message || '操作失败', 'error');
+                    }
+                }).catch(function (err) {
+                    if (err.message !== '未登录') { showToast('网络错误，请稍后重试', 'error'); }
+                });
+            }
+
+            function completeOrder(id, orderNo) {
+                if (!confirm('确定将订单 ' + orderNo + ' 标记为已完成吗？')) return;
+                fetch(API_BASE + '/order/admin/' + id + '/complete', {
+                    method: 'PUT',
+                    headers: authHeaders()
+                }).then(function (resp) {
+                    if (resp.status === 401) {
+                        localStorage.removeItem('token');
+                        localStorage.removeItem('hr_cart_synced');
+                        if (window.HRCart) HRCart.logout();
+                        location.href = './login.html';
+                        throw new Error('未登录');
+                    }
+                    return resp.json();
+                }).then(function (res) {
+                    if (res.code === 0) {
+                        showToast('订单已完成', 'success');
+                        loadOrders();
+                    } else {
+                        showToast(res.message || '操作失败', 'error');
+                    }
+                }).catch(function (err) {
+                    if (err.message !== '未登录') { showToast('网络错误，请稍后重试', 'error'); }
+                });
+            }
+
+            function adminCancelOrder(id, orderNo) {
+                if (!confirm('确定要取消订单 ' + orderNo + ' 吗？\n取消后订单将无法恢复。')) return;
+                fetch(API_BASE + '/order/admin/' + id + '/cancel', {
+                    method: 'PUT',
+                    headers: authHeaders()
+                }).then(function (resp) {
+                    if (resp.status === 401) {
+                        localStorage.removeItem('token');
+                        localStorage.removeItem('hr_cart_synced');
+                        if (window.HRCart) HRCart.logout();
+                        location.href = './login.html';
+                        throw new Error('未登录');
+                    }
+                    return resp.json();
+                }).then(function (res) {
+                    if (res.code === 0) {
+                        showToast('订单已取消', 'success');
+                        loadOrders();
+                    } else {
+                        showToast(res.message || '操作失败', 'error');
+                    }
+                }).catch(function (err) {
+                    if (err.message !== '未登录') { showToast('网络错误，请稍后重试', 'error'); }
+                });
+            }
+
+            function switchMode(admin) {
+                adminMode = admin;
+                document.getElementById('modeMyOrders').classList.toggle('active', !admin);
+                document.getElementById('modeAdmin').classList.toggle('active', admin);
+                document.getElementById('pageTitle').textContent = admin ? '订单管理' : '我的订单';
+                // 重置状态筛选
+                currentStatus = '';
+                var tabs = document.querySelectorAll('.status-tab');
+                for (var i = 0; i < tabs.length; i++) {
+                    tabs[i].classList.toggle('active', tabs[i].getAttribute('data-status') === '');
+                }
+                loadOrders();
             }
 
             function filterStatus(s) {
@@ -849,31 +1355,122 @@
                 loadOrders();
             }
 
+            // 初始化管理员 UI
+            function initAdminUI() {
+                if (isLoggedIn() && isAdmin()) {
+                    document.getElementById('modeSwitcher').style.display = 'flex';
+                }
+            }
+
             return {
                 loadOrders: loadOrders,
                 cancelOrder: cancelOrder,
-                filterStatus: filterStatus
+                filterStatus: filterStatus,
+                confirmOrder: confirmOrder,
+                completeOrder: completeOrder,
+                adminCancelOrder: adminCancelOrder,
+                switchMode: switchMode,
+                initAdminUI: initAdminUI
             };
         })();
 
         //更新顶部登录状态
-        (function updateAuthLink() {
+        function initAuthState() {
             var token = localStorage.getItem('token');
             var username = localStorage.getItem('username');
-            var authLink = document.getElementById('authLink');
-            if (token && username) {
-                authLink.innerHTML = '<a href="javascript:void(0)" onclick="showUserMenu()" style="color:#0a4db4;">' + username + '</a>';
-            }
-        })();
+            var guest = document.getElementById('authGuest');
+            var user = document.getElementById('authUser');
+            var avatarChar = (username || '商').charAt(0).toUpperCase();
 
-        function showUserMenu() {
-            if (!confirm('是否退出登录?')) return;
+            if (token && username) {
+                guest.style.display = 'none';
+                user.style.display = 'flex';
+                document.getElementById('userName').textContent = username;
+                document.getElementById('userAvatar').textContent = avatarChar;
+                document.getElementById('dropdownAvatar').textContent = avatarChar;
+                document.getElementById('dropdownUsername').textContent = username;
+                updateCartBadgeInDropdown();
+            } else {
+                guest.style.display = 'flex';
+                user.style.display = 'none';
+                closeUserDropdown();
+            }
+        }
+
+        function updateCartBadgeInDropdown() {
+            var badge = document.getElementById('dropdownCartBadge');
+            if (!badge) return;
+            var count = window.HRCart ? HRCart.getCartCount() : 0;
+            if (count > 0) {
+                badge.textContent = count;
+                badge.style.display = 'inline-block';
+            } else {
+                badge.style.display = 'none';
+            }
+        }
+
+        function closeUserDropdown() {
+            var dropdown = document.getElementById('userDropdown');
+            var trigger = document.getElementById('userMenuTrigger');
+            if (dropdown) dropdown.classList.remove('show');
+            if (trigger) trigger.classList.remove('active');
+        }
+
+        function toggleUserDropdown(e) {
+            e.stopPropagation();
+            var dropdown = document.getElementById('userDropdown');
+            var trigger = document.getElementById('userMenuTrigger');
+            var isOpen = dropdown.classList.contains('show');
+            if (isOpen) {
+                closeUserDropdown();
+            } else {
+                dropdown.classList.add('show');
+                trigger.classList.add('active');
+                updateCartBadgeInDropdown();
+            }
+        }
+
+        function handleLogout(e) {
+            e.preventDefault();
+            if (!confirm('确定要退出登录吗？')) return;
             localStorage.removeItem('token');
             localStorage.removeItem('username');
             localStorage.removeItem('roleId');
             if (window.HRCart) HRCart.logout();
-            location.reload();
+            closeUserDropdown();
+            initAuthState();
+            // 重置管理员模式
+            document.getElementById('modeSwitcher').style.display = 'none';
+            document.getElementById('pageTitle').textContent = '我的订单';
+            HROrder.loadOrders();
         }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            var trigger = document.getElementById('userMenuTrigger');
+            var logoutBtn = document.getElementById('dropdownLogout');
+            
+            if (trigger) {
+                trigger.addEventListener('click', toggleUserDropdown);
+            }
+            
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', handleLogout);
+            }
+            
+            document.addEventListener('click', function (e) {
+                var userSection = document.getElementById('authUser');
+                if (userSection && !userSection.contains(e.target)) {
+                    closeUserDropdown();
+                }
+            });
+            
+            document.addEventListener('keydown', function (e) {
+                if (e.key === 'Escape') closeUserDropdown();
+            });
+        });
+
+        initAuthState();
+        HROrder.initAdminUI();
 
         //页面加载
         HROrder.loadOrders();

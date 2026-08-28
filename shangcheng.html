@@ -15,26 +15,26 @@
     <meta name="description" content="黑科技商城 - 前沿科技产品一站式交易平台">
     <link rel="shortcut icon" href="">
     <!-- 公共样式 -->
-    <link rel="stylesheet" type="text/css" href="./index_files/extend.css">
-    <link rel="stylesheet" type="text/css" href="./index_files/style.css">
-    <link rel="stylesheet" type="text/css" href="./index_files/g-style.css">
-    <link rel="stylesheet" type="text/css" href="./index_files/f-style.css">
-    <link rel="stylesheet" type="text/css" href="./components/nav.css">
-    <script src="./index_files/hm.js"></script>
-    <script src="./config1.js"></script>
-    <script src="./index_files/svg-inject.min.js" type="text/javascript"></script>
+    <link rel="stylesheet" type="text/css" href="index_files/extend.css">
+    <link rel="stylesheet" type="text/css" href="index_files/style.css">
+    <link rel="stylesheet" type="text/css" href="index_files/g-style.css">
+    <link rel="stylesheet" type="text/css" href="index_files/f-style.css">
+    <link rel="stylesheet" type="text/css" href="components/nav.css">
+    <script src="index_files/hm.js"></script>
+    <script src="config1.js"></script>
+    <script src="index_files/svg-inject.min.js" type="text/javascript"></script>
     <style type="text/css">
         img[onload^="SVGInject("] {
             visibility: hidden;
         }
     </style>
-    <link rel="stylesheet" href="./index_files/yang-product.css">
-    <link rel="stylesheet" href="./index_files/zstyle.css">
-    <link rel="stylesheet" href="./index_files/layui.css">
-    <link rel="stylesheet" href="./index_files/share.min.css">
-    <link rel="stylesheet" type="text/css" href="./index_files/liMarquee.css">
-    <link rel="stylesheet" type="text/css" href="./index_files/mobile.css">
-	<!-- ===== 去AI味样式覆盖层：工业环保科技风 ===== -->
+    <link rel="stylesheet" href="index_files/yang-product.css">
+    <link rel="stylesheet" href="index_files/zstyle.css">
+    <link rel="stylesheet" href="index_files/layui.css">
+    <link rel="stylesheet" href="index_files/share.min.css">
+    <link rel="stylesheet" type="text/css" href="index_files/liMarquee.css">
+    <link rel="stylesheet" type="text/css" href="index_files/mobile.css">
+	
 	<link rel="stylesheet" type="text/css" href="./index_files/de-ai.css">
     <meta name="baidu-site-verification" content="codeva-LR64T0uUwL" />
 
@@ -335,6 +335,13 @@
             justify-content: center;
             font-size: 48px;
             color: #0a4db4;
+            overflow: hidden;
+        }
+
+        .flash-product .fp-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
         }
 
         .flash-product .fp-info {
@@ -1266,7 +1273,7 @@
         <div class="shop-nav-inner">
             <!-- Logo -->
             <div class="logo">
-                <img class="logo-icon" src="./img/JSlogo-beb0d75f.png" alt="Logo">
+                <img class="logo-icon" src="img/JSlogo-beb0d75f.png" alt="Logo">
                 <div class="logo-text">
                     <div class="brand">黑科技 <span class="highlight">商城</span></div>
                     <div class="tagline">Hi-Tech Bazaar </div>
@@ -1290,7 +1297,7 @@
             <div class="shop-nav-right">
                 <!-- 未登录状态 -->
                 <div class="auth-section auth-guest" id="authGuest">
-                    <a href="./login.html" class="auth-login-btn">
+                    <a href="./pages/user/login.html" class="auth-login-btn">
                         <svg class="auth-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
                             <polyline points="10 17 15 12 10 7"/>
@@ -1299,7 +1306,7 @@
                         <span>登录</span>
                     </a>
                     <span class="auth-divider">|</span>
-                    <a href="./login.html?tab=register" class="auth-register-link">注册</a>
+                    <a href="./pages/user/login.html?tab=register" class="auth-register-link">注册</a>
                 </div>
                 <!-- 已登录状态 -->
                 <div class="auth-section auth-user" id="authUser" style="display:none;">
@@ -1319,14 +1326,14 @@
                             </div>
                         </div>
                         <div class="dropdown-divider"></div>
-                        <a href="./order.html" class="dropdown-item">
+                        <a href="./pages/user/order.html" class="dropdown-item">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <path d="M9 11H5a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7a2 2 0 0 0-2-2h-4"/>
                                 <path d="M9 11V7a3 3 0 0 1 6 0v4"/>
                             </svg>
                             <span>我的订单</span>
                         </a>
-                        <a href="./cart.html" class="dropdown-item">
+                        <a href="./pages/user/cart.html" class="dropdown-item">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <circle cx="9" cy="21" r="1"/>
                                 <circle cx="20" cy="21" r="1"/>
@@ -1350,7 +1357,7 @@
                 <div class="shop-nav-cart" onclick="handleCart()">
                     <span class="cart-icon">&#128722;</span>
                     <span class="cart-label">商城首页</span>
-                    <!-- <a href="./neep.html" class="cart-label">商城首页</a> -->
+                    <!-- <a href="neep.html" class="cart-label">商城首页</a> -->
                 </div>
             </div>
         </div>
@@ -1721,8 +1728,7 @@
 
 
         function handleCart() {
-            location.href = './neep.html';
-        }
+            location.href = 'neep.html'        }
 
         /* ============ Banner轮播 ============ */
         var currentSlide = 0;
@@ -1762,14 +1768,10 @@
 
         /* ============ 限时商品数据 ============ */
         var flashProducts = [
-            // { icon: '&#128301;', name: '石墨烯散热片', price: 99, origPrice: 299 },
-            // { icon: '&#128190;', name: '量子U盘 128G', price: 599, origPrice: 1299 },
-            // { icon: '&#129299;', name: '便携式制氧呼吸机', price: 199, origPrice: 599 },
-            // { icon: '&#129302;', name: 'AI仿生芯片模块', price: 99, origPrice: 399 }
-            { icon: '&#128301;', name: '石墨烯散热片' },
-            { icon: '&#128190;', name: '量子U盘 128G' },
-            { icon: '&#129299;', name: '便携式制氧呼吸机' },
-            { icon: '&#129302;', name: 'AI仿生芯片模块' }
+            { img: 'img/机器人/cr30h_tab.jpg', name: 'CR 30H协作机器人', url: 'pages/product-detail/product-detail-cr30h.html', fallback: '&#129302;' },
+            { img: 'img/机器人/tab.jpg', name: 'CR20A协作机器人', url: 'pages/product-detail/product-detail-cr20a.html', fallback: '&#129302;' },
+            { img: 'img/机器人/collection.jpg', name: 'Atom人形机器人', url: 'pages/product-detail/product-detail-atom.html', fallback: '&#129302;' },
+            { img: 'img/chanpin1-cp1-cpjs.png', name: '无电制冷涂层', url: 'pages/product-detail/product-detail-cp1.html', fallback: '&#127777;' }
         ];
 
         function renderFlashProducts() {
@@ -1777,11 +1779,10 @@
             if (!container) return;
             var html = '';
             flashProducts.forEach(function (p) {
-                html += '<div class="flash-product" onclick="location.href=\'#\'">' +
-                    '<div class="fp-img">' + p.icon + '</div>' +
+                html += '<div class="flash-product" onclick="location.href=\'' + p.url + '\'">' +
+                    '<div class="fp-img"><img src="' + p.img + '" alt="' + p.name + '" onerror="this.parentNode.innerHTML=\'' + p.fallback + '\'"></div>' +
                     '<div class="fp-info">' +
                     '<div class="fp-name">' + p.name + '</div>' +
-                    // '<div class="fp-price">&yen;' + p.price + '<small>&yen;' + p.origPrice + '</small></div>' +
                     '</div></div>';
             });
             container.innerHTML = html;
@@ -1848,7 +1849,7 @@
             if (!container) return;
             var html = '';
             newsData.forEach(function (n) {
-                html += '<div class="news-item" onclick="location.href=\'./news-detail.html\'">' +
+                html += '<div class="news-item" onclick="location.href=\'./pages/news/news-detail.html\'">' +
                     '<div class="news-date">' +
                     '<div class="day">' + n.day + '</div>' +
                     '<div class="month">' + n.month + '</div>' +

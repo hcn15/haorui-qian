@@ -1,0 +1,1087 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登录 / 注册 - 黑科技商城</title>
+    <link rel="stylesheet" type="text/css" href="../../index_files/g-style.css">
+    <script src="../../config1.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body { height: 100%; }
+        body {
+            font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif;
+            color: #333;
+            background: linear-gradient(135deg, #e8f0fe 0%, #f7f9fc 50%, #e8f0fe 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ===== 背景装饰 ===== */
+        .bg-decoration {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 0;
+        }
+        .bg-decoration::before,
+        .bg-decoration::after {
+            content: "";
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.4;
+        }
+        .bg-decoration::before {
+            width: 400px; height: 400px;
+            background: #4a9eff;
+            top: -100px; left: -100px;
+        }
+        .bg-decoration::after {
+            width: 500px; height: 500px;
+            background: #0a4db4;
+            bottom: -150px; right: -150px;
+        }
+
+        /* ===== 登录容器 ===== */
+        .auth-container {
+            position: relative;
+            z-index: 1;
+            width: 900px;
+            max-width: 95%;
+            min-height: 560px;
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(10, 77, 180, 0.15);
+            display: flex;
+            overflow: hidden;
+            animation: fadeInUp 0.6s ease-out;
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===== 左侧品牌介绍 ===== */
+        .brand-panel {
+            width: 380px;
+            background: linear-gradient(135deg, #0a4db4, #1e6fd9);
+            color: #fff;
+            padding: 50px 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            overflow: hidden;
+        }
+        .brand-panel::before {
+            content: "";
+            position: absolute;
+            top: -50%; right: -50%;
+            width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .brand-content { position: relative; z-index: 1; }
+        .brand-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 30px;
+        }
+        .brand-logo img {
+            width: 44px; height: 44px;
+            object-fit: contain;
+            background: #fff;
+            border-radius: 8px;
+            padding: 4px;
+        }
+        .brand-logo .brand-name {
+            font-size: 22px;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+        .brand-logo .brand-name .highlight { color: #4a9eff; }
+
+        .brand-title {
+            font-size: 28px;
+            font-weight: bold;
+            line-height: 1.4;
+            margin-bottom: 16px;
+        }
+        .brand-subtitle {
+            font-size: 14px;
+            line-height: 1.8;
+            opacity: 0.9;
+            margin-bottom: 30px;
+        }
+
+        .brand-features {
+            list-style: none;
+            padding: 0;
+        }
+        .brand-features li {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+            margin-bottom: 14px;
+            opacity: 0.95;
+        }
+        .brand-features li .feature-icon {
+            width: 24px; height: 24px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            flex-shrink: 0;
+        }
+
+        .brand-footer {
+            position: relative;
+            z-index: 1;
+            font-size: 12px;
+            opacity: 0.7;
+        }
+
+        /* ===== 右侧表单区 ===== */
+        .form-panel {
+            flex: 1;
+            padding: 50px 50px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Tab切换 */
+        .tab-switcher {
+            display: flex;
+            gap: 0;
+            margin-bottom: 36px;
+            border-bottom: 2px solid #e8ecf1;
+        }
+        .tab-btn {
+            flex: 1;
+            padding: 12px 0;
+            font-size: 18px;
+            font-weight: bold;
+            color: #999;
+            background: none;
+            border: none;
+            cursor: pointer;
+            position: relative;
+            transition: color 0.3s;
+        }
+        .tab-btn.active {
+            color: #0a4db4;
+        }
+        .tab-btn.active::after {
+            content: "";
+            position: absolute;
+            bottom: -2px; left: 0; right: 0;
+            height: 2px;
+            background: #0a4db4;
+        }
+        .tab-btn:hover { color: #0a4db4; }
+
+        /* 表单容器 */
+        .form-wrapper {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .form-box {
+            display: none;
+            animation: fadeIn 0.4s ease-out;
+        }
+        .form-box.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .form-title {
+            font-size: 22px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 8px;
+        }
+        .form-desc {
+            font-size: 13px;
+            color: #999;
+            margin-bottom: 28px;
+        }
+
+        /* 输入框组 */
+        .form-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        .input-wrapper {
+            position: relative;
+        }
+        .input-wrapper .input-icon {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #bbb;
+            font-size: 16px;
+        }
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            height: 44px;
+            padding: 0 14px 0 42px;
+            border: 1px solid #e0e6ed;
+            border-radius: 8px;
+            font-size: 14px;
+            color: #333;
+            background: #fafbfc;
+            transition: all 0.3s;
+            outline: none;
+        }
+        .form-group input:focus,
+        .form-group select:focus {
+            border-color: #0a4db4;
+            background: #fff;
+            box-shadow: 0 0 0 3px rgba(10, 77, 180, 0.1);
+        }
+        .form-group input::placeholder {
+            color: #bbb;
+        }
+
+        /* 密码显示切换 */
+        .toggle-pwd {
+            position: absolute;
+            right: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #999;
+            cursor: pointer;
+            font-size: 14px;
+            user-select: none;
+            padding: 4px;
+        }
+        .toggle-pwd:hover { color: #0a4db4; }
+
+        /* 角色选择卡片 */
+        .role-selector {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .role-card {
+            flex: 1;
+            padding: 14px 12px;
+            border: 2px solid #e0e6ed;
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.3s;
+            background: #fafbfc;
+        }
+        .role-card:hover {
+            border-color: #4a9eff;
+            background: #f0f6ff;
+        }
+        .role-card.selected {
+            border-color: #0a4db4;
+            background: #e8f0fe;
+        }
+        .role-card .role-icon {
+            font-size: 24px;
+            margin-bottom: 6px;
+        }
+        .role-card .role-name {
+            font-size: 14px;
+            font-weight: bold;
+            color: #333;
+        }
+        .role-card.selected .role-name { color: #0a4db4; }
+        .role-card .role-desc {
+            font-size: 11px;
+            color: #999;
+            margin-top: 4px;
+        }
+
+        /* 错误提示 */
+        .error-msg {
+            color: #e74c3c;
+            font-size: 12px;
+            margin-top: 6px;
+            display: none;
+        }
+        .error-msg.show { display: block; }
+
+        /* 成功提示(与 error-msg 对应,绿色) */
+        .success-msg {
+            color: #2ecc71;
+            font-size: 12px;
+            margin-top: 6px;
+            display: none;
+        }
+        .success-msg.show { display: block; }
+
+        /* 输入框校验状态 */
+        .input-wrapper.valid input { border-color: #2ecc71; }
+        .input-wrapper.invalid input { border-color: #e74c3c; }
+
+        /* 校验规则提示 */
+        .rules-hint {
+            font-size: 11px;
+            color: #9aa5b1;
+            margin-top: 6px;
+            line-height: 1.6;
+        }
+        .rules-hint .rule {
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
+            margin-right: 12px;
+        }
+        .rules-hint .rule::before {
+            content: '○';
+            color: #c5cdd9;
+            font-size: 10px;
+        }
+        .rules-hint .rule.passed::before {
+            content: '✓';
+            color: #2ecc71;
+        }
+        .rules-hint .rule.passed { color: #2ecc71; }
+
+        /* 密码强度条 */
+        .pwd-strength {
+            display: flex;
+            gap: 4px;
+            margin-top: 6px;
+            height: 4px;
+        }
+        .pwd-strength .seg {
+            flex: 1;
+            border-radius: 2px;
+            background: #e8ecf1;
+            transition: background .3s;
+        }
+        .pwd-strength.lv-1 .seg:nth-child(1) { background: #e74c3c; }
+        .pwd-strength.lv-2 .seg:nth-child(-n+2) { background: #f39c12; }
+        .pwd-strength.lv-3 .seg { background: #2ecc71; }
+        .pwd-strength-label {
+            font-size: 11px;
+            margin-top: 4px;
+            color: #9aa5b1;
+        }
+        .pwd-strength-label.lv-1 { color: #e74c3c; }
+        .pwd-strength-label.lv-2 { color: #f39c12; }
+        .pwd-strength-label.lv-3 { color: #2ecc71; }
+
+        /* 选项行 */
+        .form-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            font-size: 13px;
+        }
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: #666;
+            cursor: pointer;
+        }
+        .remember-me input[type="checkbox"] {
+            width: 14px;
+            height: 14px;
+            accent-color: #0a4db4;
+        }
+        .forgot-link {
+            color: #0a4db4;
+            text-decoration: none;
+            font-size: 13px;
+        }
+        .forgot-link:hover { text-decoration: underline; }
+
+        /* 提交按钮 */
+        .submit-btn {
+            width: 100%;
+            height: 48px;
+            background: linear-gradient(135deg, #0a4db4, #1e6fd9);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            letter-spacing: 2px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(10, 77, 180, 0.3);
+        }
+        .submit-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(10, 77, 180, 0.4);
+        }
+        .submit-btn:active { transform: translateY(0); }
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* 第三方登录 */
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 24px 0 18px;
+            color: #bbb;
+            font-size: 12px;
+        }
+        .divider::before,
+        .divider::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background: #e8ecf1;
+        }
+        .divider span { padding: 0 12px; }
+
+        .social-login {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        .social-btn {
+            width: 44px; height: 44px;
+            border-radius: 50%;
+            border: 1px solid #e0e6ed;
+            background: #fff;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            transition: all 0.3s;
+        }
+        .social-btn:hover {
+            border-color: #0a4db4;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(10,77,180,0.15);
+        }
+
+        /* 返回链接 */
+        .back-link {
+            position: absolute;
+            top: 20px; left: 20px;
+            color: #999;
+            text-decoration: none;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            transition: color 0.3s;
+        }
+        .back-link:hover { color: #0a4db4; }
+
+        /* 响应式 */
+        @media (max-width: 768px) {
+            .auth-container {
+                flex-direction: column;
+                width: 95%;
+                min-height: auto;
+            }
+            .brand-panel {
+                width: 100%;
+                padding: 40px 30px;
+                min-height: 200px;
+            }
+            .form-panel { padding: 40px 30px; }
+            .brand-features { display: none; }
+        }
+
+        /* Toast提示 */
+        .toast {
+            position: fixed;
+            top: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-100px);
+            padding: 14px 28px;
+            border-radius: 8px;
+            color: #fff;
+            font-size: 14px;
+            font-weight: 500;
+            z-index: 9999;
+            transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        .toast.show { transform: translateX(-50%) translateY(0); }
+        .toast.success { background: #2ecc71; }
+        .toast.error { background: #e74c3c; }
+        .toast.info { background: #0a4db4; }
+    </style>
+</head>
+<body>
+    <div class="bg-decoration"></div>
+
+    <!-- Toast提示容器 -->
+    <div class="toast" id="toast"></div>
+
+    <div class="auth-container">
+        <!-- 左侧品牌面板 -->
+        <div class="brand-panel">
+            <div class="brand-content">
+                <div class="brand-logo" onclick="location.href='../../neep.html'" cursor:pointer;">
+                    <img src="../../img/JSlogo-beb0d75f.png" alt="Logo">
+                    <div class="brand-name">黑科技<span class="highlight">商城</span></div>
+                </div>
+                <div class="brand-title">欢迎加入<br>黑科技商城</div>
+                <div class="brand-subtitle">
+                    一站式前沿科技产品与服务交易平台<br>
+                    连接买方与卖方，赋能科技创新
+                </div>
+                <ul class="brand-features">
+                    <li><span class="feature-icon">✓</span>十大产品服务分类</li>
+                    <li><span class="feature-icon">✓</span>ECEE认证企业入驻</li>
+                    <li><span class="feature-icon">✓</span>安全可靠的交易保障</li>
+                    <li><span class="feature-icon">✓</span>7×24小时专业服务</li>
+                </ul>
+            </div>
+            <div class="brand-footer">© 2026 黑科技商城 Hi-Tech Bazaar</div>
+        </div>
+
+        <!-- 右侧表单面板 -->
+        <div class="form-panel">
+            <a class="back-link" href="../../neep.html">← 返回首页</a>
+
+            <!-- Tab切换 -->
+            <div class="tab-switcher">
+                <button class="tab-btn active" data-tab="login" onclick="switchTab('login')">登 录</button>
+                <button class="tab-btn" data-tab="register" onclick="switchTab('register')">注 册</button>
+            </div>
+
+            <!-- 登录表单 -->
+            <div class="form-wrapper">
+                <div class="form-box active" id="loginBox">
+                    <div class="form-title">账号登录</div>
+                    <div class="form-desc">欢迎回到黑科技商城</div>
+
+                    <form id="loginForm" onsubmit="handleLogin(event)">
+                        <div class="form-group">
+                            <label>用户名</label>
+                            <div class="input-wrapper">
+                                <span class="input-icon">👤</span>
+                                <input type="text" id="loginUsername" placeholder="请输入用户名"
+                                    pattern="^\S+$" required>
+                            </div>
+                            <div class="error-msg" id="loginUsernameError">用户名不能为空且不能包含空格</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>密码</label>
+                            <div class="input-wrapper">
+                                <span class="input-icon">🔒</span>
+                                <input type="password" id="loginPassword" placeholder="请输入密码(5-16位)"
+                                    pattern="^\S{5,16}$" required>
+                                <span class="toggle-pwd" onclick="togglePassword('loginPassword', this)">👁</span>
+                            </div>
+                            <div class="error-msg" id="loginPasswordError">密码必须为5-16位非空字符</div>
+                        </div>
+
+                        <div class="form-options">
+                            <label class="remember-me">
+                                <input type="checkbox" id="rememberMe"> 记住我
+                            </label>
+                            <a href="#" class="forgot-link" onclick="showToast('请联系管理员重置密码', 'info');return false;">忘记密码？</a>
+                        </div>
+
+                        <button type="submit" class="submit-btn" id="loginBtn">登 录</button>
+
+                        <div class="divider"><span>其他登录方式</span></div>
+                        <div class="social-login">
+                            <button type="button" class="social-btn" title="微信登录" onclick="showToast('微信登录即将开放', 'info')">💬</button>
+                            <button type="button" class="social-btn" title="支付宝登录" onclick="showToast('支付宝登录即将开放', 'info')">💰</button>
+                            <button type="button" class="social-btn" title="钉钉登录" onclick="showToast('钉钉登录即将开放', 'info')">📌</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- 注册表单 -->
+                <div class="form-box" id="registerBox">
+                    <div class="form-title">创建账号</div>
+                    <div class="form-desc">加入黑科技商城，开启您的科技之旅</div>
+
+                    <form id="registerForm" onsubmit="handleRegister(event)">
+                        <div class="form-group">
+                            <label>选择角色</label>
+                            <div class="role-selector">
+                                <div class="role-card selected" data-role="2" onclick="selectRole(this)">
+                                    <div class="role-icon">📦</div>
+                                    <div class="role-name">卖方</div>
+                                    <div class="role-desc">发布产品、管理店铺</div>
+                                </div>
+                                <div class="role-card" data-role="3" onclick="selectRole(this)">
+                                    <div class="role-icon">🛒</div>
+                                    <div class="role-name">买方</div>
+                                    <div class="role-desc">购买产品、发布需求</div>
+                                </div>
+                                <!-- <div class="role-card" data-role="1" onclick="selectRole(this)">
+                                    <div class="role-icon">⚙️</div>
+                                    <div class="role-name">管理员</div>
+                                    <div class="role-desc">平台管理(需审核)</div>
+                                </div> -->
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>用户名</label>
+                            <div class="input-wrapper" id="regUsernameWrap">
+                                <span class="input-icon">👤</span>
+                                <input type="text" id="regUsername" placeholder="设置用户名"
+                                    pattern="^\S+$" required autocomplete="username">
+                            </div>
+                            <div class="rules-hint">
+                                <span class="rule" id="rule-no-space">不含空格</span>
+                                <span class="rule" id="rule-unique">未被占用</span>
+                            </div>
+                            <div class="error-msg" id="regUsernameError">用户名不能为空且不能包含空格</div>
+                            <div class="success-msg" id="regUsernameOk">用户名可用</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>密码</label>
+                            <div class="input-wrapper" id="regPasswordWrap">
+                                <span class="input-icon">🔒</span>
+                                <input type="password" id="regPassword" placeholder="设置密码(5-16位)"
+                                    pattern="^\S{5,16}$" required autocomplete="new-password">
+                                <span class="toggle-pwd" onclick="togglePassword('regPassword', this)">👁</span>
+                            </div>
+                            <div class="pwd-strength" id="pwdStrength">
+                                <div class="seg"></div>
+                                <div class="seg"></div>
+                                <div class="seg"></div>
+                            </div>
+                            <div class="pwd-strength-label" id="pwdStrengthLabel">密码强度</div>
+                            <div class="error-msg" id="regPasswordError">密码必须为5-16位非空字符</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>确认密码</label>
+                            <div class="input-wrapper" id="regConfirmWrap">
+                                <span class="input-icon">🔐</span>
+                                <input type="password" id="regConfirmPassword" placeholder="再次输入密码"
+                                    pattern="^\S{5,16}$" required autocomplete="new-password">
+                                <span class="toggle-pwd" onclick="togglePassword('regConfirmPassword', this)">👁</span>
+                            </div>
+                            <div class="error-msg" id="regConfirmError">两次输入的密码不一致</div>
+                            <div class="success-msg" id="regConfirmOk">两次密码一致</div>
+                        </div>
+
+                        <button type="submit" class="submit-btn" id="registerBtn">立即注册</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 记录当前选中的角色
+        let selectedRoleId = 2;
+
+        // API基础路径(从config1.js获取)
+        const API_BASE = (typeof SERVER_BASE_URL !== 'undefined') ? SERVER_BASE_URL : 'http://localhost:8080';
+
+        // Tab切换
+        function switchTab(tab) {
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.tab === tab);
+            });
+            document.querySelectorAll('.form-box').forEach(box => box.classList.remove('active'));
+            document.getElementById(tab + 'Box').classList.add('active');
+            clearErrors();
+        }
+
+        // 角色选择
+        function selectRole(el) {
+            document.querySelectorAll('.role-card').forEach(card => card.classList.remove('selected'));
+            el.classList.add('selected');
+            selectedRoleId = parseInt(el.dataset.role);
+        }
+
+        // 密码显示切换
+        function togglePassword(inputId, iconEl) {
+            const input = document.getElementById(inputId);
+            if (input.type === 'password') {
+                input.type = 'text';
+                iconEl.textContent = '🙈';
+            } else {
+                input.type = 'password';
+                iconEl.textContent = '👁';
+            }
+        }
+
+        // Toast提示
+        function showToast(message, type = 'info', duration = 2500) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.className = 'toast ' + type + ' show';
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, duration);
+        }
+
+        // 清除所有错误提示
+        function clearErrors() {
+            document.querySelectorAll('.error-msg').forEach(el => el.classList.remove('show'));
+            document.querySelectorAll('.success-msg').forEach(el => el.classList.remove('show'));
+        }
+
+        // 显示指定错误
+        function showError(id, show) {
+            document.getElementById(id).classList.toggle('show', show);
+        }
+
+        // 显示指定成功提示
+        function showOk(id, show) {
+            const el = document.getElementById(id);
+            if (el) el.classList.toggle('show', show);
+        }
+
+        // 设置输入框校验状态
+        function setFieldState(wrapId, state) {
+            const wrap = document.getElementById(wrapId);
+            if (!wrap) return;
+            wrap.classList.remove('valid', 'invalid');
+            if (state === 'valid') wrap.classList.add('valid');
+            else if (state === 'invalid') wrap.classList.add('invalid');
+        }
+
+        // ============ 注册实时校验 ============
+        const USERNAME_RE = /^\S+$/;
+        const PASSWORD_RE = /^\S{5,16}$/;
+        let usernameCheckTimer = null;
+        let usernameAvailable = null; // null=未校验 true=可用 false=已占用
+
+        // 用户名校验(防抖)
+        function onRegUsernameInput() {
+            const val = document.getElementById('regUsername').value.trim();
+            const ruleNoSpace = document.getElementById('rule-no-space');
+            const ruleUnique = document.getElementById('rule-unique');
+            setFieldState('regUsernameWrap', '');
+            showOk('regUsernameOk', false);
+            showError('regUsernameError', false);
+            usernameAvailable = null;
+
+            // 规则: 不含空格且非空
+            const noSpaceOk = !/\s/.test(val) && val.length > 0;
+            ruleNoSpace.classList.toggle('passed', noSpaceOk);
+
+            if (!val) {
+                ruleUnique.classList.remove('passed');
+                return;
+            }
+            // 格式不合法,不发请求
+            if (!USERNAME_RE.test(val)) {
+                ruleUnique.classList.remove('passed');
+                setFieldState('regUsernameWrap', 'invalid');
+                showError('regUsernameError', true);
+                return;
+            }
+            // 防抖查重
+            clearTimeout(usernameCheckTimer);
+            usernameCheckTimer = setTimeout(async () => {
+                try {
+                    const resp = await fetch(`${API_BASE}/user/check-username?username=${encodeURIComponent(val)}`);
+                    const result = await resp.json();
+                    if (result.code === 0 && result.data && result.data.available) {
+                        ruleUnique.classList.add('passed');
+                        usernameAvailable = true;
+                        setFieldState('regUsernameWrap', 'valid');
+                        showOk('regUsernameOk', true);
+                    } else {
+                        ruleUnique.classList.remove('passed');
+                        usernameAvailable = false;
+                        setFieldState('regUsernameWrap', 'invalid');
+                        const errEl = document.getElementById('regUsernameError');
+                        errEl.textContent = '该用户名已被占用';
+                        showError('regUsernameError', true);
+                    }
+                } catch (e) {
+                    ruleUnique.classList.remove('passed');
+                }
+            }, 400);
+        }
+
+        // ============ 密码强度 ============
+        function onRegPasswordInput() {
+            const val = document.getElementById('regPassword').value;
+            const strengthBar = document.getElementById('pwdStrength');
+            const label = document.getElementById('pwdStrengthLabel');
+            showError('regPasswordError', false);
+            setFieldState('regPasswordWrap', '');
+
+            if (!val) {
+                strengthBar.className = 'pwd-strength';
+                label.textContent = '密码强度';
+                label.className = 'pwd-strength-label';
+                // 同步触发确认密码校验
+                onRegConfirmInput();
+                return;
+            }
+            if (!/^\S{5,16}$/.test(val)) {
+                strengthBar.className = 'pwd-strength';
+                label.textContent = '密码需5-16位且不含空格';
+                label.className = 'pwd-strength-label lv-1';
+                setFieldState('regPasswordWrap', 'invalid');
+                showError('regPasswordError', true);
+                onRegConfirmInput();
+                return;
+            }
+            setFieldState('regPasswordWrap', 'valid');
+            // 强度计算: 字母+1 数字+1 符号+1
+            let lv = 0;
+            if (/[a-zA-Z]/.test(val)) lv++;
+            if (/\d/.test(val)) lv++;
+            if (/[^a-zA-Z0-9]/.test(val)) lv++;
+            if (lv < 1) lv = 1;
+            const labels = ['', '弱', '中', '强'];
+            strengthBar.className = 'pwd-strength lv-' + lv;
+            label.textContent = '强度: ' + labels[lv];
+            label.className = 'pwd-strength-label lv-' + lv;
+            // 同步触发确认密码校验
+            onRegConfirmInput();
+        }
+
+        // ============ 确认密码 ============
+        function onRegConfirmInput() {
+            const pwd = document.getElementById('regPassword').value;
+            const confirm = document.getElementById('regConfirmPassword').value;
+            showError('regConfirmError', false);
+            showOk('regConfirmOk', false);
+            setFieldState('regConfirmWrap', '');
+            if (!confirm) return;
+            if (pwd !== confirm) {
+                setFieldState('regConfirmWrap', 'invalid');
+                showError('regConfirmError', true);
+            } else if (PASSWORD_RE.test(pwd)) {
+                setFieldState('regConfirmWrap', 'valid');
+                showOk('regConfirmOk', true);
+            }
+        }
+
+        // 登录处理
+        async function handleLogin(e) {
+            e.preventDefault();
+            clearErrors();
+
+            const username = document.getElementById('loginUsername').value.trim();
+            const password = document.getElementById('loginPassword').value.trim();
+
+            // 前端校验
+            if (!/^\S+$/.test(username)) {
+                showError('loginUsernameError', true);
+                return;
+            }
+            if (!/^\S{5,16}$/.test(password)) {
+                showError('loginPasswordError', true);
+                return;
+            }
+
+            const btn = document.getElementById('loginBtn');
+            btn.disabled = true;
+            btn.textContent = '登录中...';
+
+            try {
+                const response = await fetch(`${API_BASE}/user/login?username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' }
+                });
+                const result = await response.json();
+
+                if (result.code === 0) {
+                    // 登录成功,保存token和用户信息
+                    const token = result.data;
+                    localStorage.setItem('token', token);
+                    localStorage.setItem('username', username);
+
+                    // 解析JWT获取roleId
+                    const roleId = parseJwtRoleId(token);
+                    if (roleId) {
+                        localStorage.setItem('roleId', roleId);
+                    }
+
+                    showToast('登录成功！正在跳转...', 'success');
+                    setTimeout(() => {
+                        const params = new URLSearchParams(window.location.search);
+                        const redirect = params.get('redirect');
+                        if (redirect && /^[\w./-]+\.html(\?[\w=&-]*)?$/.test(redirect)) {
+                            window.location.href = '../../' + redirect.replace(/^(\.\/)+/, '');
+                        } else {
+                            window.location.href = '../../neep.html'                   }
+                    }, 1000);
+                } else {
+                    showToast(result.msg || '登录失败', 'error');
+                }
+            } catch (err) {
+                console.error('登录错误:', err);
+                showToast('网络错误,请稍后重试', 'error');
+            } finally {
+                btn.disabled = false;
+                btn.textContent = '登 录';
+            }
+        }
+
+        // 注册处理
+        async function handleRegister(e) {
+            e.preventDefault();
+            clearErrors();
+
+            const username = document.getElementById('regUsername').value.trim();
+            const password = document.getElementById('regPassword').value.trim();
+            const confirmPassword = document.getElementById('regConfirmPassword').value.trim();
+
+            // 前端校验
+            let hasError = false;
+            if (!/^\S+$/.test(username)) {
+                showError('regUsernameError', true);
+                setFieldState('regUsernameWrap', 'invalid');
+                hasError = true;
+            }
+            if (!/^\S{5,16}$/.test(password)) {
+                showError('regPasswordError', true);
+                setFieldState('regPasswordWrap', 'invalid');
+                hasError = true;
+            }
+            if (password !== confirmPassword) {
+                showError('regConfirmError', true);
+                setFieldState('regConfirmWrap', 'invalid');
+                hasError = true;
+            }
+            // 用户名已被实时校验标记为占用
+            if (usernameAvailable === false) {
+                const errEl = document.getElementById('regUsernameError');
+                errEl.textContent = '该用户名已被占用';
+                showError('regUsernameError', true);
+                setFieldState('regUsernameWrap', 'invalid');
+                hasError = true;
+            }
+            if (hasError) return;
+
+            // 角色必须选择(默认已选卖方,防御性校验)
+            if (selectedRoleId !== 2 && selectedRoleId !== 3) {
+                showToast('请选择注册角色', 'error');
+                return;
+            }
+
+            const btn = document.getElementById('registerBtn');
+            btn.disabled = true;
+            btn.textContent = '注册中...';
+
+            try {
+                const response = await fetch(`${API_BASE}/user/register?username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}&roleId=${selectedRoleId}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' }
+                });
+                const result = await response.json();
+
+                if (result.code === 0) {
+                    showToast('注册成功！请登录', 'success');
+                    // 注册成功后重置查重状态
+                    usernameAvailable = null;
+                    setTimeout(() => {
+                        // 自动切换到登录Tab，填充用户名
+                        switchTab('login');
+                        document.getElementById('loginUsername').value = username;
+                        document.getElementById('loginPassword').focus();
+                    }, 1000);
+                } else {
+                    showToast(result.message || '注册失败', 'error');
+                    // 后端返回"用户名已被占用"时,同步前端状态
+                    if (result.message && result.message.indexOf('占用') > -1) {
+                        usernameAvailable = false;
+                        setFieldState('regUsernameWrap', 'invalid');
+                        const errEl = document.getElementById('regUsernameError');
+                        errEl.textContent = '该用户名已被占用';
+                        showError('regUsernameError', true);
+                    }
+                }
+            } catch (err) {
+                console.error('注册错误:', err);
+                showToast('网络错误,请稍后重试', 'error');
+            } finally {
+                btn.disabled = false;
+                btn.textContent = '立即注册';
+            }
+        }
+
+        // 解析JWT获取roleId
+        function parseJwtRoleId(token) {
+            try {
+                const parts = token.split('.');
+                if (parts.length === 3) {
+                    // Base64解码payload
+                    const payload = JSON.parse(atob(parts[1].replace(/-/g, '+').replace(/_/g, '/')));
+                    const claims = payload.claims || payload;
+                    return claims.roleId != null ? String(claims.roleId) : null;
+                }
+            } catch (e) {
+                console.error('JWT解析失败:', e);
+            }
+            return null;
+        }
+
+        // 页面加载时检查是否已登录
+        window.addEventListener('DOMContentLoaded', () => {
+            // 检查URL参数,自动切换Tab
+            const params = new URLSearchParams(window.location.search);
+            const tab = params.get('tab');
+            if (tab === 'register') {
+                switchTab('register');
+            }
+
+            const token = localStorage.getItem('token');
+            if (token) {
+                // // 已登录,询问是否直接跳转
+                // if (confirm('您已登录,是否直接进入商城?')) {
+                //     window.location.href = '../../neep.html'           // }
+            }
+        });
+
+        // 输入时清除对应错误(登录表单)
+        ['loginUsername', 'loginPassword'].forEach(id => {
+            const input = document.getElementById(id);
+            if (input) {
+                input.addEventListener('input', () => {
+                    const errorId = id + 'Error';
+                    if (document.getElementById(errorId)) {
+                        document.getElementById(errorId).classList.remove('show');
+                    }
+                });
+            }
+        });
+
+        // 注册表单: 绑定实时校验
+        document.getElementById('regUsername').addEventListener('input', onRegUsernameInput);
+        document.getElementById('regPassword').addEventListener('input', onRegPasswordInput);
+        document.getElementById('regConfirmPassword').addEventListener('input', onRegConfirmInput);
+    </script>
+</body>
+</html>

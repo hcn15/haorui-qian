@@ -10,7 +10,7 @@
  *
  * 自动行为：
  *   1) 注入 .cart-badge 角标样式
- *   2) 所有 .cart-btn 自动：href → ./cart.html，追加数量角标
+ *   2) 所有 .cart-btn 自动：href → ./pages/user/cart.html，追加数量角标
  *   3) 暴露 window.addToCartFromPage，供产品详情页 handleAddCart 调用
  *   4) 购物车页调用 HRCart.renderCartPage() 渲染
  *
@@ -21,7 +21,68 @@
 
     var STORAGE_KEY = 'hr_cart_items';
     var SYNCED_FLAG = 'hr_cart_synced'; // 标记本地是否已与后端同步
-    var CART_PAGE = './cart.html';
+
+    /* ---------- 动态计算购物车页面路径 ---------- */
+    function computeCartPage() {
+        try {
+            var path = window.location.pathname;
+            // Normalize: remove trailing filename
+            var dir = path.substring(0, path.lastIndexOf('/') + 1);
+            // Count directory depth relative to site root
+            // Pages at root: /neep.html -> '' (empty)
+            // Pages at pages/: /pages/user/cart.html -> 'pages/user/'
+            // We need to figure out the relative path from current page to pages/user/cart.html
+            
+            var parts = path.split('/');
+            // Find 'pages' segment index
+            var pagesIdx = -1;
+            for (var i = 0; i < parts.length; i++) {
+                if (parts[i] === 'pages') {
+                    pagesIdx = i;
+                    break;
+                }
+            }
+            
+            if (pagesIdx === -1) {
+                // Root level (e.g., /neep.html, /shangcheng.html)
+                return 'pages/user/cart.html';
+            }
+            
+            // Check if current page is in pages/user/
+            if (parts[pagesIdx + 1] === 'user') {
+                return 'cart.html';
+            }
+            
+            // Any other pages/ subdirectory (about, info, product-detail, etc.)
+            return '../user/cart.html';
+        } catch (e) {
+            return 'pages/user/cart.html';
+        }
+    }
+
+    var CART_PAGE = computeCartPage();
+
+    /* ---------- 根路径辅助：返回从当前页面到站点根的相对路径 ---------- */
+    function getRootPrefix() {
+        try {
+            var path = window.location.pathname;
+            var parts = path.split('/');
+            var pagesIdx = -1;
+            for (var i = 0; i < parts.length; i++) {
+                if (parts[i] === 'pages') { pagesIdx = i; break; }
+            }
+            if (pagesIdx === -1) return '';
+            var depth = parts.length - 1 - pagesIdx;
+            var prefix = '';
+            for (var j = 0; j < depth; j++) prefix += '../';
+            return prefix;
+        } catch (e) { return ''; }
+    }
+
+    var ROOT = getRootPrefix();
+
+    /* 基于根路径构造目标页面路径 */
+    function rootPath(rel) { return ROOT + rel; }
 
     var API_BASE = (typeof SERVER_BASE_URL !== 'undefined') ? SERVER_BASE_URL : '';
     var SYNCING = false; // 防止同步过程中触发后端写回
@@ -384,7 +445,7 @@
             image: image,
             spec: spec,
             qty: qty,
-            url: location.pathname.split('/').pop()
+            url: location.pathname.replace(/^\//, '') + location.search
         };
     }
 
@@ -512,7 +573,7 @@
                 '<div class="cart-empty">' +
                 '<div class="empty-icon">🛒</div>' +
                 '<p class="empty-text">购物车还是空的，快去挑选心仪的产品吧～</p>' +
-                '<a class="btn-go-shop" href="./neep.html">去逛逛</a>' +
+                '<a class="btn-go-shop" href="' + rootPath('neep.html') + '">去逛逛</a>' +
                 '</div>';
             if (totalEl) totalEl.textContent = '¥0';
             if (countEl) countEl.textContent = '0';
@@ -566,7 +627,7 @@
             // 生成商品详情链接
             var productLink = '';
             if (it.url) {
-                productLink = '<a class="link" href="./' + escapeHtml(it.url) + '">查看商品 <span class="arrow">→</span></a>';
+                productLink = '<a class="link" href="' + rootPath(it.url) + '">查看商品 <span class="arrow">→</span></a>';
             }
 
             // 生成规格标签
@@ -792,7 +853,8 @@
         if (!cart.length) return;
         if (!isLoggedIn()) {
             if (confirm('结算需要先登录，是否前往登录？')) {
-                location.href = './login.html';
+                var curPath = location.pathname.replace(/^\//, '') + location.search;
+                location.href = rootPath('pages/user/login.html') + '?redirect=' + encodeURIComponent(curPath);
             }
             return;
         }
@@ -999,7 +1061,6 @@
         var address = (document.getElementById('hrCoAddress').value || '').trim();
         var remark = (document.getElementById('hrCoRemark').value || '').trim();
 
-        //校验
         var valid = true;
         var fName = document.getElementById('hrField-name');
         var fPhone = document.getElementById('hrField-phone');
@@ -1009,7 +1070,6 @@
         fAddr.classList.remove('invalid');
 
         if (!name) { fName.classList.add('invalid'); valid = false; }
-        //电话：手机号或座机（支持区号-号码）
         if (!phone || !/^[\d\-+ ]{6,20}$/.test(phone)) { fPhone.classList.add('invalid'); valid = false; }
         if (!address) { fAddr.classList.add('invalid'); valid = false; }
         if (!valid) return;
@@ -1036,40 +1096,285 @@
         }).then(function (res) {
             if (res.code === 0 && res.data) {
                 closeCheckoutModal();
-                //后端已清空购物车，同步清空本地
                 writeLocal([]);
                 try { localStorage.setItem(SYNCED_FLAG, '1'); } catch (e) { }
                 updateCartBadges();
                 renderCartPage();
 
-                var orderNo = res.data.orderNo || '';
-                var qty = res.data.totalQuantity || 0;
-                var total = parseFloat(res.data.totalAmount) || 0;
+                var order = res.data;
+                var orderNo = order.orderNo || '';
+                var qty = order.totalQuantity || 0;
+                var total = parseFloat(order.totalAmount) || 0;
                 var totalText = total ? ('¥' + total.toLocaleString()) : '¥询价';
-                if (confirm('订单提交成功！\n订单号：' + orderNo + '\n共 ' + qty + ' 件商品，合计：' + totalText + '\n\n是否查看我的订单？')) {
-                    location.href = './order.html';
+
+                /* ---------- 分支判断：有价商品走支付流程，询价商品直接下单 ---------- */
+                if (total > 0) {
+                    // 有价商品：弹出支付窗口，支持微信/支付宝支付
+                    showPaymentModal(order);
+                } else {
+                    // 询价商品（totalAmount=0）：直接提交订单，不走支付
+                    if (confirm('订单提交成功！\n订单号：' + orderNo + '\n共 ' + qty + ' 件商品，合计：' + totalText + '\n\n您的订单为询价单，客服将尽快与您联系。\n是否查看我的订单？')) {
+                        location.href = rootPath('pages/user/order.html');
+                    }
                 }
             } else {
-                if (typeof showToast === 'function') {
-                    showToast(res.message || res.msg || '订单提交失败', 'error');
-                } else {
-                    alert(res.message || res.msg || '订单提交失败');
-                }
+                showToastMsg(res.message || res.msg || '订单提交失败', 'error');
             }
         }).catch(function (err) {
-            if (typeof showToast === 'function') {
-                showToast('订单提交失败：' + err.message, 'error');
-            } else {
-                alert('订单提交失败：' + err.message);
-            }
+            showToastMsg('订单提交失败：' + err.message, 'error');
         }).finally(function () {
             if (btn) { btn.disabled = false; btn.textContent = '确认提交'; }
         });
     }
 
+    function showToastMsg(msg, type) {
+        if (typeof showToast === 'function') {
+            showToast(msg, type || 'error');
+        } else {
+            alert(msg);
+        }
+    }
+
+    /* ---------- 支付弹窗：有价商品结算后弹出，支持微信/支付宝扫码支付 ---------- */
+    var _paymentOrder = null;   // 当前订单对象
+    var _paymentTimer = null;   // 支付倒计时定时器
+    var _paymentHandled = false; // 防止支付成功被重复处理（轮询+mock-pay可能同时触发）
+
+    /**
+     * 显示支付弹窗
+     * 调用时机：订单创建成功后，若 totalAmount > 0（有价商品）
+     * 询价商品（totalAmount = 0）不调用此函数
+     */
+    function showPaymentModal(order) {
+        _paymentOrder = order;
+        _paymentHandled = false; // 重置防止重复处理的标志
+        var total = parseFloat(order.totalAmount) || 0;
+        var html =
+            '<div id="hrPaymentModal" style="position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:99999;display:flex;align-items:center;justify-content:center;">' +
+            '<div style="background:#fff;border-radius:14px;width:420px;max-width:92vw;max-height:90vh;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.3);">' +
+            '<div style="background:linear-gradient(135deg,#0a4db4,#1e88e5);color:#fff;padding:20px 24px;display:flex;justify-content:space-between;align-items:center;">' +
+            '<div><div style="font-size:18px;font-weight:700;">订单支付</div>' +
+            '<div style="font-size:13px;opacity:.85;margin-top:4px;">订单号：' + order.orderNo + ' | 共 ' + order.totalQuantity + ' 件</div></div>' +
+            '<button onclick="document.getElementById(\'hrPaymentModal\').remove()" style="background:rgba(255,255,255,.2);border:none;color:#fff;width:30px;height:30px;border-radius:50%;cursor:pointer;font-size:18px;line-height:1;">×</button>' +
+            '</div>' +
+            '<div style="padding:24px;overflow-y:auto;">' +
+            '<div style="text-align:center;margin-bottom:20px;">' +
+            '<div style="font-size:13px;color:#888;">应付金额</div>' +
+            '<div style="font-size:36px;font-weight:700;color:#ff4d4f;margin:8px 0;">¥' + total.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2}) + '</div>' +
+            '</div>' +
+            '<div style="border:1px solid #eee;border-radius:10px;padding:16px;margin-bottom:16px;">' +
+            '<div style="font-size:14px;color:#333;font-weight:600;margin-bottom:12px;">选择支付方式</div>' +
+            '<div style="display:flex;gap:12px;">' +
+            '<div id="payTypeWechat" onclick="selectPayType(\'wechat\')" style="flex:1;border:2px solid #07c160;border-radius:8px;padding:14px;text-align:center;cursor:pointer;background:#f0fdf4;transition:all .2s;">' +
+            '<div style="font-size:28px;">💬</div>' +
+            '<div style="font-size:14px;color:#07c160;font-weight:600;margin-top:6px;">微信支付</div>' +
+            '</div>' +
+            '<div id="payTypeAlipay" onclick="selectPayType(\'alipay\')" style="flex:1;border:2px solid #e8e8e8;border-radius:8px;padding:14px;text-align:center;cursor:pointer;transition:all .2s;">' +
+            '<div style="font-size:28px;">💰</div>' +
+            '<div style="font-size:14px;color:#666;margin-top:6px;">支付宝</div>' +
+            '</div>' +
+            '</div>' +
+            '</div>' +
+            '<div id="payQrArea" style="display:none;text-align:center;">' +
+            '<div id="payQrCode" style="width:200px;height:200px;margin:0 auto;border:1px solid #eee;border-radius:10px;display:flex;align-items:center;justify-content:center;background:#fafafa;position:relative;overflow:hidden;">' +
+            '<div style="position:absolute;top:0;left:0;right:0;bottom:0;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#999;">' +
+            '<div style="font-size:48px;">📱</div>' +
+            '<div style="font-size:13px;margin-top:8px;">请选择支付方式</div>' +
+            '</div>' +
+            '</div>' +
+            '<div style="font-size:13px;color:#888;margin-top:10px;">扫码支付 <span id="payCountdown"></span></div>' +
+            '<button id="payMockBtn" onclick="mockPaySuccess()" style="margin-top:12px;background:#0a4db4;color:#fff;border:none;padding:8px 24px;border-radius:20px;cursor:pointer;font-size:13px;">模拟扫码成功</button>' +
+            '</div>' +
+            '</div>' +
+            '<div style="border-top:1px solid #f0f0f0;padding:16px 24px;display:flex;gap:12px;">' +
+            '<button onclick="cancelPayment()" style="flex:1;padding:12px;border:1px solid #ddd;background:#fff;border-radius:8px;cursor:pointer;font-size:14px;color:#666;">取消支付</button>' +
+            '<button onclick="viewOrdersFromPayment()" style="flex:1;padding:12px;border:none;background:#0a4db4;color:#fff;border-radius:8px;cursor:pointer;font-size:14px;font-weight:600;">查看订单</button>' +
+            '</div>' +
+            '</div>';
+        document.body.insertAdjacentHTML('beforeend', html);
+        selectPayType('wechat');
+    }
+
+    /** 切换支付方式（wechat/alipay），自动创建支付记录并显示二维码 */
+    window.selectPayType = function (type) {
+        var wechat = document.getElementById('payTypeWechat');
+        var alipay = document.getElementById('payTypeAlipay');
+        if (!wechat || !alipay) return;
+
+        if (type === 'wechat') {
+            wechat.style.borderColor = '#07c160';
+            wechat.style.background = '#f0fdf4';
+            wechat.querySelector('div:last-child').style.color = '#07c160';
+            alipay.style.borderColor = '#e8e8e8';
+            alipay.style.background = '#fff';
+            alipay.querySelector('div:last-child').style.color = '#666';
+        } else {
+            alipay.style.borderColor = '#1677ff';
+            alipay.style.background = '#e6f4ff';
+            alipay.querySelector('div:last-child').style.color = '#1677ff';
+            wechat.style.borderColor = '#e8e8e8';
+            wechat.style.background = '#fff';
+            wechat.querySelector('div:last-child').style.color = '#666';
+        }
+
+        if (_paymentOrder) {
+            createPaymentRecord(_paymentOrder.id, type);
+        }
+    };
+
+    /** 调用后端创建支付记录，获取二维码信息 */
+    function createPaymentRecord(orderId, payType) {
+        fetch(apiUrl('').replace('/cart', '/payment/create'), {
+            method: 'POST',
+            headers: authHeaders(),
+            body: JSON.stringify({ orderId: orderId, payType: payType })
+        }).then(function (resp) { return resp.json(); })
+        .then(function (res) {
+            if (res.code === 0 && res.data) {
+                showQrCode(res.data);
+                startPaymentPoll(res.data.paymentNo);
+            } else {
+                showToastMsg(res.message || '创建支付失败', 'error');
+            }
+        }).catch(function (err) {
+            showToastMsg('创建支付失败：' + err.message, 'error');
+        });
+    }
+
+    function showQrCode(payment) {
+        var qrArea = document.getElementById('payQrArea');
+        var qrCode = document.getElementById('payQrCode');
+        if (!qrArea || !qrCode) return;
+        qrArea.style.display = 'block';
+
+        /* 优先使用后端返回的真实二维码URL（微信code_url / 支付宝qr_code） */
+        var qrUrl = payment.qrCodeUrl || payment.qr_code_url || '';
+        if (qrUrl && (qrUrl.indexOf('weixin://') === 0 || qrUrl.indexOf('alipay://') === 0)) {
+            // 真实支付返回的是协议链接，用qrserver生成可扫描的二维码图片
+            var qrImg = 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&margin=0&data=' + encodeURIComponent(qrUrl);
+            qrCode.innerHTML = '<img src="' + qrImg + '" style="width:100%;height:100%;object-fit:contain;" alt="支付二维码" onerror="this.style.display=\'none\';this.parentNode.innerHTML=\'<div style=\\\'color:#999;>二维码加载失败，请使用模拟扫码</div>\'">';
+        } else if (qrUrl && qrUrl.indexOf('MOCK_') >= 0) {
+            // 未配置真实支付，显示模拟二维码
+            var mockPayInfo = '【模拟支付】\n支付单号:' + payment.paymentNo + '\n订单号:' + payment.orderNo + '\n金额:¥' +
+                parseFloat(payment.amount).toFixed(2) + '\n\n请点击"模拟扫码成功"按钮';
+            var mockImg = 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&margin=0&data=' + encodeURIComponent(mockPayInfo);
+            qrCode.innerHTML = '<img src="' + mockImg + '" style="width:100%;height:100%;object-fit:contain;opacity:.6;" alt="模拟二维码">';
+        } else {
+            qrCode.innerHTML = '<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;color:#999;"><div style="font-size:48px;">📱</div><div style="font-size:13px;margin-top:8px;">二维码加载失败</div></div>';
+        }
+        qrCode.style.background = '#fff';
+
+        _paymentOrder._currentPayment = payment;
+    }
+
+    /** 启动支付倒计时（180秒过期）+ 轮询支付状态 */
+    function startPaymentPoll(paymentNo) {
+        if (_paymentTimer) clearInterval(_paymentTimer);
+        var countdown = 180;
+        var cdEl = document.getElementById('payCountdown');
+
+        /* 轮询支付状态：每3秒查询一次后端 */
+        var statusPollTimer = setInterval(function () {
+            if (!_paymentOrder || !_paymentOrder.id) {
+                clearInterval(statusPollTimer);
+                return;
+            }
+            fetch(apiUrl('').replace('/cart', '/payment/status?orderId=') + _paymentOrder.id, {
+                headers: authHeaders()
+            }).then(function (r) { return r.json(); })
+            .then(function (res) {
+                if (res.code === 0 && res.data && res.data.status === 1) {
+                    clearInterval(statusPollTimer);
+                    handlePaymentSuccess(res.data);
+                }
+            }).catch(function () {});
+        }, 3000);
+
+        _paymentTimer = setInterval(function () {
+            countdown--;
+            if (cdEl) cdEl.textContent = '(' + Math.floor(countdown / 60) + ':' + String(countdown % 60).padStart(2, '0') + ' 后过期)';
+            if (countdown <= 0) {
+                clearInterval(_paymentTimer);
+                clearInterval(statusPollTimer);
+                var payEl = document.getElementById('payQrCode');
+                if (payEl) {
+                    payEl.innerHTML = '<div style="color:#999;font-size:14px;">二维码已过期<br>请重新选择支付方式</div>';
+                    payEl.style.background = '#f5f5f5';
+                }
+            }
+        }, 1000);
+    }
+
+    /** 处理支付成功（被轮询和mock-pay共同调用，通过_paymentHandled防止重复） */
+    function handlePaymentSuccess(payment) {
+        if (_paymentHandled) return;
+        _paymentHandled = true;
+        if (_paymentTimer) clearInterval(_paymentTimer);
+        var total = parseFloat(_paymentOrder.totalAmount) || 0;
+        alert('✅ 支付成功！\n订单号：' + _paymentOrder.orderNo + '\n支付金额：¥' + total.toLocaleString(undefined, {minimumFractionDigits: 2}));
+        document.getElementById('hrPaymentModal').remove();
+        setTimeout(function () {
+            location.href = rootPath('pages/user/order.html');
+        }, 500);
+    }
+
+    /** 模拟扫码支付成功（调用后端mock-pay接口，用于开发测试） */
+    window.mockPaySuccess = function () {
+        if (!_paymentOrder || !_paymentOrder._currentPayment) return;
+        fetch(apiUrl('').replace('/cart', '/payment/mock-pay'), {
+            method: 'POST',
+            headers: authHeaders(),
+            body: JSON.stringify({ paymentNo: _paymentOrder._currentPayment.paymentNo })
+        }).then(function (resp) { return resp.json(); })
+        .then(function (res) {
+            if (res.code === 0) {
+                handlePaymentSuccess(res.data);
+            } else {
+                showToastMsg(res.message || '支付失败', 'error');
+            }
+        }).catch(function (err) {
+            showToastMsg('支付失败：' + err.message, 'error');
+        });
+    };
+
+    /** 取消支付：关闭支付记录 + 取消订单 + 移除弹窗 */
+    window.cancelPayment = function () {
+        if (_paymentTimer) clearInterval(_paymentTimer);
+        var orderId = _paymentOrder ? _paymentOrder.id : null;
+        var paymentId = _paymentOrder && _paymentOrder._currentPayment ? _paymentOrder._currentPayment.id : null;
+
+        // 1. 关闭支付记录
+        if (paymentId) {
+            fetch(apiUrl('').replace('/cart', '/payment/close'), {
+                method: 'POST',
+                headers: authHeaders(),
+                body: JSON.stringify({ paymentId: paymentId })
+            }).catch(function () {});
+        }
+
+        // 2. 同时取消订单（防止"取消支付了怎么还有订单"）
+        if (orderId) {
+            fetch(apiUrl('').replace('/cart', '/order/') + orderId + '/cancel', {
+                method: 'PUT',
+                headers: authHeaders()
+            }).catch(function () {});
+        }
+
+        _paymentOrder = null;
+        _paymentHandled = false;
+        document.getElementById('hrPaymentModal').remove();
+    };
+
+    /** 跳转订单页（支付完成后或用户主动查看） */
+    window.viewOrdersFromPayment = function () {
+        if (_paymentTimer) clearInterval(_paymentTimer);
+        document.getElementById('hrPaymentModal').remove();
+        location.href = rootPath('pages/user/order.html');
+    };
+
     /* ---------- 跳转到订单页 ---------- */
     function viewOrders() {
-        location.href = './order.html';
+        location.href = rootPath('pages/user/order.html');
     }
 
     /* ---------- 注入角标 CSS（一次） ---------- */
@@ -1128,6 +1433,7 @@
     };
     window.HRCart = HRCart;
     window.addToCartFromPage = addToCartFromPage;
+    window.showConfirmDialog = showConfirmDialog;
 
     /* ---------- 数据版本号（用于迁移旧数据） ---------- */
     var CART_DATA_VERSION = 'v2';

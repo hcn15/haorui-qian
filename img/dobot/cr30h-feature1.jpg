@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="103px" height="116px" viewBox="0 0 103 116" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>编组 7</title>
+    <defs>
+        <filter x="-7.4%" y="-4.6%" width="114.7%" height="113.0%" filterUnits="objectBoundingBox" id="filter-1">
+            <feOffset dx="0" dy="2" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="2" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.5 0" type="matrix" in="shadowBlurOuter1" result="shadowMatrixOuter1"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+        </filter>
+        <polygon id="path-2" points="0 0 95 0 95 108 0 108"></polygon>
+        <polygon id="path-4" points="33.7852334 0 33.7852334 19.6769634 12.2130556 19.6769634 12.2130556 0 0 0 0 52 12.2130556 52 12.2130556 30.4036649 33.7852334 30.4036649 33.7852334 52 46 52 46 0"></polygon>
+    </defs>
+    <g id="Nove-工业版" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="PC" transform="translate(-357, -1261)">
+            <g id="编组-2" transform="translate(320, 1227)">
+                <g id="编组-7" transform="translate(41, 36)">
+                    <g id="编组" filter="url(#filter-1)">
+                        <g>
+                            <mask id="mask-3" fill="white">
+                                <use xlink:href="#path-2"></use>
+                            </mask>
+                            <g id="Clip-2"></g>
+                            <path d="M89.9182561,23.2273682 L52.5834469,1.37874298 C49.4397139,-0.459580993 45.5636921,-0.459580993 42.4216621,1.37874298 L5.08174387,23.2273682 C1.9397139,25.0673959 0,28.4731509 0,32.1515026 L0,75.8453455 C0,79.5305121 1.9397139,82.9294522 5.08174387,84.7728874 L42.4216621,106.618105 C45.5636921,108.46154 49.4397139,108.46154 52.5834469,106.618105 L89.9182561,84.7728874 C93.0653951,82.9294522 95,79.5305121 95,75.8453455 L95,32.1515026 C95,28.4731509 93.0653951,25.0673959 89.9182561,23.2273682" id="Fill-1" fill="#FEFEFE" mask="url(#mask-3)"></path>
+                        </g>
+                        <g transform="translate(24, 28)">
+                            <mask id="mask-5" fill="white">
+                                <use xlink:href="#path-4"></use>
+                            </mask>
+                            <g id="Clip-4"></g>
+                            <polygon id="Fill-3" mask="url(#mask-5)" points="33.7852334 0 33.7852334 19.6769634 12.2130556 19.6769634 12.2130556 0 0 0 0 52 12.2130556 52 12.2130556 30.4036649 33.7852334 30.4036649 33.7852334 52 46 52 46 0"></polygon>
+                        </g>
+                    </g>
+                    <text id="H" font-family="AlibabaPuHuiTi_2_75_SemiBold, Alibaba PuHuiTi 2.0" font-size="54" font-weight="500" fill="#0039C8">
+                        <tspan x="28.452" y="74">H</tspan>
+                    </text>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

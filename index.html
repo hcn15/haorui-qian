@@ -21,13 +21,13 @@
 	<!-- ico -->
 	<link rel="shortcut icon" href="">
 	<!-- 公共 -->
-	<link rel="stylesheet" type="text/css" href="./index_files/extend.css">
-	<link rel="stylesheet" type="text/css" href="./index_files/style.css">
-	<link rel="stylesheet" type="text/css" href="./index_files/g-style.css">
-	<link rel="stylesheet" type="text/css" href="./index_files/f-style.css">
-	<link rel="stylesheet" type="text/css" href="./components/nav.css">
-	<script src="./index_files/hm.js"></script>
-	<script src="./config1.js"></script>
+	<link rel="stylesheet" type="text/css" href="index_files/extend.css">
+	<link rel="stylesheet" type="text/css" href="index_files/style.css">
+	<link rel="stylesheet" type="text/css" href="index_files/g-style.css">
+	<link rel="stylesheet" type="text/css" href="index_files/f-style.css">
+	<link rel="stylesheet" type="text/css" href="components/nav.css">
+	<script src="index_files/hm.js"></script>
+	<script src="config1.js"></script>
 	<script>
 		window.__PRELOAD_DATA__ = {};
 		window.__PRELOAD_PROMISES__ = {};
@@ -52,20 +52,20 @@
 		preloadApi('/website/techScrolling', 'techScrolling');
 		preloadApi('/website/scene', 'scene');
 	</script>
-	<script src="./index_files/svg-inject.min.js" type="text/javascript"></script>
+	<script src="index_files/svg-inject.min.js" type="text/javascript"></script>
 	<style type="text/css">
 		img[onload^="SVGInject("] {
 			visibility: hidden;
 		}
 	</style>
 	<!-- 公共结束 -->
-	<link rel="stylesheet" href="./index_files/yang-product.css">
-	<link rel="stylesheet" href="./index_files/zstyle.css">
-	<link rel="stylesheet" href="./index_files/layui.css">
+	<link rel="stylesheet" href="index_files/yang-product.css">
+	<link rel="stylesheet" href="index_files/zstyle.css">
+	<link rel="stylesheet" href="index_files/layui.css">
 
-	<link rel="stylesheet" href="./index_files/share.min.css">
-	<link rel="stylesheet" type="text/css" href="./index_files/liMarquee.css">
-	<link rel="stylesheet" type="text/css" href="./index_files/mobile.css">
+	<link rel="stylesheet" href="index_files/share.min.css">
+	<link rel="stylesheet" type="text/css" href="index_files/liMarquee.css">
+	<link rel="stylesheet" type="text/css" href="index_files/mobile.css">
 
 	<meta name="baidu-site-verification" content="codeva-LR64T0uUwL" />
 	<script async src="https://hm.baidu.com/hm.js?67f4d50cbdf1f4f1092a7bc9b04b5066"></script>
@@ -625,9 +625,9 @@
 			}
 		}
 	</style>
-	<link id="layuicss-laydate" rel="stylesheet" href="./index_files/laydate.css" media="all">
-	<link id="layuicss-layer" rel="stylesheet" href="./index_files/layer.css" media="all">
-	<link id="layuicss-skincodecss" rel="stylesheet" href="./index_files/code.css" media="all">
+	<link id="layuicss-laydate" rel="stylesheet" href="index_files/laydate.css" media="all">
+	<link id="layuicss-layer" rel="stylesheet" href="index_files/layer.css" media="all">
+	<link id="layuicss-skincodecss" rel="stylesheet" href="index_files/code.css" media="all">
 	<style type="text/css">
 		.qa-sdk-wrapper {
 			position: fixed;
@@ -1075,7 +1075,7 @@
 	</style>
 
 	<div id="nav-container"></div>
-	<script src="./components/load-components.js"></script>
+	<script src="components/load-components.js"></script>
 	<script>
 		loadComponent('nav-container', './components/nav-zh.html', function () {
 			initNav();
@@ -1094,7 +1094,7 @@
 			<div class="h_b_box"
 				style="margin:0; padding:0; height:300px; overflow:hidden; position:relative; z-index:1;">
 				<div class="h_b_img" style="height:100%; width:100%; position:absolute; top:0; left:0; z-index:1;">
-					<img src="./img/微信图片_20260710144523_7_22.png" alt="首页banner"
+					<img src="img/微信图片_20260710144523_7_22.png" alt="首页banner"
 						style="height:100%; width:100%; object-fit:cover; display:block; border:0; outline:0;">
 				</div>
 
@@ -1196,7 +1196,7 @@
                 <p style="margin:0; font-size:14px; color:#666;">${news.summary || (news.content ? news.content.substring(0, 50) + '...' : '暂无摘要')}</p>
             </div>
         `;
-				li.onclick = () => location.href = `./news-detail.html?id=${news.id}`;
+				li.onclick = () => location.href = `./pages/news/news-detail.html?id=${news.id}`;
 				listEl.appendChild(li);
 			});
 
@@ -1222,7 +1222,7 @@
                 <h3 style="font-size:22px; color:#fff; margin:0; line-height:1.4;">${news.title}</h3>
             </div>
         `;
-				div.onclick = () => location.href = `./news-detail.html?id=${news.id}`;
+				div.onclick = () => location.href = `./pages/news/news-detail.html?id=${news.id}`;
 				sliderEl.appendChild(div);
 				items.push(div);
 			});
@@ -1279,7 +1279,7 @@
 				<div class="imgbj_img imgbj_img_pc" id="imgPcWrap"></div>
 				<div class="imgbj_img imgbj_img_md" id="imgMdWrap"></div>
 				<div class="imgbj_bj">
-					<img loading="lazy" src="./index_files/home13.png" alt="">
+					<img loading="lazy" src="index_files/home13.png" alt="">
 				</div>
 			</div>
 			<div class="box_txt">
@@ -1305,11 +1305,9 @@
 
 		function goProduct(id) {
 			if (id === 1) {
-				window.location.href = './chanpin1-cp1.html';
-			} else if (id === 4) {
-				window.location.href = './chanpin1-ai.html';
-			} else {
-				window.location.href = './chanpin1.html?id=' + id;
+				window.location.href = './pages/series/chanpin1-cp1.html'			} else if (id === 4) {
+				window.location.href = './pages/series/chanpin1-ai.html'			} else {
+				window.location.href = './pages/series/chanpin1.html?id=' + id;
 			}
 		}
 
@@ -1452,7 +1450,7 @@
 
 			productListData.forEach((item, index) => {
 				const { name, id } = item;
-				const jumpUrl = id === 1 ? './chanpin1-cp1.html' : id === 4 ? './chanpin1-ai.html' : `./chanpin1.html?id=${id}`;
+				const jumpUrl = id === 1 ? './pages/series/chanpin1-cp1.html' : id === 4 ? './pages/series/chanpin1-ai.html' : `./pages/series/chanpin1.html?id=${id}`;
 
 				navHtml += `
 					<div class="new-nav-sub-item">
@@ -1647,7 +1645,7 @@
 								</i>
 								<!-- JS动态赋值：innerText = data.title -->
 								<h3 class="font40">
-									<a href="./cpxn-wdzl.html" target="_blank"
+									<a href="./pages/category/cpxn-wdzl.html" target="_blank"
 										style="cursor:pointer !important; color:inherit; text-decoration:none;"
 										id="titleRightText"></a>
 								</h3>
@@ -2047,10 +2045,10 @@
 
 	<!-- 公共 -->
 	<!--<script src="https://res.zvo.cn/module/layui/layui.js?v=2.4.5"></script>-->
-	<script src="./index_files/layui.js"></script>
-	<script src="./index_files/extend.js" type="text/javascript"></script>
-	<script src="./index_files/public.js" type="text/javascript"></script>
-	<script src="./index_files/jquery.pjax.js" type="text/javascript"></script>
+	<script src="index_files/layui.js"></script>
+	<script src="index_files/extend.js" type="text/javascript"></script>
+	<script src="index_files/public.js" type="text/javascript"></script>
+	<script src="index_files/jquery.pjax.js" type="text/javascript"></script>
 
 	<!-- 公共结束 -->
 
@@ -2067,7 +2065,7 @@
 	</script>
 
 
-	<script src="./index_files/jquery.liMarquee.js" type="text/javascript" charset="utf-8" defer></script>
+	<script src="index_files/jquery.liMarquee.js" type="text/javascript" charset="utf-8" defer></script>
 	<script type="text/javascript">
 
 		// banner

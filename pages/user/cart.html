@@ -1,0 +1,1944 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark" class="">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>购物车 - 浩瑞科技</title>
+    <meta name="keywords" content="购物车,浩瑞科技,智能机器人,数字平台,新能源,新材料">
+    <meta name="description" content="浩瑞科技购物车 - 查看已加入购物车的产品">
+    <link rel="stylesheet" type="text/css" href="../../index_files/g-style.css">
+    <link rel="stylesheet" type="text/css" href="../../index_files/f-style.css">
+    <link rel="stylesheet" type="text/css" href="../../index_files/style.css">
+    <link rel="stylesheet" type="text/css" href="../../index_files/extend.css">
+    <script src="../../config1.js"></script>
+    <script src="../../cart.js"></script>
+    <script src="../../favorite.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../mobile.css">
+	
+	<link rel="stylesheet" type="text/css" href="../../index_files/de-ai.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif;
+            color: #333;
+            background: #f7f9fc;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        a {
+            text-decoration: none;
+            color: #333;
+        }
+
+        ul,
+        ol {
+            list-style: none;
+        }
+
+        img {
+            border: none;
+            vertical-align: middle;
+        }
+
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f0f2f5;
+            border-radius: 3px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #c0c8d4;
+            border-radius: 3px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #0a4db4;
+        }
+
+        /* ===== 顶部条 ===== */
+        .top-bar {
+            background: #f7f9fc;
+            border-bottom: 1px solid #e8ecf1;
+            font-size: 12px;
+            color: #666;
+        }
+
+        .top-bar-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 6px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .top-bar a {
+            color: #666;
+            margin: 0 10px;
+        }
+
+        .top-bar a:hover {
+            color: #0a4db4;
+        }
+
+        /* ===== 登录/注册组件 ===== */
+        .auth-section {
+            display: flex;
+            align-items: center;
+            height: 100%;
+        }
+
+        /* 未登录 */
+        .auth-guest {
+            gap: 0;
+        }
+
+        .auth-login-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 5px 14px;
+            background: linear-gradient(135deg, #0a4db4, #1e6fd9);
+            color: #fff !important;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+            margin: 0 !important;
+            text-decoration: none;
+            transition: all 0.25s ease;
+            box-shadow: 0 2px 6px rgba(10, 77, 180, 0.2);
+        }
+
+        .auth-login-btn:hover {
+            background: linear-gradient(135deg, #083d94, #1558b8);
+            color: #fff !important;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 10px rgba(10, 77, 180, 0.3);
+        }
+
+        .auth-icon {
+            width: 14px;
+            height: 14px;
+        }
+
+        .auth-divider {
+            color: #d0d7de;
+            margin: 0 8px;
+            font-weight: 300;
+        }
+
+        .auth-register-link {
+            color: #555 !important;
+            font-size: 12px;
+            font-weight: 400;
+            margin: 0 !important;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .auth-register-link:hover {
+            color: #0a4db4 !important;
+        }
+
+        /* 已登录 */
+        .auth-user {
+            position: relative;
+        }
+
+        .user-menu-trigger {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 3px 10px 3px 3px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: background 0.2s;
+            user-select: none;
+        }
+
+        .user-menu-trigger:hover {
+            background: #eef2f7;
+        }
+
+        .user-menu-trigger.active {
+            background: #e3ecf7;
+        }
+
+        .user-avatar {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #0a4db4, #4a9eff);
+            color: #fff;
+            font-size: 11px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .user-name {
+            font-size: 12px;
+            color: #333;
+            font-weight: 500;
+            max-width: 80px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .user-arrow {
+            width: 10px;
+            height: 10px;
+            color: #888;
+            transition: transform 0.25s ease;
+        }
+
+        .user-menu-trigger.active .user-arrow {
+            transform: rotate(180deg);
+        }
+
+        /* 下拉菜单 */
+        .user-dropdown {
+            position: absolute;
+            top: calc(100% + 8px);
+            left: 0;
+            min-width: 210px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.06);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-8px);
+            transition: all 0.22s cubic-bezier(0.22, 1, 0.36, 1);
+            overflow: hidden;
+            z-index: 100;
+        }
+
+        .user-dropdown.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 16px;
+            background: linear-gradient(135deg, #f0f5ff, #e8f0fe);
+        }
+
+        .dropdown-avatar {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #0a4db4, #4a9eff);
+            color: #fff;
+            font-size: 16px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            box-shadow: 0 2px 8px rgba(10, 77, 180, 0.25);
+        }
+
+        .dropdown-user-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .dropdown-username {
+            font-size: 14px;
+            font-weight: 600;
+            color: #1f2937;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .dropdown-label {
+            font-size: 11px;
+            color: #6b7280;
+            margin-top: 2px;
+        }
+
+        .dropdown-divider {
+            height: 1px;
+            background: #f0f0f0;
+            margin: 4px 0;
+        }
+
+        .dropdown-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 16px;
+            color: #4b5563;
+            font-size: 13px;
+            text-decoration: none;
+            transition: all 0.15s;
+            position: relative;
+        }
+
+        .dropdown-item:hover {
+            background: #f5f8fc;
+            color: #0a4db4;
+        }
+
+        .dropdown-item svg {
+            width: 15px;
+            height: 15px;
+            flex-shrink: 0;
+            color: #6b7280;
+        }
+
+        .dropdown-item:hover svg {
+            color: #0a4db4;
+        }
+
+        .dropdown-item span {
+            flex: 1;
+        }
+
+        .dropdown-logout {
+            color: #dc2626 !important;
+        }
+
+        .dropdown-logout:hover {
+            background: #fef2f2;
+            color: #dc2626 !important;
+        }
+
+        .dropdown-logout svg {
+            color: #dc2626;
+        }
+
+        .dropdown-badge {
+            background: #ef4444;
+            color: #fff;
+            font-size: 10px;
+            font-weight: 600;
+            padding: 1px 6px;
+            border-radius: 8px;
+            min-width: 18px;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .user-name { max-width: 50px; }
+            .user-dropdown { min-width: 180px; }
+        }
+
+        /* ===== Header ===== */
+        .header {
+            background: #fff;
+            border-bottom: 2px solid #0a4db4;
+        }
+
+        .header-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 18px 20px;
+            display: flex;
+            align-items: center;
+            gap: 40px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        .logo .logo-icon {
+            width: 48px;
+            height: 48px;
+            object-fit: contain;
+        }
+
+        .logo-text .brand {
+            font-size: 22px;
+            font-weight: bold;
+            color: #0a4db4;
+        }
+
+        .logo-text .brand .highlight {
+            color: #f5a623;
+        }
+
+        .logo-text .tagline {
+            font-size: 12px;
+            color: #999;
+            letter-spacing: 1px;
+        }
+
+        .search-box {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            max-width: 560px;
+        }
+
+        .search-box .cat-select {
+            height: 40px;
+            padding: 0 12px;
+            border: 1px solid #d0d5dd;
+            border-radius: 4px 0 0 4px;
+            background: #fff;
+            font-size: 14px;
+            outline: none;
+        }
+
+        .search-box input {
+            flex: 1;
+            height: 40px;
+            padding: 0 16px;
+            border: 1px solid #d0d5dd;
+            border-radius: 0;
+            font-size: 14px;
+            outline: none;
+        }
+
+        .search-box button {
+            height: 40px;
+            padding: 0 20px;
+            border: none;
+            border-radius: 0 4px 4px 0;
+            background: #0a4db4;
+            color: #fff;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-left: auto;
+            flex-shrink: 0;
+        }
+
+        .header-right .eccee-btn {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: #fff;
+            font-weight: bold;
+            padding: 9px 16px;
+            border: none;
+            border-radius: 4px;
+            background: linear-gradient(135deg, #f5a623, #e8941a);
+            cursor: pointer;
+            font-size: 14px;
+            text-decoration: none;
+        }
+
+        .header-right .publish-btn {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: #fff;
+            font-weight: bold;
+            padding: 9px 18px;
+            border: none;
+            border-radius: 4px;
+            background: linear-gradient(135deg, #0a4db4, #1e6fd9);
+            cursor: pointer;
+            font-size: 14px;
+            text-decoration: none;
+        }
+
+        .header-right .cart-btn {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: #0a4db4;
+            font-weight: bold;
+            font-size: 14px;
+            line-height: 1.5;
+            white-space: nowrap;
+            padding: 8px 16px;
+            border: 1px solid #0a4db4;
+            border-radius: 4px;
+            background: #fff;
+            cursor: pointer;
+            overflow: visible;
+            flex-shrink: 0;
+        }
+
+        .header-right .cart-btn:hover {
+            background: #e8f0fe;
+        }
+
+        .header-right .fav-btn {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: #d97706;
+            font-weight: bold;
+            font-size: 14px;
+            line-height: 1.5;
+            white-space: nowrap;
+            padding: 8px 16px;
+            border: 1px solid #fbbf24;
+            border-radius: 4px;
+            background: #fff;
+            cursor: pointer;
+            overflow: visible;
+            flex-shrink: 0;
+        }
+
+        .header-right .fav-btn:hover {
+            background: #fffbeb;
+        }
+
+        /* ===== 主导航 ===== */
+        .main-nav {
+            background: #fff;
+            border-bottom: 1px solid #eef2f7;
+        }
+
+        .main-nav-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            gap: 6px;
+            overflow-x: auto;
+        }
+
+        .main-nav .nav-item {
+            padding: 14px 18px;
+            font-size: 14px;
+            color: #333;
+            cursor: pointer;
+            white-space: nowrap;
+            border-bottom: 2px solid transparent;
+        }
+
+        .main-nav .nav-item:hover {
+            color: #0a4db4;
+        }
+
+        .main-nav .nav-item.active {
+            color: #0a4db4;
+            border-bottom-color: #0a4db4;
+            font-weight: bold;
+        }
+
+        /* ===== 面包屑 ===== */
+        .breadcrumb-wrap {
+            background: #fff;
+            border-bottom: 1px solid #eef2f7;
+        }
+
+        .breadcrumb {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 14px 20px;
+            font-size: 13px;
+            color: #999;
+        }
+
+        .breadcrumb a {
+            color: #999;
+        }
+
+        .breadcrumb a:hover {
+            color: #0a4db4;
+        }
+
+        .breadcrumb .sep {
+            margin: 0 8px;
+            color: #ddd;
+        }
+
+        .breadcrumb .current {
+            color: #333;
+        }
+
+        /* ===== 购物车主体 ===== */
+        .cart-container {
+            max-width: 1200px;
+            margin: 28px auto;
+            padding: 0 20px;
+        }
+
+        .cart-page-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            position: relative;
+            padding-left: 14px;
+        }
+
+        .cart-page-title::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 4px;
+            height: 26px;
+            background: linear-gradient(180deg, #0a4db4, #4a9eff);
+            border-radius: 2px;
+        }
+
+        .cart-page-title .count {
+            font-size: 14px;
+            color: #9ca3af;
+            font-weight: 400;
+        }
+
+        .cart-page-title .count span {
+            color: #e4393c;
+            font-weight: 700;
+        }
+
+        /* ===== 购物车卡片 ===== */
+        .cart-card {
+            background: #fff;
+            border-radius: 14px;
+            box-shadow: 0 4px 24px rgba(10, 40, 95, 0.06);
+            overflow: hidden;
+            position: relative;
+            animation: cartFadeIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+        }
+
+        .cart-card::before {
+            content: '';
+            display: block;
+            height: 3px;
+            background: linear-gradient(90deg, #0a4db4, #4a9eff, #f5a623);
+        }
+
+        @keyframes cartFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(8px);
+            }
+
+            to {
+                opacity: 1;
+                transform: none;
+            }
+        }
+
+        /* ===== 购物车表格 ===== */
+        .cart-table {
+            table-layout: fixed;
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+        }
+
+        .cart-table .colgroup-img {
+            width: 130px;
+        }
+
+        .cart-table .colgroup-name {
+            width: auto;
+        }
+
+        .cart-table .colgroup-price {
+            width: 120px;
+        }
+
+        .cart-table .colgroup-qty {
+            width: 140px;
+        }
+
+        .cart-table .colgroup-subtotal {
+            width: 130px;
+        }
+
+        .cart-table .colgroup-op {
+            width: 110px;
+        }
+
+        @media (max-width: 768px) {
+            .cart-table .colgroup-img {
+                width: 90px;
+            }
+
+            .cart-table .colgroup-price {
+                width: 90px;
+            }
+
+            .cart-table .colgroup-qty {
+                width: 100px;
+            }
+
+            .cart-table .colgroup-subtotal {
+                width: 90px;
+            }
+
+            .cart-table .colgroup-op {
+                width: 80px;
+            }
+        }
+
+        /* 表头 */
+        .cart-table thead th {
+            padding: 16px 12px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #6b7280;
+            letter-spacing: 0.5px;
+            background: linear-gradient(180deg, #f8fafc, #f1f5f9);
+            border-bottom: 2px solid #e5e7eb;
+        }
+
+        .cart-table thead th:nth-child(1) {
+            text-align: center;
+        }
+
+        .cart-table thead th:nth-child(2) {
+            text-align: left;
+        }
+
+        .cart-table thead th:nth-child(3) {
+            text-align: center;
+        }
+
+        .cart-table thead th:nth-child(4) {
+            text-align: center;
+        }
+
+        .cart-table thead th:nth-child(5) {
+            text-align: center;
+        }
+
+        .cart-table thead th:nth-child(6) {
+            text-align: center;
+        }
+
+        /* 表格行 */
+        .cart-table tbody tr {
+            transition: background 0.25s ease, box-shadow 0.25s ease;
+            position: relative;
+            background: #fff;
+        }
+
+        .cart-table tbody tr:hover {
+            background: linear-gradient(90deg, rgba(10, 77, 180, 0.03), rgba(10, 77, 180, 0.01));
+            box-shadow: inset 3px 0 0 #0a4db4;
+        }
+
+        .cart-table tbody tr td {
+            padding: 18px 12px;
+            border-bottom: 1px solid #f3f4f6;
+            vertical-align: middle;
+        }
+
+        .cart-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* ===== 商品图片列 ===== */
+        .cart-table .col-img {
+            text-align: center;
+        }
+
+        .col-img .img-box {
+            width: 90px;
+            height: 90px;
+            border-radius: 12px;
+            border: 1px solid #e5e7eb;
+            overflow: hidden;
+            background: linear-gradient(145deg, #fff, #f9fafb);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+            transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .col-img .img-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .cart-table tbody tr:hover .col-img .img-box {
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(10, 40, 95, 0.12);
+            border-color: #c5d0e6;
+        }
+
+        .col-img .avatar-wrap img {
+            padding: 8px;
+            transition: transform 0.4s ease;
+        }
+
+        .col-img .avatar-fallback {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 32px;
+            font-weight: 700;
+            border-radius: 10px;
+            letter-spacing: -1px;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        /* ===== 商品名称列 ===== */
+        .cart-table .col-name {
+            text-align: left;
+        }
+
+        .col-name .name {
+            font-size: 15px;
+            color: #1f2937;
+            font-weight: 600;
+            line-height: 1.5;
+            margin-bottom: 8px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            transition: color 0.25s ease;
+        }
+
+        .cart-table tbody tr:hover .col-name .name {
+            color: #0a4db4;
+        }
+
+        .col-name .spec {
+            font-size: 12px;
+            color: #6b7280;
+            margin-bottom: 10px;
+            display: inline-block;
+            padding: 3px 10px;
+            background: #f3f4f6;
+            border-radius: 6px;
+            line-height: 1.4;
+        }
+
+        .col-name .link {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 13px;
+            color: #0a4db4;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.25s ease;
+        }
+
+        .col-name .link:hover {
+            color: #1e6fd9;
+            text-shadow: 0 1px 2px rgba(30, 111, 217, 0.15);
+        }
+
+        .col-name .link:hover .arrow {
+            transform: translateX(4px);
+        }
+
+        .col-name .link .arrow {
+            transition: transform 0.25s ease;
+            display: inline-block;
+        }
+
+        /* ===== 单价列 ===== */
+        .cart-table .col-price {
+            text-align: center;
+        }
+
+        .col-price {
+            color: #dc2626;
+            font-weight: 700;
+            font-size: 16px;
+            white-space: nowrap;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+        }
+
+        .col-price.has-price::before {
+            content: '¥';
+            font-size: 13px;
+            font-weight: 600;
+            margin-right: 2px;
+        }
+
+        .col-price.no-price {
+            color: #9ca3af;
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        /* ===== 数量列 ===== */
+        .cart-table .col-qty {
+            text-align: center;
+        }
+
+        .qty-control {
+            display: inline-flex;
+            align-items: center;
+            border: 1.5px solid #e5e7eb;
+            border-radius: 10px;
+            overflow: hidden;
+            background: #fff;
+            box-shadow: 0 1px 4px rgba(10, 40, 95, 0.04);
+            transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .qty-control:hover {
+            border-color: #c5d0e6;
+            box-shadow: 0 2px 8px rgba(10, 40, 95, 0.08);
+        }
+
+        .qty-control:focus-within {
+            border-color: #4a9eff;
+            box-shadow: 0 0 0 3px rgba(74, 158, 255, 0.12);
+        }
+
+        .qty-control .qty-btn {
+            width: 34px;
+            height: 34px;
+            border: none;
+            background: linear-gradient(180deg, #fafbfc, #f3f4f6);
+            color: #4b5563;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .qty-control .qty-btn:hover {
+            background: linear-gradient(180deg, #1e6fd9, #0a4db4);
+            color: #fff;
+        }
+
+        .qty-control .qty-btn:active {
+            transform: scale(0.92);
+        }
+
+        .qty-control .qty-input {
+            width: 48px;
+            height: 34px;
+            border: none;
+            border-left: 1px solid #e5e7eb;
+            border-right: 1px solid #e5e7eb;
+            text-align: center;
+            font-size: 15px;
+            font-weight: 700;
+            color: #1f2937;
+            outline: none;
+            background: #fff;
+            -moz-appearance: textfield;
+        }
+
+        .qty-control .qty-input::-webkit-outer-spin-button,
+        .qty-control .qty-input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        /* ===== 小计列 ===== */
+        .cart-table .col-subtotal {
+            text-align: center;
+        }
+
+        .col-subtotal {
+            color: #dc2626;
+            font-weight: 800;
+            font-size: 18px;
+            white-space: nowrap;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+        }
+
+        .col-subtotal.has-price::before {
+            content: '¥';
+            font-size: 14px;
+            font-weight: 700;
+            margin-right: 2px;
+        }
+
+        .col-subtotal.no-price {
+            color: #9ca3af;
+            font-weight: 600;
+            font-size: 15px;
+        }
+
+        .cart-table tbody tr:hover .col-subtotal.has-price {
+            color: #b91c1c;
+        }
+
+        /* ===== 操作列 ===== */
+        .cart-table .col-op {
+            text-align: center;
+        }
+
+        .btn-remove {
+            padding: 7px 14px;
+            border: 1.5px solid #e5e7eb;
+            border-radius: 8px;
+            background: #fff;
+            color: #6b7280;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .btn-remove:hover {
+            border-color: #ef4444;
+            color: #ef4444;
+            background: linear-gradient(180deg, #fff5f5, #fee2e2);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.18);
+        }
+
+        .btn-remove .icon {
+            font-size: 14px;
+            opacity: 0.7;
+            transition: all 0.25s ease;
+        }
+
+        .btn-remove:hover .icon {
+            opacity: 1;
+            transform: scale(1.15);
+        }
+
+        /* ===== 结算条 ===== */
+        .cart-bar {
+            background: #fff;
+            border-radius: 14px;
+            box-shadow: 0 4px 24px rgba(10, 40, 95, 0.06);
+            margin-top: 16px;
+            padding: 20px 28px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+            position: relative;
+            overflow: hidden;
+            animation: cartFadeIn 0.55s cubic-bezier(0.22, 1, 0.36, 1) 0.1s both;
+        }
+
+        .cart-bar::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #0a4db4, #4a9eff, #f5a623);
+        }
+
+        .cart-bar-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .cart-bar-left .link-clear {
+            color: #9ca3af;
+            font-size: 13px;
+            cursor: pointer;
+            padding-left: 20px;
+            position: relative;
+            transition: color 0.2s ease;
+        }
+
+        .cart-bar-left .link-clear::before {
+            content: '🗑';
+            position: absolute;
+            left: 0;
+            opacity: 0.5;
+        }
+
+        .cart-bar-left .link-clear:hover {
+            color: #e4393c;
+            transform: translateX(2px);
+        }
+
+        .cart-bar-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .cart-bar-right .total-label {
+            font-size: 14px;
+            color: #6b7280;
+            letter-spacing: 0.5px;
+        }
+
+        .cart-bar-right .total-price {
+            font-size: 30px;
+            color: #e4393c;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            background: linear-gradient(180deg, #e4393c, #cf1322);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .btn-continue {
+            padding: 10px 24px;
+            border: 1.5px solid #0a4db4;
+            border-radius: 8px;
+            background: #fff;
+            color: #0a4db4;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .btn-continue:hover {
+            background: #e8f0fe;
+            border-color: #1e6fd9;
+            box-shadow: 0 4px 14px rgba(10, 77, 180, 0.15);
+            transform: translateY(-1px);
+        }
+
+        .btn-checkout {
+            padding: 12px 40px;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #e4393c, #f5222d);
+            color: #fff;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            letter-spacing: 1px;
+            transition: all 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+            box-shadow: 0 4px 16px rgba(228, 57, 60, 0.35);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-checkout:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(228, 57, 60, 0.45);
+        }
+
+        .btn-checkout:active {
+            transform: translateY(0);
+        }
+
+        /* ===== Footer ===== */
+        .footer {
+            background: linear-gradient(180deg, #2c3e50 0%, #1a2530 100%);
+            color: #bbb;
+            margin-top: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .footer-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px 20px;
+            display: flex;
+            justify-content: space-between;
+            gap: 40px;
+        }
+
+        .footer-col {
+            flex: 1;
+        }
+
+        .footer-col h4 {
+            color: #fff;
+            font-size: 15px;
+            margin-bottom: 16px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-col a {
+            display: block;
+            color: #bbb;
+            font-size: 13px;
+            padding: 4px 0;
+            transition: all 0.2s;
+        }
+
+        .footer-col a:hover {
+            color: #4a9eff;
+            padding-left: 4px;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            padding: 16px 20px;
+            font-size: 12px;
+            color: #888;
+        }
+
+        .footer-bottom a {
+            color: #888;
+            margin: 0 6px;
+            transition: color 0.2s;
+        }
+
+        .footer-bottom a:hover {
+            color: #4a9eff;
+        }
+
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #0a4db4, #4a9eff, #f5a623);
+        }
+
+        /* ===== 空状态 ===== */
+        .cart-empty {
+            padding: 80px 40px;
+            text-align: center;
+            position: relative;
+            background: #fff;
+            border-radius: 14px;
+            box-shadow: 0 4px 24px rgba(10, 40, 95, 0.06);
+            overflow: hidden;
+            animation: cartFadeIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+        }
+
+        .cart-empty::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #0a4db4, #4a9eff, #f5a623);
+        }
+
+        .cart-empty .empty-icon {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(145deg, #e8f0fe, #dbeafe);
+            border-radius: 50%;
+            font-size: 48px;
+            animation: cartFloatIcon 3.5s ease infinite;
+        }
+
+        @keyframes cartFloatIcon {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-8px);
+            }
+        }
+
+        .cart-empty .empty-text {
+            font-size: 15px;
+            color: #6b7280;
+            margin-bottom: 28px;
+            font-weight: 500;
+        }
+
+        .cart-empty .btn-go-shop {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 12px 36px;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #0a4db4, #1e6fd9);
+            color: #fff;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            letter-spacing: 1px;
+            transition: all 0.25s ease;
+            box-shadow: 0 6px 16px rgba(10, 77, 180, 0.3);
+        }
+
+        .cart-empty .btn-go-shop:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 24px rgba(10, 77, 180, 0.4);
+        }
+
+        /* ===== 表格行入场 ===== */
+        .cart-table tbody tr {
+            animation: cartRowIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+        }
+
+        .cart-table tbody tr:nth-child(1) {
+            animation-delay: 0.05s;
+        }
+
+        .cart-table tbody tr:nth-child(2) {
+            animation-delay: 0.1s;
+        }
+
+        .cart-table tbody tr:nth-child(3) {
+            animation-delay: 0.15s;
+        }
+
+        .cart-table tbody tr:nth-child(4) {
+            animation-delay: 0.2s;
+        }
+
+        .cart-table tbody tr:nth-child(5) {
+            animation-delay: 0.25s;
+        }
+
+        @keyframes cartRowIn {
+            from {
+                opacity: 0;
+                transform: translateX(-12px);
+            }
+
+            to {
+                opacity: 1;
+                transform: none;
+            }
+        }
+
+        /* ===== 确认对话框 ===== */
+        .confirm-dialog {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            animation: cartFadeIn 0.2s ease;
+        }
+
+        .confirm-dialog .dialog-box {
+            background: #fff;
+            border-radius: 14px;
+            padding: 32px;
+            max-width: 360px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: cartDialogIn 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .confirm-dialog .dialog-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 12px;
+        }
+
+        .confirm-dialog .dialog-content {
+            font-size: 14px;
+            color: #6b7280;
+            margin-bottom: 24px;
+            line-height: 1.6;
+        }
+
+        .confirm-dialog .dialog-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+            align-items: center;
+        }
+
+        .confirm-dialog .btn-cancel {
+            display: inline-block !important;
+            padding: 10px 24px !important;
+            margin: 0 !important;
+            border: 1px solid #e5e7eb !important;
+            border-radius: 8px !important;
+            background: #fff !important;
+            color: #6b7280 !important;
+            font-size: 14px !important;
+            font-weight: 500 !important;
+            font-family: inherit !important;
+            cursor: pointer !important;
+            transition: all 0.2s ease !important;
+            -webkit-appearance: none !important;
+            -moz-appearance: none !important;
+            appearance: none !important;
+            line-height: 1.4 !important;
+            text-align: center !important;
+            box-sizing: border-box !important;
+            min-width: 80px !important;
+        }
+
+        .confirm-dialog .btn-cancel:hover {
+            background: #f9fafb !important;
+            border-color: #d1d5db !important;
+            color: #374151 !important;
+        }
+
+        .confirm-dialog .btn-confirm {
+            display: inline-block !important;
+            padding: 10px 24px !important;
+            margin: 0 !important;
+            border: none !important;
+            border-radius: 8px !important;
+            background: linear-gradient(135deg, #ef4444, #dc2626) !important;
+            color: #fff !important;
+            font-size: 14px !important;
+            font-weight: 600 !important;
+            font-family: inherit !important;
+            cursor: pointer !important;
+            transition: all 0.2s ease !important;
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3) !important;
+            -webkit-appearance: none !important;
+            -moz-appearance: none !important;
+            appearance: none !important;
+            line-height: 1.4 !important;
+            text-align: center !important;
+            box-sizing: border-box !important;
+            min-width: 80px !important;
+        }
+
+        .confirm-dialog .btn-confirm:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(239, 68, 68, 0.4) !important;
+        }
+
+        @keyframes cartDialogIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95) translateY(-8px);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        /* ===== 数量/价格变动动画 ===== */
+        .qty-input.changed {
+            animation: cartQtyChange 0.3s ease;
+        }
+
+        @keyframes cartQtyChange {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.08);
+                color: #0a4db4;
+            }
+        }
+
+        .col-subtotal.changed {
+            animation: cartPriceFlash 0.5s ease;
+        }
+
+        @keyframes cartPriceFlash {
+            0% {
+                background: rgba(74, 158, 255, 0.15);
+            }
+
+            100% {
+                background: transparent;
+            }
+        }
+
+        /* ===== 响应式 ===== */
+        @media (max-width: 768px) {
+            .cart-container {
+                margin: 16px auto;
+            }
+
+            .cart-page-title {
+                font-size: 18px;
+                margin-bottom: 14px;
+            }
+
+            .col-img .img-box {
+                width: 64px;
+                height: 64px;
+            }
+
+            .col-name .name {
+                font-size: 13px;
+            }
+
+            .col-name .spec {
+                font-size: 11px;
+                padding: 2px 8px;
+            }
+
+            .qty-control .qty-btn {
+                width: 28px;
+                height: 30px;
+                font-size: 14px;
+            }
+
+            .qty-control .qty-input {
+                width: 38px;
+                height: 30px;
+                font-size: 13px;
+            }
+
+            .col-price {
+                font-size: 14px;
+            }
+
+            .col-subtotal {
+                font-size: 15px;
+            }
+
+            .btn-remove {
+                padding: 5px 10px;
+                font-size: 12px;
+            }
+
+            .cart-bar {
+                padding: 16px 20px;
+            }
+
+            .cart-bar-right {
+                gap: 12px;
+            }
+
+            .cart-bar-right .total-price {
+                font-size: 24px;
+            }
+
+            .btn-continue,
+            .btn-checkout {
+                padding: 10px 20px;
+                font-size: 14px;
+            }
+        }
+    </style>
+    <style id="hr-cart-badge-style">
+        .cart-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            min-width: 18px;
+            height: 18px;
+            line-height: 18px;
+            padding: 0 5px;
+            border-radius: 9px;
+            background: #e4393c;
+            color: #fff;
+            font-size: 11px;
+            text-align: center;
+            font-weight: normal;
+            z-index: 10;
+            box-shadow: 0 1px 3px rgba(228, 57, 60, 0.4);
+        }
+
+        .cart-badge[style*="display:none"] {
+            display: none !important;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ============ 顶部条 ============ -->
+    <div class="top-bar">
+        <div class="top-bar-inner">
+            <div class="top-left">
+                <!-- 未登录状态 -->
+                <div class="auth-section auth-guest" id="authGuest">
+                    <a href="login.html" class="auth-login-btn">
+                        <svg class="auth-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
+                            <polyline points="10 17 15 12 10 7"/>
+                            <line x1="15" y1="12" x2="3" y2="12"/>
+                        </svg>
+                        <span>登录</span>
+                    </a>
+                    <span class="auth-divider">|</span>
+                    <a href="login.html?tab=register" class="auth-register-link">注册</a>
+                </div>
+                <!-- 已登录状态 -->
+                <div class="auth-section auth-user" id="authUser" style="display:none;">
+                    <div class="user-menu-trigger" id="userMenuTrigger">
+                        <div class="user-avatar" id="userAvatar"></div>
+                        <span class="user-name" id="userName"></span>
+                        <svg class="user-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="6 9 12 15 18 9"/>
+                        </svg>
+                    </div>
+                    <div class="user-dropdown" id="userDropdown">
+                        <div class="dropdown-header">
+                            <div class="dropdown-avatar" id="dropdownAvatar"></div>
+                            <div class="dropdown-user-info">
+                                <div class="dropdown-username" id="dropdownUsername"></div>
+                                <div class="dropdown-label">欢迎回来</div>
+                            </div>
+                        </div>
+                        <div class="dropdown-divider"></div>
+                        <a href="order.html" class="dropdown-item">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M9 11H5a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7a2 2 0 0 0-2-2h-4"/>
+                                <path d="M9 11V7a3 3 0 0 1 6 0v4"/>
+                            </svg>
+                            <span>我的订单</span>
+                        </a>
+                        <a href="cart.html" class="dropdown-item">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="9" cy="21" r="1"/>
+                                <circle cx="20" cy="21" r="1"/>
+                                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+                            </svg>
+                            <span>购物车</span>
+                            <span class="dropdown-badge" id="dropdownCartBadge">0</span>
+                        </a>
+                        <a href="favorite.html" class="dropdown-item">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                            </svg>
+                            <span>我的收藏</span>
+                            <span class="dropdown-badge" id="dropdownFavBadge">0</span>
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a href="javascript:void(0)" class="dropdown-item dropdown-logout" id="dropdownLogout">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+                                <polyline points="16 17 21 12 16 7"/>
+                                <line x1="21" y1="12" x2="9" y2="12"/>
+                            </svg>
+                            <span>退出登录</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="top-right">
+                <a href="../../neep.html">首页</a>
+                <a href="#">产品服务</a>
+                <a href="#">解决方案</a>
+                <a href="#">新闻资讯</a>
+                <a href="../about/about-us.html">关于我们</a>
+                <a href="../info/contact-us.html">联系我们</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============ Header ============ -->
+    <div class="header">
+        <div class="header-inner">
+            <div class="logo" onclick="window.location.href='../../neep.html'">
+                <img class="logo-icon" src="../../img/JSlogo-beb0d75f.png" alt="Logo" onerror="this.style.display='none'">
+                <div class="logo-text">
+                    <div class="brand">黑科技 <span class="highlight">商城</span></div>
+                    <div class="tagline">Hi-Tech Bazaar</div>
+                </div>
+            </div>
+            <div class="header-right">
+                <a class="eccee-btn" href="../info/ece.html">🏅 ECEE认证</a>
+                <a class="publish-btn" href="publish.html">✏️ 发布需求</a>
+                <a class="cart-btn" href="cart.html" data-cart-enhanced="1">🛒 购物车<span class="cart-badge">0</span></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============ 主导航 ============ -->
+    <!-- <nav class="main-nav">
+        <div class="main-nav-inner" id="mainNav">
+            <div class="nav-item active" onclick="location.href='../../neep.html'">首页</div>
+            <div class="nav-item" onclick="location.href='../series/chanpin1-ai.html'">智能机器人</div>
+            <div class="nav-item" onclick="location.href='../series/chanpin1.html'">产品中心</div>
+            <div class="nav-item" onclick="location.href='../about/index-aboutus.html'">关于我们</div>
+            <div class="nav-item" onclick="location.href='../news/news-detail.html'">新闻资讯</div>
+        </div>
+    </nav> -->
+
+    <!-- ============ 面包屑 ============ -->
+    <div class="breadcrumb-wrap">
+        <div class="breadcrumb">
+            <a href="../../neep.html">首页</a>
+            <span class="sep">›</span>
+            <span class="current">购物车</span>
+        </div>
+    </div>
+
+    <!-- ============ 购物车主体 ============ -->
+    <div class="cart-container">
+        <h1 class="cart-page-title">
+            🛒 我的购物车
+            <span class="count">共 <span id="cartCount">0</span> 件商品</span>
+        </h1>
+
+        <!-- 商品列表 / 空状态（由 cart.js 渲染） -->
+        <div class="cart-card" id="cartContainer">
+            <table class="cart-table">
+                <colgroup>
+                    <col class="colgroup-img">
+                    <col class="colgroup-name">
+                    <col class="colgroup-price">
+                    <col class="colgroup-qty">
+                    <col class="colgroup-subtotal">
+                    <col class="colgroup-op">
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th>商品</th>
+                        <th>名称</th>
+                        <th>单价</th>
+                        <th>数量</th>
+                        <th>小计</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 结算条 -->
+        <div class="cart-bar" id="cartBar">
+            <div class="cart-bar-left">
+                <a class="link-clear" id="clearCartBtn" onclick="HRCart.clearCartAndRefresh()">🗑 清空购物车</a>
+            </div>
+            <div class="cart-bar-right">
+                <span class="total-label">合计：</span>
+                <span class="total-price" id="cartTotal">¥询价</span>
+                <button class="btn-continue" onclick="location.href='../../neep.html'">继续购物</button>
+                <button class="btn-checkout" id="checkoutBtn" onclick="HRCart.checkout()">去结算</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============ neep Footer ============ -->
+    <footer class="footer">
+        <div class="footer-inner">
+            <div class="footer-col">
+                <h4>产品服务</h4>
+                <a href="#">人工智能和机器人</a>
+                <a href="#">前沿新材料</a>
+                <a href="#">数字服务与平台</a>
+                <a href="#">通信与网络</a>
+                <a href="#">低空经济</a>
+                <a href="#">大宗贸易</a>
+                <a href="#">文化创意与IP</a>
+                <a href="#">智慧农业与粮储</a>
+                <a href="#">安防与识别</a>
+                <a href="#">新能源与储能</a>
+            </div>
+            <div class="footer-col">
+                <h4>解决方案</h4>
+                <a href="#">智能制造方案</a>
+                <a href="#">低空经济方案</a>
+                <a href="#">AI赋能方案</a>
+            </div>
+            <div class="footer-col">
+                <h4>关于我们</h4>
+                <a href="#">公司介绍</a>
+                <a href="#">发展历程</a>
+                <a href="#">加入我们</a>
+                <a href="#">新闻资讯</a>
+            </div>
+            <div class="footer-col">
+                <h4>联系方式</h4>
+                <a href="#">📞 173-0180-8315</a>
+                <a href="#">📧 tech@jnsco.cn​​​​​​​​​​​​​​​​​​​​​​​​</a>
+                <a href="#">📍 中国 · 北京</a>
+            </div>
+            <div class="footer-col">
+                <h4>关注我们</h4>
+                <a href="https://weixin.sogou.com/weixin?query=浩瑞科技Harvest+Tech" target="_blank"
+                    rel="noopener noreferrer">微信：浩瑞科技Harvest Tech</a>
+                <a href="https://m.weibo.cn/n/北京浩瑞绿色科技" target="_blank" rel="noopener noreferrer">微博：北京浩瑞绿色科技</a>
+                <a href="https://www.douyin.com/search/北京浩瑞绿色科技?type=user" target="_blank"
+                    rel="noopener noreferrer">抖音：北京浩瑞绿色科技</a>
+                <a href="https://www.baidu.com/s?wd=北京浩瑞绿色科技+视频号" target="_blank" rel="noopener noreferrer">视频号</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>
+                <a href="../about/about-us.html">关于我们</a>
+                <a href="../info/contact-us.html">联系我们</a>
+                <a href="#">人才招聘</a>|
+                <a href="#">合作伙伴</a>|
+                <a href="#">友情链接</a>|
+                <a href="#">网站地图</a>
+            </p>
+            <p style="margin-top: 8px;">© 2026 浩瑞科技 版权所有 &nbsp;
+                <!-- display:block; -->
+                <a style="color:white;  margin-bottom:5px;" href="https://beian.miit.gov.cn/#/Integrated/index"
+                    target="_blank">京ICP备2026036471号</a>
+                <a style="color:white;" href="https://beian.mps.gov.cn/#/query/webSearch?code=11010502061862"
+                    rel="noreferrer" target="_blank"><img src="../../images/备案图标.png"
+                        style="height:16px;vertical-align:middle;margin-right:4px;" alt="公安备案">京公网安备11010502061862号</a>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        /* 购物车页：DOM 就绪后渲染（cart.js 已在 head 引入并监听 DOMContentLoaded），
+           这里再保险调用一次，确保购物车内容在脚本加载顺序异常时也能渲染。 */
+        function doSearch() {
+            var kw = document.getElementById('searchInput').value.trim();
+            if (kw) { location.href = '../../neep.html?kw=' + encodeURIComponent(kw); }
+        }
+        /* ============ 登录状态管理 ============ */
+        function initAuthState() {
+            const token = localStorage.getItem('token');
+            const username = localStorage.getItem('username');
+            const guest = document.getElementById('authGuest');
+            const user = document.getElementById('authUser');
+            const avatarChar = (username || '商').charAt(0).toUpperCase();
+
+            if (token && username) {
+                guest.style.display = 'none';
+                user.style.display = 'flex';
+                document.getElementById('userName').textContent = username;
+                document.getElementById('userAvatar').textContent = avatarChar;
+                document.getElementById('dropdownAvatar').textContent = avatarChar;
+                document.getElementById('dropdownUsername').textContent = username;
+                updateCartBadgeInDropdown();
+            } else {
+                guest.style.display = 'flex';
+                user.style.display = 'none';
+                closeUserDropdown();
+            }
+        }
+
+        function updateCartBadgeInDropdown() {
+            const badge = document.getElementById('dropdownCartBadge');
+            if (!badge) return;
+            const count = window.HRCart ? HRCart.getCartCount() : 0;
+            if (count > 0) {
+                badge.textContent = count;
+                badge.style.display = 'inline-block';
+            } else {
+                badge.style.display = 'none';
+            }
+            // 同时更新收藏角标
+            const favBadge = document.getElementById('dropdownFavBadge');
+            if (favBadge) {
+                const favCount = window.HRFavorite ? HRFavorite.getFavCount() : 0;
+                if (favCount > 0) {
+                    favBadge.textContent = favCount;
+                    favBadge.style.display = 'inline-block';
+                } else {
+                    favBadge.style.display = 'none';
+                }
+            }
+        }
+
+        function closeUserDropdown() {
+            const dropdown = document.getElementById('userDropdown');
+            const trigger = document.getElementById('userMenuTrigger');
+            if (dropdown) dropdown.classList.remove('show');
+            if (trigger) trigger.classList.remove('active');
+        }
+
+        function toggleUserDropdown(e) {
+            e.stopPropagation();
+            const dropdown = document.getElementById('userDropdown');
+            const trigger = document.getElementById('userMenuTrigger');
+            const isOpen = dropdown.classList.contains('show');
+            if (isOpen) {
+                closeUserDropdown();
+            } else {
+                dropdown.classList.add('show');
+                trigger.classList.add('active');
+                updateCartBadgeInDropdown();
+            }
+        }
+
+        function handleLogout(e) {
+            e.preventDefault();
+            if (!confirm('确定要退出登录吗？')) return;
+            localStorage.removeItem('token');
+            localStorage.removeItem('username');
+            localStorage.removeItem('roleId');
+            if (window.HRCart) HRCart.logout();
+            closeUserDropdown();
+            initAuthState();
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const trigger = document.getElementById('userMenuTrigger');
+            const logoutBtn = document.getElementById('dropdownLogout');
+            
+            if (trigger) {
+                trigger.addEventListener('click', toggleUserDropdown);
+            }
+            
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', handleLogout);
+            }
+            
+            document.addEventListener('click', function (e) {
+                const userSection = document.getElementById('authUser');
+                if (userSection && !userSection.contains(e.target)) {
+                    closeUserDropdown();
+                }
+            });
+            
+            document.addEventListener('keydown', function (e) {
+                if (e.key === 'Escape') closeUserDropdown();
+            });
+        });
+
+        initAuthState();
+        // 渲染购物车（cart.js 的 init 也会渲染，这里避免时序问题）
+        if (window.HRCart) { window.HRCart.renderCartPage(); window.HRCart.updateCartBadges(); }
+
+        // Header 滚动阴影
+        (function () {
+            var header = document.querySelector('.header');
+            if (!header) return;
+            function onScroll() {
+                if (window.pageYOffset > 8) header.classList.add('scrolled');
+                else header.classList.remove('scrolled');
+            }
+            window.addEventListener('scroll', onScroll, { passive: true });
+            onScroll();
+        })();
+    </script>
+</body>
+
+</html>

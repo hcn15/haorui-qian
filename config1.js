@@ -32,3 +32,38 @@ function getImageUrl(url) {
     }
     return url;
 }
+
+// ======================================================
+// 登录跳转：自动为所有 login.html 链接追加 redirect 参数
+// 登录成功后返回登录前的页面，而非统一跳 neep.html
+// ======================================================
+(function () {
+    function currentPage() {
+        var p = window.location.pathname;
+        var page = p.replace(/^\//, '');
+        if (!page) page = 'neep.html';
+        var search = window.location.search || '';
+        return page + search;
+    }
+
+    function patchLoginLinks() {
+        var links = document.querySelectorAll('a[href*="login.html"]');
+        for (var i = 0; i < links.length; i++) {
+            var a = links[i];
+            var href = a.getAttribute('href') || '';
+            // 只处理跳转到 login.html 的链接，不处理 login.html 自身的内部链接
+            if (href.indexOf('login.html') === -1) continue;
+            // 跳过带 tab=register 的注册链接（注册后通常回首页）
+            if (href.indexOf('tab=register') > -1) continue;
+            if (href.indexOf('redirect=') > -1) continue;
+            var sep = href.indexOf('?') > -1 ? '&' : '?';
+            a.setAttribute('href', href + sep + 'redirect=' + encodeURIComponent(currentPage()));
+        }
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', patchLoginLinks);
+    } else {
+        patchLoginLinks();
+    }
+})();

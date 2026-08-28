@@ -8,12 +8,13 @@
     <meta name="keywords" content="智能机器人,数字平台,新能源应用,大宗贸易,应急产品,新材料,智慧建材,AI文旅,技术转移,国际贸易会客厅,浩瑞科技">
     <meta name="description"
         content="浩瑞科技 - 专注智能机器人、数字平台、新能源应用、大宗贸易、应急产品、新材料、智慧建材、AI文旅、技术转移与本地化服务、国际贸易会客厅海南等领域的一站式服务平台">
-    <link rel="stylesheet" type="text/css" href="./index_files/g-style.css">
-    <script src="./config1.js"></script>
-    <script src="./cart.js"></script>
-    <link rel="stylesheet" type="text/css" href="./mobile.css">
-	<!-- ===== 去AI味样式覆盖层：工业环保科技风 ===== -->
-	<link rel="stylesheet" type="text/css" href="./index_files/de-ai.css">
+    <link rel="stylesheet" type="text/css" href="index_files/g-style.css">
+    <script src="config1.js"></script>
+    <script src="cart.js"></script>
+    <script src="favorite.js"></script>
+    <link rel="stylesheet" type="text/css" href="mobile.css">
+
+    <link rel="stylesheet" type="text/css" href="./index_files/de-ai.css">
     <style>
         * {
             margin: 0;
@@ -353,8 +354,13 @@
         }
 
         @media (max-width: 768px) {
-            .user-name { max-width: 50px; }
-            .user-dropdown { min-width: 180px; }
+            .user-name {
+                max-width: 50px;
+            }
+
+            .user-dropdown {
+                min-width: 180px;
+            }
         }
 
         /* ===== Header ===== */
@@ -481,6 +487,29 @@
 
         .header-right .cart-btn:hover {
             background: #e8f0fe;
+        }
+
+        .header-right .fav-btn {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: #d97706;
+            font-weight: bold;
+            font-size: 14px;
+            line-height: 1.5;
+            white-space: nowrap;
+            padding: 8px 16px;
+            border: 1px solid #fbbf24;
+            border-radius: 4px;
+            background: #fff;
+            cursor: pointer;
+            overflow: visible;
+            flex-shrink: 0;
+        }
+
+        .header-right .fav-btn:hover {
+            background: #fffbeb;
         }
 
         .header-right .publish-btn {
@@ -1872,7 +1901,7 @@
             transform: scale(1.1) rotate(-5deg);
         }
 
-        /* ========== 黑科爆品 ========== */
+        /* ========== 黑科技爆品 ========== */
         .flash-sale {
             background: #fff;
             padding: 24px 16px;
@@ -1969,6 +1998,13 @@
             font-size: 40px;
             color: var(--c-primary);
             transition: transform .4s var(--ease);
+            overflow: hidden;
+        }
+
+        .flash-product .fp-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
         }
 
         .flash-product:hover .fp-img {
@@ -2857,16 +2893,16 @@
             <div class="top-left">
                 <!-- 未登录状态 -->
                 <div class="auth-section auth-guest" id="authGuest">
-                    <a href="./login.html" class="auth-login-btn">
+                    <a href="./pages/user/login.html" class="auth-login-btn">
                         <svg class="auth-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
-                            <polyline points="10 17 15 12 10 7"/>
-                            <line x1="15" y1="12" x2="3" y2="12"/>
+                            <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4" />
+                            <polyline points="10 17 15 12 10 7" />
+                            <line x1="15" y1="12" x2="3" y2="12" />
                         </svg>
                         <span>登录</span>
                     </a>
                     <span class="auth-divider">|</span>
-                    <a href="./login.html?tab=register" class="auth-register-link">注册</a>
+                    <a href="./pages/user/login.html?tab=register" class="auth-register-link">注册</a>
                 </div>
                 <!-- 已登录状态 -->
                 <div class="auth-section auth-user" id="authUser" style="display:none;">
@@ -2874,7 +2910,7 @@
                         <div class="user-avatar" id="userAvatar"></div>
                         <span class="user-name" id="userName"></span>
                         <svg class="user-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <polyline points="6 9 12 15 18 9"/>
+                            <polyline points="6 9 12 15 18 9" />
                         </svg>
                     </div>
                     <!-- 下拉菜单 -->
@@ -2887,18 +2923,18 @@
                             </div>
                         </div>
                         <div class="dropdown-divider"></div>
-                        <a href="./order.html" class="dropdown-item">
+                        <a href="pages/user/order.html" class="dropdown-item">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M9 11H5a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7a2 2 0 0 0-2-2h-4"/>
-                                <path d="M9 11V7a3 3 0 0 1 6 0v4"/>
+                                <path d="M9 11H5a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7a2 2 0 0 0-2-2h-4" />
+                                <path d="M9 11V7a3 3 0 0 1 6 0v4" />
                             </svg>
                             <span>我的订单</span>
                         </a>
-                        <a href="./cart.html" class="dropdown-item">
+                        <a href="./pages/user/cart.html" class="dropdown-item">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <circle cx="9" cy="21" r="1"/>
-                                <circle cx="20" cy="21" r="1"/>
-                                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+                                <circle cx="9" cy="21" r="1" />
+                                <circle cx="20" cy="21" r="1" />
+                                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
                             </svg>
                             <span>购物车</span>
                             <span class="dropdown-badge" id="dropdownCartBadge">0</span>
@@ -2906,9 +2942,9 @@
                         <div class="dropdown-divider"></div>
                         <a href="javascript:void(0)" class="dropdown-item dropdown-logout" id="dropdownLogout">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
-                                <polyline points="16 17 21 12 16 7"/>
-                                <line x1="21" y1="12" x2="9" y2="12"/>
+                                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                                <polyline points="16 17 21 12 16 7" />
+                                <line x1="21" y1="12" x2="9" y2="12" />
                             </svg>
                             <span>退出登录</span>
                         </a>
@@ -2916,12 +2952,12 @@
                 </div>
             </div>
             <div class="top-right">
-                <a href="./shangcheng.html">首页</a>
+                <a href="shangcheng.html">首页</a>
                 <a href="#">产品服务</a>
                 <a href="#">解决方案</a>
-                <a href="#">新闻资讯</a>
-                <a href="./about-us.html">关于我们</a>
-                <a href="./contact-us.html">联系我们</a>
+                <a href="./pages/news/news.html">新闻资讯</a>
+                <a href="pages/about/about-us.html">关于我们</a>
+                <a href="pages/info/contact-us.html">联系我们</a>
             </div>
         </div>
     </div>
@@ -2930,7 +2966,7 @@
     <div class="header">
         <div class="header-inner">
             <div class="logo">
-                <img class="logo-icon" src="./img/JSlogo-beb0d75f.png" alt="Logo">
+                <img class="logo-icon" src="img/JSlogo-beb0d75f.png" alt="Logo">
                 <div class="logo-text">
                     <div class="brand">黑科技 <span class="highlight">商城</span></div>
                     <div class="tagline">Hi-Tech Bazaar </div>
@@ -2954,9 +2990,9 @@
                 <button onclick="doSearch()">🔍 搜索</button>
             </div>
             <div class="header-right">
-                <a class="eccee-btn" href="./ece.html">🏅 ECEE认证</a>
-                <a class="publish-btn" href="./publish.html">✏️ 发布需求</a>
-                <a class="cart-btn" href="./cart.html" data-cart-enhanced="1">🛒 购物车<span class="cart-badge"
+                <a class="eccee-btn" href="pages/info/ece.html">🏅 ECEE认证</a>
+                <a class="publish-btn" href="pages/user/publish.html">✏️ 发布需求</a>
+                <a class="cart-btn" href="./pages/user/cart.html" data-cart-enhanced="1">🛒 购物车<span class="cart-badge"
                         style="display: none;">0</span></a>
             </div>
         </div>
@@ -2987,7 +3023,7 @@
                         <span class="ns-bar"></span>
                         <h3>行业资讯</h3>
                     </div>
-                    <span class="ns-more">更多 ›</span>
+                    <span class="ns-more" onclick="location.href='./pages/news/news.html'" style="cursor:pointer;">更多 ›</span>
                 </div>
                 <div class="ns-list" id="newsList">
                     <div class="news-item" onclick="location.href=''">
@@ -3162,39 +3198,47 @@
                 </main>
             </div>
 
-            <!-- ============ 黑科爆品 ============ -->
+            <!-- ============ 黑科技爆品 ============ -->
             <section class="flash-sale">
                 <div class="container">
                     <div class="flash-header">
                         <div class="flash-title">
                             <span class="icon">🔥</span>
-                            <h2>黑科爆品</h2>
+                            <h2>黑科技爆品</h2>
                             <span class="subtitle">精选前沿科技爆品</span>
                         </div>
                     </div>
                     <div class="flash-products" id="flashProducts">
-                        <div class="flash-product" onclick="location.href='#'">
-                            <div class="fp-img">🔭</div>
+                        <div class="flash-product"
+                            onclick="location.href='pages/product-detail/product-detail-cr30h.html'">
+                            <div class="fp-img"><img src="img/机器人/cr30h_tab.jpg" alt="CR 30H协作机器人"
+                                    onerror="this.parentNode.innerHTML='&#129302;'"></div>
                             <div class="fp-info">
-                                <div class="fp-name">石墨烯散热片</div>
+                                <div class="fp-name">CR 30H协作机器人</div>
                             </div>
                         </div>
-                        <div class="flash-product" onclick="location.href='#'">
-                            <div class="fp-img">💾</div>
+                        <div class="flash-product"
+                            onclick="location.href='pages/product-detail/product-detail-cr20a.html'">
+                            <div class="fp-img"><img src="img/机器人/collection.jpg" alt="CR20A协作机器人"
+                                    onerror="this.parentNode.innerHTML='&#129302;'"></div>
                             <div class="fp-info">
-                                <div class="fp-name">量子U盘 128G</div>
+                                <div class="fp-name">CR20A协作机器人</div>
                             </div>
                         </div>
-                        <div class="flash-product" onclick="location.href='#'">
-                            <div class="fp-img">🤓</div>
+                        <div class="flash-product"
+                            onclick="location.href='pages/product-detail/product-detail-atom.html'">
+                            <div class="fp-img"><img src="img/机器人/tab.jpg" alt="Atom人形机器人"
+                                    onerror="this.parentNode.innerHTML='&#129302;'"></div>
                             <div class="fp-info">
-                                <div class="fp-name">便携式制氧呼吸机</div>
+                                <div class="fp-name">Atom人形机器人</div>
                             </div>
                         </div>
-                        <div class="flash-product" onclick="location.href='#'">
-                            <div class="fp-img">🤖</div>
+                        <div class="flash-product"
+                            onclick="location.href='pages/product-detail/product-detail-cp1.html'">
+                            <div class="fp-img"><img src="img/chanpin1-cp1-cpjs.png" alt="无电制冷涂层"
+                                    onerror="this.parentNode.innerHTML='&#127777;'"></div>
                             <div class="fp-info">
-                                <div class="fp-name">AI仿生芯片模块</div>
+                                <div class="fp-name">无电制冷涂层</div>
                             </div>
                         </div>
                     </div>
@@ -3236,9 +3280,10 @@
                     <div class="np-list-item" onclick="location.href='#'"><span class="np-title">新能源电池材料</span><span
                             class="np-tag qty">200吨</span><span class="np-date">07-30</span></div>
                     <div class="np-list-item" onclick="location.href='#'"><span class="np-title">石墨烯散热膜</span><span
-                            class="np-tag qty">5000㎡</span><span class="np-date">07-30</span></div>
-                    <div class="np-list-item" onclick="location.href='#'"><span class="np-title">工业级传感器</span><span
-                            class="np-tag qty">1000只</span><span class="np-date">07-29</span></div>
+                            class="np-tag qty">5000㎡</span><span c lass="np-date">07-30</span></div>
+                    <div class="np-list-item" onclick="location.href='#'"><span class="np-title">工业级传感器</span>
+                        <spanÒ class="np-tag qty">1000只</span><span class="np-date">07-29</span>
+                    </div>
                     <div class="np-list-item" onclick="location.href='#'"><span class="np-title">高性能无人机</span><span
                             class="np-tag qty">50台</span><span class="np-date">07-28</span></div>
                     <div class="np-list-item" onclick="location.href='#'"><span class="np-title">AI视觉模块</span><span
@@ -3250,8 +3295,8 @@
     <!-- ============ 右侧快捷栏 ============ -->
     <div class="side-shortcut">
         <div class="shortcut-item"><span class="icon">🔔</span>公告</div>
-        <div class="shortcut-item"><a href="order.html"><span class="icon">📋</span>订单</a></div>
-        <div class="shortcut-item"><span class="icon">⭐</span>收藏</div>
+        <div class="shortcut-item"><a href="./pages/user/order.html"><span class="icon">📋</span>订单</a></div>
+        <div class="shortcut-item"><a href="./pages/user/favorite.html"><span class="icon">⭐</span>我的<br>收藏</a></div>
         <div class="shortcut-item" onclick="window.scrollTo({top:0,behavior:'smooth'})">
             <span class="icon">⬆</span>顶部
         </div>
@@ -3284,7 +3329,7 @@
                 <a href="#">公司介绍</a>
                 <a href="#">发展历程</a>
                 <a href="#">加入我们</a>
-                <a href="#">新闻资讯</a>
+                <a href="./pages/news/news.html">新闻资讯</a>
             </div>
             <div class="footer-col revealed">
                 <h4>联系方式</h4>
@@ -3304,8 +3349,8 @@
         </div>
         <div class="footer-bottom">
             <p>
-                <a href="./about-us.html">关于我们</a>
-                <a href="./contact-us.html">联系我们</a>
+                <a href="pages/about/about-us.html">关于我们</a>
+                <a href="pages/info/contact-us.html">联系我们</a>
                 <a href="#">人才招聘</a>|
                 <a href="#">合作伙伴</a>|
                 <a href="#">友情链接</a>|
@@ -3467,15 +3512,15 @@
         document.addEventListener('DOMContentLoaded', function () {
             const trigger = document.getElementById('userMenuTrigger');
             const logoutBtn = document.getElementById('dropdownLogout');
-            
+
             if (trigger) {
                 trigger.addEventListener('click', toggleUserDropdown);
             }
-            
+
             if (logoutBtn) {
                 logoutBtn.addEventListener('click', handleLogout);
             }
-            
+
             // 点击外部关闭
             document.addEventListener('click', function (e) {
                 const userSection = document.getElementById('authUser');
@@ -3483,7 +3528,7 @@
                     closeUserDropdown();
                 }
             });
-            
+
             // ESC 关闭
             document.addEventListener('keydown', function (e) {
                 if (e.key === 'Escape') closeUserDropdown();
@@ -3866,32 +3911,32 @@
 
         /* ============ 打开产品子项（跳转到对应产品详情页） ============ */
         const PRODUCT_PAGE_MAP = {
-            1: './chanpin1-ai.html',        // 智能机器人
-            2: './chanpin1.html?id=2',      // 数字平台
-            3: './chanpin1.html?id=11',     // 新能源应用板块
-            4: './chanpin1.html?id=6',      // 大宗贸易
+            1: './pages/series/chanpin1-ai.html',        // 智能机器人
+            2: './pages/series/chanpin1.html?id=2',      // 数字平台
+            3: './pages/series/chanpin1.html?id=11',     // 新能源应用板块
+            4: './pages/series/chanpin1.html?id=6',      // 大宗贸易
             5: './chanpin1-aqwx.html',      // 应急产品
-            6: './chanpin1-cp1.html',       // 新材料
-            7: './chanpin1.html?id=7',      // 智慧建材
-            8: './chanpin1.html?id=7',      // AI文旅
-            9: './chanpin1.html?id=3',      // 技术转移与本地化服务
-            10: './chanpin1.html?id=6'      // 国际贸易会客厅海南
+            6: './pages/series/chanpin1-cp1.html',       // 新材料
+            7: './pages/series/chanpin1.html?id=7',      // 智慧建材
+            8: './pages/series/chanpin1.html?id=7',      // AI文旅
+            9: './pages/series/chanpin1.html?id=3',      // 技术转移与本地化服务
+            10: './pages/series/chanpin1.html?id=6'      // 国际贸易会客厅海南
         };
 
         /* 子项名称 -> 详情页映射（直接跳转具体产品详情页） */
         const PRODUCT_DETAIL_MAP = {
-            'CR 30H': './product-detail-cr30h.html',
-            'CR20A': './product-detail-cr20a.html',
-            'CRAF力控系列': './product-detail-craf.html',
-            'CRA-IP68': './product-detail-cra-ip68.html',
-            'Nova 2': './product-detail-nova2.html',
-            'MG400': './product-detail-mg400.html',
-            'Mi Pro': './product-detail-m1pro.html',
-            'Magician E6': './product-detail-magician-e6.html',
-            'Atom': './product-detail-atom.html',
-            'Rover X1家庭智能机器狗': './product-detail-rover-x1.html',
-            '无线对讲': './product-detail-aqwx.html',
-            '无电制冷涂层金属基层/无电制冷涂层混凝土基层/沥青卷材基/光伏伴侣/防水膜': './product-detail-cp1.html'
+            'CR 30H': './pages/product-detail/product-detail-cr30h.html',
+            'CR20A': './pages/product-detail/product-detail-cr20a.html',
+            'CRAF力控系列': './pages/product-detail/product-detail-craf.html',
+            'CRA-IP68': './pages/product-detail/product-detail-cra-ip68.html',
+            'Nova 2': './pages/product-detail/product-detail-nova2.html',
+            'MG400': './pages/product-detail/product-detail-mg400.html',
+            'Mi Pro': './pages/product-detail/product-detail-m1pro.html',
+            'Magician E6': './pages/product-detail/product-detail-magician-e6.html',
+            'Atom': './pages/product-detail/product-detail-atom.html',
+            'Rover X1家庭智能机器狗': './pages/product-detail/product-detail-rover-x1.html',
+            '无线对讲': './pages/product-detail/product-detail-aqwx.html',
+            '无电制冷涂层金属基层/无电制冷涂层混凝土基层/沥青卷材基/光伏伴侣/防水膜': './pages/product-detail/product-detail-cp1.html'
         };
 
         /* ============ 子菜单项点击跳转（优先跳详情页） ============ */
@@ -4120,12 +4165,12 @@
                 .forEach(function (el) { io.observe(el); });
         }
 
-        /* ============ 限时商品数据（黑科爆品） ============ */
+        /* ============ 限时商品数据（黑科技爆品） ============ */
         var flashProducts = [
-            { icon: '&#128301;', name: '石墨烯散热片' },
-            { icon: '&#128190;', name: '量子U盘 128G' },
-            { icon: '&#129299;', name: '便携式制氧呼吸机' },
-            { icon: '&#129302;', name: 'AI仿生芯片模块' }
+            { img: 'img/机器人/cr30h_tab.jpg', name: 'CR 30H协作机器人', url: 'pages/product-detail/product-detail-cr30h.html', fallback: '&#129302;' },
+            { img: 'img/机器人/collection.jpg', name: 'CR20A协作机器人', url: 'pages/product-detail/product-detail-cr20a.html', fallback: '&#129302;' },
+            { img: 'img/机器人/tab.jpg', name: 'Atom人形机器人', url: 'pages/product-detail/product-detail-atom.html', fallback: '&#129302;' },
+            { img: 'img/chanpin1-cp1-cpjs.png', name: '无电制冷涂层', url: 'pages/product-detail/product-detail-cp1.html', fallback: '&#127777;' }
         ];
 
         function renderFlashProducts() {
@@ -4133,8 +4178,8 @@
             if (!container) return;
             var html = '';
             flashProducts.forEach(function (p) {
-                html += '<div class="flash-product" onclick="location.href=\'#\'">' +
-                    '<div class="fp-img">' + p.icon + '</div>' +
+                html += '<div class="flash-product" onclick="location.href=\'' + p.url + '\'">' +
+                    '<div class="fp-img"><img src="' + p.img + '" alt="' + p.name + '" onerror="this.parentNode.innerHTML=\'' + p.fallback + '\'"></div>' +
                     '<div class="fp-info">' +
                     '<div class="fp-name">' + p.name + '</div>' +
                     '</div></div>';

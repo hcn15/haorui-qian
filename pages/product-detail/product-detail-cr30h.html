@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html xml:lang="zh" lang="zh">
 
 <head>
@@ -38,7 +38,7 @@
             color: #333;
         }
 
-        /* ============ neep 顶部条 ============ */
+        /* ============ index 顶部条 ============ */
         .top-bar {
             background: #f7f9fc;
             border-bottom: 1px solid #e8ecf1;
@@ -317,7 +317,7 @@
             }
         }
 
-        /* ============ neep Header ============ */
+        /* ============ index Header ============ */
         .header {
             background: #fff;
             border-bottom: 2px solid #0a4db4;
@@ -367,6 +367,40 @@
             color: #999;
             letter-spacing: 2px;
             margin-top: 2px;
+        }
+
+        /* Logo 微交互 */
+        .logo {
+            cursor: pointer;
+            transition: transform .3s var(--ease);
+        }
+
+        .logo:hover {
+            transform: translateX(-2px);
+        }
+
+        .logo .brand {
+            background: linear-gradient(135deg, #000000 0%, #006eff 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Logo 微交互 */
+        .logo {
+            cursor: pointer;
+            transition: transform .3s var(--ease);
+        }
+
+        .logo:hover {
+            transform: translateX(-2px);
+        }
+
+        .logo .brand {
+            background: linear-gradient(135deg, #000000 0%, #006eff 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .search-box {
@@ -489,7 +523,7 @@
             box-shadow: 0 4px 12px rgba(245, 166, 35, 0.4);
         }
 
-        /* ============ neep 主导航 ============ */
+        /* ============ index 主导航 ============ */
         .main-nav {
             background: #0a4db4;
         }
@@ -888,7 +922,6 @@
             font-size: 15px;
             border-left: 1px solid #ddd;
             border-right: 1px solid #ddd;
-            pointer-events: none;
             -moz-appearance: textfield;
         }
 
@@ -1382,7 +1415,7 @@
 
 
 
-        /* ============ neep Footer ============ */
+        /* ============ index Footer ============ */
         .footer {
             background: linear-gradient(180deg, #2c3e50 0%, #1a2530 100%);
             color: #bbb;
@@ -1441,7 +1474,7 @@
             color: #4a9eff;
         }
 
-        /* neep 响应式 */
+        /* index 响应式 */
     </style>
 </head>
 
@@ -1508,7 +1541,7 @@
                 </div>
             </div>
             <div class="top-right">
-                <a href="../../neep.html">首页</a>
+                <a href="../../index.html">首页</a>
                 <a href="#">产品服务</a>
                 <a href="#">解决方案</a>
                 <a href="#">新闻资讯</a>
@@ -1519,7 +1552,7 @@
     </div>
     <div class="header">
         <div class="header-inner">
-            <div class="logo" onclick="window.location.href='../../neep.html'">
+            <div class="logo" onclick="window.location.href='../../index.html'">
                 <img class="logo-icon" src="../../img/JSlogo-beb0d75f.png" alt="Logo">
                 <div class="logo-text">
                     <div class="brand">黑科技 <span class="highlight">商城</span></div>
@@ -1529,8 +1562,9 @@
             <div class="header-right">
                 <a class="eccee-btn" href="../info/ece.html">🏅 ECEE认证</a>
                 <a class="publish-btn" href="../user/publish.html">✏️ 发布需求</a>
-                
-                <a class="cart-btn" href="../user/cart.html" data-cart-enhanced="1">🛒 购物车<span class="cart-badge">0</span></a>
+
+                <a class="cart-btn" href="../user/cart.html" data-cart-enhanced="1">🛒 购物车<span
+                        class="cart-badge">0</span></a>
             </div>
         </div>
     </div>
@@ -1539,11 +1573,11 @@
     <!-- 面包屑 -->
     <div class="breadcrumb-wrap">
         <div class="breadcrumb">
-            <a href="../../neep.html">首页</a>
+            <a href="../../index.html">首页</a>
             <span class="sep">›</span>
-            <a href="../../neep.html">人工智能和机器人</a>
+            <a href="../../index.html">人工智能和机器人</a>
             <span class="sep">›</span>
-            <a href="../../neep.html">六轴协作机器人CRH系列</a>
+            <a href="../../index.html">六轴协作机器人CRH系列</a>
             <span class="sep">›</span>
             <span class="current">CR 30H协作机器人</span>
         </div>
@@ -1559,24 +1593,19 @@
                 <button class="nav-arrow next" onclick="nextImage()" title="下一张">›</button>
             </div>
             <div class="thumbnail-list" id="thumbnailList">
-                <div class="thumb-item active" data-src="../../img/dobot/cr30h-list2.jpg"
-                    onclick="changeImage(this)">
+                <div class="thumb-item active" data-src="../../img/dobot/cr30h-list2.jpg" onclick="changeImage(this)">
                     <img src="../../img/dobot/cr30h-main.jpg" alt="图片1">
                 </div>
-                <div class="thumb-item" data-src="../../img/dobot/cr30h-main.jpg"
-                    onclick="changeImage(this)">
+                <div class="thumb-item" data-src="../../img/dobot/cr30h-main.jpg" onclick="changeImage(this)">
                     <img src="../../img/dobot/cr30h-list2.jpg" alt="图片2">
                 </div>
-                <div class="thumb-item" data-src="../../img/dobot/cr30h-list2.jpg"
-                    onclick="changeImage(this)">
+                <div class="thumb-item" data-src="../../img/dobot/cr30h-list2.jpg" onclick="changeImage(this)">
                     <img src="../../img/dobot/cr30h-list3.jpg" alt="图片3">
                 </div>
-                <div class="thumb-item" data-src="../../img/dobot/cr30h-list3.jpg"
-                    onclick="changeImage(this)">
+                <div class="thumb-item" data-src="../../img/dobot/cr30h-list3.jpg" onclick="changeImage(this)">
                     <img src="../../img/dobot/cr30h-list4.jpg" alt="图片4">
                 </div>
-                <div class="thumb-item" data-src="../../img/dobot/cr30h-list4.jpg"
-                    onclick="changeImage(this)">
+                <div class="thumb-item" data-src="../../img/dobot/cr30h-list4.jpg" onclick="changeImage(this)">
                     <img src="../../img/dobot/cr30h-scene.jpg" alt="图片5">
                 </div>
             </div>
@@ -1596,7 +1625,9 @@
             <div class="price-section">
                 <div class="price-row">
                     <span class="price-label">价格</span>
-                    <span class="price-value"><span class="currency">¥</span>32,000<span class="unit">/台</span></span></span>           </div>
+                    <span class="price-value"><span class="currency">¥</span>32,000<span
+                            class="unit">/台</span></span></span>
+                </div>
                 <div class="price-row">
                     <span class="price-label">订货量</span>
                     <span class="stock-info">1台起批</span>
@@ -1629,7 +1660,7 @@
                     <span class="spec-label">数量</span>
                     <div class="quantity-input">
                         <button onclick="changeQty(-1)">-</button>
-                        <input type="number" id="quantityInput" value="1" min="1" readonly>
+                        <input type="number" id="quantityInput" value="1" min="1">
                         <button onclick="changeQty(1)">+</button>
                     </div>
 
@@ -1913,7 +1944,7 @@
         </div>
     </div>
 
-            <!-- 相关推荐 -->
+    <!-- 相关推荐 -->
     <div class="related-section">
         <div class="related-title">为您推荐</div>
         <div class="related-grid">
@@ -1955,7 +1986,7 @@
             </div>
         </div>
     </div>
-    ========= Footer ============ -->
+    <!-- ============ Footer ============ -->
     <footer class="footer">
         <div class="footer-inner">
             <div class="footer-col revealed">
@@ -2048,7 +2079,7 @@
 
     <script>
 
-        /* ============ neep 主导航渲染 ============ */
+        /* ============ index 主导航渲染 ============ */
         function renderMainNav() {
             const nav = document.getElementById('mainNav');
             if (!nav) return;
@@ -2152,7 +2183,7 @@
             });
         });
 
-        /* ============ neep 搜索功能 ============ */
+        /* ============ index 搜索功能 ============ */
         function doSearch() {
             const keyword = document.getElementById('searchInput').value.trim();
             const catId = document.getElementById('searchSelect').value;

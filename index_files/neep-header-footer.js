@@ -1,6 +1,6 @@
 /* ============================================================
- * neep-header-footer.js
- * 抽取自 neep.html 的登录状态管理逻辑
+ * index-header-footer.js
+ * 抽取自 index.html 的登录状态管理逻辑
  * 依赖：cart.js（HRCart）、config1.js（SERVER_BASE_URL）
  * ============================================================ */
 

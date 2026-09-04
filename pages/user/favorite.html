@@ -870,7 +870,7 @@
                 </div>
             </div>
             <div class="top-right">
-                <a href="../../neep.html">首页</a>
+                <a href="../../index.html">首页</a>
                 <a href="#">产品服务</a>
                 <a href="#">解决方案</a>
                 <a href="#">新闻资讯</a>
@@ -883,7 +883,7 @@
     <!-- ============ Header ============ -->
     <div class="header">
         <div class="header-inner">
-            <div class="logo" onclick="window.location.href='../../neep.html'">
+            <div class="logo" onclick="window.location.href='../../index.html'">
                 <img class="logo-icon" src="../../img/JSlogo-beb0d75f.png" alt="Logo" onerror="this.style.display='none'">
                 <div class="logo-text">
                     <div class="brand">黑科技 <span class="highlight">商城</span></div>
@@ -901,7 +901,7 @@
     <!-- ============ 面包屑 ============ -->
     <div class="breadcrumb-wrap">
         <div class="breadcrumb">
-            <a href="../../neep.html">首页</a>
+            <a href="../../index.html">首页</a>
             <span class="sep">›</span>
             <span class="current">我的收藏</span>
         </div>
@@ -924,7 +924,7 @@
                 <a class="link-clear" id="clearFavBtn" onclick="HRFavorite.clearFavAndRefresh()">🗑 清空收藏</a>
             </div>
             <div class="fav-bar-right">
-                <button class="btn-continue" onclick="location.href='../../neep.html'">继续购物</button>
+                <button class="btn-continue" onclick="location.href='../../index.html'">继续购物</button>
             </div>
         </div>
     </div>
@@ -1035,6 +1035,8 @@
 
         /* ============ 登录状态管理 ============ */
         function initAuthState() {
+            // 主动检测 token 是否过期，过期则清除登录态
+            if (typeof checkTokenExpired === 'function') checkTokenExpired();
             const token = localStorage.getItem('token');
             const username = localStorage.getItem('username');
             const guest = document.getElementById('authGuest');

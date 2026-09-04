@@ -63,7 +63,10 @@
 
     /* ---------- 登录态 ---------- */
     function isLoggedIn() {
-        try { return !!localStorage.getItem('token'); } catch (e) { return false; }
+        try {
+            if (typeof checkTokenExpired === 'function' && checkTokenExpired()) return false;
+            return !!localStorage.getItem('token');
+        } catch (e) { return false; }
     }
 
     /* ---------- 基础读写（localStorage） ---------- */
@@ -454,7 +457,7 @@
                 '<div class="fav-empty">' +
                 '<div class="empty-icon">⭐</div>' +
                 '<p class="empty-text">还没有收藏任何商品，快去发现心仪的产品吧～</p>' +
-                '<a class="btn-go-shop" href="' + ROOT + 'neep.html">去逛逛</a>' +
+                '<a class="btn-go-shop" href="' + ROOT + 'index.html">去逛逛</a>' +
                 '</div>';
             if (totalEl) totalEl.textContent = '0';
             if (clearBtn) clearBtn.style.display = 'none';

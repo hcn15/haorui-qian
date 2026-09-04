@@ -1,7 +1,7 @@
 /* ============================================================
- * neep-header-footer.css
- * 抽取自 neep.html 的顶部条 + Header + 主导航 + 右侧快捷栏 + Footer 样式
- * 供 neep.html 和子页面（如 news.html）共用，保持视觉一致
+ * index-header-footer.css
+ * 抽取自 index.html 的顶部条 + Header + 主导航 + 右侧快捷栏 + Footer 样式
+ * 供 index.html 和子页面（如 news.html）共用，保持视觉一致
  * ============================================================ */
 
 /* ===== 顶部条 ===== */

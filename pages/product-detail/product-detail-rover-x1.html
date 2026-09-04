@@ -367,6 +367,23 @@
             margin-top: 2px;
         }
 
+        /* Logo 微交互 */
+        .logo {
+            cursor: pointer;
+            transition: transform .3s var(--ease);
+        }
+
+        .logo:hover {
+            transform: translateX(-2px);
+        }
+
+        .logo .brand {
+            background: linear-gradient(135deg, #000000 0%, #006eff 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
         .search-box {
             flex: 1;
             max-width: 580px;
@@ -870,7 +887,6 @@
             font-size: 15px;
             border-left: 1px solid #ddd;
             border-right: 1px solid #ddd;
-            pointer-events: none;
             -moz-appearance: textfield;
         }
 
@@ -1473,7 +1489,7 @@
                 </div>
             </div>
             <div class="top-right">
-                <a href="../../neep.html">首页</a>
+                <a href="../../index.html">首页</a>
                 <a href="#">产品服务</a>
                 <a href="#">解决方案</a>
                 <a href="#">新闻资讯</a>
@@ -1485,7 +1501,7 @@
 
     <div class="header">
         <div class="header-inner">
-            <div class="logo" onclick="window.location.href='../../neep.html'">
+            <div class="logo" onclick="window.location.href='../../index.html'">
                 <img class="logo-icon" src="../../img/JSlogo-beb0d75f.png" alt="Logo">
                 <div class="logo-text">
                     <div class="brand">黑科技 <span class="highlight">商城</span></div>
@@ -1507,11 +1523,11 @@
 
     <div class="breadcrumb-wrap">
         <div class="breadcrumb">
-            <a href="../../neep.html">首页</a>
+            <a href="../../index.html">首页</a>
             <span class="sep">›</span>
-            <a href="../../neep.html">人工智能和机器人</a>
+            <a href="../../index.html">人工智能和机器人</a>
             <span class="sep">›</span>
-            <a href="../../neep.html">特种机器人</a>
+            <a href="../../index.html">特种机器人</a>
             <span class="sep">›</span>
             <span class="current">Rover X1 家庭智能机器狗</span>
         </div>
@@ -1592,7 +1608,7 @@
                     <span class="spec-label">数量</span>
                     <div class="quantity-input">
                         <button onclick="changeQty(-1)">-</button>
-                        <input type="number" id="quantityInput" value="1" min="1" readonly>
+                        <input type="number" id="quantityInput" value="1" min="1">
                         <button onclick="changeQty(1)">+</button>
                     </div>
 
@@ -2052,17 +2068,17 @@
         };
 
         var MAIN_NAV = [
-            { name: '首页', url: '../../neep.html' },
-            { name: '人工智能和机器人', url: '../../neep.html', active: true },
-            { name: '前沿新材料', url: '../../neep.html' },
-            { name: '数字服务与平台', url: '../../neep.html' },
-            { name: '通信与网络', url: '../../neep.html' },
-            { name: '低空经济', url: '../../neep.html' },
-            { name: '大宗贸易', url: '../../neep.html' },
-            { name: '文化创意与IP', url: '../../neep.html' },
-            { name: '智慧农业与粮储', url: '../../neep.html' },
-            { name: '安防与识别', url: '../../neep.html' },
-            { name: '新能源与储能', url: '../../neep.html' }
+            { name: '首页', url: '../../index.html' },
+            { name: '人工智能和机器人', url: '../../index.html', active: true },
+            { name: '前沿新材料', url: '../../index.html' },
+            { name: '数字服务与平台', url: '../../index.html' },
+            { name: '通信与网络', url: '../../index.html' },
+            { name: '低空经济', url: '../../index.html' },
+            { name: '大宗贸易', url: '../../index.html' },
+            { name: '文化创意与IP', url: '../../index.html' },
+            { name: '智慧农业与粮储', url: '../../index.html' },
+            { name: '安防与识别', url: '../../index.html' },
+            { name: '新能源与储能', url: '../../index.html' }
         ];
 
         var currentImageIndex = 0;
@@ -2173,7 +2189,7 @@
             var input = document.getElementById('searchInput');
             var val = input ? input.value.trim() : '';
             if (!val) { showToast('请输入搜索关键词', 'error'); return; }
-            window.location.href = '../../neep.html?search=' + encodeURIComponent(val);
+            window.location.href = '../../index.html?search=' + encodeURIComponent(val);
         }
 
         function changeImage(el) {

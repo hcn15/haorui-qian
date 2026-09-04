@@ -38,7 +38,7 @@
             color: #333;
         }
 
-        /* ============ neep 顶部条 ============ */
+        /* ============ index 顶部条 ============ */
         .top-bar {
             background: #f7f9fc;
             border-bottom: 1px solid #e8ecf1;
@@ -317,7 +317,7 @@
             }
         }
 
-        /* ============ neep Header ============ */
+        /* ============ index Header ============ */
         .header {
             background: #fff;
             border-bottom: 2px solid #0a4db4;
@@ -367,6 +367,23 @@
             color: #999;
             letter-spacing: 2px;
             margin-top: 2px;
+        }
+
+        /* Logo 微交互 */
+        .logo {
+            cursor: pointer;
+            transition: transform .3s var(--ease);
+        }
+
+        .logo:hover {
+            transform: translateX(-2px);
+        }
+
+        .logo .brand {
+            background: linear-gradient(135deg, #000000 0%, #006eff 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .search-box {
@@ -489,7 +506,7 @@
             box-shadow: 0 4px 12px rgba(245, 166, 35, 0.4);
         }
 
-        /* ============ neep 主导航 ============ */
+        /* ============ index 主导航 ============ */
         .main-nav {
             background: #0a4db4;
         }
@@ -889,7 +906,6 @@
             font-size: 15px;
             border-left: 1px solid #ddd;
             border-right: 1px solid #ddd;
-            pointer-events: none;
             -moz-appearance: textfield;
         }
 
@@ -1378,7 +1394,7 @@
             background: #1e6fd9;
         }
 
-        /* ============ neep Footer ============ */
+        /* ============ index Footer ============ */
         .footer {
             background: linear-gradient(180deg, #2c3e50 0%, #1a2530 100%);
             color: #bbb;
@@ -1591,7 +1607,7 @@
                 </div>
             </div>
             <div class="top-right">
-                <a href="../../neep.html">首页</a>
+                <a href="../../index.html">首页</a>
                 <a href="#">产品服务</a>
                 <a href="#">解决方案</a>
                 <a href="#">新闻资讯</a>
@@ -1602,7 +1618,7 @@
     </div>
     <div class="header">
         <div class="header-inner">
-            <div class="logo" onclick="window.location.href='../../neep.html'">
+            <div class="logo" onclick="window.location.href='../../index.html'">
                 <img class="logo-icon" src="../../img/JSlogo-beb0d75f.png" alt="Logo">
                 <div class="logo-text">
                     <div class="brand">黑科技 <span class="highlight">商城</span></div>
@@ -1622,9 +1638,9 @@
     <!-- 产品详情 -->
     <div class="breadcrumb-wrap">
         <div class="breadcrumb">
-            <a href="../../neep.html">首页</a>
+            <a href="../../index.html">首页</a>
             <span class="sep">›</span>
-            <a href="../../neep.html">前沿新材料</a>
+            <a href="../../index.html">前沿新材料</a>
             <span class="sep">›</span>
             <a href="../series/chanpin1-cp1.html">无电制冷涂层</a>
             <span class="sep">›</span>
@@ -1710,7 +1726,7 @@
                     <span class="spec-label">数量</span>
                     <div class="quantity-input">
                         <button onclick="changeQty(-1)">-</button>
-                        <input type="number" id="quantityInput" value="1" min="1" readonly>
+                        <input type="number" id="quantityInput" value="1" min="1">
                         <button onclick="changeQty(1)">+</button>
                     </div>
                 </div>
@@ -2025,7 +2041,7 @@
             </div>
         </div>
     </div>
-    <!-- ============ neep Footer ============ -->
+    <!-- ============ index Footer ============ -->
     <footer class="footer">
         <div class="footer-inner">
             <div class="footer-col">

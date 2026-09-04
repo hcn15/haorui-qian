@@ -714,6 +714,23 @@
             margin-top: 2px;
         }
 
+        /* Logo 微交互 */
+        .logo {
+            cursor: pointer;
+            transition: transform .3s var(--ease);
+        }
+
+        .logo:hover {
+            transform: translateX(-2px);
+        }
+
+        .logo .brand {
+            background: linear-gradient(135deg, #000000 0%, #006eff 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
         .shop-nav-logo {
             display: flex;
             align-items: center;
@@ -1357,7 +1374,7 @@
                 <div class="shop-nav-cart" onclick="handleCart()">
                     <span class="cart-icon">&#128722;</span>
                     <span class="cart-label">商城首页</span>
-                    <!-- <a href="neep.html" class="cart-label">商城首页</a> -->
+                    <!-- <a href="index.html" class="cart-label">商城首页</a> -->
                 </div>
             </div>
         </div>
@@ -1728,7 +1745,7 @@
 
 
         function handleCart() {
-            location.href = 'neep.html'        }
+            location.href = 'index.html'        }
 
         /* ============ Banner轮播 ============ */
         var currentSlide = 0;

@@ -549,7 +549,7 @@
         <!-- 左侧品牌面板 -->
         <div class="brand-panel">
             <div class="brand-content">
-                <div class="brand-logo" onclick="location.href='../../neep.html'" cursor:pointer;">
+                <div class="brand-logo" onclick="location.href='../../index.html'" cursor:pointer;">
                     <img src="../../img/JSlogo-beb0d75f.png" alt="Logo">
                     <div class="brand-name">黑科技<span class="highlight">商城</span></div>
                 </div>
@@ -570,7 +570,7 @@
 
         <!-- 右侧表单面板 -->
         <div class="form-panel">
-            <a class="back-link" href="../../neep.html">← 返回首页</a>
+            <a class="back-link" href="../../index.html">← 返回首页</a>
 
             <!-- Tab切换 -->
             <div class="tab-switcher">
@@ -707,7 +707,7 @@
         let selectedRoleId = 2;
 
         // API基础路径(从config1.js获取)
-        const API_BASE = (typeof SERVER_BASE_URL !== 'undefined') ? SERVER_BASE_URL : 'http://localhost:8080';
+        const API_BASE = (typeof SERVER_BASE_URL !== 'undefined') ? SERVER_BASE_URL : 'https://localhost:8443';
 
         // Tab切换
         function switchTab(tab) {
@@ -935,7 +935,7 @@
                         if (redirect && /^[\w./-]+\.html(\?[\w=&-]*)?$/.test(redirect)) {
                             window.location.href = '../../' + redirect.replace(/^(\.\/)+/, '');
                         } else {
-                            window.location.href = '../../neep.html'                   }
+                            window.location.href = '../../index.html'                   }
                     }, 1000);
                 } else {
                     showToast(result.msg || '登录失败', 'error');
@@ -1058,10 +1058,14 @@
             }
 
             const token = localStorage.getItem('token');
-            if (token) {
+            // 主动检测 token 是否过期，过期则清除登录态
+            if (token && typeof checkTokenExpired === 'function' && checkTokenExpired()) {
+                // token 已过期，已清除，显示提示
+                showToast('登录已过期，请重新登录', 'info');
+            } else if (token) {
                 // // 已登录,询问是否直接跳转
                 // if (confirm('您已登录,是否直接进入商城?')) {
-                //     window.location.href = '../../neep.html'           // }
+                //     window.location.href = '../../index.html'           // }
             }
         });
 

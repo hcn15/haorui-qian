@@ -13,8 +13,8 @@
     <script src="../../cart.js"></script>
     <script src="../../favorite.js"></script>
     <link rel="stylesheet" type="text/css" href="../../mobile.css">
-	
-	<link rel="stylesheet" type="text/css" href="../../index_files/de-ai.css">
+
+    <link rel="stylesheet" type="text/css" href="../../index_files/de-ai.css">
     <style>
         * {
             margin: 0;
@@ -310,8 +310,13 @@
         }
 
         @media (max-width: 768px) {
-            .user-name { max-width: 50px; }
-            .user-dropdown { min-width: 180px; }
+            .user-name {
+                max-width: 50px;
+            }
+
+            .user-dropdown {
+                min-width: 180px;
+            }
         }
 
         .header {
@@ -363,6 +368,23 @@
             color: #999;
             letter-spacing: 2px;
             margin-top: 2px;
+        }
+
+        /* Logo 微交互 */
+        .logo {
+            cursor: pointer;
+            transition: transform .3s var(--ease);
+        }
+
+        .logo:hover {
+            transform: translateX(-2px);
+        }
+
+        .logo .brand {
+            background: linear-gradient(135deg, #000000 0%, #006eff 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .search-box {
@@ -868,7 +890,6 @@
             font-size: 15px;
             border-left: 1px solid #ddd;
             border-right: 1px solid #ddd;
-            pointer-events: none;
             -moz-appearance: textfield;
         }
 
@@ -1409,7 +1430,7 @@
 </head>
 
 <body>
- <!-- ============ 顶部条 ============ -->
+    <!-- ============ 顶部条 ============ -->
     <div class="top-bar">
         <div class="top-bar-inner">
             <div class="top-left">
@@ -1417,9 +1438,9 @@
                 <div class="auth-section auth-guest" id="authGuest">
                     <a href="../user/login.html" class="auth-login-btn">
                         <svg class="auth-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
-                            <polyline points="10 17 15 12 10 7"/>
-                            <line x1="15" y1="12" x2="3" y2="12"/>
+                            <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4" />
+                            <polyline points="10 17 15 12 10 7" />
+                            <line x1="15" y1="12" x2="3" y2="12" />
                         </svg>
                         <span>登录</span>
                     </a>
@@ -1432,7 +1453,7 @@
                         <div class="user-avatar" id="userAvatar"></div>
                         <span class="user-name" id="userName"></span>
                         <svg class="user-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <polyline points="6 9 12 15 18 9"/>
+                            <polyline points="6 9 12 15 18 9" />
                         </svg>
                     </div>
                     <div class="user-dropdown" id="userDropdown">
@@ -1446,16 +1467,16 @@
                         <div class="dropdown-divider"></div>
                         <a href="../user/order.html" class="dropdown-item">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M9 11H5a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7a2 2 0 0 0-2-2h-4"/>
-                                <path d="M9 11V7a3 3 0 0 1 6 0v4"/>
+                                <path d="M9 11H5a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7a2 2 0 0 0-2-2h-4" />
+                                <path d="M9 11V7a3 3 0 0 1 6 0v4" />
                             </svg>
                             <span>我的订单</span>
                         </a>
                         <a href="../user/cart.html" class="dropdown-item">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <circle cx="9" cy="21" r="1"/>
-                                <circle cx="20" cy="21" r="1"/>
-                                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+                                <circle cx="9" cy="21" r="1" />
+                                <circle cx="20" cy="21" r="1" />
+                                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
                             </svg>
                             <span>购物车</span>
                             <span class="dropdown-badge" id="dropdownCartBadge">0</span>
@@ -1463,9 +1484,9 @@
                         <div class="dropdown-divider"></div>
                         <a href="javascript:void(0)" class="dropdown-item dropdown-logout" id="dropdownLogout">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
-                                <polyline points="16 17 21 12 16 7"/>
-                                <line x1="21" y1="12" x2="9" y2="12"/>
+                                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                                <polyline points="16 17 21 12 16 7" />
+                                <line x1="21" y1="12" x2="9" y2="12" />
                             </svg>
                             <span>退出登录</span>
                         </a>
@@ -1473,7 +1494,7 @@
                 </div>
             </div>
             <div class="top-right">
-                <a href="../../neep.html">首页</a>
+                <a href="../../index.html">首页</a>
                 <a href="#">产品服务</a>
                 <a href="#">解决方案</a>
                 <a href="#">新闻资讯</a>
@@ -1485,7 +1506,7 @@
 
     <div class="header">
         <div class="header-inner">
-            <div class="logo" onclick="window.location.href='../../neep.html'">
+            <div class="logo" onclick="window.location.href='../../index.html'">
                 <img class="logo-icon" src="../../img/JSlogo-beb0d75f.png" alt="Logo">
                 <div class="logo-text">
                     <div class="brand">黑科技 <span class="highlight">商城</span></div>
@@ -1495,8 +1516,9 @@
             <div class="header-right">
                 <a class="eccee-btn" href="../info/ece.html">🏅 ECEE认证</a>
                 <a class="publish-btn" href="../user/publish.html">✏️ 发布需求</a>
-                
-                <a class="cart-btn" href="../user/cart.html" data-cart-enhanced="1">🛒 购物车<span class="cart-badge">0</span></a>
+
+                <a class="cart-btn" href="../user/cart.html" data-cart-enhanced="1">🛒 购物车<span
+                        class="cart-badge">0</span></a>
             </div>
         </div>
     </div>
@@ -1505,11 +1527,11 @@
 
     <div class="breadcrumb-wrap">
         <div class="breadcrumb">
-            <a href="../../neep.html">首页</a>
+            <a href="../../index.html">首页</a>
             <span class="sep">›</span>
-            <a href="../../neep.html">人工智能和机器人</a>
+            <a href="../../index.html">人工智能和机器人</a>
             <span class="sep">›</span>
-            <a href="../../neep.html">协作机器人</a>
+            <a href="../../index.html">协作机器人</a>
             <span class="sep">›</span>
             <span class="current">Atom 轻量化协作机器人</span>
         </div>
@@ -1523,24 +1545,19 @@
                 <button class="nav-arrow next" onclick="nextImage()" title="下一张">›</button>
             </div>
             <div class="thumbnail-list" id="thumbnailList">
-                <div class="thumb-item active" data-src="../../img/dobot/atom-max.jpg"
-                    onclick="changeImage(this)">
+                <div class="thumb-item active" data-src="../../img/dobot/atom-max.jpg" onclick="changeImage(this)">
                     <img src="../../img/dobot/atom-main.jpg" alt="图片1">
                 </div>
-                <div class="thumb-item" data-src="../../img/dobot/atom-main.jpg"
-                    onclick="changeImage(this)">
+                <div class="thumb-item" data-src="../../img/dobot/atom-main.jpg" onclick="changeImage(this)">
                     <img src="../../img/dobot/atom-max.jpg" alt="图片2">
                 </div>
-                <div class="thumb-item" data-src="../../img/dobot/atom-max.jpg"
-                    onclick="changeImage(this)">
+                <div class="thumb-item" data-src="../../img/dobot/atom-max.jpg" onclick="changeImage(this)">
                     <img src="../../img/dobot/atom-standard.jpg" alt="图片3">
                 </div>
-                <div class="thumb-item" data-src="../../img/dobot/atom-standard.jpg"
-                    onclick="changeImage(this)">
+                <div class="thumb-item" data-src="../../img/dobot/atom-standard.jpg" onclick="changeImage(this)">
                     <img src="../../img/dobot/atom-d.jpg" alt="图片4">
                 </div>
-                <div class="thumb-item" data-src="../../img/dobot/atom-d.jpg"
-                    onclick="changeImage(this)">
+                <div class="thumb-item" data-src="../../img/dobot/atom-d.jpg" onclick="changeImage(this)">
                     <img src="../../img/dobot/atom-scene.jpg" alt="图片5">
                 </div>
             </div>
@@ -1558,7 +1575,9 @@
             <div class="price-section">
                 <div class="price-row">
                     <span class="price-label">价格</span>
-                    <span class="price-value"><span class="currency">¥</span>85,000<span class="unit">/台</span></span></span>           </div>
+                    <span class="price-value"><span class="currency">¥</span>85,000<span
+                            class="unit">/台</span></span></span>
+                </div>
                 <div class="price-row">
                     <span class="price-label">订货量</span>
                     <span class="stock-info">1台起批</span>
@@ -1590,7 +1609,7 @@
                     <span class="spec-label">数量</span>
                     <div class="quantity-input">
                         <button onclick="changeQty(-1)">-</button>
-                        <input type="number" id="quantityInput" value="1" min="1" readonly>
+                        <input type="number" id="quantityInput" value="1" min="1">
                         <button onclick="changeQty(1)">+</button>
                     </div>
 
@@ -1917,7 +1936,7 @@
             </div>
         </div>
     </div>
-         <!-- ============ Footer ============ -->
+    <!-- ============ Footer ============ -->
     <footer class="footer">
         <div class="footer-inner">
             <div class="footer-col revealed">
@@ -2014,7 +2033,7 @@
             brand: 'Dobot',
             model: 'Atom',
             images: [
-                                '../../img/dobot/atom-main.jpg',
+                '../../img/dobot/atom-main.jpg',
                 '../../img/dobot/atom-max.jpg',
                 '../../img/dobot/atom-standard.jpg',
                 '../../img/dobot/atom-d.jpg',
@@ -2023,17 +2042,17 @@
         };
 
         var MAIN_NAV = [
-            { name: '首页', url: '../../neep.html' },
-            { name: '人工智能和机器人', url: '../../neep.html', active: true },
-            { name: '前沿新材料', url: '../../neep.html' },
-            { name: '数字服务与平台', url: '../../neep.html' },
-            { name: '通信与网络', url: '../../neep.html' },
-            { name: '低空经济', url: '../../neep.html' },
-            { name: '大宗贸易', url: '../../neep.html' },
-            { name: '文化创意与IP', url: '../../neep.html' },
-            { name: '智慧农业与粮储', url: '../../neep.html' },
-            { name: '安防与识别', url: '../../neep.html' },
-            { name: '新能源与储能', url: '../../neep.html' }
+            { name: '首页', url: '../../index.html' },
+            { name: '人工智能和机器人', url: '../../index.html', active: true },
+            { name: '前沿新材料', url: '../../index.html' },
+            { name: '数字服务与平台', url: '../../index.html' },
+            { name: '通信与网络', url: '../../index.html' },
+            { name: '低空经济', url: '../../index.html' },
+            { name: '大宗贸易', url: '../../index.html' },
+            { name: '文化创意与IP', url: '../../index.html' },
+            { name: '智慧农业与粮储', url: '../../index.html' },
+            { name: '安防与识别', url: '../../index.html' },
+            { name: '新能源与储能', url: '../../index.html' }
         ];
 
         var currentImageIndex = 0;
@@ -2118,22 +2137,22 @@
         document.addEventListener('DOMContentLoaded', function () {
             var trigger = document.getElementById('userMenuTrigger');
             var logoutBtn = document.getElementById('dropdownLogout');
-            
+
             if (trigger) {
                 trigger.addEventListener('click', toggleUserDropdown);
             }
-            
+
             if (logoutBtn) {
                 logoutBtn.addEventListener('click', handleLogout);
             }
-            
+
             document.addEventListener('click', function (e) {
                 var userSection = document.getElementById('authUser');
                 if (userSection && !userSection.contains(e.target)) {
                     closeUserDropdown();
                 }
             });
-            
+
             document.addEventListener('keydown', function (e) {
                 if (e.key === 'Escape') closeUserDropdown();
             });
@@ -2145,7 +2164,7 @@
             var input = document.getElementById('searchInput');
             var val = input ? input.value.trim() : '';
             if (!val) { showToast('请输入搜索关键词', 'error'); return; }
-            window.location.href = '../../neep.html?search=' + encodeURIComponent(val);
+            window.location.href = '../../index.html?search=' + encodeURIComponent(val);
         }
 
         function changeImage(el) {

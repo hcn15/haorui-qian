@@ -1654,7 +1654,7 @@
                 </div>
             </div>
             <div class="top-right">
-                <a href="../../neep.html">首页</a>
+                <a href="../../index.html">首页</a>
                 <a href="#">产品服务</a>
                 <a href="#">解决方案</a>
                 <a href="#">新闻资讯</a>
@@ -1667,7 +1667,7 @@
     <!-- ============ Header ============ -->
     <div class="header">
         <div class="header-inner">
-            <div class="logo" onclick="window.location.href='../../neep.html'">
+            <div class="logo" onclick="window.location.href='../../index.html'">
                 <img class="logo-icon" src="../../img/JSlogo-beb0d75f.png" alt="Logo" onerror="this.style.display='none'">
                 <div class="logo-text">
                     <div class="brand">黑科技 <span class="highlight">商城</span></div>
@@ -1685,7 +1685,7 @@
     <!-- ============ 主导航 ============ -->
     <!-- <nav class="main-nav">
         <div class="main-nav-inner" id="mainNav">
-            <div class="nav-item active" onclick="location.href='../../neep.html'">首页</div>
+            <div class="nav-item active" onclick="location.href='../../index.html'">首页</div>
             <div class="nav-item" onclick="location.href='../series/chanpin1-ai.html'">智能机器人</div>
             <div class="nav-item" onclick="location.href='../series/chanpin1.html'">产品中心</div>
             <div class="nav-item" onclick="location.href='../about/index-aboutus.html'">关于我们</div>
@@ -1696,7 +1696,7 @@
     <!-- ============ 面包屑 ============ -->
     <div class="breadcrumb-wrap">
         <div class="breadcrumb">
-            <a href="../../neep.html">首页</a>
+            <a href="../../index.html">首页</a>
             <span class="sep">›</span>
             <span class="current">购物车</span>
         </div>
@@ -1743,13 +1743,13 @@
             <div class="cart-bar-right">
                 <span class="total-label">合计：</span>
                 <span class="total-price" id="cartTotal">¥询价</span>
-                <button class="btn-continue" onclick="location.href='../../neep.html'">继续购物</button>
+                <button class="btn-continue" onclick="location.href='../../index.html'">继续购物</button>
                 <button class="btn-checkout" id="checkoutBtn" onclick="HRCart.checkout()">去结算</button>
             </div>
         </div>
     </div>
 
-    <!-- ============ neep Footer ============ -->
+    <!-- ============ index Footer ============ -->
     <footer class="footer">
         <div class="footer-inner">
             <div class="footer-col">
@@ -1819,10 +1819,12 @@
            这里再保险调用一次，确保购物车内容在脚本加载顺序异常时也能渲染。 */
         function doSearch() {
             var kw = document.getElementById('searchInput').value.trim();
-            if (kw) { location.href = '../../neep.html?kw=' + encodeURIComponent(kw); }
+            if (kw) { location.href = '../../index.html?kw=' + encodeURIComponent(kw); }
         }
         /* ============ 登录状态管理 ============ */
         function initAuthState() {
+            // 主动检测 token 是否过期，过期则清除登录态
+            if (typeof checkTokenExpired === 'function') checkTokenExpired();
             const token = localStorage.getItem('token');
             const username = localStorage.getItem('username');
             const guest = document.getElementById('authGuest');

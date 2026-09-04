@@ -1,6 +1,6 @@
 /* ============================================================
  * mobile.css  ——  全站移动端适配样式
- * 适用于 neep.html / cart.html / product-detail-*.html
+ * 适用于 index.html / cart.html / product-detail-*.html
  * ------------------------------------------------------------
  * 引入方式：在 <head> 中（其他样式之后）添加：
  *   <link rel="stylesheet" type="text/css" href="./mobile.css">
@@ -11,21 +11,136 @@
 html, body { overflow-x: hidden; max-width: 100vw; }
 img, table { max-width: 100%; }
 
+/* 汉堡菜单按钮：桌面端默认隐藏，仅在移动端显示 */
+.mobile-menu-toggle { display: none; }
+
+/* ================================================================
+ *  ≤ 1100px  ——  平板：三栏折行时重置左右栏外边距，避免溢出
+ * ================================================================ */
+@media (max-width: 1100px) {
+    .col-left { margin-left: 0 !important; }
+    .col-right { margin-right: 0 !important; }
+}
+
 /* ================================================================
  *  ≤ 768px  ——  手机竖屏
  * ================================================================ */
 @media (max-width: 768px) {
 
     /* ============ 通用导航/Header ============ */
-    .top-bar { display: none !important; }
+    /* 顶部条改为下拉抽屉，恢复登录/注册与站点导航的移动端可达性 */
+    .top-bar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 10001; /* 必须高于 sticky header (1000) 与 nav (999) */
+        background: #f7f9fc;
+        border-bottom: 1px solid #e8ecf1;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height .32s cubic-bezier(0.22, 1, 0.36, 1);
+        padding-top: env(safe-area-inset-top);
+        box-shadow: none;
+    }
+    .top-bar.mobile-open {
+        max-height: 85vh;
+        overflow-y: auto;
+        box-shadow: 0 16px 48px rgba(10, 40, 95, 0.22);
+    }
+    /* 抽屉蒙层：禁止背景滚动 */
+    body.mobile-menu-open::after {
+        content: '';
+        position: fixed;
+        inset: 0;
+        background: rgba(10, 25, 50, 0.42);
+        backdrop-filter: blur(2px);
+        z-index: 10000;
+    }
+    body.mobile-menu-open {
+        overflow: hidden !important;
+        overscroll-behavior: contain;
+    }
+    .top-bar-inner {
+        max-width: none !important;
+        flex-direction: column;
+        align-items: stretch !important;
+        padding: 6px 16px calc(6px + env(safe-area-inset-bottom)) !important;
+        gap: 4px;
+        position: static !important;
+    }
+    .top-bar .top-left { width: 100%; }
+    .top-bar .top-right {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        margin-top: 6px;
+        padding-top: 6px;
+        border-top: 1px solid #e8ecf1;
+    }
+    .top-bar .top-right a {
+        margin: 0 !important;
+        padding: 12px 4px;
+        font-size: 14px;
+        border-bottom: 1px solid #f0f2f5;
+        line-height: 1.4;
+    }
+    .top-bar .top-right a:last-child { border-bottom: none; }
+    .top-bar .auth-section { width: 100%; justify-content: flex-start; }
+    .top-bar .auth-login-btn { padding: 12px 16px; font-size: 14px; min-height: 44px; }
+    .top-bar .auth-register-link { font-size: 14px; padding: 6px 4px; }
+    .top-bar .user-menu-trigger { padding: 10px 12px; min-height: 44px; }
 
+    /* 汉堡按钮：仅移动端显示 */
+    .mobile-menu-toggle {
+        display: inline-flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 4px;
+        width: 40px;
+        height: 40px;
+        padding: 0;
+        margin-right: 2px;
+        border: 1px solid #e0e6ef;
+        border-radius: 8px;
+        background: #fff;
+        cursor: pointer;
+        flex-shrink: 0;
+        order: 0;
+    }
+    .mobile-menu-toggle .toggle-bar {
+        display: block;
+        width: 18px;
+        height: 2px;
+        margin: 0 auto;
+        background: #0a4db4;
+        border-radius: 2px;
+        transition: transform .25s ease, opacity .25s ease;
+    }
+    .mobile-menu-toggle.active .toggle-bar:nth-child(1) {
+        transform: translateY(6px) rotate(45deg);
+    }
+    .mobile-menu-toggle.active .toggle-bar:nth-child(2) { opacity: 0; }
+    .mobile-menu-toggle.active .toggle-bar:nth-child(3) {
+        transform: translateY(-6px) rotate(-45deg);
+    }
+    .mobile-menu-toggle:active { background: #eef2f7; }
+
+    /* Header 粘性置顶，保留搜索与入口的可达感 */
+    .header {
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        background: #fff;
+        padding-top: env(safe-area-inset-top);
+    }
     .header-inner {
         flex-wrap: wrap;
         gap: 10px;
-        padding: 12px;
+        padding: 10px 12px;
     }
     .logo { order: 1; }
-    .logo .logo-icon { width: 36px; height: 36px; }
+    .logo .logo-icon { width: 34px; height: 34px; }
     .logo .logo-text .brand { font-size: 18px; }
     .logo .logo-text .tagline { font-size: 10px; letter-spacing: 1px; }
 
@@ -37,11 +152,11 @@ img, table { max-width: 100%; }
         flex: 1 0 100%;
         gap: 4px;
     }
-    .search-box .cat-select { width: 90px; font-size: 12px; padding: 0 6px; }
-    .search-box input { font-size: 13px; padding: 0 10px; height: 36px; }
-    .search-box button { width: 70px; font-size: 13px; letter-spacing: 1px; height: 36px; }
+    .search-box .cat-select { width: 86px; font-size: 12px; padding: 0 6px; height: 40px; }
+    .search-box input { font-size: 16px; padding: 0 10px; height: 40px; } /* 16px 规避 iOS 输入聚焦放大 */
+    .search-box button { width: 64px; font-size: 13px; letter-spacing: 1px; height: 40px; }
 
-    /* 右侧按钮组 */
+    /* 右侧按钮组：保证可点高度 ≥ 40px */
     .header-right {
         order: 2;
         gap: 6px;
@@ -50,32 +165,37 @@ img, table { max-width: 100%; }
     }
     .header-right .eccee-btn,
     .header-right .publish-btn {
-        padding: 7px 10px;
+        padding: 8px 10px;
         font-size: 12px;
         gap: 4px;
+        min-height: 40px;
     }
     .header-right .cart-btn {
-        padding: 6px 10px;
+        padding: 8px 12px;
         font-size: 12px;
         gap: 4px;
+        min-height: 40px;
     }
 
-    /* 主导航：横向滚动 */
+    /* 主导航：横向滚动，触控行高 44px（不单独粘顶，避免与 sticky header 重叠） */
     .main-nav-inner {
         flex-wrap: nowrap !important;
         overflow-x: auto;
         -webkit-overflow-scrolling: touch;
         scrollbar-width: none;
+        padding-left: env(safe-area-inset-left);
+        padding-right: env(safe-area-inset-right);
     }
     .main-nav-inner::-webkit-scrollbar { display: none; }
     .main-nav .nav-item {
-        padding: 0 12px;
-        line-height: 40px;
+        padding: 0 14px;
+        line-height: 44px;
         font-size: 13px;
         flex-shrink: 0;
         white-space: nowrap;
     }
     .main-nav .nav-item.active::after { width: 40%; }
+    .main-nav .nav-item:active { background: #083d94; }
 
     /* ============ 首页主体 ============ */
     .main-container {
@@ -85,7 +205,7 @@ img, table { max-width: 100%; }
         padding: 0 12px;
     }
 
-    /* 侧边栏 - 折叠式 */
+    /* 侧边栏 - 默认折叠，点击标题展开，规避桌面 max-height:420px 漏入的空白占位 */
     .sidebar {
         width: 100%;
         order: 1;
@@ -95,57 +215,122 @@ img, table { max-width: 100%; }
         font-size: 13px;
         cursor: pointer;
         user-select: none;
+        min-height: 44px; /* 触控目标 */
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        outline: none;
+    }
+    .sidebar-title:focus-visible {
+        box-shadow: 0 0 0 2px #4a9eff inset;
     }
     .sidebar-title::after {
         content: '▾';
-        float: right;
         font-size: 12px;
         transition: transform 0.3s;
+        flex-shrink: 0;
     }
+    /* collapsed = 折叠态：箭头右转 */
     .sidebar.collapsed .sidebar-title::after {
         transform: rotate(-90deg);
     }
     .sidebar-menu {
-        max-height: 0;
-        overflow: hidden;
+        max-height: 0 !important;
+        overflow: hidden !important;
+        overflow-y: hidden !important;
         transition: max-height 0.3s ease;
     }
-    .sidebar:not(.collapsed) .sidebar-menu {
-        max-height: 600px;
+    /* 展开态：360px 足以容纳 6 条分类，同时不占据整屏（特异性双重写法避免某些浏览器漏匹配） */
+    .sidebar:not(.collapsed) .sidebar-menu,
+    .sidebar.mobile-open .sidebar-menu {
+        max-height: 360px !important;
+        overflow-y: auto !important;
     }
     .sidebar-menu .menu-item {
-        padding: 10px 14px;
+        padding: 11px 14px;
         font-size: 14px;
+        min-height: 44px; /* 触控目标 */
     }
 
     .content-area { order: 2; }
 
     /* Banner */
-    .banner-wrap { flex-direction: column; gap: 12px; }
-    .banner-carousel { height: 200px; border-radius: 8px; }
-    .slide-content { padding: 20px 16px; }
-    .slide-content .main-title { font-size: 18px; line-height: 1.4; }
-    .slide-content .sub-title { font-size: 13px; margin-top: 8px; }
+    .banner-wrap {
+        flex-direction: column !important;
+        gap: 14px;
+        overflow: visible !important;   /* 防止轮播/公告内部元素被外层裁剪（轮播图自己仍有 overflow:hidden） */
+        margin-bottom: 14px !important; /* 覆盖桌面 20px 固定值，移动端上下留白更紧凑但足够隔开 黑科技爆品 */
+    }
+    .banner-carousel {
+        width: 100% !important;
+        height: 200px !important;
+        border-radius: 8px !important;
+        flex: 1 1 auto !important;
+        overflow: hidden;               /* 保持轮播图自身裁剪 */
+    }
+    .slide-content { padding: 16px 14px !important; }
+    .slide-content .main-title { font-size: 18px; line-height: 1.3; margin-bottom: 6px; }
+    .slide-content .sub-title { font-size: 13px; margin-top: 6px; line-height: 1.4; }
     .slide-content .desc {
         font-size: 12px;
-        margin-top: 8px;
-        line-height: 1.6;
+        margin-top: 6px;
+        line-height: 1.5;
         display: -webkit-box;
         -webkit-line-clamp: 2;
         -webkit-box-orient: vertical;
         overflow: hidden;
     }
-    .carousel-arrow { display: none; }
-    .carousel-dots { bottom: 6px; }
+    .carousel-arrow { display: none !important; }
+    .carousel-dots { bottom: 6px; gap: 4px; }
     .carousel-dots .dot { width: 6px; height: 6px; }
 
-    /* 公告面板 */
-    .notice-panel { width: 100%; }
+    /* 公告面板：覆盖桌面 300px 宽度，保证 100% */
+    .notice-panel {
+        width: 100% !important;
+        box-sizing: border-box;
+        overflow: visible !important;     /* 防止桌面 overflow:hidden 裁剪下方 item 与 黑科技爆品标题重叠 */
+        margin-bottom: 0 !important;
+        padding-bottom: 4px !important;
+    }
     .notice-header { padding: 10px 14px; }
     .notice-header h3 { font-size: 14px; }
-    .notice-list { padding: 6px 10px; }
-    .notice-item { padding: 8px 6px; font-size: 12px; }
-    .notice-item .tag { font-size: 10px; padding: 1px 5px; }
+    .notice-list {
+        padding: 4px 10px 8px 10px;
+        overflow: visible !important;     /* 防止 item 文本换行后被父层裁剪重叠 */
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+    }
+    .notice-item {
+        padding: 10px 10px !important;   /* 上下 10 + 10，内容 2 行 (18px*2+gap4)+20 = 60px ≥ 触控目标 */
+        font-size: 13px;
+        min-height: auto !important;     /* 内容多行时不再被 44px 高度卡死导致相邻重叠 */
+        height: auto !important;
+        overflow: visible !important;    /* 取消桌面 nowrap 模式的溢出裁剪 */
+        white-space: normal !important;
+        text-overflow: clip !important;
+        flex-wrap: wrap;
+        gap: 6px 10px;                   /* 横向 10px，纵向换行时 6px */
+        align-items: center;
+    }
+    .notice-item .tag {
+        font-size: 10px;
+        padding: 2px 6px;
+        border-radius: 3px;
+        line-height: 1.4;
+        flex-shrink: 0;
+        align-self: flex-start;          /* 多行时 tag 贴顶对齐而非居中 */
+        margin-top: 2px;
+    }
+    .notice-item .title {
+        font-size: 13px;
+        white-space: normal;
+        line-height: 1.55;               /* 行高更宽松，避免相邻行文字叠影 */
+        flex: 1 1 calc(100% - 48px);     /* 除去 tag 宽度的剩余全占 */
+        max-width: 100%;
+        color: #333;
+        word-break: break-word;
+    }
 
     /* 产品板块 */
     .product-zone { margin-bottom: 16px; }
@@ -165,9 +350,11 @@ img, table { max-width: 100%; }
         gap: 8px;
     }
     .product-categories .cat-item {
-        padding: 10px 6px;
+        padding: 12px 6px;
         font-size: 12px;
         text-align: center;
+        min-height: 64px; /* 触控目标 */
+        border-radius: 8px;
     }
     .product-categories .cat-item .cat-icon {
         display: block;
@@ -180,6 +367,104 @@ img, table { max-width: 100%; }
 
     /* 侧边快捷栏 */
     .side-shortcut { display: none !important; }
+
+    /* ============ 三栏布局（首页） ============ */
+    .three-col-wrapper {
+        flex-direction: column !important;
+        flex-wrap: nowrap !important;
+        gap: 14px;
+        margin: 14px auto;
+        padding: 0 12px;
+    }
+    .col-left,
+    .col-right {
+        width: 100% !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        position: static !important;
+        max-height: none !important;
+        overflow: visible !important;
+        top: auto;
+    }
+    .col-center {
+        order: -1;
+        flex: 1 0 100%;
+        max-width: none;
+    }
+
+    /* 行业资讯栏 */
+    .news-sidebar { width: 100%; }
+    .news-sidebar .ns-header { padding: 10px 14px; min-height: 44px; }
+    .news-sidebar .ns-header h3 { font-size: 14px; }
+    .news-sidebar .ns-list .news-item {
+        padding: 12px 12px !important;
+        min-height: 64px;
+        align-items: center;
+    }
+    .news-sidebar .ns-list .news-item .news-body h4 { font-size: 13px; -webkit-line-clamp: 2; display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden; line-height: 1.4; }
+    .news-sidebar .ns-list .news-item .news-body p { font-size: 11px; -webkit-line-clamp: 2; margin-top: 4px; }
+    .news-sidebar .ns-list .news-item .news-date .day { font-size: 16px; }
+    .news-sidebar .ns-list .news-item .news-date .month { font-size: 10px; }
+
+    /* 认证栏 */
+    .cert-bar--sidebar { padding: 12px; }
+    .cert-bar--sidebar .cert-title { font-size: 13px; padding: 8px 0; }
+    .cert-bar--sidebar .cert-col-list { gap: 8px; }
+    .cert-bar--sidebar .cert-item--v {
+        padding: 10px 8px !important;
+        font-size: 12px;
+        min-height: 48px;
+        align-items: center;
+    }
+    .cert-bar--sidebar .cert-item--v .cert-icon { width: 30px; height: 30px; line-height: 30px; font-size: 16px; }
+
+    /* 右侧栏：新品首发 / 采购需求 */
+    .np-sidebar-panel { width: 100%; }
+    .np-sidebar-panel .np-header { padding: 10px 14px; min-height: 44px; }
+    .np-sidebar-panel .np-header h3 { font-size: 13px; }
+    .np-sidebar-panel .np-list-item {
+        padding: 12px 14px !important;
+        min-height: 48px;
+        flex-wrap: wrap;
+        gap: 4px 6px;
+        align-items: center;
+    }
+    .np-sidebar-panel .np-list-item .np-title { font-size: 13px; flex: 1 0 60%; margin-right: 4px; line-height: 1.4; }
+
+    /* 黑科技爆品 */
+    .flash-sale {
+        padding: 14px 12px;
+        border-radius: 8px;
+        margin-top: 4px;               /* 顶部额外 4px，防止上一区块残留溢出 */
+        overflow: visible !important;
+    }
+    .flash-header {
+        margin-bottom: 12px;
+        flex-wrap: wrap;               /* 副标题换行时不再挤爆单行高度，避免和 flash-products 重叠 */
+        gap: 6px 10px;
+        align-items: center;
+    }
+    .flash-title {
+        gap: 8px;
+        flex-wrap: wrap;               /* 允许 🔥 图标 与 主副标题多行排列，防止重叠 */
+        align-items: baseline;
+        row-gap: 2px;
+    }
+    .flash-title h2 { font-size: 16px; margin: 0; line-height: 1.3; }
+    .flash-title .icon { font-size: 20px; line-height: 1; }
+    .flash-title .subtitle {
+        font-size: 11px;
+        line-height: 1.4;
+        color: #888;
+        margin: 0;
+        flex: 1 1 100%;                /* 强制换行到第二行，不再和主标题挤同一行 */
+    }
+    .flash-products {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 10px;
+    }
+    .flash-product .fp-img { height: 90px; font-size: 32px; }
+    .flash-product .fp-info .fp-name { font-size: 12px; }
 
     /* Footer */
     .footer-inner {
@@ -346,6 +631,32 @@ img, table { max-width: 100%; }
 
     .cart-empty { padding: 50px 16px; }
     .cart-empty .empty-icon { font-size: 56px; }
+
+    /* ============ 触控反馈（无 hover 时以 :active 替代） ============ */
+    .news-item:active,
+    .np-list-item:active,
+    .notice-item:active,
+    .sidebar-menu .menu-item:active,
+    .cert-item--v:active,
+    .flash-product:active,
+    .related-card:active {
+        background: #eef2f7 !important;
+        transform: scale(0.985);
+    }
+    .flash-product:active { box-shadow: 0 6px 18px rgba(10, 77, 180, 0.18); }
+    .footer-col a:active { color: #0a4db4; }
+}
+
+/* ============ 尊重「减少动态」系统偏好 ============ */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+        scroll-behavior: auto !important;
+    }
 }
 
 /* ================================================================
@@ -367,10 +678,10 @@ img, table { max-width: 100%; }
 
     .search-box { gap: 2px; }
     .search-box .cat-select { width: 75px; font-size: 11px; }
-    .search-box input { font-size: 12px; }
+    .search-box input { font-size: 16px; } /* 保持 16px，规避 iOS 聚焦放大 */
     .search-box button { width: 58px; font-size: 12px; }
 
-    .main-nav .nav-item { padding: 0 10px; font-size: 12px; line-height: 38px; }
+    .main-nav .nav-item { padding: 0 10px; font-size: 12px; line-height: 44px; }
 
     .banner-carousel { height: 170px; }
     .slide-content { padding: 16px 12px; }
@@ -380,6 +691,13 @@ img, table { max-width: 100%; }
 
     .product-categories { grid-template-columns: repeat(2, 1fr); }
     .product-zone-image img { max-height: 130px; }
+
+    /* 首页三栏：小屏单列堆叠，爆品单列 */
+    .three-col-wrapper { padding: 0 10px; gap: 10px; }
+    .news-sidebar .ns-list .news-item .news-body h4 { font-size: 12px; }
+    .cert-bar--sidebar .cert-item--v { padding: 7px 4px; }
+    .flash-products { grid-template-columns: 1fr !important; }
+    .flash-product .fp-img { height: 110px; }
 
     /* 详情页小屏 */
     .main-image { height: 220px; }

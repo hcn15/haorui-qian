@@ -363,6 +363,10 @@
         .btn-cancel:hover { border-color: #f5222d; color: #f5222d; background: #fff5f5; }
         .btn-detail { padding: 6px 16px; border: 1px solid #0a4db4; border-radius: 4px; background: #fff; color: #0a4db4; font-size: 13px; cursor: pointer; }
         .btn-detail:hover { background: #e8f0fe; }
+        /* 去支付按钮：绿色渐变，强调主操作 */
+        .btn-pay { padding: 6px 18px; border: 1px solid #52c41a; border-radius: 4px; background: linear-gradient(135deg, #52c41a, #73d13d); color: #fff; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.25s ease; box-shadow: 0 2px 6px rgba(82,196,26,0.25); }
+        .btn-pay:hover { background: linear-gradient(135deg, #389e0d, #52c41a); border-color: #389e0d; box-shadow: 0 4px 12px rgba(82,196,26,0.4); transform: translateY(-1px); }
+        .btn-pay:active { transform: translateY(0); }
 
         /* 管理员操作按钮 */
         .btn-confirm { padding: 6px 16px; border: 1px solid #0a4db4; border-radius: 4px; background: #0a4db4; color: #fff; font-size: 13px; cursor: pointer; transition: all 0.25s ease; }
@@ -875,7 +879,7 @@
                 </div>
             </div>
             <div class="top-right">
-                <a href="../../neep.html">首页</a>
+                <a href="../../index.html">首页</a>
                 <a href="#">产品服务</a>
                 <a href="#">解决方案</a>
                 <a href="#">新闻资讯</a>
@@ -888,7 +892,7 @@
     <!-- ============ Header ============ -->
     <div class="header">
         <div class="header-inner">
-            <div class="logo" onclick="window.location.href='../../neep.html'">
+            <div class="logo" onclick="window.location.href='../../index.html'">
                 <img class="logo-icon" src="../../img/JSlogo-beb0d75f.png" alt="Logo" onerror="this.style.display='none'">
                 <div class="logo-text">
                     <div class="brand">黑科技 <span class="highlight">商城</span></div>
@@ -904,7 +908,7 @@
     <!-- ============ 主导航 ============
     <nav class="main-nav">
         <div class="main-nav-inner">
-            <div class="nav-item" onclick="location.href='../../neep.html'">首页</div>
+            <div class="nav-item" onclick="location.href='../../index.html'">首页</div>
             <div class="nav-item" onclick="location.href='../series/chanpin1-ai.html'">智能机器人</div>
             <div class="nav-item" onclick="location.href='../series/chanpin1.html'">产品中心</div>
             <div class="nav-item" onclick="location.href='../about/index-aboutus.html'">关于我们</div>
@@ -915,7 +919,7 @@
     <!-- ============ 面包屑 ============ -->
     <div class="breadcrumb-wrap">
         <div class="breadcrumb">
-            <a href="../../neep.html">首页</a>
+            <a href="../../index.html">首页</a>
             <span class="sep">›</span>
             <span class="current">我的订单</span>
         </div>
@@ -1020,6 +1024,9 @@
 
         var HROrder = (function () {
             var currentStatus = '';
+            // 订单列表缓存：供 HROrder.gotoPay(orderId) 反查订单对象
+            // 不缓存会导致 onclick 内联调用时无法传递整个 order 对象（JSON 转义问题）
+            var _ordersCache = [];
             var adminMode = false;
 
             function isLoggedIn() {
@@ -1141,13 +1148,15 @@
                 var wrap = document.getElementById('orderList');
                 var countEl = document.getElementById('orderCount');
                 countEl.textContent = orders.length ? ('共 ' + orders.length + ' 个订单') : '';
+                // 缓存订单数据，供 HROrder.gotoPay(orderId) 反查
+                _ordersCache = orders || [];
 
                 if (!orders.length) {
                     wrap.innerHTML =
                         '<div class="order-empty">' +
                         '<div class="empty-icon">📦</div>' +
                         '<p class="empty-text">' + (adminMode ? '暂无相关订单' : '暂无相关订单') + '</p>' +
-                        (adminMode ? '' : '<a class="btn-go-shop" href="../../neep.html">去购物</a>') +
+                        (adminMode ? '' : '<a class="btn-go-shop" href="../../index.html">去购物</a>') +
                         '</div>';
                     return;
                 }
@@ -1179,16 +1188,33 @@
                     var actionsHtml = '';
                     if (adminMode) {
                         if (st === 0) {
-                            actionsHtml = '<button class="btn-confirm" onclick="HROrder.confirmOrder(' + o.id + ',\'' + escapeHtml(o.orderNo) + '\')">确认订单</button>' +
-                                '<button class="btn-admin-cancel" onclick="HROrder.adminCancelOrder(' + o.id + ',\'' + escapeHtml(o.orderNo) + '\')">取消</button>';
+                            var adminTotal = parseFloat(o.totalAmount) || 0;
+                            var adminPaid = (o.payStatus != null && o.payStatus === 1);
+                            // 有价订单必须用户先支付完成才能确认；询价订单(trialAmount=0)免支付可直接确认
+                            if (adminTotal > 0 && !adminPaid) {
+                                actionsHtml = '<button class="btn-confirm" style="opacity:.45;cursor:not-allowed;background:linear-gradient(135deg,#aaa,#bbb);border-color:#888;" title="用户尚未支付，无法确认订单" disabled>待用户支付</button>' +
+                                    '<button class="btn-admin-cancel" onclick="HROrder.adminCancelOrder(' + o.id + ',\'' + escapeHtml(o.orderNo) + '\')">取消</button>';
+                            } else {
+                                actionsHtml = '<button class="btn-confirm" onclick="HROrder.confirmOrder(' + o.id + ',\'' + escapeHtml(o.orderNo) + '\')">确认订单</button>' +
+                                    '<button class="btn-admin-cancel" onclick="HROrder.adminCancelOrder(' + o.id + ',\'' + escapeHtml(o.orderNo) + '\')">取消</button>';
+                            }
                         } else if (st === 1) {
                             actionsHtml = '<button class="btn-complete" onclick="HROrder.completeOrder(' + o.id + ',\'' + escapeHtml(o.orderNo) + '\')">标记完成</button>' +
                                 '<button class="btn-admin-cancel" onclick="HROrder.adminCancelOrder(' + o.id + ',\'' + escapeHtml(o.orderNo) + '\')">取消</button>';
                         }
                     } else {
-                        // 普通用户仅可取消待处理订单
+                        // 普通用户：待处理订单可取消；待处理+有价+未支付订单可重新发起支付
                         if (st === 0) {
-                            actionsHtml = '<button class="btn-cancel" onclick="HROrder.cancelOrder(' + o.id + ',\'' + escapeHtml(o.orderNo) + '\')">取消订单</button>';
+                            var ordTotal = parseFloat(o.totalAmount) || 0;
+                            var ordUnpaid = (o.payStatus == null || o.payStatus !== 1);
+                            if (ordTotal > 0 && ordUnpaid) {
+                                // 有价且未支付：显示"去支付"主按钮（绿色渐变）+ 取消按钮
+                                actionsHtml = '<button class="btn-pay" onclick="HROrder.gotoPay(' + o.id + ')">去支付</button>' +
+                                    '<button class="btn-cancel" onclick="HROrder.cancelOrder(' + o.id + ',\'' + escapeHtml(o.orderNo) + '\')">取消订单</button>';
+                            } else {
+                                // 询价订单或已支付：仅显示取消按钮
+                                actionsHtml = '<button class="btn-cancel" onclick="HROrder.cancelOrder(' + o.id + ',\'' + escapeHtml(o.orderNo) + '\')">取消订单</button>';
+                            }
                         }
                     }
 
@@ -1215,7 +1241,10 @@
                         '<div class="total-info">' +
                         '共 <span class="qty">' + (o.totalQuantity || 0) + '</span> 件商品' +
                         (o.remark ? ' &nbsp;|&nbsp; <span class="remark-text" title="' + escapeHtml(o.remark) + '">备注：' + escapeHtml(o.remark) + '</span>' : '') +
-                        (o.payStatus != null && o.payStatus > 0 ? ' &nbsp;|&nbsp; 支付：' + (PAY_TYPE_MAP[o.payType] || '') + ' ' + PAY_STATUS_MAP[o.payStatus] : '') +
+                        // 管理员端：永远展示支付状态（含"待支付"），便于区分；用户端仅在已支付/退款时展示
+                        (adminMode
+                            ? ' &nbsp;|&nbsp; 支付：' + (o.payType ? (PAY_TYPE_MAP[o.payType] || '') + ' ' : '') + (PAY_STATUS_MAP[o.payStatus] || PAY_STATUS_MAP[0])
+                            : (o.payStatus != null && o.payStatus > 0 ? ' &nbsp;|&nbsp; 支付：' + (PAY_TYPE_MAP[o.payType] || '') + ' ' + PAY_STATUS_MAP[o.payStatus] : '')) +
                         userInfoHtml +
                         '</div>' +
                         '<div style="display:flex;align-items:center;">' +
@@ -1365,6 +1394,35 @@
                 }
             }
 
+            /**
+             * 跳转支付：从缓存中按 orderId 反查订单对象，调用 cart.js 的 showPaymentModal
+             * 触发条件：订单页"去支付"按钮点击
+             * 依赖：cart.js 已加载并将 showPaymentModal 暴露到 window
+             */
+            function gotoPay(orderId) {
+                var order = null;
+                for (var i = 0; i < _ordersCache.length; i++) {
+                    if (_ordersCache[i].id == orderId) { order = _ordersCache[i]; break; }
+                }
+                if (!order) {
+                    showToast('订单数据已失效，请刷新页面后重试', 'error');
+                    return;
+                }
+                // 二次校验：仅待处理 + 有价 + 未支付订单可发起支付
+                var total = parseFloat(order.totalAmount) || 0;
+                var unpaid = (order.payStatus == null || order.payStatus !== 1);
+                if (order.status !== 0 || total <= 0 || !unpaid) {
+                    showToast('当前订单状态不支持支付', 'error');
+                    return;
+                }
+                if (typeof window.showPaymentModal !== 'function') {
+                    showToast('支付模块加载失败，请刷新页面重试', 'error');
+                    return;
+                }
+                // 调用 cart.js 的支付弹窗（内部会调用 /payment/create 创建/复用支付记录）
+                window.showPaymentModal(order);
+            }
+
             return {
                 loadOrders: loadOrders,
                 cancelOrder: cancelOrder,
@@ -1373,12 +1431,15 @@
                 completeOrder: completeOrder,
                 adminCancelOrder: adminCancelOrder,
                 switchMode: switchMode,
-                initAdminUI: initAdminUI
+                initAdminUI: initAdminUI,
+                gotoPay: gotoPay
             };
         })();
 
         //更新顶部登录状态
         function initAuthState() {
+            // 主动检测 token 是否过期，过期则清除登录态
+            if (typeof checkTokenExpired === 'function') checkTokenExpired();
             var token = localStorage.getItem('token');
             var username = localStorage.getItem('username');
             var guest = document.getElementById('authGuest');

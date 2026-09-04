@@ -367,6 +367,23 @@
             margin-top: 2px;
         }
 
+        /* Logo 微交互 */
+        .logo {
+            cursor: pointer;
+            transition: transform .3s var(--ease);
+        }
+
+        .logo:hover {
+            transform: translateX(-2px);
+        }
+
+        .logo .brand {
+            background: linear-gradient(135deg, #000000 0%, #006eff 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
         .search-box {
             flex: 1;
             max-width: 580px;
@@ -870,7 +887,6 @@
             font-size: 15px;
             border-left: 1px solid #ddd;
             border-right: 1px solid #ddd;
-            pointer-events: none;
             -moz-appearance: textfield;
         }
 
@@ -1473,7 +1489,7 @@
                 </div>
             </div>
             <div class="top-right">
-                <a href="../../neep.html">首页</a>
+                <a href="../../index.html">首页</a>
                 <a href="#">产品服务</a>
                 <a href="#">解决方案</a>
                 <a href="#">新闻资讯</a>
@@ -1485,7 +1501,7 @@
 
     <div class="header">
         <div class="header-inner">
-            <div class="logo" onclick="window.location.href='../../neep.html'">
+            <div class="logo" onclick="window.location.href='../../index.html'">
                 <img class="logo-icon" src="../../img/JSlogo-beb0d75f.png" alt="Logo">
                 <div class="logo-text">
                     <div class="brand">黑科技 <span class="highlight">商城</span></div>
@@ -1503,11 +1519,11 @@
 
     <div class="breadcrumb-wrap">
         <div class="breadcrumb">
-            <a href="../../neep.html">首页</a>
+            <a href="../../index.html">首页</a>
             <span class="sep">›</span>
-            <a href="../../neep.html">人工智能和机器人</a>
+            <a href="../../index.html">人工智能和机器人</a>
             <span class="sep">›</span>
-            <a href="../../neep.html">六轴协作机器人CR系列</a>
+            <a href="../../index.html">六轴协作机器人CR系列</a>
             <span class="sep">›</span>
             <span class="current">CRA-IP68 高防护</span>
         </div>
@@ -1591,7 +1607,7 @@
                     <span class="spec-label">数量</span>
                     <div class="quantity-input">
                         <button onclick="changeQty(-1)">-</button>
-                        <input type="number" id="quantityInput" value="1" min="1" readonly>
+                        <input type="number" id="quantityInput" value="1" min="1">
                         <button onclick="changeQty(1)">+</button>
                     </div>
 

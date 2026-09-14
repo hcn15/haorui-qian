@@ -359,6 +359,9 @@
         .order-card-foot .total-amount { font-size: 18px; color: #e4393c; font-weight: bold; margin: 0 14px; }
         .order-card-foot .remark-text { font-size: 12px; color: #888; max-width: 400px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
         .order-actions { display: flex; gap: 8px; }
+        /* 未支付倒计时 */
+        .pay-countdown { font-size: 12px; color: #ff4d4f; font-weight: 600; margin-left: 8px; white-space: nowrap; }
+        .pay-countdown.expired { color: #999; }
         .btn-cancel { padding: 6px 16px; border: 1px solid #ddd; border-radius: 4px; background: #fff; color: #666; font-size: 13px; cursor: pointer; }
         .btn-cancel:hover { border-color: #f5222d; color: #f5222d; background: #fff5f5; }
         .btn-detail { padding: 6px 16px; border: 1px solid #0a4db4; border-radius: 4px; background: #fff; color: #0a4db4; font-size: 13px; cursor: pointer; }
@@ -367,6 +370,10 @@
         .btn-pay { padding: 6px 18px; border: 1px solid #52c41a; border-radius: 4px; background: linear-gradient(135deg, #52c41a, #73d13d); color: #fff; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.25s ease; box-shadow: 0 2px 6px rgba(82,196,26,0.25); }
         .btn-pay:hover { background: linear-gradient(135deg, #389e0d, #52c41a); border-color: #389e0d; box-shadow: 0 4px 12px rgba(82,196,26,0.4); transform: translateY(-1px); }
         .btn-pay:active { transform: translateY(0); }
+        /* 退款按钮：橙色渐变，区分于支付和取消 */
+        .btn-refund { padding: 6px 18px; border: 1px solid #fa8c16; border-radius: 4px; background: linear-gradient(135deg, #fa8c16, #ffa940); color: #fff; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.25s ease; box-shadow: 0 2px 6px rgba(250,140,22,0.25); }
+        .btn-refund:hover { background: linear-gradient(135deg, #d46b08, #fa8c16); border-color: #d46b08; box-shadow: 0 4px 12px rgba(250,140,22,0.4); transform: translateY(-1px); }
+        .btn-refund:active { transform: translateY(0); }
 
         /* 管理员操作按钮 */
         .btn-confirm { padding: 6px 16px; border: 1px solid #0a4db4; border-radius: 4px; background: #0a4db4; color: #fff; font-size: 13px; cursor: pointer; transition: all 0.25s ease; }
@@ -1202,6 +1209,11 @@
                             actionsHtml = '<button class="btn-complete" onclick="HROrder.completeOrder(' + o.id + ',\'' + escapeHtml(o.orderNo) + '\')">标记完成</button>' +
                                 '<button class="btn-admin-cancel" onclick="HROrder.adminCancelOrder(' + o.id + ',\'' + escapeHtml(o.orderNo) + '\')">取消</button>';
                         }
+                        // PAY-011: 管理员端：已支付且未退款的订单，显示"退款"按钮
+                        if (o.payStatus === 1 && st !== 3) {
+                            actionsHtml = (actionsHtml || '') +
+                                '<button class="btn-refund" onclick="HROrder.refundOrder(' + o.id + ',\'' + escapeHtml(o.orderNo) + '\')">退款</button>';
+                        }
                     } else {
                         // 普通用户：待处理订单可取消；待处理+有价+未支付订单可重新发起支付
                         if (st === 0) {
@@ -1215,6 +1227,11 @@
                                 // 询价订单或已支付：仅显示取消按钮
                                 actionsHtml = '<button class="btn-cancel" onclick="HROrder.cancelOrder(' + o.id + ',\'' + escapeHtml(o.orderNo) + '\')">取消订单</button>';
                             }
+                        }
+                        // PAY-011: 已支付且未退款的订单，显示"申请退款"按钮
+                        if (o.payStatus === 1 && st !== 3) {
+                            actionsHtml = (actionsHtml || '') +
+                                '<button class="btn-refund" onclick="HROrder.refundOrder(' + o.id + ',\'' + escapeHtml(o.orderNo) + '\')">申请退款</button>';
                         }
                     }
 
@@ -1245,6 +1262,10 @@
                         (adminMode
                             ? ' &nbsp;|&nbsp; 支付：' + (o.payType ? (PAY_TYPE_MAP[o.payType] || '') + ' ' : '') + (PAY_STATUS_MAP[o.payStatus] || PAY_STATUS_MAP[0])
                             : (o.payStatus != null && o.payStatus > 0 ? ' &nbsp;|&nbsp; 支付：' + (PAY_TYPE_MAP[o.payType] || '') + ' ' + PAY_STATUS_MAP[o.payStatus] : '')) +
+                        // 未支付且有价订单：显示自动取消倒计时
+                        (st === 0 && (o.payStatus == null || o.payStatus !== 1) && total > 0
+                            ? '<span class="pay-countdown" data-created="' + escapeHtml(o.createdAt || '') + '"></span>'
+                            : '') +
                         userInfoHtml +
                         '</div>' +
                         '<div style="display:flex;align-items:center;">' +
@@ -1256,6 +1277,47 @@
                 }).join('');
 
                 wrap.innerHTML = html;
+                // 启动倒计时
+                startPayCountdown();
+            }
+
+            // 未支付订单自动取消倒计时（15分钟）
+            var _countdownTimer = null;
+            var ORDER_EXPIRE_MS = 15 * 60 * 1000; // 与后端 pay.expire-minutes:15 一致
+
+            function startPayCountdown() {
+                if (_countdownTimer) clearInterval(_countdownTimer);
+                updateCountdowns();
+                var els = document.querySelectorAll('.pay-countdown:not(.expired)');
+                if (els.length > 0) {
+                    _countdownTimer = setInterval(updateCountdowns, 1000);
+                }
+            }
+
+            function updateCountdowns() {
+                var els = document.querySelectorAll('.pay-countdown');
+                var hasActive = false;
+                els.forEach(function (el) {
+                    var created = el.getAttribute('data-created');
+                    if (!created) return;
+                    var createdDate = new Date(created.replace(' ', 'T'));
+                    if (isNaN(createdDate)) return;
+                    var deadline = createdDate.getTime() + ORDER_EXPIRE_MS;
+                    var remaining = deadline - Date.now();
+                    if (remaining <= 0) {
+                        el.textContent = '已超时，等待自动取消';
+                        el.classList.add('expired');
+                    } else {
+                        var mins = Math.floor(remaining / 60000);
+                        var secs = Math.floor((remaining % 60000) / 1000);
+                        el.textContent = '剩余 ' + mins + ':' + (secs < 10 ? '0' : '') + secs + ' 自动取消';
+                        hasActive = true;
+                    }
+                });
+                if (!hasActive && _countdownTimer) {
+                    clearInterval(_countdownTimer);
+                    _countdownTimer = null;
+                }
             }
 
             function cancelOrder(id, orderNo) {
@@ -1278,6 +1340,40 @@
                         loadOrders();
                     } else {
                         showToast(res.message || res.msg || '取消失败', 'error');
+                    }
+                }).catch(function (err) {
+                    if (err.message !== '未登录') { showToast('网络错误，请稍后重试', 'error'); }
+                });
+            }
+
+            /**
+             * 申请退款（PAY-011/PAY-012）
+             * 调用 POST /payment/refund 接口，后端会调用支付宝 alipay.trade.refund
+             * 退款成功后 payment.status=2、order.pay_status=2
+             */
+            function refundOrder(id, orderNo) {
+                var reason = prompt('请输入退款原因（可选）：', '不想要了');
+                if (reason === null) return; // 用户取消
+                if (!confirm('确定要对订单 ' + orderNo + ' 申请退款吗？\n退款成功后资金将原路退回，无法撤销。')) return;
+                fetch(API_BASE + '/payment/refund', {
+                    method: 'POST',
+                    headers: authHeaders(),
+                    body: JSON.stringify({ orderId: id, reason: reason })
+                }).then(function (resp) {
+                    if (resp.status === 401) {
+                        localStorage.removeItem('token');
+                        localStorage.removeItem('hr_cart_synced');
+                        if (window.HRCart) HRCart.logout();
+                        location.href = 'login.html?redirect=' + encodeURIComponent(location.pathname.replace(/^\//, '') + location.search);
+                        throw new Error('未登录');
+                    }
+                    return resp.json();
+                }).then(function (res) {
+                    if (res.code === 0) {
+                        showToast('退款成功，资金将原路退回', 'success');
+                        loadOrders();
+                    } else {
+                        showToast(res.message || '退款失败', 'error');
                     }
                 }).catch(function (err) {
                     if (err.message !== '未登录') { showToast('网络错误，请稍后重试', 'error'); }
@@ -1426,6 +1522,7 @@
             return {
                 loadOrders: loadOrders,
                 cancelOrder: cancelOrder,
+                refundOrder: refundOrder,
                 filterStatus: filterStatus,
                 confirmOrder: confirmOrder,
                 completeOrder: completeOrder,

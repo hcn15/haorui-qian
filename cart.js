@@ -178,6 +178,30 @@
         return h;
     }
 
+    /**
+     * 带超时的 fetch：避免网络异常或服务器无响应时请求无限挂起。
+     * 默认超时 15s；支付相关请求（创建支付记录/轮询/模拟支付）建议用 10s。
+     */
+    function fetchWithTimeout(url, options, timeoutMs) {
+        var controller = (typeof AbortController !== 'undefined') ? new AbortController() : null;
+        var signal = controller ? controller.signal : undefined;
+        var opts = options || {};
+        if (signal) opts.signal = signal;
+        var timer = setTimeout(function () {
+            if (controller) controller.abort();
+        }, timeoutMs || 15000);
+        return fetch(url, opts).then(function (resp) {
+            clearTimeout(timer);
+            return resp;
+        }, function (err) {
+            clearTimeout(timer);
+            if (err && err.name === 'AbortError') {
+                throw new Error('请求超时，请检查网络后重试');
+            }
+            throw err;
+        });
+    }
+
     /* 处理 401：token 失效，回退为游客模式并清空本地购物车数据 */
     function handleAuthFailure(resp) {
         if (resp && resp.status === 401) {
@@ -994,8 +1018,8 @@
             '</div>' +
             '<div class="hr-field" id="hrField-phone">' +
             '<label>联系电话<span class="req">*</span></label>' +
-            '<input type="text" id="hrCoPhone" placeholder="请输入手机号或座机号" maxlength="20">' +
-            '<div class="err">请填写正确的联系电话</div>' +
+            '<input type="tel" id="hrCoPhone" placeholder="请输入11位手机号" maxlength="11" inputmode="numeric">' +
+            '<div class="err">请输入正确的11位手机号</div>' +
             '</div>' +
             '<div class="hr-field" id="hrField-address">' +
             '<label>收货地址<span class="req">*</span></label>' +
@@ -1073,7 +1097,7 @@
         fAddr.classList.remove('invalid');
 
         if (!name) { fName.classList.add('invalid'); valid = false; }
-        if (!phone || !/^[\d\-+ ]{6,20}$/.test(phone)) { fPhone.classList.add('invalid'); valid = false; }
+        if (!phone || !/^1[3-9]\d{9}$/.test(phone)) { fPhone.classList.add('invalid'); valid = false; }
         if (!address) { fAddr.classList.add('invalid'); valid = false; }
         if (!valid) return;
 
@@ -1087,15 +1111,16 @@
         var btn = document.getElementById('hrCoSubmit');
         if (btn) { btn.disabled = true; btn.textContent = '提交中...'; }
 
-        fetch(apiUrl('').replace('/cart', '/order/checkout'), {
+        fetchWithTimeout(apiUrl('').replace('/cart', '/order/checkout'), {
             method: 'POST',
             headers: authHeaders(),
             body: JSON.stringify(dto)
-        }).then(function (resp) {
+        }, 15000).then(function (resp) {
             if (handleAuthFailure(resp)) {
                 throw new Error('未登录或登录已过期');
             }
-            return resp.json();
+            if (!resp.ok) throw new Error('服务器错误(' + resp.status + ')');
+            return resp.json().catch(function () { throw new Error('响应解析失败，请稍后重试'); });
         }).then(function (res) {
             if (res.code === 0 && res.data) {
                 closeCheckoutModal();
@@ -1153,7 +1178,7 @@
             '</div>' +
             '<div style="border-top:1px solid #f0f0f0;padding:16px 24px;display:flex;gap:12px;">' +
             '<button onclick="closeInquiryModal()" style="flex:1;padding:12px;border:1px solid #ddd;background:#fff;border-radius:8px;cursor:pointer;font-size:14px;color:#666;">继续购物</button>' +
-            '<button onclick="location.href=rootPath(\'pages/user/order.html\')" style="flex:1;padding:12px;border:none;background:#0a4db4;color:#fff;border-radius:8px;cursor:pointer;font-size:14px;font-weight:600;">查看订单</button>' +
+            '<button onclick="HRCart.viewOrders()" style="flex:1;padding:12px;border:none;background:#0a4db4;color:#fff;border-radius:8px;cursor:pointer;font-size:14px;font-weight:600;">查看订单</button>' +
             '</div>' +
             '</div></div>';
         // 注入成功动画关键帧
@@ -1175,6 +1200,7 @@
     var _paymentTimer = null;   // 支付倒计时定时器
     var _paymentStatusTimer = null; // 支付状态轮询定时器
     var _paymentHandled = false; // 防止支付成功被重复处理（轮询+mock-pay可能同时触发）
+    var _successRedirectTimer = null; // 支付成功后跳转到订单页的定时器
     var _qrcodeJsLoading = null; // Promise：确保 qrcode.min.js 只加载一次
 
     /**
@@ -1220,6 +1246,13 @@
      * 询价商品（totalAmount = 0）不调用此函数
      */
     function showPaymentModal(order) {
+        // 防止重复打开：若已有支付弹窗，先移除并清理旧定时器，避免多弹窗叠加与定时器泄漏
+        var existing = document.getElementById('hrPaymentModal');
+        if (existing) existing.remove();
+        if (_paymentTimer) clearInterval(_paymentTimer);
+        if (_paymentStatusTimer) clearTimeout(_paymentStatusTimer);
+        if (_successRedirectTimer) { clearTimeout(_successRedirectTimer); _successRedirectTimer = null; }
+
         _paymentOrder = order;
         // 进入弹窗就预加载 qrcode.min.js，不阻塞后续渲染（加载完成后下次二维码会自动用本地渲染）
         if (typeof _ensureQrCodeJs === 'function') _ensureQrCodeJs();
@@ -1239,7 +1272,7 @@
             '<div style="background:#fff;border-radius:14px;width:420px;max-width:92vw;max-height:90vh;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.3);">' +
             '<div style="background:linear-gradient(135deg,#0a4db4,#1e88e5);color:#fff;padding:20px 24px;display:flex;justify-content:space-between;align-items:center;">' +
             '<div><div style="font-size:18px;font-weight:700;">订单支付</div>' +
-            '<div style="font-size:13px;opacity:.85;margin-top:4px;">订单号：' + order.orderNo + ' | 共 ' + order.totalQuantity + ' 件</div></div>' +
+            '<div style="font-size:13px;opacity:.85;margin-top:4px;">订单号：' + (order.orderNo || '') + ' | 共 ' + (order.totalQuantity || 0) + ' 件</div></div>' +
             '<button onclick="closePaymentModal()" style="background:rgba(255,255,255,.2);border:none;color:#fff;width:30px;height:30px;border-radius:50%;cursor:pointer;font-size:18px;line-height:1;">×</button>' +
             '</div>' +
             '<div style="padding:24px;overflow-y:auto;">' +
@@ -1250,13 +1283,13 @@
             '<div style="border:1px solid #eee;border-radius:10px;padding:16px;margin-bottom:16px;">' +
             '<div style="font-size:14px;color:#333;font-weight:600;margin-bottom:12px;">选择支付方式</div>' +
             '<div style="display:flex;gap:12px;">' +
-            '<div id="payTypeWechat" onclick="selectPayType(\'wechat\')" style="flex:1;border:2px solid #07c160;border-radius:8px;padding:14px;text-align:center;cursor:pointer;background:#f0fdf4;transition:all .2s;">' +
+            '<div id="payTypeWechat" onclick="selectPayType(\'wechat\')" style="flex:1;border:2px solid #07c160;border-radius:8px;padding:14px;text-align:center;cursor:pointer;background:#f0fdf4;transition:all .2s;display:none;">' +
             '<div style="font-size:28px;">💬</div>' +
             '<div style="font-size:14px;color:#07c160;font-weight:600;margin-top:6px;">微信支付</div>' +
             '</div>' +
-            '<div id="payTypeAlipay" onclick="selectPayType(\'alipay\')" style="flex:1;border:2px solid #e8e8e8;border-radius:8px;padding:14px;text-align:center;cursor:pointer;transition:all .2s;">' +
+            '<div id="payTypeAlipay" onclick="selectPayType(\'alipay\')" style="flex:1;border:2px solid #1677ff;border-radius:8px;padding:14px;text-align:center;cursor:pointer;background:#e6f4ff;transition:all .2s;">' +
             '<div style="font-size:28px;">💰</div>' +
-            '<div style="font-size:14px;color:#666;margin-top:6px;">支付宝</div>' +
+            '<div style="font-size:14px;color:#1677ff;font-weight:600;margin-top:6px;">支付宝</div>' +
             '</div>' +
             '</div>' +
             '</div>' +
@@ -1277,7 +1310,7 @@
             '</div>' +
             '</div>';
         document.body.insertAdjacentHTML('beforeend', html);
-        selectPayType('wechat');
+        selectPayType('alipay');
     }
 
     /** 当前选中的支付方式（防止切换时旧请求覆盖新UI） */
@@ -1324,14 +1357,14 @@
             qrCode.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;color:#999;font-size:13px;"><div style="border:3px solid #e0e0e0;border-top:3px solid #0a4db4;border-radius:50%;width:28px;height:28px;animation:hrSpin .8s linear infinite;margin-right:8px;"></div>正在生成二维码...</div>';
             qrCode.style.background = '#fafafa';
         }
-        fetch(apiUrl('').replace('/cart', '/payment/create'), {
+        fetchWithTimeout(apiUrl('').replace('/cart', '/payment/create'), {
             method: 'POST',
             headers: authHeaders(),
             body: JSON.stringify({ orderId: orderId, payType: payType })
-        }).then(function (resp) {
+        }, 10000).then(function (resp) {
             if (resp.status === 401) throw new Error('登录已过期，请重新登录');
             if (!resp.ok) throw new Error('服务器错误(' + resp.status + ')');
-            return resp.json();
+            return resp.json().catch(function () { throw new Error('响应解析失败，请稍后重试'); });
         })
         .then(function (res) {
             // 防止过期响应：用户在请求过程中切换了支付方式时，忽略旧请求的结果
@@ -1360,6 +1393,11 @@
             }
         }).finally(function () {
             _createPaymentInProgress = false;
+            // 若用户在请求过程中切换了支付方式，自动用最新选中的方式重新创建支付记录，
+            // 避免快速切换时第二次请求被防抖拦截后二维码永远不显示的问题
+            if (payType !== _selectedPayType && _paymentOrder) {
+                createPaymentRecord(_paymentOrder.id, _selectedPayType);
+            }
         });
     }
 
@@ -1445,6 +1483,42 @@
         /* 优先使用后端返回的真实二维码URL（微信code_url / 支付宝qr_code / 沙箱qr.alipay.com链接） */
         var qrUrl = payment.qrCodeUrl || payment.qr_code_url || '';
 
+        /* 支付宝电脑网站支付（alipay.trade.page.pay）：
+           后端返回的是一段 HTML <form> 字符串（自动提交到支付宝收银台），
+           而非二维码 URL。此时直接将表单注入页面并自动提交，跳转支付宝完成支付。 */
+        if (qrUrl && (qrUrl.indexOf('<form') >= 0 || qrUrl.indexOf('<FORM') >= 0)) {
+            var amt = parseFloat(payment.amount);
+            var amtText = (isNaN(amt) ? 0 : amt).toFixed(2);
+            qrCode.innerHTML = '<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;color:#999;"><div style="font-size:48px;">⏳</div><div style="font-size:13px;margin-top:8px;">正在跳转支付宝收银台…</div><div style="font-size:12px;margin-top:4px;">金额 ¥' + amtText + '</div></div>';
+            qrCode.style.background = '#fff';
+            _paymentOrder._currentPayment = payment;
+            // 隐藏模拟扫码按钮（真实支付环境）
+            var mockBtn2 = document.getElementById('payMockBtn');
+            if (mockBtn2) mockBtn2.style.display = 'none';
+            // 注入表单并自动提交（跳转支付宝）
+            try {
+                var formWrap = document.createElement('div');
+                formWrap.style.display = 'none';
+                formWrap.innerHTML = qrUrl;
+                document.body.appendChild(formWrap);
+                var form = formWrap.querySelector('form');
+                if (form) {
+                    form.submit();
+                } else {
+                    // 兜底：直接写入整页
+                    document.open();
+                    document.write(qrUrl);
+                    document.close();
+                }
+            } catch (e) {
+                // 极端情况下直接用整页写入方式跳转
+                document.open();
+                document.write(qrUrl);
+                document.close();
+            }
+            return;
+        }
+
         /* 模拟扫码按钮显隐：仅在 mock 模式（qrCodeUrl 含 MOCK_）显示，
            与后端 mock-pay 三重防护（登录 + mockEnabled + isMockMode）对齐——
            真实支付环境下后端必然拒绝模拟支付，隐藏入口避免用户点击必然报错 */
@@ -1454,7 +1528,8 @@
         if (!qrUrl) {
             qrCode.innerHTML = '<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;color:#999;"><div style="font-size:48px;">📱</div><div style="font-size:13px;margin-top:8px;">二维码加载失败</div></div>';
             qrCode.style.background = '#fff';
-            _paymentOrder._currentPayment = payment;
+            // 不设置 _currentPayment：二维码无效时 mockPay 按钮也应隐藏，避免误用
+            if (_paymentOrder) _paymentOrder._currentPayment = null;
             return;
         }
 
@@ -1462,9 +1537,12 @@
         var isMock = qrUrl.indexOf('MOCK_') >= 0;
         var hint = '';
         var data;
+        // 金额兜底：amount 可能为 undefined/null，parseFloat 返回 NaN 时显示 0.00 避免 "¥NaN"
+        var amt = parseFloat(payment.amount);
+        var amtText = (isNaN(amt) ? 0 : amt).toFixed(2);
         if (isMock) {
-            data = '【模拟支付】\n支付单号:' + payment.paymentNo + '\n订单号:' + payment.orderNo + '\n金额:¥' +
-                parseFloat(payment.amount).toFixed(2) + '\n\n请点击下方"模拟扫码成功"按钮';
+            data = '【模拟支付】\n支付单号:' + (payment.paymentNo || '') + '\n订单号:' + (payment.orderNo || '') + '\n金额:¥' +
+                amtText + '\n\n请点击下方"模拟扫码成功"按钮';
             hint = '模拟支付模式，请使用下方模拟扫码按钮';
         } else {
             data = qrUrl;
@@ -1534,9 +1612,9 @@
         /** 单次轮询：递归 setTimeout 调度，由 pollActive 控制是否继续 */
         function pollOnce() {
             if (!pollActive || !_paymentOrder || !_paymentOrder.id) return;
-            fetch(apiUrl('').replace('/cart', '/payment/status-summary?orderId=') + _paymentOrder.id, {
+            fetchWithTimeout(apiUrl('').replace('/cart', '/payment/status-summary?orderId=') + _paymentOrder.id, {
                 headers: authHeaders()
-            }).then(function (r) {
+            }, 8000).then(function (r) {
                 if (r.status === 401) {
                     // token过期，停止轮询并提示重新登录
                     pollActive = false;
@@ -1547,11 +1625,21 @@
                     }, 1500);
                     return;
                 }
-                return r.json();
+                if (!r.ok) throw new Error('HTTP ' + r.status);
+                return r.json().catch(function () { throw new Error('JSON_PARSE_ERROR'); });
             })
             .then(function (res) {
-                if (!res) return;
-                if (res.code === 0 && res.data) {
+                if (!res) {
+                    scheduleNext();
+                    return;
+                }
+                // 后端返回非0错误码（非支付状态）：不阻塞轮询，避免后端偶发抖动导致漏检；
+                // 但如果是订单不存在等致命错误，后端应返回 status=3 由上面分支处理
+                if (res.code !== 0) {
+                    scheduleNext();
+                    return;
+                }
+                if (res.data) {
                     var st = res.data.status;
                     if (st === 1) {
                         // 支付成功：停止轮询
@@ -1571,15 +1659,19 @@
                     }
                 }
                 // 继续轮询：自适应间隔调度下一次
+                scheduleNext();
+            }).catch(function (err) {
+                // 网络异常/超时/JSON解析失败：继续轮询，避免短暂网络问题导致漏检
                 if (pollActive) {
-                    _paymentStatusTimer = setTimeout(pollOnce, getNextInterval());
-                }
-            }).catch(function () {
-                // 网络异常也继续轮询，避免短暂网络问题导致漏检
-                if (pollActive) {
-                    _paymentStatusTimer = setTimeout(pollOnce, getNextInterval());
+                    scheduleNext();
                 }
             });
+
+            function scheduleNext() {
+                if (pollActive) {
+                    _paymentStatusTimer = setTimeout(pollOnce, getNextInterval());
+                }
+            }
         }
 
         // 倒计时定时器：固定 1s 间隔，仅用于 UI 展示
@@ -1607,6 +1699,7 @@
             window.addEventListener('beforeunload', function () {
                 if (_paymentTimer) clearInterval(_paymentTimer);
                 if (_paymentStatusTimer) clearTimeout(_paymentStatusTimer);
+                if (_successRedirectTimer) clearTimeout(_successRedirectTimer);
             });
         }
     }
@@ -1614,6 +1707,8 @@
     /** 处理支付成功（被轮询和mock-pay共同调用，通过_paymentHandled防止重复） */
     function handlePaymentSuccess(payment) {
         if (_paymentHandled) return;
+        // 防御：cancelPayment/closePaymentModal 已将订单置空时，pending poll 的成功回调直接忽略
+        if (!_paymentOrder) return;
         _paymentHandled = true;
         if (_paymentTimer) clearInterval(_paymentTimer);
         if (_paymentStatusTimer) clearTimeout(_paymentStatusTimer);
@@ -1638,15 +1733,18 @@
                     '<svg viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>' +
                     '</div>' +
                     '<div style="font-size:20px;font-weight:700;color:#333;margin-bottom:8px;">支付成功</div>' +
-                    '<div style="font-size:14px;color:#888;margin-bottom:4px;">订单号：' + _paymentOrder.orderNo + '</div>' +
+                    '<div style="font-size:14px;color:#888;margin-bottom:4px;">订单号：' + (_paymentOrder.orderNo || '') + '</div>' +
                     '<div style="font-size:16px;font-weight:600;color:#ff4d4f;">¥' + totalText + '</div>' +
                     '<div style="font-size:13px;color:#999;margin-top:12px;">即将跳转到订单页…</div>' +
                     '</div>';
             }
         }
-        showToastMsg('支付成功！订单号：' + _paymentOrder.orderNo, 'success');
+        showToastMsg('支付成功！订单号：' + (_paymentOrder.orderNo || ''), 'success');
 
-        setTimeout(function () {
+        // 保存定时器引用，便于用户在跳转前点击"查看订单"时清除，避免双重跳转
+        if (_successRedirectTimer) clearTimeout(_successRedirectTimer);
+        _successRedirectTimer = setTimeout(function () {
+            _successRedirectTimer = null;
             var m = document.getElementById('hrPaymentModal');
             if (m) m.remove();
             location.href = rootPath('pages/user/order.html');
@@ -1658,14 +1756,14 @@
         if (!_paymentOrder || !_paymentOrder._currentPayment) return;
         var btn = document.getElementById('payMockBtn');
         if (btn) { btn.disabled = true; btn.textContent = '处理中...'; }
-        fetch(apiUrl('').replace('/cart', '/payment/mock-pay'), {
+        fetchWithTimeout(apiUrl('').replace('/cart', '/payment/mock-pay'), {
             method: 'POST',
             headers: authHeaders(),
             body: JSON.stringify({ paymentNo: _paymentOrder._currentPayment.paymentNo })
-        }).then(function (resp) {
+        }, 10000).then(function (resp) {
             if (resp.status === 401) throw new Error('登录已过期');
             if (!resp.ok) throw new Error('服务器错误');
-            return resp.json();
+            return resp.json().catch(function () { throw new Error('响应解析失败，请稍后重试'); });
         })
         .then(function (res) {
             if (res.code === 0) {
@@ -1690,32 +1788,34 @@
     window.cancelPayment = function () {
         if (_paymentTimer) clearInterval(_paymentTimer);
         if (_paymentStatusTimer) clearTimeout(_paymentStatusTimer);
+        if (_successRedirectTimer) { clearTimeout(_successRedirectTimer); _successRedirectTimer = null; }
         var orderId = _paymentOrder ? _paymentOrder.id : null;
         var paymentId = _paymentOrder && _paymentOrder._currentPayment ? _paymentOrder._currentPayment.id : null;
         var modal = document.getElementById('hrPaymentModal');
 
         // 1. 关闭支付记录
         if (paymentId) {
-            fetch(apiUrl('').replace('/cart', '/payment/close'), {
+            fetchWithTimeout(apiUrl('').replace('/cart', '/payment/close'), {
                 method: 'POST',
                 headers: authHeaders(),
                 body: JSON.stringify({ paymentId: paymentId })
-            }).catch(function (e) {
+            }, 8000).catch(function (e) {
                 console.warn('关闭支付记录失败:', e);
             });
         }
 
         // 2. 同时取消订单（防止"取消支付了怎么还有订单"）
         if (orderId) {
-            fetch(apiUrl('').replace('/cart', '/order/') + orderId + '/cancel', {
+            fetchWithTimeout(apiUrl('').replace('/cart', '/order/') + orderId + '/cancel', {
                 method: 'PUT',
                 headers: authHeaders()
-            }).then(function (resp) {
+            }, 8000).then(function (resp) {
                 if (resp.status === 401) {
                     showToastMsg('登录已过期，订单取消可能未成功', 'error');
                     return null;
                 }
-                return resp.json();
+                if (!resp.ok) throw new Error('HTTP ' + resp.status);
+                return resp.json().catch(function () { return null; });
             }).then(function (res) {
                 if (res && res.code !== 0) {
                     // 订单取消失败（可能已支付），提示用户
@@ -1726,25 +1826,34 @@
             });
         }
 
+        // 置空订单对象并标记已处理，阻断任何 pending poll / mock-pay 的回调继续执行
         _paymentOrder = null;
-        _paymentHandled = false;
+        _paymentHandled = true;
         if (modal) modal.remove();
     };
 
     /** 跳转订单页（支付完成后或用户主动查看） */
     window.viewOrdersFromPayment = function () {
         if (_paymentTimer) clearInterval(_paymentTimer);
-        if (_paymentStatusTimer) clearInterval(_paymentStatusTimer);
-        document.getElementById('hrPaymentModal').remove();
+        if (_paymentStatusTimer) clearTimeout(_paymentStatusTimer);
+        if (_successRedirectTimer) { clearTimeout(_successRedirectTimer); _successRedirectTimer = null; }
+        var m = document.getElementById('hrPaymentModal');
+        if (m) m.remove();
+        // 重置支付状态，避免浏览器后退时残留旧订单引用
+        _paymentOrder = null;
+        _paymentHandled = true;
         location.href = rootPath('pages/user/order.html');
     };
 
     /** 关闭支付弹窗（×按钮）：清理定时器并移除弹窗，不触发取消支付 */
     window.closePaymentModal = function () {
         if (_paymentTimer) clearInterval(_paymentTimer);
-        if (_paymentStatusTimer) clearInterval(_paymentStatusTimer);
+        if (_paymentStatusTimer) clearTimeout(_paymentStatusTimer);
+        if (_successRedirectTimer) { clearTimeout(_successRedirectTimer); _successRedirectTimer = null; }
         var m = document.getElementById('hrPaymentModal');
         if (m) m.remove();
+        // 标记已处理，阻断 pending poll 的成功回调在弹窗关闭后仍触发跳转
+        _paymentHandled = true;
     };
 
     /* ---------- 跳转到订单页 ---------- */

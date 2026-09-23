@@ -1289,7 +1289,11 @@
             '</div>' +
             '<div id="payTypeAlipay" onclick="selectPayType(\'alipay\')" style="flex:1;border:2px solid #1677ff;border-radius:8px;padding:14px;text-align:center;cursor:pointer;background:#e6f4ff;transition:all .2s;">' +
             '<div style="font-size:28px;">💰</div>' +
-            '<div style="font-size:14px;color:#1677ff;font-weight:600;margin-top:6px;">支付宝</div>' +
+            '<div style="font-size:14px;color:#1677ff;font-weight:600;margin-top:6px;">支付宝电脑网站支付</div>' +
+            '</div>' +
+            '<div id="payTypeAlipayPrecreate" onclick="selectPayType(\'alipay_precreate\')" style="flex:1;border:2px solid #e8e8e8;border-radius:8px;padding:14px;text-align:center;cursor:pointer;background:#fff;transition:all .2s;margin-top:8px;display:none;">' +
+            '<div style="font-size:24px;">📱</div>' +
+            '<div style="font-size:13px;margin-top:4px;color:#666;">支付宝扫码支付</div>' +
             '</div>' +
             '</div>' +
             '</div>' +
@@ -1316,27 +1320,43 @@
     /** 当前选中的支付方式（防止切换时旧请求覆盖新UI） */
     var _selectedPayType = null;
 
-    /** 切换支付方式（wechat/alipay），自动创建支付记录并显示二维码 */
+    /** 切换支付方式（wechat/alipay/alipay_precreate），自动创建支付记录并显示二维码 */
     window.selectPayType = function (type) {
         _selectedPayType = type; // 记录当前选中方式
         var wechat = document.getElementById('payTypeWechat');
         var alipay = document.getElementById('payTypeAlipay');
+        var precreate = document.getElementById('payTypeAlipayPrecreate');
         if (!wechat || !alipay) return;
 
+        // 统一重置所有按钮为未选中态
+        function resetBtn(el, color) {
+            if (!el) return;
+            el.style.borderColor = '#e8e8e8';
+            el.style.background = '#fff';
+            var label = el.querySelector('div:last-child');
+            if (label) label.style.color = '#666';
+        }
+        // 高亮指定按钮
+        function highlightBtn(el, color, bg) {
+            if (!el) return;
+            el.style.borderColor = color;
+            el.style.background = bg;
+            var label = el.querySelector('div:last-child');
+            if (label) label.style.color = color;
+        }
+
+        resetBtn(wechat);
+        resetBtn(alipay);
+        resetBtn(precreate);
+
         if (type === 'wechat') {
-            wechat.style.borderColor = '#07c160';
-            wechat.style.background = '#f0fdf4';
-            wechat.querySelector('div:last-child').style.color = '#07c160';
-            alipay.style.borderColor = '#e8e8e8';
-            alipay.style.background = '#fff';
-            alipay.querySelector('div:last-child').style.color = '#666';
+            highlightBtn(wechat, '#07c160', '#f0fdf4');
+        } else if (type === 'alipay_precreate') {
+            // 扫码支付与电脑网站支付共用蓝色主题，便于用户识别为同系列支付方式
+            highlightBtn(precreate, '#1677ff', '#e6f4ff');
         } else {
-            alipay.style.borderColor = '#1677ff';
-            alipay.style.background = '#e6f4ff';
-            alipay.querySelector('div:last-child').style.color = '#1677ff';
-            wechat.style.borderColor = '#e8e8e8';
-            wechat.style.background = '#fff';
-            wechat.querySelector('div:last-child').style.color = '#666';
+            // 默认走 alipay（电脑网站支付）
+            highlightBtn(alipay, '#1677ff', '#e6f4ff');
         }
 
         if (_paymentOrder) {
@@ -1482,16 +1502,20 @@
 
         /* 优先使用后端返回的真实二维码URL（微信code_url / 支付宝qr_code / 沙箱qr.alipay.com链接） */
         var qrUrl = payment.qrCodeUrl || payment.qr_code_url || '';
+        var payType = payment.payType || '';
 
         /* 支付宝电脑网站支付（alipay.trade.page.pay）：
            后端返回的是一段 HTML <form> 字符串（自动提交到支付宝收银台），
-           而非二维码 URL。此时直接将表单注入页面并自动提交，跳转支付宝完成支付。 */
-        if (qrUrl && (qrUrl.indexOf('<form') >= 0 || qrUrl.indexOf('<FORM') >= 0)) {
+           而非二维码 URL。此时直接将表单注入页面并自动提交，跳转支付宝完成支付。
+           注意：仅当 payType 为 alipay/alipay_page 且返回值含 <form 时才走此分支，
+           避免 alipay_precreate 返回的 qr_code URL 被误拦截。 */
+        var isAlipayPagePay = (payType === 'alipay' || payType === 'alipay_page');
+        if (isAlipayPagePay && qrUrl && (qrUrl.indexOf('<form') >= 0 || qrUrl.indexOf('<FORM') >= 0)) {
             var amt = parseFloat(payment.amount);
             var amtText = (isNaN(amt) ? 0 : amt).toFixed(2);
             qrCode.innerHTML = '<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;color:#999;"><div style="font-size:48px;">⏳</div><div style="font-size:13px;margin-top:8px;">正在跳转支付宝收银台…</div><div style="font-size:12px;margin-top:4px;">金额 ¥' + amtText + '</div></div>';
             qrCode.style.background = '#fff';
-            _paymentOrder._currentPayment = payment;
+            if (_paymentOrder) _paymentOrder._currentPayment = payment;
             // 隐藏模拟扫码按钮（真实支付环境）
             var mockBtn2 = document.getElementById('payMockBtn');
             if (mockBtn2) mockBtn2.style.display = 'none';
@@ -1555,7 +1579,7 @@
         }
         _renderQrCode(qrCode, data, hint);
         qrCode.style.background = '#fff';
-        _paymentOrder._currentPayment = payment;
+        if (_paymentOrder) _paymentOrder._currentPayment = payment;
 
         // 如果 qrcodejs 未就绪，等加载完成后再重新渲染（解决用户第一次点"支付宝"仍走到 qrserver 的问题）
         var hadLocal = window.QRCode && typeof window.QRCode === 'function';

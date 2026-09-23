@@ -460,7 +460,9 @@ class Utils {
             return url;
         }
         if (url.includes('/') && !url.startsWith('/') && !url.startsWith('./')) {
-            return 'http://127.0.0.1:9000/' + url;
+            // 优先使用 config1.js 中自动检测的 MINIO_BASE_URL
+            var base = (typeof MINIO_BASE_URL !== 'undefined') ? MINIO_BASE_URL : '';
+            return base + '/' + url;
         }
         return url;
     }

@@ -706,8 +706,8 @@
         // 记录当前选中的角色
         let selectedRoleId = 2;
 
-        // API基础路径(从config1.js获取)
-        const API_BASE = (typeof SERVER_BASE_URL !== 'undefined') ? SERVER_BASE_URL : 'https://localhost:8443';
+        // API基础路径(从config1.js获取；兜底为空串=同域，由Nginx反代)
+        const API_BASE = (typeof SERVER_BASE_URL !== 'undefined') ? SERVER_BASE_URL : '';
 
         // Tab切换
         function switchTab(tab) {
@@ -911,8 +911,7 @@
 
             try {
                 const response = await fetch(`${API_BASE}/user/login?username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' }
+                    method: 'POST'
                 });
                 const result = await response.json();
 
@@ -997,8 +996,7 @@
 
             try {
                 const response = await fetch(`${API_BASE}/user/register?username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}&roleId=${selectedRoleId}`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' }
+                    method: 'POST'
                 });
                 const result = await response.json();
 

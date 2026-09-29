@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的需求 - 浩瑞科技</title>
+    <link rel="stylesheet" type="text/css" href="../../index_files/g-style.css">
+    <script src="../../config1.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif;
+            color: #333; background: #f7f9fc;
+            -webkit-font-smoothing: antialiased; min-height: 100vh;
+        }
+        a { text-decoration: none; color: #333; }
+        ul, ol { list-style: none; }
+
+        /* ===== 顶部导航条 ===== */
+        .top-bar {
+            background: #fff; border-bottom: 1px solid #e8ecf1;
+            position: sticky; top: 0; z-index: 100;
+        }
+        .top-bar-inner {
+            max-width: 960px; margin: 0 auto; padding: 14px 20px;
+            display: flex; align-items: center; gap: 16px;
+        }
+        .back-btn {
+            display: flex; align-items: center; gap: 4px;
+            color: #0a4db4; font-size: 14px; font-weight: 500;
+            cursor: pointer; padding: 6px 12px; border-radius: 4px;
+            transition: background 0.2s;
+        }
+        .back-btn:hover { background: #e8f0fe; }
+        .page-title {
+            flex: 1; text-align: center; font-size: 17px; font-weight: bold;
+            color: #333; letter-spacing: 1px;
+        }
+        .header-logo { display: flex; align-items: center; gap: 8px; }
+        .header-logo .logo-icon { width: 36px; height: 36px; object-fit: contain; }
+        .header-logo .logo-text { font-size: 16px; font-weight: bold; color: #333; }
+        .header-logo .logo-text .highlight { color: #0a4db4; }
+
+        /* ===== 主体容器 ===== */
+        .container { max-width: 960px; margin: 0 auto; padding: 24px 20px 60px; }
+
+        /* ===== 状态筛选 ===== */
+        .filter-bar {
+            display: flex; gap: 8px; margin-bottom: 20px;
+            background: #fff; padding: 10px; border-radius: 10px;
+            box-shadow: 0 2px 12px rgba(10,77,180,0.08);
+            flex-wrap: wrap;
+        }
+        .filter-btn {
+            padding: 8px 16px; font-size: 14px; cursor: pointer;
+            border: 1px solid #d9e0ea; border-radius: 20px;
+            background: #fafbfc; color: #666; transition: all 0.2s;
+        }
+        .filter-btn:hover { color: #0a4db4; border-color: #0a4db4; }
+        .filter-btn.active {
+            background: linear-gradient(135deg, #0a4db4 0%, #1e6fd9 100%);
+            color: #fff; border-color: transparent; font-weight: 500;
+        }
+        .filter-count { margin-left: auto; color: #999; font-size: 13px; align-self: center; }
+
+        /* ===== 卡片列表 ===== */
+        .req-list { display: flex; flex-direction: column; gap: 12px; }
+        .req-card {
+            background: #fff; border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(10,77,180,0.08);
+            padding: 18px 22px; cursor: pointer;
+            transition: all 0.2s;
+            border-left: 4px solid #d9e0ea;
+        }
+        .req-card:hover {
+            box-shadow: 0 4px 20px rgba(10,77,180,0.15);
+            transform: translateY(-1px);
+        }
+        .req-card.status-pending  { border-left-color: #faad14; }
+        .req-card.status-approved { border-left-color: #52c41a; }
+        .req-card.status-rejected { border-left-color: #ff4d4f; }
+
+        .req-head { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; flex-wrap: wrap; }
+        .req-type-tag {
+            display: inline-block; padding: 2px 8px; border-radius: 4px;
+            font-size: 12px; font-weight: 500;
+        }
+        .req-type-tag.buy  { background: #fff1f0; color: #cf1322; }
+        .req-type-tag.sell { background: #f6ffed; color: #389e0d; }
+        .req-type-tag.coop { background: #e6f7ff; color: #096dd9; }
+        .req-status-tag {
+            display: inline-block; padding: 2px 8px; border-radius: 4px;
+            font-size: 12px; font-weight: 500; margin-left: auto;
+        }
+        .req-status-tag.pending  { background: #fff7e6; color: #d48806; }
+        .req-status-tag.approved { background: #f6ffed; color: #389e0d; }
+        .req-status-tag.rejected { background: #fff1f0; color: #cf1322; }
+        .req-title {
+            font-size: 16px; font-weight: bold; color: #333;
+            margin-bottom: 6px; word-break: break-all;
+        }
+        .req-meta {
+            display: flex; gap: 16px; font-size: 13px; color: #666;
+            flex-wrap: wrap;
+        }
+        .req-meta span { display: inline-flex; align-items: center; gap: 4px; }
+        .req-remark {
+            margin-top: 8px; padding: 8px 12px; background: #fff1f0;
+            border-radius: 6px; font-size: 13px; color: #cf1322;
+        }
+        .req-time { font-size: 12px; color: #999; margin-top: 8px; }
+
+        /* ===== 空状态 ===== */
+        .empty-state {
+            text-align: center; padding: 80px 20px; color: #999;
+        }
+        .empty-state .empty-icon { font-size: 56px; margin-bottom: 16px; }
+        .empty-state h3 { font-size: 18px; color: #666; margin-bottom: 8px; }
+        .empty-state p { font-size: 14px; margin-bottom: 20px; }
+        .empty-state a {
+            display: inline-block; padding: 10px 24px;
+            background: linear-gradient(135deg, #0a4db4 0%, #1e6fd9 100%);
+            color: #fff; border-radius: 8px; font-size: 14px;
+            transition: all 0.2s;
+        }
+        .empty-state a:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(10,77,180,0.3); }
+
+        /* ===== 分页 ===== */
+        .pagination {
+            display: flex; justify-content: center; gap: 6px;
+            margin-top: 24px;
+        }
+        .pagination button {
+            padding: 6px 12px; min-width: 32px;
+            border: 1px solid #d9e0ea; background: #fff;
+            border-radius: 6px; cursor: pointer; font-size: 14px;
+            color: #333; transition: all 0.2s;
+        }
+        .pagination button:hover:not(:disabled) { border-color: #0a4db4; color: #0a4db4; }
+        .pagination button.active {
+            background: linear-gradient(135deg, #0a4db4 0%, #1e6fd9 100%);
+            color: #fff; border-color: transparent;
+        }
+        .pagination button:disabled { cursor: not-allowed; opacity: 0.5; }
+
+        /* ===== 加载与错误 ===== */
+        .loading, .error-box {
+            text-align: center; padding: 40px; color: #999; font-size: 14px;
+        }
+        .error-box { color: #cf1322; }
+
+        /* ===== 响应式 ===== */
+        @media (max-width: 768px) {
+            .container { padding: 16px 12px 40px; }
+            .req-card { padding: 14px 16px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ============ 顶部导航 ============ -->
+<div class="top-bar">
+    <div class="top-bar-inner">
+        <div class="back-btn" onclick="goBack()">◀ 返回</div>
+        <div class="page-title">我的需求</div>
+        <div class="header-logo">
+            <img class="logo-icon" src="../../img/JSlogo-beb0d75f.png" alt="Logo">
+            <div class="logo-text">黑科技 <span class="highlight">商城</span></div>
+        </div>
+    </div>
+</div>
+
+<!-- ============ 主体 ============ -->
+<div class="container">
+    <!-- 状态筛选 -->
+    <div class="filter-bar">
+        <button class="filter-btn active" data-status="" onclick="switchFilter('')">全部</button>
+        <button class="filter-btn" data-status="pending"  onclick="switchFilter('pending')">待审核</button>
+        <button class="filter-btn" data-status="approved" onclick="switchFilter('approved')">已通过</button>
+        <button class="filter-btn" data-status="rejected" onclick="switchFilter('rejected')">已驳回</button>
+        <span class="filter-count" id="filterCount"></span>
+    </div>
+
+    <!-- 列表 -->
+    <div id="listBox">
+        <div class="loading">加载中...</div>
+    </div>
+
+    <!-- 分页 -->
+    <div class="pagination" id="pagination" style="display:none;"></div>
+</div>
+
+<script>
+const API_BASE = window.SERVER_BASE_URL || '';
+let currentStatus = '';
+let currentPage = 1;
+const PAGE_SIZE = 10;
+
+/* ============ 品类静态映射 ============ */
+const CATEGORY_MAP = {
+    1: '人工智能和机器人', 2: '前沿新材料', 3: '数字服务与平台',
+    4: '通信与网络', 5: '低空经济', 6: '大宗贸易',
+    7: '文化创意与IP', 8: '智慧农业与粮储', 9: '安防与识别', 10: '新能源与储能'
+};
+const TYPE_MAP = { buy: '我要买', sell: '我要卖', coop: '我要合作' };
+
+/* ============ 登录校验 ============ */
+function ensureLogin() {
+    const token = localStorage.getItem('token');
+    if (!token || checkTokenExpired()) {
+        const cur = window.location.pathname.replace(/^\//, '') + (window.location.search || '');
+        window.location.href = 'login.html?redirect=' + encodeURIComponent(cur);
+        return false;
+    }
+    return true;
+}
+
+/* ============ 切换状态筛选 ============ */
+function switchFilter(status) {
+    currentStatus = status;
+    currentPage = 1;
+    document.querySelectorAll('.filter-btn').forEach(b => {
+        b.classList.toggle('active', b.dataset.status === status);
+    });
+    loadList();
+}
+
+/* ============ 加载列表 ============ */
+async function loadList() {
+    const box = document.getElementById('listBox');
+    box.innerHTML = '<div class="loading">加载中...</div>';
+    document.getElementById('pagination').style.display = 'none';
+
+    const url = `${API_BASE}/requirement/mine?pageNum=${currentPage}&pageSize=${PAGE_SIZE}`
+              + (currentStatus ? `&status=${encodeURIComponent(currentStatus)}` : '');
+
+    try {
+        const resp = await fetch(url, {
+            headers: { 'Authorization': localStorage.getItem('token') }
+        });
+        if (resp.status === 401) {
+            const cur = window.location.pathname.replace(/^\//, '') + (window.location.search || '');
+            window.location.href = 'login.html?redirect=' + encodeURIComponent(cur);
+            return;
+        }
+        const result = await resp.json();
+        if (resp.ok && result.code === 0) {
+            renderList(result.data);
+        } else {
+            box.innerHTML = `<div class="error-box">${escapeHtml(result.message || result.msg || '加载失败')}</div>`;
+        }
+    } catch (err) {
+        console.error('加载错误:', err);
+        box.innerHTML = '<div class="error-box">网络错误，请稍后重试</div>';
+    }
+}
+
+/* ============ 渲染列表 ============ */
+function renderList(page) {
+    const box = document.getElementById('listBox');
+    const items = page.items || [];
+    const total = page.total || 0;
+    document.getElementById('filterCount').textContent = `共 ${total} 条`;
+
+    if (!items.length) {
+        box.innerHTML = `
+            <div class="empty-state">
+                <div class="empty-icon">📭</div>
+                <h3>暂无需求</h3>
+                <p>您还没有发布过需求</p>
+                <a href="publish.html">立即发布需求</a>
+            </div>
+        `;
+        return;
+    }
+
+    box.innerHTML = `<div class="req-list">${items.map(renderCard).join('')}</div>`;
+    renderPagination(total);
+}
+
+function renderCard(r) {
+    const typeTag = `<span class="req-type-tag ${r.type}">${TYPE_MAP[r.type] || r.type}</span>`;
+    const statusTag = `<span class="req-status-tag ${r.status}">${statusText(r.status)}</span>`;
+    const category = CATEGORY_MAP[r.categoryId] || `品类#${r.categoryId}`;
+    const price = (r.minPrice != null || r.maxPrice != null)
+        ? `¥${r.minPrice || 0} ~ ¥${r.maxPrice || '面议'}`
+        : '价格面议';
+    const remarkHtml = (r.status === 'rejected' && r.auditRemark)
+        ? `<div class="req-remark">驳回原因：${escapeHtml(r.auditRemark)}</div>`
+        : '';
+
+    return `
+        <div class="req-card status-${r.status}" onclick="goDetail(${r.id})">
+            <div class="req-head">
+                ${typeTag}
+                <span style="font-size:12px;color:#999;">${escapeHtml(category)}</span>
+                ${statusTag}
+            </div>
+            <div class="req-title">${escapeHtml(r.name)}</div>
+            <div class="req-meta">
+                <span>📞 ${escapeHtml(r.contactName)}</span>
+                <span>📱 ${escapeHtml(maskPhone(r.contactPhone))}</span>
+                <span>💰 ${escapeHtml(price)}</span>
+            </div>
+            ${remarkHtml}
+            <div class="req-time">提交时间：${escapeHtml(formatTime(r.createTime))}</div>
+        </div>
+    `;
+}
+
+function statusText(s) {
+    return { pending: '待审核', approved: '已通过', rejected: '已驳回' }[s] || s;
+}
+function maskPhone(p) { return p ? p.replace(/(\d{3})\d{4}(\d{4})/, '$1****$2') : ''; }
+function formatTime(t) { return t ? t.replace('T', ' ').substring(0, 16) : ''; }
+
+/* ============ 分页 ============ */
+function renderPagination(total) {
+    const pag = document.getElementById('pagination');
+    const totalPages = Math.ceil(total / PAGE_SIZE);
+    if (totalPages <= 1) { pag.style.display = 'none'; return; }
+    pag.style.display = 'flex';
+
+    const max = 7;
+    let start = Math.max(1, currentPage - 3);
+    let end = Math.min(totalPages, start + max - 1);
+    start = Math.max(1, end - max + 1);
+
+    let html = '';
+    html += `<button ${currentPage === 1 ? 'disabled' : ''} onclick="gotoPage(${currentPage - 1})">上一页</button>`;
+    if (start > 1) {
+        html += `<button onclick="gotoPage(1)">1</button>`;
+        if (start > 2) html += `<button disabled>...</button>`;
+    }
+    for (let i = start; i <= end; i++) {
+        html += `<button class="${i === currentPage ? 'active' : ''}" onclick="gotoPage(${i})">${i}</button>`;
+    }
+    if (end < totalPages) {
+        if (end < totalPages - 1) html += `<button disabled>...</button>`;
+        html += `<button onclick="gotoPage(${totalPages})">${totalPages}</button>`;
+    }
+    html += `<button ${currentPage === totalPages ? 'disabled' : ''} onclick="gotoPage(${currentPage + 1})">下一页</button>`;
+    pag.innerHTML = html;
+}
+
+function gotoPage(p) {
+    currentPage = p;
+    loadList();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+/* ============ 跳转详情 ============ */
+function goDetail(id) {
+    window.location.href = `../requirement/detail.html?id=${id}`;
+}
+
+/* ============ 返回 ============ */
+function goBack() {
+    if (document.referrer && document.referrer.indexOf('index') !== -1) {
+        history.back();
+    } else {
+        window.location.href = '../../index.html';
+    }
+}
+
+function escapeHtml(s) {
+    if (s == null) return '';
+    return String(s).replace(/[&<>"']/g, c => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+    })[c]);
+}
+
+/* ============ 启动 ============ */
+if (ensureLogin()) {
+    loadList();
+}
+</script>
+
+</body>
+</html>

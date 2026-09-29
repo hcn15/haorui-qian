@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>需求详情 - 浩瑞科技</title>
+    <link rel="stylesheet" type="text/css" href="../../index_files/g-style.css">
+    <script src="../../config1.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif;
+            color: #333; background: #f7f9fc;
+            -webkit-font-smoothing: antialiased; min-height: 100vh;
+        }
+        a { text-decoration: none; color: inherit; }
+        ul, ol { list-style: none; }
+
+        /* ===== 顶部导航条 ===== */
+        .top-bar {
+            background: #fff; border-bottom: 1px solid #e8ecf1;
+            position: sticky; top: 0; z-index: 100;
+        }
+        .top-bar-inner {
+            max-width: 960px; margin: 0 auto; padding: 14px 20px;
+            display: flex; align-items: center; gap: 16px;
+        }
+        .back-btn {
+            display: flex; align-items: center; gap: 4px;
+            color: #0a4db4; font-size: 14px; font-weight: 500;
+            cursor: pointer; padding: 6px 12px; border-radius: 4px;
+            transition: background 0.2s;
+        }
+        .back-btn:hover { background: #e8f0fe; }
+        .page-title {
+            flex: 1; text-align: center; font-size: 17px; font-weight: bold;
+            color: #333; letter-spacing: 1px;
+        }
+        .header-logo { display: flex; align-items: center; gap: 8px; }
+        .header-logo .logo-icon { width: 36px; height: 36px; object-fit: contain; }
+        .header-logo .logo-text { font-size: 16px; font-weight: bold; color: #333; }
+        .header-logo .logo-text .highlight { color: #0a4db4; }
+
+        /* ===== 主体容器 ===== */
+        .container { max-width: 960px; margin: 0 auto; padding: 24px 20px 60px; }
+
+        /* ===== 卡片 ===== */
+        .detail-card {
+            background: #fff; border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(10,77,180,0.08);
+            overflow: hidden;
+        }
+        .detail-head {
+            padding: 24px 28px;
+            border-bottom: 1px solid #f0f3f7;
+            background: linear-gradient(180deg, #f0f5ff 0%, #fff 100%);
+        }
+        .detail-tags {
+            display: flex; gap: 8px; align-items: center;
+            margin-bottom: 12px; flex-wrap: wrap;
+        }
+        .req-type-tag {
+            display: inline-block; padding: 3px 10px; border-radius: 4px;
+            font-size: 13px; font-weight: 500;
+        }
+        .req-type-tag.buy  { background: #fff1f0; color: #cf1322; }
+        .req-type-tag.sell { background: #f6ffed; color: #389e0d; }
+        .req-type-tag.coop { background: #e6f7ff; color: #096dd9; }
+        .req-status-tag {
+            display: inline-block; padding: 3px 10px; border-radius: 4px;
+            font-size: 13px; font-weight: 500;
+        }
+        .req-status-tag.pending  { background: #fff7e6; color: #d48806; }
+        .req-status-tag.approved { background: #f6ffed; color: #389e0d; }
+        .req-status-tag.rejected { background: #fff1f0; color: #cf1322; }
+        .detail-title {
+            font-size: 22px; font-weight: bold; color: #333;
+            line-height: 1.4; word-break: break-all;
+        }
+
+        .detail-body { padding: 24px 28px; }
+
+        .info-row {
+            display: flex; padding: 14px 0;
+            border-bottom: 1px dashed #f0f3f7;
+        }
+        .info-row:last-child { border-bottom: none; }
+        .info-label {
+            width: 130px; flex-shrink: 0;
+            color: #666; font-size: 14px;
+        }
+        .info-value {
+            flex: 1; color: #333; font-size: 14px;
+            word-break: break-all;
+        }
+        .info-value .price { color: #ff4d4f; font-weight: bold; font-size: 16px; }
+        .info-value .ecee-yes { color: #52c41a; font-weight: 500; }
+        .info-value .ecee-no  { color: #999; }
+
+        /* 附件列表 */
+        .files-list {
+            display: flex; flex-direction: column; gap: 8px;
+        }
+        .file-link {
+            display: flex; align-items: center; gap: 8px;
+            padding: 10px 14px; background: #f0f5ff;
+            border-radius: 6px; color: #0a4db4;
+            font-size: 13px; cursor: pointer;
+            transition: all 0.2s;
+        }
+        .file-link:hover {
+            background: #e0eaff;
+            transform: translateX(2px);
+        }
+        .file-link .file-icon { font-size: 18px; }
+        .file-link .file-name { flex: 1; word-break: break-all; }
+        .file-link .file-size { color: #999; font-size: 12px; }
+
+        /* 审核备注 */
+        .audit-remark-box {
+            margin-top: 16px; padding: 14px 18px;
+            background: #fff1f0; border-radius: 8px;
+            border-left: 4px solid #ff4d4f;
+            font-size: 14px; color: #cf1322;
+        }
+        .audit-remark-box.approved { background: #f6ffed; border-left-color: #52c41a; color: #389e0d; }
+        .audit-remark-box .label { font-weight: bold; margin-right: 4px; }
+
+        /* ===== 错误和加载 ===== */
+        .loading, .error-box {
+            text-align: center; padding: 80px 20px;
+            color: #999; font-size: 14px;
+        }
+        .error-box { color: #cf1322; }
+        .error-box .icon { font-size: 48px; margin-bottom: 12px; display: block; }
+
+        /* ===== 底部操作 ===== */
+        .detail-actions {
+            margin-top: 20px; display: flex; gap: 12px; justify-content: center;
+            flex-wrap: wrap;
+        }
+        .action-btn {
+            padding: 12px 28px; font-size: 14px; font-weight: 500;
+            border: none; border-radius: 8px; cursor: pointer;
+            transition: all 0.2s;
+        }
+        .action-btn.primary {
+            background: linear-gradient(135deg, #0a4db4 0%, #1e6fd9 100%);
+            color: #fff;
+        }
+        .action-btn.primary:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(10,77,180,0.3); }
+        .action-btn.secondary {
+            background: #fff; color: #0a4db4;
+            border: 1px solid #0a4db4;
+        }
+        .action-btn.secondary:hover { background: #e8f0fe; }
+
+        @media (max-width: 768px) {
+            .container { padding: 16px 12px 40px; }
+            .detail-head, .detail-body { padding: 18px 16px; }
+            .info-row { flex-direction: column; gap: 4px; }
+            .info-label { width: auto; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ============ 顶部导航 ============ -->
+<div class="top-bar">
+    <div class="top-bar-inner">
+        <div class="back-btn" onclick="goBack()">◀ 返回</div>
+        <div class="page-title">需求详情</div>
+        <div class="header-logo">
+            <img class="logo-icon" src="../../img/JSlogo-beb0d75f.png" alt="Logo">
+            <div class="logo-text">黑科技 <span class="highlight">商城</span></div>
+        </div>
+    </div>
+</div>
+
+<!-- ============ 主体 ============ -->
+<div class="container">
+    <div id="detailBox">
+        <div class="loading">加载中...</div>
+    </div>
+    <div class="detail-actions" id="actions" style="display:none;">
+        <button class="action-btn primary" onclick="location.href='list.html'">浏览更多需求</button>
+        <button class="action-btn secondary" onclick="location.href='../user/publish.html'">我也要发布</button>
+    </div>
+</div>
+
+<script>
+const API_BASE = window.SERVER_BASE_URL || '';
+
+const CATEGORY_MAP = {
+    1: '人工智能和机器人', 2: '前沿新材料', 3: '数字服务与平台',
+    4: '通信与网络', 5: '低空经济', 6: '大宗贸易',
+    7: '文化创意与IP', 8: '智慧农业与粮储', 9: '安防与识别', 10: '新能源与储能'
+};
+const TYPE_MAP = { buy: '我要买', sell: '我要卖', coop: '我要合作' };
+
+/* ============ 加载详情 ============ */
+async function loadDetail() {
+    const id = new URLSearchParams(window.location.search).get('id');
+    const box = document.getElementById('detailBox');
+
+    if (!id) {
+        box.innerHTML = `<div class="error-box"><span class="icon">⚠️</span>缺少需求ID参数</div>`;
+        return;
+    }
+
+    try {
+        // 公开详情可免登录访问；若未审核且非本人，后端会返回 error
+        const headers = {};
+        const token = localStorage.getItem('token');
+        if (token && !checkTokenExpired()) headers['Authorization'] = token;
+
+        const resp = await fetch(`${API_BASE}/requirement/detail/${encodeURIComponent(id)}`, { headers });
+        const result = await resp.json();
+        if (resp.ok && result.code === 0 && result.data) {
+            renderDetail(result.data);
+        } else if (resp.status === 401 || (result.message && result.message.indexOf('未登录') !== -1)) {
+            const cur = window.location.pathname.replace(/^\//, '') + window.location.search;
+            window.location.href = '../user/login.html?redirect=' + encodeURIComponent(cur);
+        } else {
+            box.innerHTML = `<div class="error-box"><span class="icon">🔍</span>${escapeHtml(result.message || result.msg || '需求不存在或无权查看')}</div>`;
+        }
+    } catch (err) {
+        console.error('加载错误:', err);
+        box.innerHTML = `<div class="error-box"><span class="icon">⚠️</span>网络错误，请稍后重试</div>`;
+    }
+}
+
+/* ============ 渲染详情 ============ */
+function renderDetail(r) {
+    const box = document.getElementById('detailBox');
+    document.getElementById('actions').style.display = 'flex';
+
+    const typeTag = `<span class="req-type-tag ${r.type}">${TYPE_MAP[r.type] || r.type}</span>`;
+    const statusTag = r.status ? `<span class="req-status-tag ${r.status}">${statusText(r.status)}</span>` : '';
+    const category = CATEGORY_MAP[r.categoryId] || `品类#${r.categoryId}`;
+    const price = (r.minPrice != null || r.maxPrice != null)
+        ? `<span class="price">¥${r.minPrice || 0} ~ ¥${r.maxPrice || '面议'}</span>`
+        : '价格面议';
+    const ecee = r.needEcee === 1
+        ? `<span class="ecee-yes">✓ 需要</span> <a href="../info/ece.html" style="font-size:12px;color:#0a4db4;margin-left:8px;">了解ECEE认证 →</a>`
+        : `<span class="ecee-no">✗ 不需要</span>`;
+
+    // 附件
+    let filesHtml = '<span style="color:#999;">无附件</span>';
+    if (r.files && r.files.length) {
+        filesHtml = `<div class="files-list">${r.files.map(f => `
+            <a class="file-link" href="${getDownloadUrl(f.filePath)}" target="_blank" rel="noopener">
+                <span class="file-icon">📎</span>
+                <span class="file-name">${escapeHtml(f.originalName || f.filePath)}</span>
+                <span class="file-size">${formatSize(f.fileSize)}</span>
+            </a>
+        `).join('')}</div>`;
+    }
+
+    // 审核备注
+    let remarkHtml = '';
+    if (r.auditRemark) {
+        const cls = r.status === 'approved' ? 'approved' : '';
+        remarkHtml = `
+            <div class="audit-remark-box ${cls}">
+                <span class="label">${r.status === 'approved' ? '审核备注' : '驳回原因'}：</span>
+                ${escapeHtml(r.auditRemark)}
+            </div>
+        `;
+    }
+
+    box.innerHTML = `
+        <div class="detail-card">
+            <div class="detail-head">
+                <div class="detail-tags">${typeTag} ${statusTag}</div>
+                <div class="detail-title">${escapeHtml(r.name)}</div>
+            </div>
+            <div class="detail-body">
+                <div class="info-row">
+                    <div class="info-label">所属品类</div>
+                    <div class="info-value">${escapeHtml(category)}</div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">价格区间</div>
+                    <div class="info-value">${price}</div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">是否需要ECEE检测</div>
+                    <div class="info-value">${ecee}</div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">企业/联系人</div>
+                    <div class="info-value">${escapeHtml(r.contactName || '-')}</div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">联系电话</div>
+                    <div class="info-value">${escapeHtml(r.contactPhone || '-')}</div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">发布者</div>
+                    <div class="info-value">${escapeHtml(r.username || '匿名用户')}</div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">发布时间</div>
+                    <div class="info-value">${formatTime(r.createTime)}</div>
+                </div>
+                ${r.auditedAt ? `
+                <div class="info-row">
+                    <div class="info-label">审核时间</div>
+                    <div class="info-value">${formatTime(r.auditedAt)}</div>
+                </div>` : ''}
+                <div class="info-row">
+                    <div class="info-label">技术指标/附件</div>
+                    <div class="info-value">${filesHtml}</div>
+                </div>
+                ${remarkHtml}
+            </div>
+        </div>
+    `;
+}
+
+/* ============ 工具函数 ============ */
+function statusText(s) {
+    return { pending: '待审核', approved: '已通过', rejected: '已驳回' }[s] || s;
+}
+function formatTime(t) { return t ? t.replace('T', ' ').substring(0, 19) : '-'; }
+function formatSize(bytes) {
+    if (!bytes) return '';
+    const units = ['B', 'KB', 'MB', 'GB'];
+    let i = 0;
+    while (bytes >= 1024 && i < units.length - 1) { bytes /= 1024; i++; }
+    return bytes.toFixed(1) + ' ' + units[i];
+}
+
+/* 附件下载 URL：走后端 /minio/fileDownload 代理，避免 MinIO 直链混合内容问题 */
+function getDownloadUrl(filePath) {
+    // filePath 形如 "big-event/xxx.pdf"，去掉 bucket 前缀
+    if (!filePath) return '#';
+    const pureName = filePath.indexOf('/') > -1
+        ? filePath.substring(filePath.indexOf('/') + 1)
+        : filePath;
+    return `${API_BASE}/minio/fileDownload/${encodeURIComponent(pureName)}`;
+}
+
+function escapeHtml(s) {
+    if (s == null) return '';
+    return String(s).replace(/[&<>"']/g, c => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+    })[c]);
+}
+
+function goBack() {
+    if (document.referrer && document.referrer.indexOf('index') !== -1) {
+        history.back();
+    } else {
+        window.location.href = 'list.html';
+    }
+}
+
+/* ============ 启动 ============ */
+loadDetail();
+</script>
+
+</body>
+</html>

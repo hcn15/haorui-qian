@@ -452,9 +452,24 @@
 </div>
 
 <script>
+/* ============ API 基址 ============ */
+const API_BASE = window.SERVER_BASE_URL || '';
+
 /* ============ 当前发布类型 ============ */
 let currentType = 'sell';
+/* uploadedFiles 元素结构：{ filePath, originalName, fileSize, fileType, uploading, error } */
 let uploadedFiles = [];
+
+/* ============ 登录校验：未登录直接跳登录页 ============ */
+function ensureLogin() {
+    const token = localStorage.getItem('token');
+    if (!token || checkTokenExpired()) {
+        const cur = window.location.pathname.replace(/^\//, '') + (window.location.search || '');
+        window.location.href = 'login.html?redirect=' + encodeURIComponent(cur);
+        return false;
+    }
+    return true;
+}
 
 /* ============ 类型切换 ============ */
 function switchType(type) {
@@ -487,41 +502,98 @@ function switchType(type) {
     }
 }
 
-/* ============ 文件上传 ============ */
-function handleFileUpload(input) {
+/* ============ 文件上传到 MinIO ============ */
+async function handleFileUpload(input) {
     const files = Array.from(input.files);
-    files.forEach(f => {
+    input.value = '';
+
+    for (const f of files) {
         if (uploadedFiles.length >= 5) {
             alert('最多上传5个文件');
             return;
         }
         if (f.size > 10 * 1024 * 1024) {
             alert(`文件 ${f.name} 超过10MB限制`);
-            return;
+            continue;
         }
-        uploadedFiles.push(f.name);
-    });
-    renderFileList();
-    input.value = '';
+
+        // 占位：插入"上传中"项
+        const placeholder = {
+            filePath: null,
+            originalName: f.name,
+            fileSize: f.size,
+            fileType: f.type,
+            uploading: true,
+            error: null
+        };
+        uploadedFiles.push(placeholder);
+        renderFileList();
+
+        // 通过 FormData 上传到 /minio/fileUpload
+        const formData = new FormData();
+        formData.append('file', f);
+
+        try {
+            const resp = await fetch(`${API_BASE}/minio/fileUpload`, {
+                method: 'POST',
+                headers: { 'Authorization': localStorage.getItem('token') },
+                body: formData
+            });
+            const result = await resp.json();
+            if (resp.ok && result.code === 0 && result.data && result.data.filename) {
+                placeholder.filePath = result.data.filename; // 形如 "big-event/xxx.pdf"
+                placeholder.uploading = false;
+            } else {
+                placeholder.uploading = false;
+                placeholder.error = result.message || result.msg || '上传失败';
+                alert(`文件 ${f.name} 上传失败：${placeholder.error}`);
+            }
+        } catch (err) {
+            placeholder.uploading = false;
+            placeholder.error = '网络错误';
+            alert(`文件 ${f.name} 上传失败：网络错误`);
+        }
+        renderFileList();
+    }
 }
 
 function renderFileList() {
     const list = document.getElementById('fileList');
-    list.innerHTML = uploadedFiles.map((name, idx) => `
-        <div class="file-item">
-            <span>📎 ${name}</span>
-            <span class="remove-file" onclick="removeFile(${idx})">✕</span>
-        </div>
-    `).join('');
+    if (!uploadedFiles.length) {
+        list.innerHTML = '';
+        return;
+    }
+    list.innerHTML = uploadedFiles.map((f, idx) => {
+        const status = f.uploading
+            ? '<span style="color:#999;font-size:12px;">上传中...</span>'
+            : (f.error ? `<span style="color:#ff4d4f;font-size:12px;">${f.error}</span>` : '');
+        return `
+            <div class="file-item">
+                <span>📎 ${escapeHtml(f.originalName || '')} ${status}</span>
+                <span class="remove-file" onclick="removeFile(${idx})">✕</span>
+            </div>
+        `;
+    }).join('');
+}
+
+function escapeHtml(s) {
+    return s.replace(/[&<>"']/g, c => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+    })[c]);
 }
 
 function removeFile(idx) {
+    // 注意：未上传完成的项不允许删除（避免竞态）
+    if (uploadedFiles[idx] && uploadedFiles[idx].uploading) {
+        alert('文件上传中，请稍后');
+        return;
+    }
     uploadedFiles.splice(idx, 1);
     renderFileList();
 }
 
 /* ============ 提交表单 ============ */
-function submitForm(e) {
+async function submitForm(e) {
     e.preventDefault();
 
     const name = document.getElementById('itemName').value.trim();
@@ -530,6 +602,7 @@ function submitForm(e) {
     const maxPrice = document.getElementById('maxPrice').value;
     const contactName = document.getElementById('contactName').value.trim();
     const contactPhone = document.getElementById('contactPhone').value.trim();
+    const needEcee = document.querySelector('input[name="eccee"]:checked').value === 'yes' ? 1 : 0;
 
     if (!name || !category || !contactName || !contactPhone) {
         alert('请填写所有必填项');
@@ -546,8 +619,69 @@ function submitForm(e) {
         return;
     }
 
-    // 模拟提交
-    showSuccess();
+    // 校验文件全部上传完成且无错误
+    const pendingUpload = uploadedFiles.some(f => f.uploading);
+    if (pendingUpload) {
+        alert('请等待文件上传完成');
+        return;
+    }
+    const hasError = uploadedFiles.some(f => f.error);
+    if (hasError) {
+        if (!confirm('部分文件上传失败，是否仅提交成功上传的文件？')) return;
+    }
+    // 只取成功上传的文件
+    const files = uploadedFiles
+        .filter(f => f.filePath)
+        .map(f => ({
+            filePath: f.filePath,
+            originalName: f.originalName,
+            fileSize: f.fileSize,
+            fileType: f.fileType
+        }));
+
+    const body = {
+        type: currentType,
+        name: name,
+        categoryId: Number(category),
+        minPrice: minPrice ? Number(minPrice) : null,
+        maxPrice: maxPrice ? Number(maxPrice) : null,
+        needEcee: needEcee,
+        contactName: contactName,
+        contactPhone: contactPhone,
+        files: files
+    };
+
+    const btn = document.querySelector('.submit-btn');
+    const oldText = btn.innerHTML;
+    btn.disabled = true;
+    btn.innerHTML = '<span class="btn-icon">⏳</span>提交中...';
+
+    try {
+        const resp = await fetch(`${API_BASE}/requirement`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': localStorage.getItem('token')
+            },
+            body: JSON.stringify(body)
+        });
+        const result = await resp.json();
+        if (resp.ok && result.code === 0) {
+            showSuccess();
+        } else if (resp.status === 401) {
+            alert('登录已过期，请重新登录');
+            const cur = window.location.pathname.replace(/^\//, '') + (window.location.search || '');
+            window.location.href = 'login.html?redirect=' + encodeURIComponent(cur);
+        } else {
+            alert(result.message || result.msg || '提交失败');
+        }
+    } catch (err) {
+        console.error('提交错误:', err);
+        alert('网络错误，请稍后重试');
+    } finally {
+        btn.disabled = false;
+        btn.innerHTML = oldText;
+    }
 }
 
 /* ============ 成功提示 ============ */
@@ -574,6 +708,13 @@ function goBack() {
     } else {
         window.location.href = '../../index.html';
     }
+}
+
+/* ============ 启动：登录校验 ============ */
+if (!ensureLogin()) {
+    // 已跳转，后续不执行
+} else {
+    switchType('sell');
 }
 </script>
 

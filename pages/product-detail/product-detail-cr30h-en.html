@@ -1,562 +1,1218 @@
 <!DOCTYPE html>
-<html xml:lang="en" lang="en" style="--color: #005CE6; --vh: 708px; scroll-behavior: auto;">
+<html xml:lang="en" lang="en">
+
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta name="format-detection" content="telephone=no,telephone=no,email=no,adress=no">
-    <meta name="renderer" content="webkit">
-    <meta name="force-rendering" content="webkit">
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
-    <title>CR 30H Collaborative Robot - Haorui Green Technology</title>
-    <meta name="keywords" content="CR 30H,collaborative robot,high-payload robot,fast robot">
-    <meta name="description" content="CR 30H Collaborative Robot, Next-Gen Flagship Model, 300°/s industry's fastest high-payload collaborative robot">
-    <link rel="shortcut icon" href="">
-    <link rel="stylesheet" type="text/css" href="../../index_files/extend.css">
-    <link rel="stylesheet" type="text/css" href="../../index_files/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CR 30H Collaborative Robot - Hi-Tech Bazaar</title>
+    <meta name="keywords" content="CR 30H,Collaborative Robot,Heavy-Payload Robot,High-Speed Robot">
+    <meta name="description" content="CR 30H collaborative robot, the next-generation flagship model and the industry's fastest heavy-payload cobot at 300°/s">
     <link rel="stylesheet" type="text/css" href="../../index_files/g-style.css">
-    <link rel="stylesheet" type="text/css" href="../../index_files/f-style.css">
-	<link rel="stylesheet" type="text/css" href="../../components/nav.css">
-    <link rel="stylesheet" type="text/css" href="../../index_files/common.css">
-    <script src="../../index_files/hm.js"></script>
     <script src="../../config1.js"></script>
-    <script src="../../index_files/svg-inject.min.js" type="text/javascript"></script>
-    <style type="text/css">
-        img[onload^="SVGInject("] {
-            visibility: hidden;
-        }
-    </style>
-    <link rel="stylesheet" href="../../index_files/yang-product.css">
-    <link rel="stylesheet" href="../../index_files/zstyle.css">
-    <link rel="stylesheet" href="../../index_files/layui.css">
-    <link rel="stylesheet" href="../../index_files/share.min.css">
-    <link rel="stylesheet" type="text/css" href="../../index_files/liMarquee.css">
+    <script src="../../cart.js"></script>
+    <script src="../../favorite.js"></script>
     <link rel="stylesheet" type="text/css" href="../../mobile.css">
-	
-	<link rel="stylesheet" type="text/css" href="../../index_files/de-ai.css">
 
+    <link rel="stylesheet" type="text/css" href="../../index_files/de-ai.css">
     <style>
-        html, body {
-            max-width: 100vw;
-            overflow-x: hidden;
+        * {
             margin: 0;
             padding: 0;
-            background: #fff;
-            color: #333;
-            font-family: "Microsoft YaHei", "SimSun", "Arial", sans-serif;
+            box-sizing: border-box;
         }
 
-        .product-detail {
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif;
+            color: #333;
+            background: #f5f5f5;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        a {
+            text-decoration: none;
+            color: #333;
+        }
+
+        /* ============ index 顶部条 ============ */
+        .top-bar {
+            background: #f7f9fc;
+            border-bottom: 1px solid #e8ecf1;
+            font-size: 12px;
+            color: #666;
+        }
+
+        .top-bar-inner {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 40px 20px;
+            padding: 6px 20px;
             display: flex;
-            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        .hero-section {
+        .top-bar a {
+            color: #666;
+            margin: 0 10px;
+        }
+
+        .top-bar a:hover {
+            color: #0a4db4;
+        }
+
+        /* ===== 登录/注册组件 ===== */
+        .auth-section {
             display: flex;
             align-items: center;
-            justify-content: flex-start;
-            padding: 160px 40px;
-            background: linear-gradient(135deg, #f5f8fc 0%, #e8f0fe 100%);
-            border-radius: 16px;
-            margin-bottom: 40px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero-section::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 55%;
             height: 100%;
-            background-image: url('../../img/dobot/cr30h-main.jpg');
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-position: center center;
-            opacity: 0.85;
         }
 
-        .hero-section .hero-content {
-            flex: 1;
-            text-align: left;
-            position: relative;
-            z-index: 1;
+        .auth-guest {
+            gap: 0;
         }
 
-        .hero-section h1 {
-            font-size: 42px;
-            font-weight: bold;
-            color: #0a3a8f;
-            margin: 0 0 15px;
-        }
-
-        .hero-section .subtitle {
-            font-size: 20px;
-            color: #1967c2;
-            margin: 0 0 20px;
-        }
-
-        .hero-section .description {
-            font-size: 16px;
-            color: #666;
-            line-height: 1.8;
-            margin: 0 0 30px;
-            max-width: 600px;
-        }
-
-        .hero-section .video-btn {
+        .auth-login-btn {
             display: inline-flex;
             align-items: center;
-            gap: 8px;
-            background: #1967c2;
-            color: #fff;
-            padding: 12px 30px;
-            border-radius: 25px;
+            gap: 5px;
+            padding: 5px 14px;
+            background: linear-gradient(135deg, #0a4db4, #1e6fd9);
+            color: #fff !important;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+            margin: 0 !important;
             text-decoration: none;
-            font-size: 16px;
-            transition: all 0.3s ease;
+            transition: all 0.25s ease;
+            box-shadow: 0 2px 6px rgba(10, 77, 180, 0.2);
         }
 
-        .hero-section .video-btn:hover {
-            background: #004a99;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(25, 103, 194, 0.3);
+        .auth-login-btn:hover {
+            background: linear-gradient(135deg, #083d94, #1558b8);
+            color: #fff !important;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 10px rgba(10, 77, 180, 0.3);
         }
 
-        .about-feature-section {
-            margin-bottom: 50px;
+        .auth-icon {
+            width: 14px;
+            height: 14px;
         }
 
-        .about-feature-content {
-            text-align: center;
-            margin-bottom: 30px;
+        .auth-divider {
+            color: #d0d7de;
+            margin: 0 8px;
+            font-weight: 300;
         }
 
-        .about-feature-content h2 {
-            font-size: 28px;
-            font-weight: bold;
-            color: #000;
-            margin: 0 0 20px;
+        .auth-register-link {
+            color: #555 !important;
+            font-size: 12px;
+            font-weight: 400;
+            margin: 0 !important;
+            text-decoration: none;
+            transition: color 0.2s;
         }
 
-        .about-feature-content p {
-            font-size: 16px;
-            color: #444;
-            line-height: 2;
-            margin: 0;
-            max-width: 800px;
-            display: inline-block;
+        .auth-register-link:hover {
+            color: #0a4db4 !important;
         }
 
-        .about-feature-grid {
-            display: flex;
-            gap: 20px;
+        .auth-user {
+            position: relative;
         }
 
-        .about-feature-high {
-            flex: 1;
-            background: linear-gradient(135deg, #004a99, #1967c2);
-            border-radius: 12px;
-            padding: 40px;
+        .user-menu-trigger {
             display: flex;
             align-items: center;
-            gap: 30px;
-            color: #fff;
+            gap: 6px;
+            padding: 3px 10px 3px 3px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: background 0.2s;
+            user-select: none;
         }
 
-        .about-feature-high .hexagon {
-            width: 100px;
-            height: 100px;
-            background: #fff;
-            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+        .user-menu-trigger:hover {
+            background: #eef2f7;
+        }
+
+        .user-menu-trigger.active {
+            background: #e3ecf7;
+        }
+
+        .user-avatar {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #0a4db4, #4a9eff);
+            color: #fff;
+            font-size: 11px;
+            font-weight: 600;
             display: flex;
             align-items: center;
             justify-content: center;
             flex-shrink: 0;
         }
 
-        .about-feature-high .hexagon .h-text {
-            font-size: 48px;
-            font-weight: bold;
-            color: #004a99;
+        .user-name {
+            font-size: 12px;
+            color: #333;
+            font-weight: 500;
+            max-width: 80px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
 
-        .about-feature-high .high-labels {
+        .user-arrow {
+            width: 10px;
+            height: 10px;
+            color: #888;
+            transition: transform 0.25s ease;
+        }
+
+        .user-menu-trigger.active .user-arrow {
+            transform: rotate(180deg);
+        }
+
+        .user-dropdown {
+            position: absolute;
+            top: calc(100% + 8px);
+            left: 0;
+            min-width: 210px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.06);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-8px);
+            transition: all 0.22s cubic-bezier(0.22, 1, 0.36, 1);
+            overflow: hidden;
+            z-index: 100;
+        }
+
+        .user-dropdown.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 16px;
+            background: linear-gradient(135deg, #f0f5ff, #e8f0fe);
+        }
+
+        .dropdown-avatar {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #0a4db4, #4a9eff);
+            color: #fff;
+            font-size: 16px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            box-shadow: 0 2px 8px rgba(10, 77, 180, 0.25);
+        }
+
+        .dropdown-user-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .dropdown-username {
+            font-size: 14px;
+            font-weight: 600;
+            color: #1f2937;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .dropdown-label {
+            font-size: 11px;
+            color: #6b7280;
+            margin-top: 2px;
+        }
+
+        .dropdown-divider {
+            height: 1px;
+            background: #f0f0f0;
+            margin: 4px 0;
+        }
+
+        .dropdown-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 16px;
+            color: #4b5563;
+            font-size: 13px;
+            text-decoration: none;
+            transition: all 0.15s;
+            position: relative;
+        }
+
+        .dropdown-item:hover {
+            background: #f5f8fc;
+            color: #0a4db4;
+        }
+
+        .dropdown-item svg {
+            width: 15px;
+            height: 15px;
+            flex-shrink: 0;
+            color: #6b7280;
+        }
+
+        .dropdown-item:hover svg {
+            color: #0a4db4;
+        }
+
+        .dropdown-item span {
+            flex: 1;
+        }
+
+        .dropdown-logout {
+            color: #dc2626 !important;
+        }
+
+        .dropdown-logout:hover {
+            background: #fef2f2;
+            color: #dc2626 !important;
+        }
+
+        .dropdown-logout svg {
+            color: #dc2626;
+        }
+
+        .dropdown-badge {
+            background: #ef4444;
+            color: #fff;
+            font-size: 10px;
+            font-weight: 600;
+            padding: 1px 6px;
+            border-radius: 8px;
+            min-width: 18px;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .user-name {
+                max-width: 50px;
+            }
+
+            .user-dropdown {
+                min-width: 180px;
+            }
+        }
+
+        /* ============ index Header ============ */
+        .header {
+            background: #fff;
+            border-bottom: 2px solid #0a4db4;
+        }
+
+        .header-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 18px 20px;
+            display: flex;
+            align-items: center;
+            gap: 40px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        .logo .logo-icon {
+            width: 48px;
+            height: 48px;
+            object-fit: contain;
+        }
+
+        .logo .logo-text {
             display: flex;
             flex-direction: column;
-            gap: 8px;
         }
 
-        .about-feature-high .high-label {
-            font-size: 16px;
+        .logo .logo-text .brand {
+            font-size: 24px;
             font-weight: bold;
+            color: #333;
+            letter-spacing: 1px;
+        }
+
+        .logo .logo-text .brand .highlight {
+            color: #0a4db4;
+        }
+
+        .logo .logo-text .tagline {
+            font-size: 11px;
+            color: #999;
+            letter-spacing: 2px;
+            margin-top: 2px;
+        }
+
+        /* Logo 微交互 */
+        .logo {
+            cursor: pointer;
+            transition: transform .3s var(--ease);
+        }
+
+        .logo:hover {
+            transform: translateX(-2px);
+        }
+
+        .logo .brand {
+            background: linear-gradient(135deg, #000000 0%, #006eff 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Logo 微交互 */
+        .logo {
+            cursor: pointer;
+            transition: transform .3s var(--ease);
+        }
+
+        .logo:hover {
+            transform: translateX(-2px);
+        }
+
+        .logo .brand {
+            background: linear-gradient(135deg, #000000 0%, #006eff 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .search-box {
+            flex: 1;
+            max-width: 580px;
+            display: flex;
+            border: 2px solid #0a4db4;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .search-box .cat-select {
+            width: 120px;
+            padding: 0 10px;
+            border: none;
+            border-right: 1px solid #ddd;
+            background: #fafafa;
+            font-size: 13px;
+            cursor: pointer;
+            outline: none;
+        }
+
+        .search-box input {
+            flex: 1;
+            padding: 0 15px;
+            border: none;
+            outline: none;
+            font-size: 14px;
+            height: 40px;
+        }
+
+        .search-box button {
+            width: 90px;
+            background: #0a4db4;
             color: #fff;
-            margin: 0;
+            border: none;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: bold;
+            letter-spacing: 2px;
         }
 
-        .about-feature-cards {
-            flex: 3;
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
+        .search-box button:hover {
+            background: #083d94;
         }
 
-        .about-feature-card {
-            background: #f5f8fc;
-            border-radius: 8px;
-            padding: 25px;
-            transition: all 0.3s ease;
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-left: auto;
+            flex-shrink: 0;
         }
 
-        .about-feature-card:hover {
+        .header-right .cart-btn {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: #0a4db4;
+            font-weight: bold;
+            font-size: 14px;
+            line-height: 1.5;
+            white-space: nowrap;
+            padding: 8px 16px;
+            border: 1px solid #0a4db4;
+            border-radius: 4px;
+            background: #fff;
+            cursor: pointer;
+            overflow: visible;
+            flex-shrink: 0;
+            text-decoration: none;
+        }
+
+        .header-right .cart-btn:hover {
             background: #e8f0fe;
         }
 
-        .about-feature-card .title {
-            font-size: 18px;
+        .header-right .publish-btn {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: #fff;
             font-weight: bold;
-            color: #005CE6;
-            margin: 0 0 10px;
+            padding: 9px 18px;
+            border: none;
+            border-radius: 4px;
+            background: linear-gradient(135deg, #0a4db4, #1e6fd9);
+            cursor: pointer;
+            font-size: 14px;
+            text-decoration: none;
+            box-shadow: 0 2px 8px rgba(10, 77, 180, 0.3);
+            transition: all 0.2s;
         }
 
-        .about-feature-card .value {
-            font-size: 22px;
-            font-weight: bold;
-            color: #005CE6;
-            margin: 0 0 5px;
+        .header-right .publish-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(10, 77, 180, 0.4);
         }
 
-        .about-feature-card .desc {
-            font-size: 13px;
-            color: #666;
-            margin: 0;
-            line-height: 1.6;
+        .header-right .eccee-btn {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: #fff;
+            font-weight: bold;
+            padding: 9px 16px;
+            border: none;
+            border-radius: 4px;
+            background: linear-gradient(135deg, #f5a623, #e8941a);
+            cursor: pointer;
+            font-size: 14px;
+            text-decoration: none;
+            box-shadow: 0 2px 8px rgba(245, 166, 35, 0.3);
+            transition: all 0.2s;
         }
 
-        .section-title {
-            font-size: 28px;
-            font-weight: bold;
-            color: #0a3a8f;
-            margin: 0 0 25px;
-            text-align: center;
+        .header-right .eccee-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(245, 166, 35, 0.4);
+        }
+
+        /* ============ index 主导航 ============ */
+        .main-nav {
+            background: #0a4db4;
+        }
+
+        .main-nav-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: stretch;
+        }
+
+        .main-nav .nav-item {
             position: relative;
-            padding-bottom: 15px;
+            padding: 0 22px;
+            line-height: 46px;
+            color: #fff;
+            font-size: 15px;
+            cursor: pointer;
+            transition: background 0.2s;
+            white-space: nowrap;
         }
 
-        .section-title::after {
+        .main-nav .nav-item:hover {
+            background: #083d94;
+        }
+
+        .main-nav .nav-item.active {
+            background: #083d94;
+            font-weight: bold;
+        }
+
+        .main-nav .nav-item.active::after {
             content: "";
             position: absolute;
             bottom: 0;
             left: 50%;
             transform: translateX(-50%);
-            width: 60px;
+            width: 60%;
+            height: 3px;
+            background: #4a9eff;
+            border-radius: 2px 2px 0 0;
+        }
+
+        /* ===== 面包屑 ===== */
+        .breadcrumb-wrap {
+            background: #fff;
+            border-bottom: 1px solid #eee;
+            padding: 12px 0;
+        }
+
+        .breadcrumb {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            font-size: 13px;
+            color: #999;
+        }
+
+        .breadcrumb a {
+            color: #999;
+        }
+
+        .breadcrumb a:hover {
+            color: #0a4db4;
+        }
+
+        .breadcrumb .sep {
+            margin: 0 8px;
+            color: #ddd;
+        }
+
+        .breadcrumb .current {
+            color: #333;
+        }
+
+        /* ===== 产品展示区 ===== */
+        .product-show {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 30px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+            display: flex;
+            gap: 40px;
+        }
+
+        /* 左侧图片区 */
+        .product-gallery {
+            width: 480px;
+            flex-shrink: 0;
+        }
+
+        .main-image {
+            width: 100%;
+            height: 420px;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            overflow: hidden;
+            background: #f9f9f9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 12px;
+            position: relative;
+        }
+
+        .main-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            transition: transform 0.3s;
+            pointer-events: none;
+        }
+
+        .main-image:hover img {
+            transform: scale(1.05);
+        }
+
+        /* 图片左右切换箭头 */
+        .main-image .nav-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 18px;
+            color: #333;
+            z-index: 10;
+            opacity: 0;
+            transition: all 0.25s;
+            border: none;
+        }
+
+        .main-image:hover .nav-arrow {
+            opacity: 1;
+        }
+
+        .main-image .nav-arrow:hover {
+            background: #0a4db4;
+            color: #fff;
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .main-image .nav-arrow.prev {
+            left: 12px;
+        }
+
+        .main-image .nav-arrow.next {
+            right: 12px;
+        }
+
+        .thumbnail-list {
+            display: flex;
+            gap: 10px;
+        }
+
+        .thumb-item {
+            width: 80px;
+            height: 80px;
+            border: 2px solid #eee;
+            border-radius: 6px;
+            overflow: hidden;
+            cursor: pointer;
+            background: #f9f9f9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .thumb-item img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            pointer-events: none;
+        }
+
+        .thumb-item:hover {
+            border-color: #4a9eff;
+        }
+
+        .thumb-item.active {
+            border-color: #0a4db4;
+            box-shadow: 0 0 0 2px rgba(10, 77, 180, 0.2);
+        }
+
+        /* 右侧信息区 */
+        .product-info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-title {
+            font-size: 26px;
+            font-weight: bold;
+            color: #222;
+            margin-bottom: 10px;
+            line-height: 1.3;
+        }
+
+        .product-subtitle {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .product-tags {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .product-tag {
+            padding: 3px 10px;
+            background: #fff5e6;
+            color: #f5a623;
+            border: 1px solid #ffe0b2;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+
+        .product-tag.blue {
+            background: #e8f0fe;
+            color: #0a4db4;
+            border-color: #b3d4fc;
+        }
+
+        /* 价格区 */
+        .price-section {
+            background: linear-gradient(135deg, #fff9e6, #fff5d6);
+            border: 1px solid #ffe4a1;
+            border-radius: 8px;
+            padding: 20px 24px;
+            margin-bottom: 20px;
+        }
+
+        .price-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .price-row:last-child {
+            margin-bottom: 0;
+        }
+
+        .price-label {
+            width: 90px;
+            font-size: 13px;
+            color: #999;
+            flex-shrink: 0;
+        }
+
+        .price-value {
+            font-size: 28px;
+            font-weight: bold;
+            color: #e4393c;
+        }
+
+        .price-value .currency {
+            font-size: 18px;
+            margin-right: 2px;
+        }
+
+        .price-value .unit {
+            font-size: 14px;
+            color: #999;
+            margin-left: 6px;
+            font-weight: normal;
+        }
+
+        .price-value.range {
+            font-size: 20px;
+        }
+
+        .stock-info {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .origin-price {
+            font-size: 13px;
+            color: #999;
+            text-decoration: line-through;
+            margin-left: 8px;
+        }
+
+        /* 规格选择 */
+        .spec-section {
+            margin-bottom: 18px;
+        }
+
+        .spec-label {
+            display: flex;
+            align-items: center;
+            width: 90px;
+            font-size: 13px;
+            color: #999;
+            flex-shrink: 0;
+        }
+
+        .spec-row {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 14px;
+        }
+
+        .spec-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            flex: 1;
+        }
+
+        .spec-option {
+            padding: 8px 18px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+            background: #fff;
+        }
+
+        .spec-option:hover {
+            border-color: #4a9eff;
+            color: #0a4db4;
+        }
+
+        .spec-option.selected {
+            border-color: #0a4db4;
+            color: #0a4db4;
+            background: #e8f0fe;
+            font-weight: 500;
+        }
+
+        /* 数量选择 */
+        .quantity-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 18px;
+        }
+
+        .quantity-input {
+            display: flex;
+            align-items: stretch;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            overflow: visible;
+            position: relative;
+            z-index: 1;
+        }
+
+        .quantity-input button {
+            width: 38px;
+            height: 38px;
+            border: none;
+            background: #f5f5f5;
+            font-size: 18px;
+            cursor: pointer;
+            color: #666;
+            transition: background 0.2s;
+            padding: 0;
+            line-height: 1;
+            position: relative;
+            z-index: 2;
+            pointer-events: auto;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        .quantity-input button:hover {
+            background: #e8e8e8;
+            color: #0a4db4;
+        }
+
+        .quantity-input button:active {
+            background: #d0d0d0;
+        }
+
+        .quantity-input input {
+            flex: 1;
+            height: 38px;
+            text-align: center;
+            border: none;
+            outline: none;
+            font-size: 15px;
+            border-left: 1px solid #ddd;
+            border-right: 1px solid #ddd;
+            -moz-appearance: textfield;
+        }
+
+        .quantity-input input::-webkit-outer-spin-button,
+        .quantity-input input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        .stock-label {
+            margin-left: 14px;
+            color: #999;
+            font-size: 13px;
+        }
+
+        /* 服务支持 */
+        .service-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 22px;
+            font-size: 13px;
+            color: #666;
+        }
+
+        .service-row .service-label {
+            width: 90px;
+            flex-shrink: 0;
+            color: #999;
+        }
+
+        .service-list {
+            display: flex;
+            gap: 18px;
+            flex: 1;
+        }
+
+        .service-list span {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .service-list .check-icon {
+            color: #52c41a;
+            font-weight: bold;
+        }
+
+        /* 按钮组 */
+        .action-buttons {
+            display: flex;
+            gap: 14px;
+        }
+
+        .btn {
+            height: 48px;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: all 0.2s;
+            padding: 0 30px;
+        }
+
+        .btn-buy {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: #fff;
+        }
+
+        .btn-buy:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 5px 14px rgba(16, 185, 129, 0.4);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #0a4db4, #1e6fd9);
+            color: #fff;
+            box-shadow: 0 3px 10px rgba(10, 77, 180, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 5px 14px rgba(10, 77, 180, 0.4);
+        }
+
+        .btn-orange {
+            background: linear-gradient(135deg, #f5a623, #e8941a);
+            color: #fff;
+            box-shadow: 0 3px 10px rgba(245, 166, 35, 0.3);
+        }
+
+        .btn-orange:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 5px 14px rgba(245, 166, 35, 0.4);
+        }
+
+        .btn-default {
+            background: #fff;
+            color: #333;
+            border: 1px solid #ddd;
+        }
+
+        .btn-default:hover {
+            border-color: #0a4db4;
+            color: #0a4db4;
+        }
+
+        /* ===== 详情内容区 ===== */
+        .detail-section {
+            max-width: 1200px;
+            margin: 0 auto 30px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+            overflow: hidden;
+        }
+
+        .detail-tabs {
+            display: flex;
+            border-bottom: 2px solid #0a4db4;
+            background: #fafafa;
+        }
+
+        .detail-tab {
+            padding: 14px 28px;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            color: #666;
+            border-bottom: 2px solid transparent;
+            margin-bottom: -2px;
+            transition: all 0.2s;
+        }
+
+        .detail-tab:hover {
+            color: #0a4db4;
+        }
+
+        .detail-tab.active {
+            color: #0a4db4;
+            background: #fff;
+            border-bottom-color: #0a4db4;
+            font-weight: bold;
+        }
+
+        .detail-content {
+            padding: 40px 50px;
+        }
+
+        .detail-panel {
+            display: none;
+        }
+
+        .detail-panel.active {
+            display: block;
+        }
+
+        /* 产品详情 */
+        .detail-panel h2 {
+            font-size: 22px;
+            font-weight: bold;
+            color: #0a3a8f;
+            margin-bottom: 24px;
+            text-align: center;
+            position: relative;
+            padding-bottom: 14px;
+        }
+
+        .detail-panel h2::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
             height: 3px;
             background: linear-gradient(90deg, #004a99, #1967c2);
             border-radius: 2px;
         }
 
-        .about-section {
-            background: #fafafa;
-            padding: 50px 20px;
-            border-radius: 12px;
-            margin-bottom: 50px;
+        .detail-panel h3 {
+            font-size: 18px;
+            font-weight: bold;
+            color: #0a4db4;
+            margin: 30px 0 16px;
+            padding-left: 12px;
+            border-left: 4px solid #0a4db4;
         }
 
-        .about-section p {
-            font-size: 16px;
+        .detail-panel p {
+            font-size: 15px;
             color: #444;
             line-height: 2;
-            margin: 0 0 15px;
+            margin-bottom: 14px;
             text-align: justify;
         }
 
-        .design-section {
-            margin-bottom: 50px;
-        }
-
-        .design-section .design-image {
-            width: 100%;
-            max-height: 350px;
-            object-fit: contain;
-            margin-bottom: 20px;
-        }
-
-        .design-section p {
-            font-size: 16px;
-            color: #444;
-            line-height: 1.8;
-            text-align: center;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .versions-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 24px;
-            margin-bottom: 50px;
-        }
-
-        .version-card {
-            background: #fff;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-            border: 1px solid #e8e8e8;
-            transition: all 0.3s ease;
-        }
-
-        .version-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-        }
-
-        .version-card img {
-            width: 100%;
-            height: 200px;
-            object-fit: contain;
-            background: #f5f8fc;
-        }
-
-        .version-card .version-info {
-            padding: 20px;
-        }
-
-        .version-card .version-info h3 {
-            font-size: 20px;
-            font-weight: bold;
-            color: #0a3a8f;
-            margin: 0 0 10px;
-        }
-
-        .version-card .version-info .tagline {
-            font-size: 14px;
-            color: #1967c2;
-            font-weight: 500;
-            margin: 0 0 10px;
-        }
-
-        .version-card .version-info p {
-            font-size: 14px;
-            color: #666;
-            line-height: 1.6;
-            margin: 0;
-        }
-
-        .performance-section {
-            background: #f5f8fc;
-            padding: 50px 20px;
-            border-radius: 12px;
-            margin-bottom: 50px;
-        }
-
-        .performance-item {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 50px;
-            gap: 40px;
-        }
-
-        .performance-item:last-child {
-            margin-bottom: 0;
-        }
-
-        .performance-item.reverse {
-            flex-direction: row-reverse;
-        }
-
-        .performance-item .performance-content {
-            flex: 1;
-        }
-
-        .performance-item .performance-image {
-            flex: 1;
-            max-width: 500px;
-            border-radius: 8px;
-            overflow: hidden;
-        }
-
-        .performance-item .performance-image img {
-            width: 100%;
+        .detail-panel img {
+            max-width: 100%;
             height: auto;
+            border-radius: 8px;
+            margin: 20px 0;
             display: block;
         }
 
-        .performance-item h3 {
-            font-size: 28px;
-            font-weight: bold;
-            color: #005CE6;
-            margin: 0 0 15px;
+        .detail-panel ul {
+            padding-left: 20px;
+            margin-bottom: 16px;
         }
 
-        .performance-item p {
-            font-size: 15px;
+        .detail-panel ul li {
+            font-size: 14px;
             color: #555;
-            line-height: 1.8;
-            margin: 0 0 10px;
+            line-height: 2;
+            margin-bottom: 6px;
         }
 
-        .performance-item .highlight {
-            font-size: 16px;
-            font-weight: bold;
-            color: #333;
-        }
-
-        .applications-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 20px;
-            margin-bottom: 50px;
-        }
-
-        .application-card {
-            position: relative;
-            border-radius: 10px;
-            overflow: hidden;
-            min-height: 280px;
+        /* 产品卖点卡片 */
+        .feature-highlight {
             display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
-            transition: all 0.3s ease;
-        }
-
-        .application-card::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            z-index: 0;
-        }
-
-        .application-card::after {
-            content: "";
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 60%;
-            background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
-            z-index: 1;
-        }
-
-        .application-card.car-manufacture::before {
-            background-image: url('../../img/dobot/cr30h-main.jpg');
-        }
-
-        .application-card.food-beverage::before {
-            background-image: url('../../img/dobot/cr30h-main.jpg');
-        }
-
-        .application-card.metal-processing::before {
-            background-image: url('../../img/dobot/cr30h-main.jpg');
-        }
-
-        .application-card.semiconductor::before {
-            background-image: url('../../img/dobot/cr30h-main.jpg');
-        }
-
-        .application-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-        }
-
-        .application-card .card-content {
-            position: relative;
-            z-index: 2;
-            padding: 25px;
+            gap: 20px;
+            padding: 30px;
+            background: linear-gradient(135deg, #004a99, #1967c2);
+            border-radius: 10px;
             color: #fff;
+            margin: 25px 0;
         }
 
-        .application-card .card-content h4 {
-            font-size: 20px;
+        .feature-highlight .main-feature {
+            width: 120px;
+            text-align: center;
+            border-right: 1px solid rgba(255, 255, 255, 0.2);
+            padding-right: 20px;
+        }
+
+        .feature-highlight .main-feature .hexagon {
+            width: 80px;
+            height: 80px;
+            background: #fff;
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px;
+        }
+
+        .feature-highlight .main-feature .hexagon span {
+            font-size: 36px;
             font-weight: bold;
-            color: #fff;
-            margin: 0 0 10px;
+            color: #004a99;
         }
 
-        .application-card .card-content p {
-            font-size: 13px;
-            color: rgba(255, 255, 255, 0.9);
-            margin: 0;
-            line-height: 1.6;
+        .feature-highlight .main-feature .label {
+            font-size: 14px;
+            font-weight: bold;
         }
 
-        .quality-section {
-            background: linear-gradient(135deg, #004a99 0%, #1967c2 100%);
-            padding: 50px 20px;
-            border-radius: 12px;
-            margin-bottom: 50px;
-            color: #fff;
-        }
-
-        .quality-section .section-title {
-            color: #fff;
-        }
-
-        .quality-section .section-title::after {
-            background: rgba(255, 255, 255, 0.5);
-        }
-
-        .quality-grid {
+        .feature-highlight .feature-items {
+            flex: 1;
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 24px;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
         }
 
-        .quality-item {
+        .feature-highlight .feature-item {
+            background: rgba(255, 255, 255, 0.12);
+            padding: 14px;
+            border-radius: 6px;
             text-align: center;
         }
 
-        .quality-item img {
-            width: 60px;
-            height: 60px;
-            margin: 0 auto 12px;
-            filter: brightness(0) invert(1);
+        .feature-highlight .feature-item .title {
+            font-size: 14px;
             opacity: 0.9;
+            margin-bottom: 4px;
         }
 
-        .quality-item h4 {
-            font-size: 15px;
+        .feature-highlight .feature-item .value {
+            font-size: 22px;
             font-weight: bold;
-            margin: 0 0 6px;
         }
 
-        .quality-item p {
-            font-size: 13px;
-            opacity: 0.85;
-            margin: 0;
-        }
-
-        .specs-section {
-            margin-bottom: 50px;
-        }
-
-        .specs-section h3 {
-            font-size: 20px;
-            font-weight: bold;
-            color: #0a3a8f;
-            margin: 0 0 20px;
-        }
-
+        /* 规格参数表 */
         .spec-table {
             width: 100%;
             border-collapse: collapse;
-            background: #fff;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-            border: 1px solid #e8e8e8;
+            margin: 20px 0;
         }
 
         .spec-table th {
@@ -566,7 +1222,6 @@
             text-align: center;
             font-weight: bold;
             font-size: 14px;
-            white-space: nowrap;
         }
 
         .spec-table td {
@@ -574,7 +1229,6 @@
             border-bottom: 1px solid #f0f0f0;
             font-size: 14px;
             color: #444;
-            text-align: center;
         }
 
         .spec-table tr:nth-child(even) td {
@@ -585,434 +1239,1216 @@
             background: #f0f5fc;
         }
 
-        .nav-back-btn {
+        .spec-table td:first-child {
+            font-weight: 500;
+            width: 180px;
+            color: #555;
+        }
+
+        /* 相关推荐 */
+        .related-section {
+            max-width: 1200px;
+            margin: 0 auto 40px;
+            padding: 30px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+        }
+
+        .related-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 24px;
+            padding-left: 12px;
+            border-left: 4px solid #0a4db4;
+        }
+
+        .related-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .related-card {
+            border: 1px solid #eee;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .related-card:hover {
+            box-shadow: 0 6px 20px rgba(10, 77, 180, 0.15);
+            transform: translateY(-3px);
+        }
+
+        .related-card .img-wrap {
+            height: 160px;
+            background: #f9f9f9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+        }
+
+        .related-card .img-wrap img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        .related-card .info {
+            padding: 14px;
+        }
+
+        .related-card .info .name {
+            font-size: 14px;
+            font-weight: 500;
+            color: #333;
+            margin-bottom: 6px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .related-card .info .price {
+            font-size: 16px;
+            font-weight: bold;
+            color: #e4393c;
+        }
+
+        /* 侧边客服 */
+        .sidebar-service {
+            position: fixed;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            background: #fff;
+            border: 1px solid #eee;
+            border-right: none;
+            border-radius: 8px 0 0 8px;
+            box-shadow: -2px 2px 10px rgba(0, 0, 0, 0.08);
+            display: flex;
+            flex-direction: column;
+            z-index: 100;
+        }
+
+        .sidebar-service a {
+            padding: 16px 12px;
+            text-align: center;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 12px;
+            color: #666;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            transition: all 0.2s;
+        }
+
+        .sidebar-service a:last-child {
+            border-bottom: none;
+        }
+
+        .sidebar-service a:hover {
+            color: #0a4db4;
+            background: #f0f6ff;
+        }
+
+        .sidebar-service .icon {
+            font-size: 22px;
+        }
+
+        /* Toast提示 */
+        .toast {
+            position: fixed;
+            top: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-100px);
+            padding: 14px 28px;
+            border-radius: 8px;
+            color: #fff;
+            font-size: 14px;
+            z-index: 9999;
+            transition: transform 0.4s;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .toast.success {
+            background: #2ecc71;
+        }
+
+        .toast.error {
+            background: #e74c3c;
+        }
+
+        .toast.info {
+            background: #0a4db4;
+        }
+
+        /* 返回顶部 */
+        .back-to-top {
+            position: fixed;
+            right: 20px;
+            bottom: 30px;
+            width: 44px;
+            height: 44px;
+            background: #0a4db4;
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 20px;
+            box-shadow: 0 4px 12px rgba(10, 77, 180, 0.3);
+            display: none;
+            z-index: 100;
+            transition: all 0.2s;
+        }
+
+        .back-to-top.show {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .back-to-top:hover {
+            background: #1e6fd9;
+        }
+
+        /* 响应式 */
+
+
+
+
+        /* ============ index Footer ============ */
+        .footer {
+            background: linear-gradient(180deg, #2c3e50 0%, #1a2530 100%);
+            color: #bbb;
+            margin-top: 40px;
+        }
+
+        .footer-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px 20px;
+            display: flex;
+            justify-content: space-between;
+            gap: 40px;
+        }
+
+        .footer-col {
+            flex: 1;
+        }
+
+        .footer-col h4 {
+            color: #fff;
+            font-size: 15px;
+            margin-bottom: 16px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-col a {
+            display: block;
+            color: #bbb;
+            font-size: 13px;
+            padding: 4px 0;
+            transition: all 0.2s;
+        }
+
+        .footer-col a:hover {
+            color: #4a9eff;
+            padding-left: 4px;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            padding: 16px 20px;
+            font-size: 12px;
+            color: #888;
+        }
+
+        .footer-bottom a {
+            color: #888;
+            margin: 0 6px;
+            transition: color 0.2s;
+        }
+
+        .footer-bottom a:hover {
+            color: #4a9eff;
+        }
+
+        /* index 响应式 */
+        /* ===== 中英文切换按钮 ===== */
+        .top-bar .top-right .lang-toggle {
             display: inline-flex;
             align-items: center;
-            gap: 8px;
-            background: rgba(255, 255, 255, 0.2);
-            color: #fff;
-            padding: 8px 20px;
-            border-radius: 4px;
-            text-decoration: none;
-            font-size: 14px;
-            transition: all 0.3s ease;
-            margin-right: 15px;
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            margin: 0 0 0 10px;
+            border: 1px solid #d9d9d9;
+            border-radius: 12px;
+            overflow: hidden;
+            line-height: 1;
+            vertical-align: middle;
         }
 
-        .nav-back-btn:hover {
-            background: rgba(255, 255, 255, 0.3);
-        }
-
-        .mobile-nav-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 999;
-        }
-
-        .mobile-nav-overlay.active {
-            display: block;
-        }
-
-        .mobile-nav-drawer {
-            position: fixed;
-            top: 0;
-            right: -300px;
-            width: 300px;
-            height: 100%;
-            background: #fff;
-            z-index: 1000;
-            transition: right 0.3s ease;
-            padding: 20px;
-            box-sizing: border-box;
-        }
-
-        .mobile-nav-drawer.active {
-            right: 0;
-        }
-
-        .mobile-nav-drawer .close-btn {
-            font-size: 24px;
-            color: #333;
-            cursor: pointer;
-            margin-bottom: 20px;
-        }
-
-        .mobile-nav-drawer ul {
-            list-style: none;
-            padding: 0;
+        .top-bar .top-right .lang-toggle a {
             margin: 0;
+            padding: 3px 9px;
+            font-size: 12px;
         }
 
-        .mobile-nav-drawer ul li {
-            margin-bottom: 15px;
+        .top-bar .top-right .lang-toggle a + a {
+            border-left: 1px solid #d9d9d9;
         }
 
-        .mobile-nav-drawer ul li a {
-            color: #333;
-            text-decoration: none;
-            font-size: 16px;
+        .top-bar .top-right .lang-toggle a.active {
+            background: #0a4db4;
+            color: #fff;
         }
 
-        
+        /* ===== 英文文本防溢出 ===== */
+        .product-title,
+        .related-card .info .name {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            white-space: normal;
+        }
 
-        
+        .breadcrumb .current,
+        .related-title,
+        .spec-table th,
+        .spec-table td {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .spec-table {
+            table-layout: fixed;
+        }
+
     </style>
-    <script src="../../favorite.js"></script>
-
-    <style>
-        .btn-favorite:hover { background: #fffbeb; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(245, 166, 35, 0.25); }
-        .btn-favorite.favorited { background: #fffbeb; border-color: #f5a623; }
-        .btn-favorite.favorited .fav-icon { color: #f5a623; }
-    </style>
-
 </head>
 
 <body>
-    <div id="nav-container"></div>
-	<script src="../../components/load-components.js"></script>
-	<script>
-		loadComponent('nav-container', '.../../components/nav-en.html', function() {
-			initNav();
-		});
-	</script>
+    <!-- ============ 顶部条 ============ -->
+    <div class="top-bar">
+        <div class="top-bar-inner">
+            <div class="top-left">
+                <div class="auth-section auth-guest" id="authGuest">
+                    <a href="../user/login.html" class="auth-login-btn">
+                        <svg class="auth-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4" />
+                            <polyline points="10 17 15 12 10 7" />
+                            <line x1="15" y1="12" x2="3" y2="12" />
+                        </svg>
+                        <span>Login</span>
+                    </a>
+                    <span class="auth-divider">|</span>
+                    <a href="../user/login.html?tab=register" class="auth-register-link">Register</a>
+                </div>
+                <div class="auth-section auth-user" id="authUser" style="display:none;">
+                    <div class="user-menu-trigger" id="userMenuTrigger">
+                        <div class="user-avatar" id="userAvatar"></div>
+                        <span class="user-name" id="userName"></span>
+                        <svg class="user-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="6 9 12 15 18 9" />
+                        </svg>
+                    </div>
+                    <div class="user-dropdown" id="userDropdown">
+                        <div class="dropdown-header">
+                            <div class="dropdown-avatar" id="dropdownAvatar"></div>
+                            <div class="dropdown-user-info">
+                                <div class="dropdown-username" id="dropdownUsername"></div>
+                                <div class="dropdown-label">Welcome back</div>
+                            </div>
+                        </div>
+                        <div class="dropdown-divider"></div>
+                        <a href="../user/order.html" class="dropdown-item">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M9 11H5a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7a2 2 0 0 0-2-2h-4" />
+                                <path d="M9 11V7a3 3 0 0 1 6 0v4" />
+                            </svg>
+                            <span>My Orders</span>
+                        </a>
+                        <a href="../user/cart.html" class="dropdown-item">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="9" cy="21" r="1" />
+                                <circle cx="20" cy="21" r="1" />
+                                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
+                            </svg>
+                            <span>Cart</span>
+                            <span class="dropdown-badge" id="dropdownCartBadge">0</span>
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a href="javascript:void(0)" class="dropdown-item dropdown-logout" id="dropdownLogout">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                                <polyline points="16 17 21 12 16 7" />
+                                <line x1="21" y1="12" x2="9" y2="12" />
+                            </svg>
+                            <span>Log Out</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="top-right">
+                <a href="../../index-en.html">Home</a>
+                <a href="#">Products &amp; Services</a>
+                <a href="#">Solutions</a>
+                <a href="#">News</a>
+                <a href="../about/about-us.html">About Us</a>
+                <a href="../info/contact-us.html">Contact Us</a>
+                <span class="lang-toggle" title="Language"><a href="#" class="lang-switch-zh">中</a><a href="#" class="lang-switch-en active">EN</a></span>
+            </div>
+        </div>
+    </div>
+    <div class="header">
+        <div class="header-inner">
+            <div class="logo" onclick="window.location.href='../../index-en.html'">
+                <div class="logo-text">
+                    <div class="brand">HARVEST · Hi-Tech Bazaar</div>
+                </div>
+            </div>
+            <div class="header-right">
+                <a class="eccee-btn" href="../info/ece.html">🏅 ECEE Certification</a>
+                <a class="publish-btn" href="../user/publish.html">✏️ Publish Requirement</a>
 
-    <div class="mobile-nav-overlay" id="mobileNavOverlay" onclick="toggleMobileMenu()"></div>
-    <div class="mobile-nav-drawer" id="mobileNavDrawer">
-        <div class="close-btn" onclick="toggleMobileMenu()">×</div>
-        <ul>
-            <li><a href="../../index-en.html">Home</a></li>
-            <li><a href="../series/chanpin1-ai-en.html">Products</a></li>
-            <li><a href="../../index-en.html#yycj">Applications</a></li>
-            <li><a href="../../index-en.html#cpxn">Core Technology</a></li>
-            <li><a href="#lxwm">Contact Us</a></li>
-            <li><a href="product-detail-cr30h.html">中文</a></li>
-        </ul>
+                <a class="cart-btn" href="../user/cart.html" data-cart-enhanced="1">🛒 Cart<span
+                        class="cart-badge">0</span></a>
+            </div>
+        </div>
     </div>
 
-    <script>
-        const searchBtn = document.getElementById('searchBtn');
-        const searchBox = document.getElementById('searchBox');
-        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-        const mobileNavOverlay = document.getElementById('mobileNavOverlay');
-        const mobileNavDrawer = document.getElementById('mobileNavDrawer');
 
-        function toggleMobileMenu() {
-            if (mobileMenuBtn && mobileNavDrawer && mobileNavOverlay) {
-                mobileMenuBtn.classList.toggle('active');
-                mobileNavDrawer.classList.toggle('active');
-                mobileNavOverlay.classList.toggle('active');
+    <!-- 面包屑 -->
+    <div class="breadcrumb-wrap">
+        <div class="breadcrumb">
+            <a href="../../index-en.html">Home</a>
+            <span class="sep">›</span>
+            <a href="../../index-en.html">AI &amp; Robotics</a>
+            <span class="sep">›</span>
+            <a href="../../index-en.html">Six-Axis Collaborative Robot CRH Series</a>
+            <span class="sep">›</span>
+            <span class="current">CR 30H Collaborative Robot</span>
+        </div>
+    </div>
+
+    <!-- 产品展示区 -->
+    <div class="product-show">
+        <!-- 左侧图片区 -->
+        <div class="product-gallery">
+            <div class="main-image">
+                <img id="mainImage" src="../../img/dobot/cr30h-main.jpg" alt="CR 30H Collaborative Robot">
+                <button class="nav-arrow prev" onclick="prevImage()" title="Previous">‹</button>
+                <button class="nav-arrow next" onclick="nextImage()" title="Next">›</button>
+            </div>
+            <div class="thumbnail-list" id="thumbnailList">
+                <div class="thumb-item active" data-src="../../img/dobot/cr30h-list2.jpg" onclick="changeImage(this)">
+                    <img src="../../img/dobot/cr30h-main.jpg" alt="Image 1">
+                </div>
+                <div class="thumb-item" data-src="../../img/dobot/cr30h-main.jpg" onclick="changeImage(this)">
+                    <img src="../../img/dobot/cr30h-list2.jpg" alt="Image 2">
+                </div>
+                <div class="thumb-item" data-src="../../img/dobot/cr30h-list2.jpg" onclick="changeImage(this)">
+                    <img src="../../img/dobot/cr30h-list3.jpg" alt="Image 3">
+                </div>
+                <div class="thumb-item" data-src="../../img/dobot/cr30h-list3.jpg" onclick="changeImage(this)">
+                    <img src="../../img/dobot/cr30h-list4.jpg" alt="Image 4">
+                </div>
+                <div class="thumb-item" data-src="../../img/dobot/cr30h-list4.jpg" onclick="changeImage(this)">
+                    <img src="../../img/dobot/cr30h-scene.jpg" alt="Image 5">
+                </div>
+            </div>
+        </div>
+
+        <!-- 右侧信息区 -->
+        <div class="product-info">
+            <h1 class="product-title">CR 30H Collaborative Robot — Next-Generation Flagship</h1>
+            <div class="product-subtitle">The industry's fastest heavy-payload cobot at 300°/s, empowering you with highly efficient automated production</div>
+            <div class="product-tags">
+                <span class="product-tag">High Payload</span>
+                <span class="product-tag">High Speed</span>
+                <span class="product-tag blue">Industrial Grade</span>
+                <span class="product-tag blue">IP65 Protection</span>
+            </div>
+
+            <div class="price-section">
+                <div class="price-row">
+                    <span class="price-label">Price</span>
+                    <span class="price-value"><span class="currency">¥</span>32,000<span
+                            class="unit">/unit</span></span></span>
+                </div>
+                <div class="price-row">
+                    <span class="price-label">MOQ</span>
+                    <span class="stock-info">From 1 unit</span>
+                </div>
+                <div class="price-row">
+                    <span class="price-label">Stock</span>
+                    <span class="stock-info" style="color:#52c41a;">● In stock, customization available</span>
+                </div>
+            </div>
+
+            <div class="spec-section">
+                <div class="spec-row">
+                    <span class="spec-label">Version</span>
+                    <div class="spec-options">
+                        <div class="spec-option selected" onclick="selectSpec(this, '标准版')">Standard</div>
+                        <div class="spec-option" onclick="selectSpec(this, '触控版')">Touch (HT)</div>
+                        <div class="spec-option" onclick="selectSpec(this, '洁净版')">Cleanroom (Food)</div>
+                    </div>
+                </div>
+                <div class="spec-row">
+                    <span class="spec-label">Application</span>
+                    <div class="spec-options">
+                        <div class="spec-option selected" onclick="selectSpec(this, '通用')">General</div>
+                        <div class="spec-option" onclick="selectSpec(this, '汽车制造')">Automotive</div>
+                        <div class="spec-option" onclick="selectSpec(this, '金属加工')">Metalworking</div>
+                        <div class="spec-option" onclick="selectSpec(this, '食品饮料')">Food &amp; Beverage</div>
+                    </div>
+                </div>
+                <div class="quantity-row">
+                    <span class="spec-label">Quantity</span>
+                    <div class="quantity-input">
+                        <button onclick="changeQty(-1)">-</button>
+                        <input type="number" id="quantityInput" value="1" min="1">
+                        <button onclick="changeQty(1)">+</button>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="service-row">
+                <span class="service-label">Service &amp; Support</span>
+                <div class="service-list">
+                    <span><span class="check-icon">✓</span> Genuine Products</span>
+                    <span><span class="check-icon">✓</span> Fast Shipping</span>
+                    <span><span class="check-icon">✓</span> 3-Year Warranty</span>
+                    <span><span class="check-icon">✓</span> 24/7 Support</span>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <button class="btn btn-buy" onclick="handleBuyNow()">⚡ Buy Now</button>
+                <button class="btn btn-primary" onclick="handleInquiry()">💰 Inquiry</button>
+                <button class="btn btn-orange" onclick="handleAddCart()">
+                    🛒 Add to Cart
+                </button>
+                <button class="btn btn-default" onclick="handleFavorite()">
+                    ⭐ Favorite
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 详情内容区 -->
+    <div class="detail-section">
+        <div class="detail-tabs">
+            <div class="detail-tab active" onclick="switchTab('detail')">Product Details</div>
+            <div class="detail-tab" onclick="switchTab('spec')">Specifications</div>
+            <div class="detail-tab" onclick="switchTab('service')">Service Guarantee</div>
+        </div>
+
+        <div class="detail-content">
+            <!-- 产品详情 -->
+            <div class="detail-panel active" id="detail">
+                <h2>About the CR 30H Collaborative Robot</h2>
+                <p>Designed for high-end manufacturing that demands superior industrial automation performance, stability and efficiency, Dobot introduces the next-generation flagship CR 30H. With joint speeds reaching <strong
+                        style="color:#0a4db4;">300°/s</strong> — the highest record to date for heavy-payload collaborative robots in the industry — it breaks through productivity and efficiency bottlenecks, achieving the optimal fusion of high payload, high speed and high stability.
+                </p>
+
+                <div class="feature-highlight">
+                    <div class="main-feature">
+                        <div class="hexagon"><span>H</span></div>
+                        <div class="label">High-Speed<br>High-Payload<br>High-Stability</div>
+                    </div>
+                    <div class="feature-items">
+                        <div class="feature-item">
+                            <div class="title">Faster</div>
+                            <div class="value">300°/s</div>
+                            <div style="font-size:12px;opacity:0.85;margin-top:4px;">Industry-leading joint speed</div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="title">Stronger</div>
+                            <div class="value">30kg</div>
+                            <div style="font-size:12px;opacity:0.85;margin-top:4px;">Payload</div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="title">Steadier</div>
+                            <div class="value">1800mm</div>
+                            <div style="font-size:12px;opacity:0.85;margin-top:4px;">Extended reach</div>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>Rounded Joint Design — Where Technology Meets Aesthetics</h3>
+                <p>Breaking away from the cold, rigid feel of traditional industrial robots, its outstanding design drives efficient and safe operation. Compact, flexible and easy to deploy, it meets the demands of flexible production.</p>
+                <img src="../../img/dobot/cr30h-design.jpg" alt="Rounded joint design" style="display:block;margin:20px auto;">
+
+                <h3>Product Series</h3>
+                <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:20px 0;">
+                    <div style="border:1px solid #eee;border-radius:8px;overflow:hidden;">
+                        <div
+                            style="height:180px;background:#f5f8fc;display:flex;align-items:center;justify-content:center;">
+                            <img src="../../img/dobot/cr30h-std.jpg" alt="Standard Edition"
+                                style="max-width:90%;max-height:100%;object-fit:contain;">
+                        </div>
+                        <div style="padding:16px;">
+                            <div style="font-weight:bold;color:#0a3a8f;margin-bottom:4px;">CR 30H - Standard Edition</div>
+                            <div style="font-size:13px;color:#666;">Efficient, stable and high-performing</div>
+                        </div>
+                    </div>
+                    <div style="border:1px solid #eee;border-radius:8px;overflow:hidden;">
+                        <div
+                            style="height:180px;background:#f5f8fc;display:flex;align-items:center;justify-content:center;">
+                            <img src="../../img/dobot/cr30h-touch.jpg" alt="Touch Edition"
+                                style="max-width:90%;max-height:100%;object-fit:contain;">
+                        </div>
+                        <div style="padding:16px;">
+                            <div style="font-weight:bold;color:#0a3a8f;margin-bottom:4px;">CR 30HT - Touch Edition</div>
+                            <div style="font-size:13px;color:#666;">Compliant collaboration — drag with one hand</div>
+                        </div>
+                    </div>
+                    <div style="border:1px solid #eee;border-radius:8px;overflow:hidden;">
+                        <div
+                            style="height:180px;background:#f5f8fc;display:flex;align-items:center;justify-content:center;">
+                            <img src="../../img/dobot/cr30h-clean.jpg" alt="Cleanroom Edition"
+                                style="max-width:90%;max-height:100%;object-fit:contain;">
+                        </div>
+                        <div style="padding:16px;">
+                            <div style="font-weight:bold;color:#0a3a8f;margin-bottom:4px;">CR 30H - Food Cleanroom Edition</div>
+                            <div style="font-size:13px;color:#666;">Expert in food-safe production</div>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>Performance Advantages</h3>
+                <p><strong style="color:#0a4db4;">Faster:</strong> Industry-leading joint speed of 300°/s — the highest record to date for heavy-payload collaborative robots — delivers fast and steady handling and palletizing, greatly improving manufacturing efficiency and flexibility.
+                </p>
+                <p><strong style="color:#0a4db4;">Steadier:</strong> Advanced vibration suppression algorithms effectively reduce vibration and end-effector jitter across the full-speed, full-payload range.</p>
+                <p><strong style="color:#0a4db4;">More Reliable:</strong> High-density servo drive technology boosts power by 50% while reducing heat generation by 20%. With IP65/IP67 high protection, it stands up to dust, water mist and oil.</p>
+                <p><strong style="color:#0a4db4;">Smarter:</strong> The industry's first 30 kg payload-class cobot with a built-in torque sensor, improving teaching efficiency by 90%.</p>
+
+                <h3>Application Scenarios</h3>
+                <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin:20px 0;">
+                    <div
+                        style="background:linear-gradient(135deg,#e8f0fe,#f0f6ff);border-radius:10px;padding:24px;color:#0a4db4;">
+                        <div style="font-size:28px;margin-bottom:8px;">🚗</div>
+                        <div style="font-weight:bold;margin-bottom:6px;">Automotive Manufacturing</div>
+                        <div style="font-size:12px;opacity:0.9;">Wheel hub handling, seat installation, battery module handling</div>
+                    </div>
+                    <div
+                        style="background:linear-gradient(135deg,#f0f6ff,#e8f0fe);border-radius:10px;padding:24px;color:#0a4db4;">
+                        <div style="font-size:28px;margin-bottom:8px;">⚙️</div>
+                        <div style="font-weight:bold;margin-bottom:6px;">Metalworking</div>
+                        <div style="font-size:12px;opacity:0.9;">Heavy workpiece handling, laser cutting</div>
+                    </div>
+                    <div
+                        style="background:linear-gradient(135deg,#e8f0fe,#f0f6ff);border-radius:10px;padding:24px;color:#0a4db4;">
+                        <div style="font-size:28px;margin-bottom:8px;">🔬</div>
+                        <div style="font-weight:bold;margin-bottom:6px;">Semiconductor Manufacturing</div>
+                        <div style="font-size:12px;opacity:0.9;">Wafer handling and packaging</div>
+                    </div>
+                    <div
+                        style="background:linear-gradient(135deg,#f0f6ff,#e8f0fe);border-radius:10px;padding:24px;color:#0a4db4;">
+                        <div style="font-size:28px;margin-bottom:8px;">🍎</div>
+                        <div style="font-weight:bold;margin-bottom:6px;">Food &amp; Beverage</div>
+                        <div style="font-size:12px;opacity:0.9;">Case palletizing, raw material handling</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 规格参数 -->
+            <div class="detail-panel" id="spec">
+                <h2 style="text-align:left;padding-left:0;">Specifications</h2>
+                <table class="spec-table">
+                    <thead>
+                        <tr>
+                            <th colspan="2" style="background:linear-gradient(90deg,#004a99,#1967c2);">Basic Parameters</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Model</td>
+                            <td>CR 30H / CR 30HT / CR 30H-Food</td>
+                        </tr>
+                        <tr>
+                            <td>Payload Capacity</td>
+                            <td>30 kg</td>
+                        </tr>
+                        <tr>
+                            <td>Working Radius</td>
+                            <td>1800 mm</td>
+                        </tr>
+                        <tr>
+                            <td>Joint Speed</td>
+                            <td>300°/s (industry's fastest)</td>
+                        </tr>
+                        <tr>
+                            <td>Number of Joints</td>
+                            <td>6 axes</td>
+                        </tr>
+                        <tr>
+                            <td>Repeatability</td>
+                            <td>±0.02 mm</td>
+                        </tr>
+                        <tr>
+                            <td>Body Weight</td>
+                            <td>≤ 75 kg</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table class="spec-table">
+                    <thead>
+                        <tr>
+                            <th colspan="2" style="background:linear-gradient(90deg,#004a99,#1967c2);">Environmental Parameters</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Operating Temperature</td>
+                            <td>0°C ~ 45°C</td>
+                        </tr>
+                        <tr>
+                            <td>Storage Temperature</td>
+                            <td>-20°C ~ 55°C</td>
+                        </tr>
+                        <tr>
+                            <td>Protection Rating</td>
+                            <td>IP65 (CR 30H-Food: IP67)</td>
+                        </tr>
+                        <tr>
+                            <td>Humidity</td>
+                            <td>20% ~ 80% (non-condensing)</td>
+                        </tr>
+                        <tr>
+                            <td>Power Supply</td>
+                            <td>220V / 50-60Hz</td>
+                        </tr>
+                        <tr>
+                            <td>Power Consumption</td>
+                            <td>≤ 800W (typical)</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table class="spec-table">
+                    <thead>
+                        <tr>
+                            <th colspan="2" style="background:linear-gradient(90deg,#004a99,#1967c2);">Safety &amp; Certifications</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Safety Functions</td>
+                            <td>Collision detection, drag teaching, emergency stop protection</td>
+                        </tr>
+                        <tr>
+                            <td>Electromagnetic Brake</td>
+                            <td>No-drop electromagnetic brake, auto-locks on power loss</td>
+                        </tr>
+                        <tr>
+                            <td>Certifications</td>
+                            <td>CE, ISO 10218, ISO 14999, NSF (Food edition)</td>
+                        </tr>
+                        <tr>
+                            <td>Warranty</td>
+                            <td>Industry-first 3-year warranty</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- 服务保障 -->
+            <div class="detail-panel" id="service">
+                <h2 style="text-align:left;padding-left:0;">Service Guarantee</h2>
+                <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:20px;margin-top:24px;">
+                    <div style="padding:24px;background:#f0f6ff;border-radius:10px;border:1px solid #e8f0fe;">
+                        <div style="font-size:32px;margin-bottom:10px;">🛡️</div>
+                        <div style="font-weight:bold;font-size:16px;color:#0a4db4;margin-bottom:8px;">Genuine Product Guarantee</div>
+                        <div style="color:#666;font-size:14px;line-height:1.8;">Official authorized channels. All products are brand-new, original and genuine, with official verification supported.</div>
+                    </div>
+                    <div style="padding:24px;background:#f0fff4;border-radius:10px;border:1px solid #e6ffed;">
+                        <div style="font-size:32px;margin-bottom:10px;">🚚</div>
+                        <div style="font-weight:bold;font-size:16px;color:#2ecc71;margin-bottom:8px;">Fast Shipping</div>
+                        <div style="color:#666;font-size:14px;line-height:1.8;">Orders ship within 24 hours via our professional logistics team, with nationwide delivery.</div>
+                    </div>
+                    <div style="padding:24px;background:#fff9e6;border-radius:10px;border:1px solid #fff3cd;">
+                        <div style="font-size:32px;margin-bottom:10px;">🔧</div>
+                        <div style="font-weight:bold;font-size:16px;color:#f5a623;margin-bottom:8px;">3-Year Warranty</div>
+                        <div style="color:#666;font-size:14px;line-height:1.8;">Industry-first 3-year warranty with lifetime technical support and maintenance.</div>
+                    </div>
+                    <div style="padding:24px;background:#f0f6ff;border-radius:10px;border:1px solid #e8f0fe;">
+                        <div style="font-size:32px;margin-bottom:10px;">📞</div>
+                        <div style="font-weight:bold;font-size:16px;color:#0a4db4;margin-bottom:8px;">24/7 Support</div>
+                        <div style="color:#666;font-size:14px;line-height:1.8;">Our professional technical team is online around the clock to answer your questions anytime.</div>
+                    </div>
+                </div>
+                <div
+                    style="margin-top:30px;padding:24px;background:linear-gradient(135deg,#0a4db4,#1e6fd9);border-radius:10px;color:#fff;text-align:center;">
+                    <div style="font-size:18px;font-weight:bold;margin-bottom:10px;">Need More Help?</div>
+                    <div style="opacity:0.9;margin-bottom:16px;">Contact our professional team for customized solutions</div>
+                    <button class="btn" style="background:#fff;color:#0a4db4;" onclick="handleContact()">📞
+                        Contact Support</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 相关推荐 -->
+    <div class="related-section">
+        <div class="related-title">Recommended for You</div>
+        <div class="related-grid">
+            <div class="related-card" onclick="location.href='./product-detail-cr20a-en.html'">
+                <div class="img-wrap">
+                    <img src="../../img/dobot/home-cr30h.jpg" alt="CR20A Collaborative Robot">
+                </div>
+                <div class="info">
+                    <div class="name">CR20A Collaborative Robot</div>
+                    <div class="price">Price on Request</div>
+                </div>
+            </div>
+            <div class="related-card" onclick="location.href='./product-detail-m1pro-en.html'">
+                <div class="img-wrap">
+                    <img src="../../img/dobot/home-cr30h2.jpg" alt="M1 Pro 4-Axis SCARA Collaborative Robot">
+                </div>
+                <div class="info">
+                    <div class="name">M1 Pro 4-Axis SCARA Collaborative Robot</div>
+                    <div class="price">Price on Request</div>
+                </div>
+            </div>
+            <div class="related-card" onclick="location.href='./product-detail-nova2-en.html'">
+                <div class="img-wrap">
+                    <img src="../../img/dobot/home-nova.jpg" alt="Nova 2 Collaborative Robot">
+                </div>
+                <div class="info">
+                    <div class="name">Nova 2 Collaborative Robot</div>
+                    <div class="price">Price on Request</div>
+                </div>
+            </div>
+            <div class="related-card" onclick="location.href='./product-detail-magician-e6-en.html'">
+                <div class="img-wrap">
+                    <img src="../../img/dobot/magician-e6-main.jpg" alt="Magician E6 Desktop 6-Axis Collaborative Robot">
+                </div>
+                <div class="info">
+                    <div class="name">Magician E6 Desktop 6-Axis Collaborative Robot</div>
+                    <div class="price">Price on Request</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ============ Footer ============ -->
+    <footer class="footer">
+        <div class="footer-inner">
+            <div class="footer-col revealed">
+                <h4>Products &amp; Services</h4>
+                <a href="#">Intelligent Robots</a>
+                <a href="#">Digital Platform</a>
+                <a href="#">New Energy Applications</a>
+                <a href="#">Commodity Trading</a>
+                <a href="#">Emergency Products</a>
+                <a href="#">New Materials</a>
+                <a href="#">Smart Building Materials</a>
+                <a href="#">AI Cultural Tourism</a>
+                <a href="#">Technology Transfer &amp; Localization Services</a>
+                <a href="#">International Trade Reception Hall · Hainan</a>
+            </div>
+            <div class="footer-col revealed">
+                <h4>Solutions</h4>
+                <a href="#">Intelligent Robot Solutions</a>
+                <a href="#">New Energy Application Solutions</a>
+                <a href="#">Cross-Border Commodity Trading Solutions</a>
+            </div>
+            <div class="footer-col revealed">
+                <h4>About Us</h4>
+                <a href="#">Company Profile</a>
+                <a href="#">Milestones</a>
+                <a href="#">Join Us</a>
+                <a href="#">News</a>
+            </div>
+            <div class="footer-col revealed">
+                <h4>Contact</h4>
+                <a href="#">📞 173-0180-8315</a>
+                <a href="#">📧 tech@jnsco.cn​​​​​​​​​​​​​​​​​​​​​​​​</a>
+                <a href="#">📍 Beijing, China</a>
+            </div>
+            <div class="footer-col revealed">
+                <h4>Follow Us</h4>
+                <a href="https://weixin.sogou.com/weixin?query=浩瑞科技Harvest+Tech" target="_blank"
+                    rel="noopener noreferrer">WeChat: HARVEST Tech</a>
+                <a href="https://m.weibo.cn/n/北京浩瑞绿色科技" target="_blank" rel="noopener noreferrer">Weibo: Beijing HARVEST Green Technology</a>
+                <a href="https://www.douyin.com/search/北京浩瑞绿色科技?type=user" target="_blank"
+                    rel="noopener noreferrer">Douyin: Beijing HARVEST Green Technology</a>
+                <a href="https://www.baidu.com/s?wd=北京浩瑞绿色科技+视频号" target="_blank" rel="noopener noreferrer">Channels</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>
+                <a href="../about/about-us.html">About Us</a>
+                <a href="../info/contact-us.html">Contact Us</a>
+                <a href="#">Careers</a>|
+                <a href="#">Partners</a>|
+                <a href="#">Friendly Links</a>|
+                <a href="#">Sitemap</a>
+            </p>
+            <p style="margin-top: 8px;">© 2026 HARVEST Green Technology. All rights reserved. &nbsp;
+                <!-- display:block; -->
+                <a style="color:white;  margin-bottom:5px;" href="https://beian.miit.gov.cn/#/Integrated/index"
+                    target="_blank">京ICP备2026036471号-2</a>
+                <a style="color:white;" href="https://beian.mps.gov.cn/#/query/webSearch?code=11010502061862"
+                    rel="noreferrer" target="_blank"><img src="../../images/备案图标.png"
+                        style="height:16px;vertical-align:middle;margin-right:4px;" alt="Police Filing">京公网安备11010502061862号</a>
+            </p>
+        </div>
+    </footer>
+
+    <!-- 侧边客服 -->
+    <div class="sidebar-service">
+        <a href="#" onclick="handleContact();return false;">
+            <span class="icon">💬</span>
+            <span>Online<br>Consultation</span>
+        </a>
+        <a href="#" onclick="handleInquiry();return false;">
+            <span class="icon">💰</span>
+            <span>Inquiry</span>
+        </a>
+        <a href="#" onclick="handleBuyNow();return false;">
+            <span class="icon">⚡</span>
+            <span>Buy<br>Now</span>
+        </a>
+        <a href="../user/cart.html">
+            <span class="icon">🛒</span>
+            <span>Cart</span>
+        </a>
+        <a href="../user/favorite.html">
+            <span class="icon">⭐</span>
+            <span>My<br>Favorites</span>
+        </a>
+        <a href="#top" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">
+            <span class="icon">⬆️</span>
+            <span>Back to<br>Top</span>
+        </a>
+    </div>
+
+    <!-- Toast提示 -->
+    <div class="toast" id="toast"></div>
+
+    <script>
+
+        /* ============ index 主导航渲染 ============ */
+        function renderMainNav() {
+            const nav = document.getElementById('mainNav');
+            if (!nav) return;
+            const html = PRODUCT_CONFIG.map((p, i) =>
+                `<div class="nav-item ${i === 0 ? 'active' : ''}" onclick="location.href='${p.page}'">${p.name}</div>`
+            ).join('');
+            nav.innerHTML = html;
+        }
+        /* ============ 页面初始化 ============ */
+        document.addEventListener('DOMContentLoaded', function () {
+        });
+
+        /* ============ 登录状态管理 ============ */
+        function initAuthState() {
+            const token = localStorage.getItem('token');
+            const username = localStorage.getItem('username');
+            const guest = document.getElementById('authGuest');
+            const user = document.getElementById('authUser');
+            const avatarChar = (username || 'U').charAt(0).toUpperCase();
+
+            if (token && username) {
+                guest.style.display = 'none';
+                user.style.display = 'flex';
+                document.getElementById('userName').textContent = username;
+                document.getElementById('userAvatar').textContent = avatarChar;
+                document.getElementById('dropdownAvatar').textContent = avatarChar;
+                document.getElementById('dropdownUsername').textContent = username;
+                updateCartBadgeInDropdown();
+            } else {
+                guest.style.display = 'flex';
+                user.style.display = 'none';
+                closeUserDropdown();
             }
         }
 
-        searchBtn.addEventListener('click', function (e) {
+        function updateCartBadgeInDropdown() {
+            const badge = document.getElementById('dropdownCartBadge');
+            if (!badge) return;
+            const count = window.HRCart ? HRCart.getCartCount() : 0;
+            if (count > 0) {
+                badge.textContent = count;
+                badge.style.display = 'inline-block';
+            } else {
+                badge.style.display = 'none';
+            }
+        }
+
+        function closeUserDropdown() {
+            const dropdown = document.getElementById('userDropdown');
+            const trigger = document.getElementById('userMenuTrigger');
+            if (dropdown) dropdown.classList.remove('show');
+            if (trigger) trigger.classList.remove('active');
+        }
+
+        function toggleUserDropdown(e) {
             e.stopPropagation();
-            searchBox.classList.toggle('active');
-            if (searchBox.classList.contains('active')) {
-                searchBox.querySelector('input').focus();
+            const dropdown = document.getElementById('userDropdown');
+            const trigger = document.getElementById('userMenuTrigger');
+            const isOpen = dropdown.classList.contains('show');
+            if (isOpen) {
+                closeUserDropdown();
+            } else {
+                dropdown.classList.add('show');
+                trigger.classList.add('active');
+                updateCartBadgeInDropdown();
             }
+        }
+
+        function handleLogout(e) {
+            e.preventDefault();
+            if (!confirm('Are you sure you want to log out?')) return;
+            localStorage.removeItem('token');
+            localStorage.removeItem('username');
+            localStorage.removeItem('roleId');
+            if (window.HRCart) HRCart.logout();
+            closeUserDropdown();
+            initAuthState();
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const trigger = document.getElementById('userMenuTrigger');
+            const logoutBtn = document.getElementById('dropdownLogout');
+
+            if (trigger) {
+                trigger.addEventListener('click', toggleUserDropdown);
+            }
+
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', handleLogout);
+            }
+
+            document.addEventListener('click', function (e) {
+                const userSection = document.getElementById('authUser');
+                if (userSection && !userSection.contains(e.target)) {
+                    closeUserDropdown();
+                }
+            });
+
+            document.addEventListener('keydown', function (e) {
+                if (e.key === 'Escape') closeUserDropdown();
+            });
         });
 
-        document.addEventListener('click', function () {
-            searchBox.classList.remove('active');
-            if (mobileMenuBtn && mobileNavDrawer && mobileNavOverlay) {
-                mobileMenuBtn.classList.remove('active');
-                mobileNavDrawer.classList.remove('active');
-                mobileNavOverlay.classList.remove('active');
+        /* ============ index 搜索功能 ============ */
+        function doSearch() {
+            const keyword = document.getElementById('searchInput').value.trim();
+            const catId = document.getElementById('searchSelect').value;
+            if (!keyword) {
+                alert('Please enter a search keyword');
+                return;
             }
+            const url = new URL('./search.html', window.location.href);
+            url.searchParams.set('q', keyword);
+            if (catId) url.searchParams.set('cat', catId);
+            window.location.href = url.toString();
+        }
+
+        /* ============ 初始化 ============ */
+        renderMainNav();
+        initAuthState();
+
+        // 键盘左右箭头切换图片
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'ArrowLeft') prevImage();
+            if (e.key === 'ArrowRight') nextImage();
         });
 
-        searchBox.addEventListener('click', function (e) {
-            e.stopPropagation();
-        });
-    </script>
-
-    <div class="product-detail">
-        <div class="hero-section">
-            <div class="hero-content">
-                <h1>CR 30H Collaborative Robot</h1>
-                <p class="subtitle">Next-Gen Flagship Model</p>
-                <p class="description">300°/s industry's fastest high-payload collaborative robot, empowering efficient automated production</p>
-            
-                <button class="btn-favorite" onclick="handleFavorite()" style="display:inline-flex;align-items:center;gap:6px;margin-top:15px;padding:10px 24px;border:1px solid #f5a623;border-radius:25px;background:#fff;color:#d97706;font-size:14px;cursor:pointer;transition:all .25s ease;">
-                    <span class="fav-icon" style="font-size:16px;">☆</span> <span>Add to Favorites</span>
-                </button>
-</div>
-        </div>
-
-        <div class="about-feature-section">
-            <div class="about-feature-content">
-                <h2>About CR 30H</h2>
-                <p>Targeting high-end manufacturing fields with demanding requirements for industrial automation performance, stability, and efficiency, Dobot introduces the "Next-Gen Flagship Model" CR 30H. With joint speed reaching 300°/s, it sets the highest record for high-payload collaborative robots in the industry to date, breaking through productivity and efficiency bottlenecks, and achieving the optimal integration of high payload, high speed, and high stability.</p>
-            </div>
-            <div class="about-feature-grid">
-                <div class="about-feature-high">
-                    <div class="hexagon">
-                        <div class="h-text">H</div>
-                    </div>
-                    <div class="high-labels">
-                        <p class="high-label">High-Speed</p>
-                        <p class="high-label">High-Payload</p>
-                        <p class="high-label">High-Stability</p>
-                    </div>
-                </div>
-                <div class="about-feature-cards">
-                    <div class="about-feature-card">
-                        <div class="title">Faster</div>
-                        <div class="value">300°/s</div>
-                        <div class="desc">Industry-leading joint speed</div>
-                    </div>
-                    <div class="about-feature-card">
-                        <div class="title">Stronger</div>
-                        <div class="value">30kg Payload</div>
-                        <div class="desc">1800mm extended reach</div>
-                    </div>
-                    <div class="about-feature-card">
-                        <div class="title">Stabler</div>
-                        <div class="value">Stable Operation</div>
-                        <div class="desc">High-speed heavy-load stable operation</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="design-section">
-            <h2 class="section-title">Rounded Joint Design, Where Technology Meets Aesthetics</h2>
-            <img src="../../img/dobot/cr30h-design.jpg" alt="Rounded Joint Design" class="design-image">
-            <p>Breaking the rigid feel of traditional industrial robots, driven by superior design for efficient and safe operation. Flexible, compact, and easy to deploy, meeting flexible production needs.</p>
-        </div>
-
-        <h2 class="section-title">Product Series</h2>
-        <div class="versions-grid">
-            <div class="version-card">
-                <img src="../../img/dobot/cr30h-std.jpg" alt="CR 30H Standard">
-                <div class="version-info">
-                    <h3>CR 30H Standard</h3>
-                    <p class="tagline">Efficient & Stable, Excellent Performance</p>
-                    <p>Adaptable to all environments, doubling productivity, unleashing full-scenario productivity</p>
-                </div>
-            </div>
-            <div class="version-card">
-                <img src="../../img/dobot/cr30h-touch.jpg" alt="CR 30HT Touch">
-                <div class="version-info">
-                    <h3>CR 30HT Touch</h3>
-                    <p class="tagline">Compliant Collaboration, One-Hand Drag</p>
-                    <p>Built-in torque sensor in joints, compliant drag, sensitive collision detection</p>
-                </div>
-            </div>
-            <div class="version-card">
-                <img src="../../img/dobot/cr30h-clean.jpg" alt="CR 30H-Food Cleanroom">
-                <div class="version-info">
-                    <h3>CR 30H-Food Cleanroom</h3>
-                    <p class="tagline">Food Safety Production Expert</p>
-                    <p>International NSF certified, food-grade lubricants, easy-to-clean smooth surface</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="performance-section">
-            <h2 class="section-title">Performance Advantages</h2>
-            
-            <div class="performance-item">
-                <div class="performance-content">
-                    <h3>Faster</h3>
-                    <p><span class="highlight">300°/s Industry-leading Joint Speed:</span> The highest record for high-payload collaborative robots in the industry to date. Fast and stable handling and palletizing, significantly improving manufacturing efficiency and flexibility.</p>
-                    <p><span class="highlight">Faster Acceleration:</span> Equipped with HyperMove motion control algorithm, intelligently adjusting acceleration, always running at maximum reliability speed, improving single-machine efficiency by 20% compared to similar products.</p>
-                    <p><span class="highlight">Handling/Palletizing Cycle "10 boxes/min":</span> Surpassing the efficiency boundary of traditional palletizing systems, efficient production for higher benefits.</p>
-                </div>
-                <div class="performance-image">
-                    <img src="../../img/dobot/cr30h-list2.jpg" alt="Faster">
-                </div>
-            </div>
-
-            <div class="performance-item reverse">
-                <div class="performance-content">
-                    <h3>Stabler</h3>
-                    <p><span class="highlight">High-Speed Heavy-Load Stable Operation:</span> Advanced vibration suppression algorithm, effectively reducing vibration and end-effector shaking within full-speed and full-load range.</p>
-                </div>
-                <div class="performance-image">
-                    <img src="../../img/dobot/cr30h-list3.jpg" alt="Stabler">
-                </div>
-            </div>
-
-            <div class="performance-item">
-                <div class="performance-content">
-                    <h3>More Reliable</h3>
-                    <p><span class="highlight">High-Density Servo Drive Technology:</span> 50% power increase, 20% heat reduction.</p>
-                    <p><span class="highlight">More Reliable Joint Stability:</span> 30% reduction in component count.</p>
-                    <p><span class="highlight">Secure Electromagnetic Brake Protection:</span> Automatic brake on power failure, end-effector drop displacement <1mm.</p>
-                    <p><span class="highlight">IP65/IP67 High Protection:</span> Dust, water mist, and oil resistant.</p>
-                </div>
-                <div class="performance-image">
-                    <img src="../../img/dobot/cr30h-list4.jpg" alt="More Reliable">
-                </div>
-            </div>
-
-            <div class="performance-item reverse">
-                <div class="performance-content">
-                    <h3>Smarter</h3>
-                    <p><span class="highlight">Easy One-Hand Drag:</span> The industry's first 30kg payload class with built-in torque sensor; teaching efficiency improved by 90%, comprehensively boosting user efficiency.</p>
-                    <p><span class="highlight">Shorter Control Cycle:</span> 1kHz real-time control frequency, reducing command delay, allowing high-speed robot movement without overshoot.</p>
-                </div>
-                <div class="performance-image">
-                    <img src="../../img/dobot/cr30h-list4.jpg" alt="Smarter">
-                </div>
-            </div>
-        </div>
-
-        <h2 class="section-title">Application Scenarios</h2>
-        <div class="applications-grid">
-            <div class="application-card car-manufacture">
-                <div class="card-content">
-                    <h4>Automotive Manufacturing</h4>
-                    <p>Wheel handling, seat installation, battery module handling...</p>
-                </div>
-            </div>
-            <div class="application-card metal-processing">
-                <div class="card-content">
-                    <h4>Metal Processing</h4>
-                    <p>Heavy workpiece handling, laser cutting...</p>
-                </div>
-            </div>
-            <div class="application-card semiconductor">
-                <div class="card-content">
-                    <h4>Semiconductor</h4>
-                    <p>Wafer handling and packaging...</p>
-                </div>
-            </div>
-            <div class="application-card food-beverage">
-                <div class="card-content">
-                    <h4>Food & Beverage</h4>
-                    <p>Case palletizing, raw material handling, dairy, frozen food lines</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="quality-section">
-            <h2 class="section-title">International Quality Management Standards</h2>
-            <p style="text-align:center; margin-bottom:30px; opacity:0.9;">Powerful performance, solid quality, worry-free experience</p>
-            <div class="quality-grid">
-                <div class="quality-item">
-                    <img src="../../img/dobot/cr30h-warranty.jpg" alt="Three-year Warranty">
-                    <h4>Three-year Warranty</h4>
-                </div>
-                <div class="quality-item">
-                    <img src="../../img/dobot/cr30h-service.jpg" alt="7x24 Online Support">
-                    <h4>7×24 Online Support</h4>
-                </div>
-                <div class="quality-item">
-                    <img src="../../img/dobot/cr30h-parts.jpg" alt="Global Service">
-                    <h4>Global Service Coverage</h4>
-                </div>
-                <div class="quality-item">
-                    <img src="../../img/dobot/cr30h-quality.jpg" alt="90% In-house Components">
-                    <h4>90% In-house Components</h4>
-                </div>
-            </div>
-        </div>
-
-        <div class="specs-section">
-           
-        </div>
-    </div>
-
-    <div id="footer-container"></div>
-	<script>
-		loadComponent('footer-container', '.../../components/footer-en.html');
-	</script>
-
-    <div class="gpop" style="display: block;">
-        <a href="#lxwm" class="pop_a cur1">
-            <div class="pop_a_img">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" data-inject-url="https://www.i2cool.com.cn/static/cms/images/pop_r_svg.svg" loading="lazy">
-                    <defs>
-                        <style>
-                            .cls-1 {
-                                fill: #2260bc;
-                                fill-rule: evenodd;
-                            }
-                        </style>
-                    </defs>
-                    <path class="cls-1" d="M186.357,199.5a0.858,0.858,0,0,1-.857-0.858V178.071a2.571,2.571,0,0,1,2.571-2.571h18.857a2.571,2.571,0,0,1,2.572,2.571v13.714a2.572,2.572,0,0,1-2.572,2.572H192.991a0.861,0.861,0,0,0-.558.206l-5.519,4.73a0.862,0.862,0,0,1-.557.207h0Zm1.714-22.286a0.857,0.857,0,0,0-.857.857v18.708l4.1-3.514a2.571,2.571,0,0,1,1.673-.623h13.937a0.856,0.856,0,0,0,.857-0.857V178.071a0.857,0.857,0,0,0-.857-0.857H188.071Zm14.572,6H192.357a0.857,0.857,0,0,1,0-1.714h10.286A0.857,0.857,0,0,1,202.643,183.214ZM197.5,187.5h-5.143a0.858,0.858,0,0,1,0-1.715H197.5A0.858,0.858,0,0,1,197.5,187.5Zm5.143,0h-2.572a0.858,0.858,0,0,1,0-1.715h2.572A0.858,0.858,0,0,1,202.643,187.5Z" transform="translate(-185.5 -175.5)"></path>
-                </svg>
-                <p>Contact Us </p>
-            </div>
-        </a>
-        <a href="#" class="pop_a cur2" style="cursor: pointer;">
-            <div class="pop_a_img">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                    data-inject-url="" loading="lazy">
-                    <defs>
-                        <style>
-                            .cls-1 {
-                                fill: #2260bc;
-                                fill-rule: evenodd;
-                            }
-                        </style>
-                    </defs>
-                    <path class="cls-1"
-                        d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path>
-                </svg>
-                <p>Back to Top</p>
-            </div>
-        </a>
-    </div>
-
-    <script>
-        document.addEventListener('click', function(e) {
-            var target = e.target.closest('.pop_a.cur2');
-            if (target) {
-                e.preventDefault();
-                e.stopPropagation();
-                window.scrollTo({ top: 0, behavior: 'smooth' });
+        // 图片切换（点击缩略图）
+        function changeImage(el) {
+            const src = el.getAttribute('data-src');
+            const mainImg = document.getElementById('mainImage');
+            if (mainImg && src) {
+                mainImg.src = src;
             }
-        });
-    </script>
+            document.querySelectorAll('.thumb-item').forEach(i => i.classList.remove('active'));
+            el.classList.add('active');
+        }
 
-    <script src="../../index_files/layui.js"></script>
-    <script src="../../index_files/extend.js" type="text/javascript"></script>
-    <script src="../../index_files/public.js" type="text/javascript"></script>
-    <script src="../../index_files/jquery.pjax.js" type="text/javascript"></script>
-    <script>
-        $(document).on('click', 'a', function () {
-            href = $(this).attr('href');
-            if ($(this).attr('href') == '') {
-                event.preventDefault();
-            } else if (href.startsWith('http://') || href.startsWith('https://')) {
-                $(this).attr('target', '_blank');
+        // 获取当前图片索引
+        function getCurrentImageIndex() {
+            const thumbs = document.querySelectorAll('.thumb-item');
+            for (let i = 0; i < thumbs.length; i++) {
+                if (thumbs[i].classList.contains('active')) return i;
             }
-        })
-    </script>
+            return 0;
+        }
 
-    <script src="../../index_files/jquery.liMarquee.js" type="text/javascript" charset="utf-8"></script>
+        // 上一张图片
+        function prevImage() {
+            const thumbs = document.querySelectorAll('.thumb-item');
+            if (thumbs.length === 0) return;
+            let idx = getCurrentImageIndex();
+            idx = (idx - 1 + thumbs.length) % thumbs.length;
+            thumbs[idx].click();
+        }
 
-    <script>
-        function handleFavorite() {
-            var token = localStorage.getItem('token');
+        // 下一张图片
+        function nextImage() {
+            const thumbs = document.querySelectorAll('.thumb-item');
+            if (thumbs.length === 0) return;
+            let idx = getCurrentImageIndex();
+            idx = (idx + 1) % thumbs.length;
+            thumbs[idx].click();
+        }
+
+        // 规格选择
+        function selectSpec(el, name) {
+            const parent = el.parentElement;
+            parent.querySelectorAll('.spec-option').forEach(o => o.classList.remove('selected'));
+            el.classList.add('selected');
+        }
+
+        // 数量调整
+        function changeQty(delta) {
+            const input = document.getElementById('quantityInput');
+            if (!input) return;
+            const val = parseInt(input.value, 10) || 1;
+            const max = 999;
+            const newVal = Math.max(1, Math.min(max, val + delta));
+            input.value = newVal;
+
+        }
+
+        // Tab切换
+        function switchTab(tabId) {
+            document.querySelectorAll('.detail-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.detail-panel').forEach(p => p.classList.remove('active'));
+            event.target.classList.add('active');
+            document.getElementById(tabId).classList.add('active');
+        }
+
+        // Toast
+        function showToast(msg, type = 'info') {
+            const toast = document.getElementById('toast');
+            toast.textContent = msg;
+            toast.className = 'toast show ' + type;
+            setTimeout(() => toast.classList.remove('show'), 2500);
+        }
+
+        // 操作函数
+        function handleInquiry() {
+            const token = localStorage.getItem('token');
             if (!token) {
-                if (confirm('Please log in first. Go to login?')) {
+                if (confirm('You are not logged in yet. Go to the login page?')) {
                     location.href = '../user/login.html?redirect=' + encodeURIComponent(location.pathname.replace(/^\//, '') + location.search);
                 }
                 return;
             }
-            if (typeof HRFavorite === 'undefined') {
-                alert('Favorite module is loading, please try again later.');
+            var qty = document.getElementById('quantityInput').value || 1;
+            var item = (typeof collectFromPage === 'function') ? collectFromPage() : null;
+            fetch((window.SERVER_BASE_URL || '') + '/inquiry/submit', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'Authorization': localStorage.getItem('token') },
+                body: JSON.stringify({
+                    productId: null,
+                    productName: item ? item.name : (document.title || ''),
+                    productKey: item ? item.key : null,
+                    spec: item ? item.spec : null,
+                    image: item ? item.image : null,
+                    url: location.pathname.replace(/^\//, '') + location.search,
+                    quantity: parseInt(qty, 10) || 1,
+                    remark: '',
+                    contactName: localStorage.getItem('username') || '',
+                    contactPhone: ''
+                })
+            }).then(function (r) { return r.json(); }).then(function (res) {
+                if (res && res.code === 0) {
+                    showToast('Inquiry submitted! The supplier will quote as soon as possible. You can check it in "My Inquiries".', 'success');
+                    setTimeout(function () { location.href = '../user/my-inquiries.html'; }, 2500);
+                } else {
+                    showToast('Failed to submit inquiry: ' + (res && res.message ? res.message : 'please try again later'), 'error');
+                }
+            }).catch(function () {
+                showToast('Network error. Inquiry not submitted. Please try again later.', 'error');
+            });
+        }
+
+        function handleAddCart() {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                if (confirm('You are not logged in yet. Go to the login page?')) {
+                    location.href = '../user/login.html?redirect=' + encodeURIComponent(location.pathname.replace(/^\//, '') + location.search);
+                }
+                return;
+            }
+            addToCartFromPage();
+        }
+
+        function handleBuyNow() {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                if (confirm('You are not logged in yet. Go to the login page?')) {
+                    location.href = '../user/login.html?redirect=' + encodeURIComponent(location.pathname.replace(/^\//, '') + location.search);
+                }
+                return;
+            }
+            addToCartFromPage();
+            setTimeout(function () { location.href = '../user/cart.html'; }, 300);
+        }
+
+        function handleFavorite() {
+            var token = localStorage.getItem('token');
+            if (!token) {
+                if (confirm('You are not logged in yet. Go to the login page?')) {
+                    location.href = '../user/login.html?redirect=' + encodeURIComponent(location.pathname.replace(/^\//, '') + location.search);
+                }
                 return;
             }
             var isAdding = HRFavorite.toggleFavorite();
-            var msg = isAdding ? 'Added to favorites' : 'Removed from favorites';
             if (typeof showToast === 'function') {
-                showToast(msg, isAdding ? 'success' : 'info');
-            } else {
-                alert(msg);
+                showToast(isAdding ? 'Added to favorites' : 'Removed from favorites', isAdding ? 'success' : 'info');
             }
         }
-    </script>
 
+        function handleContact() {
+            showToast('Customer service: 400-888-8888', 'info', 4000);
+        }
+
+        function checkLogin() {
+            const token = localStorage.getItem('token');
+            const username = localStorage.getItem('username');
+            if (!token || !username) {
+                if (confirm('You are not logged in yet. Go to the login page?')) {
+                    location.href = '../user/login.html?redirect=' + encodeURIComponent(location.pathname.replace(/^\//, '') + location.search);
+                }
+                return false;
+            }
+            return true;
+        }
+
+        // 返回顶部按钮显示
+        window.addEventListener('scroll', () => {
+            const btn = document.getElementById('backToTop');
+            if (window.scrollY > 400) {
+                btn.classList.add('show');
+            } else {
+                btn.classList.remove('show');
+            }
+        });
+    </script>
+    <script src="../../components/load-components.js"></script>
+    <script>
+        if (typeof initNav === 'function') {
+            initNav();
+        }
+    </script>
 </body>
+
 </html>

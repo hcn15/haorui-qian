@@ -9,9 +9,9 @@
 (function () {
     var host = window.location.hostname;
     var isDev = /^(localhost|127\.0\.0\.1)$/.test(host)
-                || /^192\.168\./.test(host)
-                || /^10\./.test(host)
-                || /^172\.(1[6-9]|2\d|3[01])\./.test(host);
+        || /^192\.168\./.test(host)
+        || /^10\./.test(host)
+        || /^172\.(1[6-9]|2\d|3[01])\./.test(host);
 
     if (isDev) {
         // ============ 本地开发环境 ============

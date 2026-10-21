@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 
 <html xml:lang="zh" lang="zh" style="--color: #005CE6; --vh: 708px; scroll-behavior: auto;">
 <!-- en --><!-- xml:lang="en" lang="en" -->
@@ -261,7 +261,7 @@
 		<div class="nav_ljbox" style="background:#0059B3;">
 			<div class="nav_l_box" style="background:#0059B3;">
 				<a href="#" class="logo">
-					<img class="xs" src="../../img/JSlogo-beb0d75f.png" alt="web logo-15.png">
+					<img class="xs" src="../../images\黑科技logo.png" alt="web logo-15.png">
 				</a>
 				<div class="logo_bj">
 					<img src="../../index_files/home_1.png" alt="">
@@ -500,8 +500,8 @@
 								<div class="nav_lan_sel"
 									style="display: none; height: 80px; padding-top: 0px; margin-top: 0px; padding-bottom: 0px; margin-bottom: 0px;">
 									<div class="nav_lan_sel_box ignore">
-										<a href="../../index-en.html">EN</a>
-										<a href="../../index.html">简</a>
+										<a href="#" class="lang-switch-en">EN</a>
+										<a href="#" class="lang-switch-zh active">简</a>
 									</div>
 								</div>
 							</div>
@@ -718,7 +718,7 @@
 	<!-- ====================================================== -->
 	<div id="footer-container"></div>
 	<script>
-		loadComponent('footer-container', '.../../components/footer-zh.html');
+		loadComponent('footer-container', '../../components/footer-zh.html');
 	</script>
 
     <!-- 右侧浮窗 -->
@@ -1858,6 +1858,12 @@
                 </div>
             </div>
         </template></div>
+<script src="../../components/load-components.js"></script>
+<script>
+    if (typeof initNav === 'function') {
+        initNav();
+    }
+</script>
 </body>
 <div id="ai-assist-root-bangs"><template shadowrootmode="open">
         <div id="ai-assist-bangs" data-v-app="">

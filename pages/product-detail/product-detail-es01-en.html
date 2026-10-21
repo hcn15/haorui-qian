@@ -7,9 +7,9 @@
     <meta name="format-detection" content="telephone=no,telephone=no,email=no,adress=no">
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
-    <title>DOBOT ES01 Electric Vacuum Suction Cup - Haorui Green Technology</title>
-    <meta name="keywords" content="DOBOT ES01,electric vacuum suction cup,vacuum gripper,education accessories,robot accessories">
-    <meta name="description" content="DOBOT ES01 is a compact electric vacuum suction cup developed by Dobot specifically for Magician E6 six-axis collaborative robot. Plug and play, enables quick automation grasping solutions in education and research">
+    <title>DOBOT ES01 Electric Vacuum Gripper - HARVEST Green Technology</title>
+    <meta name="keywords" content="DOBOT ES01,Electric Vacuum Gripper,Vacuum Gripper,Educational Accessories,Robot Accessories">
+    <meta name="description" content="DOBOT ES01 is a compact electric vacuum gripper developed by DOBOT specifically for the Magician E6 six-axis collaborative robot. With plug-and-play support, it quickly enables automated gripping solutions for education and research.">
     <link rel="shortcut icon" href="">
     <link rel="stylesheet" type="text/css" href="../../index_files/extend.css">
     <link rel="stylesheet" type="text/css" href="../../index_files/style.css">
@@ -309,17 +309,166 @@
         
     </style>
 </head>
-<body style="">
+<body>
     <div id="nav-container"></div>
 	<script src="../../components/load-components.js"></script>
 	<script>
-		loadComponent('nav-container', '.../../components/nav-en.html', function() {
+		loadComponent('nav-container', '../../components/nav-en.html', function() {
 			initNav();
 		});
 	</script>
-    
 
-    
+    <script>
+        const searchBtn = document.getElementById('searchBtn');
+        const searchBox = document.getElementById('searchBox');
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const mobileNavPanel = document.getElementById('mobileNavPanel');
+
+        function toggleMobileMenu() {
+            if (mobileMenuBtn && mobileNavPanel) {
+                mobileMenuBtn.classList.toggle('active');
+                mobileNavPanel.classList.toggle('active');
+            }
+        }
+
+        searchBtn.addEventListener('click', function (e) {
+            e.stopPropagation();
+            searchBox.classList.toggle('active');
+            if (searchBox.classList.contains('active')) {
+                searchBox.querySelector('input').focus();
+            }
+        });
+
+        document.addEventListener('click', function () {
+            searchBox.classList.remove('active');
+            if (mobileMenuBtn && mobileNavPanel) {
+                mobileMenuBtn.classList.remove('active');
+                mobileNavPanel.classList.remove('active');
+            }
+        });
+
+        searchBox.addEventListener('click', function (e) {
+            e.stopPropagation();
+        });
+    </script>
+
+    <div class="product-detail">
+        <div class="hero-section">
+            <div class="hero-content">
+                <h1>DOBOT ES01</h1>
+                <p class="subtitle">Electric Vacuum Gripper</p>
+                <p class="description">DOBOT ES01 is a compact electric vacuum gripper developed by DOBOT specifically for the Magician E6 six-axis collaborative robot. With plug-and-play support, it quickly enables automated gripping solutions for education and research.</p>
+                <div class="hero-stats">
+                    <div class="hero-stat">
+                        <div class="value">700 g</div>
+                        <div class="label">Max Payload</div>
+                    </div>
+                    <div class="hero-stat">
+                        <div class="value">55 kPa</div>
+                        <div class="label">Vacuum Level</div>
+                    </div>
+                    <div class="hero-stat">
+                        <div class="value">250 g</div>
+                        <div class="label">Weight</div>
+                    </div>
+                    <div class="hero-stat">
+                        <div class="value">DC 24V</div>
+                        <div class="label">Rated Voltage</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="about-section">
+            <h2 class="section-title">Product Overview</h2>
+            <p>DOBOT ES01 is a compact electric vacuum gripper developed by DOBOT specifically for the Magician E6 six-axis collaborative robot. Its integrated design delivers plug-and-play operation with no external air supply required and low operating noise. Combined with the DobotStudio Pro platform, which offers Blockly block-based programming and Lua scripting, it is simple to use and quickly enables automated gripping solutions for education and research, easily meeting teaching needs.</p>
+        </div>
+
+        <div class="features-section">
+            <h2 class="section-title">Key Features</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h4>Easy Deployment</h4>
+                    <p>The integrated design fits the aviation connector at the end of the Magician E6, delivering plug-and-play setup without cumbersome wiring.</p>
+                </div>
+                <div class="feature-card">
+                    <h4>Simple to Use</h4>
+                    <p>Controlled directly via the DobotStudio Pro platform with easy Blockly block-based programming, while also supporting efficient Lua scripting.</p>
+                </div>
+                <div class="feature-card">
+                    <h4>Compact &amp; Practical</h4>
+                    <p>Compact in size, requires no external air supply, runs quietly, and easily meets teaching needs.</p>
+                </div>
+                <div class="feature-card">
+                    <h4>Flexible Expansion</h4>
+                    <p>Suction nozzles support quick attachment and removal, and multiple nozzles can be connected to adapt to more application scenarios.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="scenarios-section">
+            <h2 class="section-title">Application Scenarios</h2>
+            <p>Ideal for teaching simulations of small-part loading and unloading, handling, palletizing, processing, packaging, and other applications.</p>
+        </div>
+
+        <div class="specs-section">
+            <h3>DOBOT ES01 Specifications</h3>
+            <table class="spec-table">
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+                        <th>DOBOT ES01</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td><strong>Product Name</strong></td><td>DOBOT ES01</td></tr>
+                    <tr><td><strong>Model</strong></td><td>DT-ES01</td></tr>
+                    <tr><td><strong>Dimensions (L*W*H)</strong></td><td>74mm * 65mm * 65mm</td></tr>
+                    <tr><td><strong>Weight</strong></td><td>250g</td></tr>
+                    <tr><td><strong>Max Payload</strong></td><td>700g*</td></tr>
+                    <tr><td><strong>Vacuum Level</strong></td><td>55kPa</td></tr>
+                    <tr><td><strong>Max Air Flow</strong></td><td>2.0L/min</td></tr>
+                    <tr><td><strong>Communication</strong></td><td>IO</td></tr>
+                    <tr><td><strong>Operating Noise</strong></td><td>≤50dB</td></tr>
+                    <tr><td><strong>Rated Voltage</strong></td><td>DC 24V</td></tr>
+                    <tr><td><strong>Rated Power</strong></td><td>2.55W</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+    <div id="footer-container"></div>
+	<script>
+		loadComponent('footer-container', '../../components/footer-en.html');
+	</script>
+
+    <div class="gpop" style="display: block;">
+        <a href="#lxwm" class="pop_a cur1">
+            <div class="pop_a_img">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" data-inject-url="https://www.i2cool.com.cn/static/cms/images/pop_r_svg.svg" loading="lazy">
+                    <defs><style>.cls-1{fill:#2260bc;fill-rule:evenodd;}</style></defs>
+                    <path class="cls-1" d="M186.357,199.5a0.858,0.858,0,0,1-.857-0.858V178.071a2.571,2.571,0,0,1,2.571-2.571h18.857a2.571,2.571,0,0,1,2.572,2.571v13.714a2.572,2.572,0,0,1-2.572,2.572H192.991a0.861,0.861,0,0,0-.558.206l-5.519,4.73a0.862,0.862,0,0,1-.557.207h0Zm1.714-22.286a0.857,0.857,0,0,0-.857.857v18.708l4.1-3.514a2.571,2.571,0,0,1,1.673-.623h13.937a0.856,0.856,0,0,0,.857-0.857V178.071a0.857,0.857,0,0,0-.857-0.857H188.071Zm14.572,6H192.357a0.857,0.857,0,0,1,0-1.714h10.286A0.857,0.857,0,0,1,202.643,183.214ZM197.5,187.5h-5.143a0.858,0.858,0,0,1,0-1.715H197.5A0.858,0.858,0,0,1,197.5,187.5Zm5.143,0h-2.572a0.858,0.858,0,0,1,0-1.715h2.572A0.858,0.858,0,0,1,202.643,187.5Z" transform="translate(-185.5 -175.5)"></path>
+                </svg>
+                <p>Contact Us </p>
+            </div>
+        </a>
+        <a class="pop_a cur2">
+            <div class="pop_a_img">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="15.5" viewBox="0 0 24 15.5" data-inject-url="" loading="lazy">
+                    <defs><style>.cls-1{fill:#2260bc;fill-rule:evenodd;}</style></defs>
+                    <path class="cls-1" d="M245.179,175.5a0.857,0.857,0,0,1-.857.857H232.857a0.857,0.857,0,0,1-.857-.857V172.143a0.857,0.857,0,0,1,.857-.857H244.321a0.857,0.857,0,0,1,.857.857Zm0-8.571a0.857,0.857,0,0,1-.857.857H232.857a0.857,0.857,0,0,1-.857-.857V163.571a0.857,0.857,0,0,1,.857-.857H244.321a0.857,0.857,0,0,1,.857.857Zm0-8.571a0.857,0.857,0,0,1-.857.857H232.857a0.857,0.857,0,0,1-.857-.857V155a0.857,0.857,0,0,1,.857-.857H244.321a0.857,0.857,0,0,1,.857.857Z" transform="translate(-232 -154.143)"></path>
+                </svg>
+                <p>Back to Top</p>
+            </div>
+        </a>
+    </div>
+
+    <script>
+        document.querySelector('.pop_a.cur2').addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    </script>
 
     <script src="../../index_files/layui.js"></script>
     <script src="../../index_files/extend.js" type="text/javascript"></script>
@@ -337,10 +486,5 @@
     </script>
 
     <script src="../../index_files/jquery.liMarquee.js" type="text/javascript" charset="utf-8"></script>
-
-	<div id="footer-container"></div>
-	<script>
-		loadComponent('footer-container', '.../../components/footer-en.html');
-	</script>
 </body>
 </html>

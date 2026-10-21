@@ -181,13 +181,28 @@
             }
         }
     </style>
+    <style id="en-deform-guard">
+        /* 英文文案较长：固定宽度/固定行数的文本容器用省略号兜底，避免 -en 页面变形 */
+        .three_menu { max-width: 360px; overflow: hidden !important; }
+        .three_menu a { overflow: hidden; }
+        .three_menu a p { white-space: nowrap !important; overflow: hidden; text-overflow: ellipsis; }
+        .mobile-nav-sub-link { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        #breadcrumb { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        #breadcrumb #productName { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        #pageTitle { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; word-break: break-word; }
+        #tabBar .tab-item { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        #productItemBox .item .txt h3 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; word-break: break-word; }
+        #productItemBox .item .txt p { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; word-break: break-word; }
+        .robot-product-item .product-name { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; word-break: break-word; }
+        .robot-product-item .product-sub-list li a { display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    </style>
 </head>
 
 <body style="">
     <div id="nav-container"></div>
 	<script src="../../components/load-components.js"></script>
 	<script>
-		loadComponent('nav-container', '.../../components/nav-en.html', function() {
+		loadComponent('nav-container', '../../components/nav-en.html', function() {
 			initNav();
 		});
 	</script>
@@ -286,7 +301,7 @@
 
     <div id="footer-container"></div>
 	<script>
-		loadComponent('footer-container', '.../../components/footer-en.html');
+		loadComponent('footer-container', '../../components/footer-en.html');
 	</script>
 
     <div id="fixedGpop" class="gpop" style="display: block;">

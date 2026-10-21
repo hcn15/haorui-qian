@@ -953,6 +953,16 @@
             padding: 0 30px;
         }
 
+        .btn-buy {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: #fff;
+        }
+
+        .btn-buy:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 5px 14px rgba(16, 185, 129, 0.4);
+        }
+
         .btn-primary {
             background: linear-gradient(135deg, #0a4db4, #1e6fd9);
             color: #fff;
@@ -1423,6 +1433,33 @@
         .footer-bottom a:hover {
             color: #4a9eff;
         }
+        /* ===== 中英文切换按钮 ===== */
+        .top-bar .top-right .lang-toggle {
+            display: inline-flex;
+            align-items: center;
+            margin: 0 0 0 10px;
+            border: 1px solid #d9d9d9;
+            border-radius: 12px;
+            overflow: hidden;
+            line-height: 1;
+            vertical-align: middle;
+        }
+
+        .top-bar .top-right .lang-toggle a {
+            margin: 0;
+            padding: 3px 9px;
+            font-size: 12px;
+        }
+
+        .top-bar .top-right .lang-toggle a + a {
+            border-left: 1px solid #d9d9d9;
+        }
+
+        .top-bar .top-right .lang-toggle a.active {
+            background: #0a4db4;
+            color: #fff;
+        }
+
     </style>
 </head>
 
@@ -1495,6 +1532,7 @@
                 <a href="#">新闻资讯</a>
                 <a href="../about/about-us.html">关于我们</a>
                 <a href="../info/contact-us.html">联系我们</a>
+                <span class="lang-toggle" title="Language"><a href="#" class="lang-switch-zh active">中</a><a href="#" class="lang-switch-en">EN</a></span>
             </div>
         </div>
     </div>
@@ -1502,10 +1540,8 @@
     <div class="header">
         <div class="header-inner">
             <div class="logo" onclick="window.location.href='../../index.html'">
-                <img class="logo-icon" src="../../img/JSlogo-beb0d75f.png" alt="Logo">
                 <div class="logo-text">
-                    <div class="brand">黑科技 <span class="highlight">商城</span></div>
-                    <div class="tagline">Hi-Tech Bazaar</div>
+                    <div class="brand">HARVEST · 黑科技商城</div>
                 </div>
             </div>
             <div class="header-right">
@@ -1627,7 +1663,8 @@
             </div>
 
             <div class="action-buttons">
-                <button class="btn btn-primary" onclick="handleInquiry()">💰 立即询价</button>
+                <button class="btn btn-buy" onclick="handleBuyNow()">⚡ 立即购买</button>
+                <button class="btn btn-primary" onclick="handleInquiry()">💰 询价</button>
                 <button class="btn btn-orange" onclick="handleAddCart()">🛒 加入购物车</button>
                 <button class="btn btn-default" onclick="handleFavorite()">⭐ 收藏</button>
             </div>
@@ -2023,4 +2060,10 @@
             </div>
         </div>
     </div>
+    <script src="../../components/load-components.js"></script>
+    <script>
+        if (typeof initNav === 'function') {
+            initNav();
+        }
+    </script>
     

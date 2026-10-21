@@ -356,6 +356,33 @@
             .apply-icon { margin: 0 auto; }
             .apply-btn { width: 100%; justify-content: center; }
         }
+
+        /* ===== 中英文切换按钮 ===== */
+        .top-bar .top-bar-inner .lang-toggle {
+            display: inline-flex;
+            align-items: center;
+            margin: 0 0 0 10px;
+            border: 1px solid #d9d9d9;
+            border-radius: 12px;
+            overflow: hidden;
+            line-height: 1;
+            vertical-align: middle;
+        }
+
+        .top-bar .top-bar-inner .lang-toggle a {
+            margin: 0;
+            padding: 3px 9px;
+            font-size: 12px;
+        }
+
+        .top-bar .top-bar-inner .lang-toggle a + a {
+            border-left: 1px solid #d9d9d9;
+        }
+
+        .top-bar .top-bar-inner .lang-toggle a.active {
+            background: #0a4db4;
+            color: #fff;
+        }
     </style>
 </head>
 <body>
@@ -374,6 +401,7 @@
             <span class="search-icon">🔍</span>
             <input type="text" placeholder="搜索认证企业..." readonly>
         </div>
+        <span class="lang-toggle" title="Language"><a href="#" class="active">中</a><a href="../../index-en.html">EN</a></span>
     </div>
 </div>
 

@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>我的询价 - 黑科技商城</title>
+    <link rel="stylesheet" type="text/css" href="../../index_files/g-style.css">
+    <link rel="stylesheet" type="text/css" href="../../index_files/f-style.css">
+    <link rel="stylesheet" type="text/css" href="../../index_files/style.css">
+    <link rel="stylesheet" type="text/css" href="../../index_files/extend.css">
+    <script src="../../config1.js"></script>
+    <script src="../../cart.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../mobile.css">
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif;
+            color: #333;
+            background: #f7f9fc;
+            -webkit-font-smoothing: antialiased;
+        }
+        a { text-decoration: none; color: #333; }
+        ul, ol { list-style: none; }
+        img { border: none; vertical-align: middle; }
+
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: #f0f2f5; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb { background: #c0c8d4; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #0a4db4; }
+
+        /* ===== 顶部条 ===== */
+        .top-bar {
+            background: #f7f9fc;
+            border-bottom: 1px solid #e8ecf1;
+            font-size: 12px;
+            color: #666;
+            position: relative;
+            z-index: 999;
+        }
+        .top-bar-inner {
+            max-width: 1200px; margin: 0 auto; padding: 10px 24px;
+            display: flex; align-items: center; justify-content: flex-end; gap: 14px;
+        }
+        .top-bar a { color: #666; transition: color .2s; }
+        .top-bar a:hover { color: #0a4db4; }
+        .top-bar .sep { color: #d0d6de; }
+
+        /* ===== Header ===== */
+        .header {
+            background: #fff;
+            border-bottom: 1px solid #e8ecf1;
+            position: sticky; top: 0; z-index: 998;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+        .header-inner {
+            max-width: 1200px; margin: 0 auto; padding: 16px 24px;
+            display: flex; align-items: center; gap: 28px;
+        }
+        .logo {
+            font-size: 22px; font-weight: 700;
+            color: #0a4db4; letter-spacing: 1px;
+            flex-shrink: 0;
+        }
+        .logo .highlight { color: #f5a623; }
+        .search-box {
+            flex: 1; max-width: 520px;
+            display: flex; align-items: center;
+            background: #f0f2f5; border-radius: 999px;
+            padding: 8px 16px;
+        }
+        .search-box input {
+            flex: 1; border: none; background: transparent;
+            font-size: 14px; outline: none;
+        }
+        .header-right {
+            margin-left: auto;
+            display: flex; align-items: center; gap: 12px;
+            flex-shrink: 0;
+        }
+        .header-right .cart-btn {
+            display: inline-flex; align-items: center; gap: 6px;
+            padding: 8px 14px; font-size: 14px; font-weight: 600;
+            color: #0a4db4; background: #eaf2ff;
+            border-radius: 8px; position: relative;
+            line-height: 1.5; white-space: nowrap;
+            overflow: visible; flex-shrink: 0;
+        }
+        .header-right .cart-btn:hover { background: #d4e5ff; }
+        .cart-badge {
+            position: absolute; top: -8px; right: -8px;
+            background: #ff4d4f; color: #fff;
+            font-size: 11px; padding: 2px 6px;
+            border-radius: 999px; line-height: 1.2;
+            display: none;
+        }
+
+        /* ===== 主体容器 ===== */
+        .container {
+            max-width: 1200px; margin: 0 auto; padding: 28px 24px 60px;
+        }
+        .breadcrumb {
+            font-size: 13px; color: #999; margin-bottom: 18px;
+        }
+        .breadcrumb a { color: #666; }
+        .breadcrumb a:hover { color: #0a4db4; }
+        .breadcrumb .sep { margin: 0 8px; color: #ccc; }
+        .breadcrumb .current { color: #333; font-weight: 500; }
+
+        .page-header {
+            display: flex; align-items: center; justify-content: space-between;
+            margin-bottom: 22px;
+        }
+        .page-title {
+            font-size: 24px; font-weight: 700; color: #1a1f2e;
+            display: flex; align-items: center; gap: 10px;
+        }
+        .page-title .count-badge {
+            background: linear-gradient(135deg, #0a4db4, #1e6fd9);
+            color: #fff; font-size: 13px; padding: 3px 10px;
+            border-radius: 999px; font-weight: 600;
+        }
+        .page-subtitle {
+            color: #888; font-size: 13px; margin-top: 4px;
+        }
+
+        /* ===== 状态 Tab ===== */
+        .status-tabs {
+            display: flex; gap: 6px;
+            background: #fff; padding: 6px;
+            border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            margin-bottom: 22px; overflow-x: auto;
+        }
+        .status-tab {
+            padding: 9px 18px; font-size: 14px; font-weight: 500;
+            color: #666; cursor: pointer; border-radius: 8px;
+            transition: all .2s; white-space: nowrap;
+            border: none; background: transparent;
+        }
+        .status-tab:hover { background: #f0f2f5; color: #0a4db4; }
+        .status-tab.active {
+            background: linear-gradient(135deg, #0a4db4, #1e6fd9);
+            color: #fff; font-weight: 600;
+        }
+
+        /* ===== 询价卡片 ===== */
+        .inquiry-list { display: flex; flex-direction: column; gap: 14px; }
+        .inquiry-card {
+            background: #fff; border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            overflow: hidden; transition: all .25s;
+            position: relative;
+        }
+        .inquiry-card::before {
+            content: ""; position: absolute; top: 0; left: 0; bottom: 0;
+            width: 4px; background: var(--state-color, #0a4db4);
+        }
+        .inquiry-card:hover {
+            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+            transform: translateY(-1px);
+        }
+        .inquiry-card[data-status="0"] { --state-color: #faad14; } /* 待报价 */
+        .inquiry-card[data-status="1"] { --state-color: #10b981; } /* 已报价 */
+        .inquiry-card[data-status="2"] { --state-color: #0a4db4; } /* 已确认 */
+        .inquiry-card[data-status="3"] { --state-color: #b0b7c4; } /* 已取消 */
+
+        .inquiry-card-body {
+            padding: 18px 22px 18px 26px;
+            display: grid;
+            grid-template-columns: 90px 1fr auto;
+            gap: 18px; align-items: center;
+        }
+        .inquiry-img {
+            width: 90px; height: 90px;
+            border-radius: 8px; object-fit: cover;
+            background: #f0f2f5;
+        }
+        .inquiry-main { min-width: 0; }
+        .inquiry-top {
+            display: flex; align-items: center; gap: 10px;
+            margin-bottom: 8px; flex-wrap: wrap;
+        }
+        .inquiry-no {
+            font-size: 12px; color: #888;
+            font-family: "Consolas", "Monaco", monospace;
+        }
+        .status-badge {
+            display: inline-flex; align-items: center; gap: 5px;
+            font-size: 12px; font-weight: 600;
+            padding: 3px 10px; border-radius: 999px;
+            background: var(--state-bg, #eaf2ff);
+            color: var(--state-color, #0a4db4);
+        }
+        .inquiry-card[data-status="0"] .status-badge { background: #fff7e6; }
+        .inquiry-card[data-status="1"] .status-badge { background: #e6fffb; }
+        .inquiry-card[data-status="2"] .status-badge { background: #eaf2ff; }
+        .inquiry-card[data-status="3"] .status-badge { background: #f0f2f5; color: #888; }
+        .inquiry-name {
+            font-size: 16px; font-weight: 600; color: #1a1f2e;
+            margin-bottom: 6px;
+            display: -webkit-box; -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical; overflow: hidden;
+        }
+        .inquiry-meta {
+            display: flex; flex-wrap: wrap; gap: 14px;
+            font-size: 13px; color: #888;
+        }
+        .inquiry-meta .meta-item .lbl { color: #aaa; margin-right: 4px; }
+        .inquiry-meta .meta-item .val { color: #333; font-weight: 500; }
+
+        .quote-block {
+            margin-top: 10px; padding: 10px 14px;
+            background: linear-gradient(135deg, #f0fdf4, #ecfdf5);
+            border-left: 3px solid #10b981;
+            border-radius: 6px; font-size: 13px;
+        }
+        .quote-block .quote-price {
+            font-size: 18px; font-weight: 700; color: #10b981;
+        }
+        .quote-block .quote-price .currency { font-size: 14px; margin-right: 2px; }
+        .quote-block .quote-remark {
+            color: #555; margin-top: 4px; line-height: 1.5;
+        }
+        .quote-block .quote-time {
+            color: #888; font-size: 12px; margin-top: 4px;
+        }
+
+        .inquiry-actions {
+            display: flex; flex-direction: column; gap: 8px;
+            align-items: flex-end;
+        }
+        .btn {
+            padding: 8px 18px; font-size: 13px; font-weight: 600;
+            border: none; border-radius: 8px; cursor: pointer;
+            transition: all .2s; white-space: nowrap;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: #fff;
+        }
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.35);
+        }
+        .btn-secondary {
+            background: #f0f2f5; color: #555;
+        }
+        .btn-secondary:hover { background: #e1e5ed; }
+        .btn-link {
+            background: transparent; color: #0a4db4;
+            padding: 8px 12px;
+        }
+        .btn-link:hover { background: #eaf2ff; }
+
+        /* ===== 空状态 ===== */
+        .empty-state {
+            text-align: center; padding: 80px 20px;
+            background: #fff; border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+        .empty-icon {
+            font-size: 64px; margin-bottom: 16px;
+            display: inline-block;
+            animation: emptyFloat 3s ease-in-out infinite;
+        }
+        @keyframes emptyFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+        .empty-title {
+            font-size: 18px; font-weight: 600; color: #333;
+            margin-bottom: 8px;
+        }
+        .empty-desc { color: #888; font-size: 14px; margin-bottom: 22px; }
+        .empty-cta {
+            display: inline-block; padding: 10px 24px;
+            background: linear-gradient(135deg, #0a4db4, #1e6fd9);
+            color: #fff; font-size: 14px; font-weight: 600;
+            border-radius: 999px; transition: all .2s;
+        }
+        .empty-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(10, 77, 180, 0.35);
+        }
+
+        /* ===== 登录提示 ===== */
+        .login-required {
+            text-align: center; padding: 80px 20px;
+            background: #fff; border-radius: 12px;
+        }
+        .login-required .icon { font-size: 56px; margin-bottom: 14px; }
+        .login-required h3 {
+            font-size: 18px; color: #333; margin-bottom: 8px;
+        }
+        .login-required p { color: #888; margin-bottom: 22px; }
+        .login-required .btn-login {
+            display: inline-block; padding: 10px 28px;
+            background: linear-gradient(135deg, #0a4db4, #1e6fd9);
+            color: #fff; border-radius: 999px;
+            font-size: 14px; font-weight: 600;
+        }
+
+        /* ===== Toast ===== */
+        .toast {
+            position: fixed; top: 20px; left: 50%;
+            transform: translateX(-50%) translateY(-100px);
+            background: rgba(20, 25, 40, 0.95);
+            color: #fff; padding: 12px 24px;
+            border-radius: 8px; font-size: 14px;
+            z-index: 10000; opacity: 0;
+            transition: all .35s cubic-bezier(0.22, 1, 0.36, 1);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+        }
+        .toast.show {
+            opacity: 1; transform: translateX(-50%) translateY(0);
+        }
+        .toast.success { background: rgba(16, 142, 75, 0.95); }
+        .toast.error { background: rgba(220, 53, 69, 0.95); }
+
+        /* ===== 加载态 ===== */
+        .loading {
+            text-align: center; padding: 60px 20px;
+            color: #888; font-size: 14px;
+        }
+        .loading::after {
+            content: ""; display: block; width: 28px; height: 28px;
+            margin: 12px auto 0; border: 3px solid #e1e5ed;
+            border-top-color: #0a4db4; border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* ===== 分页 ===== */
+        .pagination {
+            display: flex; justify-content: center; gap: 6px;
+            margin-top: 28px;
+        }
+        .pagination button {
+            padding: 8px 14px; font-size: 13px;
+            border: 1px solid #e1e5ed; background: #fff;
+            border-radius: 6px; cursor: pointer; color: #555;
+            transition: all .2s;
+        }
+        .pagination button:hover {
+            border-color: #0a4db4; color: #0a4db4;
+        }
+        .pagination button.active {
+            background: #0a4db4; color: #fff;
+            border-color: #0a4db4;
+        }
+        .pagination button:disabled {
+            opacity: 0.5; cursor: not-allowed;
+        }
+
+        @media (max-width: 768px) {
+            .inquiry-card-body {
+                grid-template-columns: 70px 1fr;
+                gap: 12px; padding: 14px;
+            }
+            .inquiry-img { width: 70px; height: 70px; }
+            .inquiry-actions {
+                grid-column: 1 / -1; flex-direction: row;
+                justify-content: flex-end;
+            }
+            .page-title { font-size: 20px; }
+            .status-tab { padding: 8px 14px; font-size: 13px; }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 顶部条 -->
+    <div class="top-bar">
+        <div class="top-bar-inner">
+            <a href="../../index.html">首页</a>
+            <span class="sep">|</span>
+            <a href="../info/contact-us.html">联系我们</a>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="header-inner">
+            <a href="../../index.html" class="logo">黑<span class="highlight">科技</span>商城</a>
+            <div class="search-box">
+                <input type="text" placeholder="搜索商品 / 需求 / 案例">
+            </div>
+            <div class="header-right">
+                <a class="cart-btn" href="../user/cart.html" data-cart-enhanced="1">🛒 购物车<span class="cart-badge">0</span></a>
+            </div>
+        </div>
+    </header>
+
+    <!-- 主体 -->
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="../../index.html">首页</a>
+            <span class="sep">/</span>
+            <a href="../user/profile.html">用户中心</a>
+            <span class="sep">/</span>
+            <span class="current">我的询价</span>
+        </div>
+
+        <div class="page-header">
+            <div>
+                <h1 class="page-title">
+                    我的询价
+                    <span class="count-badge" id="totalCount">0</span>
+                </h1>
+                <div class="page-subtitle">提交询价后，供应商将在线报价；确认报价后自动生成订单进入支付流程</div>
+            </div>
+        </div>
+
+        <!-- 状态筛选 -->
+        <div class="status-tabs" id="statusTabs">
+            <button class="status-tab active" data-status="" onclick="HRInquiry.filterStatus('')">全部</button>
+            <button class="status-tab" data-status="0" onclick="HRInquiry.filterStatus('0')">待报价</button>
+            <button class="status-tab" data-status="1" onclick="HRInquiry.filterStatus('1')">已报价</button>
+            <button class="status-tab" data-status="2" onclick="HRInquiry.filterStatus('2')">已确认</button>
+            <button class="status-tab" data-status="3" onclick="HRInquiry.filterStatus('3')">已取消</button>
+        </div>
+
+        <!-- 登录态 -->
+        <div id="loginView" style="display:none">
+            <div class="login-required">
+                <div class="icon">🔒</div>
+                <h3>请先登录</h3>
+                <p>登录后可查看您的询价记录</p>
+                <a class="btn-login" href="login.html?redirect=pages/user/my-inquiries.html">立即登录</a>
+            </div>
+        </div>
+
+        <!-- 已登录：询价列表 -->
+        <div id="listView" style="display:none">
+            <div class="inquiry-list" id="inquiryList"></div>
+            <div class="pagination" id="pagination"></div>
+        </div>
+    </div>
+
+    <script>
+        var HRInquiry = (function () {
+            var API_BASE = window.SERVER_BASE_URL || '';
+            var currentStatus = '';
+            var currentPage = 1;
+            var pageSize = 10;
+
+            var STATUS_MAP = {
+                0: { text: '待报价', color: '#faad14' },
+                1: { text: '已报价', color: '#10b981' },
+                2: { text: '已确认', color: '#0a4db4' },
+                3: { text: '已取消', color: '#b0b7c4' }
+            };
+
+            function getToken() { return localStorage.getItem('token'); }
+
+            function authHeaders() {
+                return { 'Authorization': getToken() };
+            }
+
+            function escapeHtml(s) {
+                return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+                    return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+                });
+            }
+
+            function formatDateTime(s) {
+                if (!s) return '-';
+                return String(s).replace('T', ' ').substring(0, 16);
+            }
+
+            function formatPrice(p) {
+                if (p == null || p === '') return '询价';
+                var n = parseFloat(p);
+                if (isNaN(n)) return '询价';
+                return '¥' + n.toLocaleString('zh-CN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            }
+
+            function showToast(msg, type) {
+                var el = document.createElement('div');
+                el.className = 'toast ' + (type || '');
+                el.textContent = msg;
+                document.body.appendChild(el);
+                setTimeout(function () { el.classList.add('show'); }, 10);
+                setTimeout(function () {
+                    el.classList.remove('show');
+                    setTimeout(function () { el.remove(); }, 350);
+                }, 2400);
+            }
+
+            // 渲染询价卡片
+            function renderCard(it) {
+                var st = STATUS_MAP[it.status] || STATUS_MAP[0];
+                var imgUrl = it.image || '';
+                // 兼容绝对路径与相对路径
+                if (imgUrl && !/^https?:\/\//.test(imgUrl) && imgUrl.indexOf('..') !== 0) {
+                    imgUrl = (window.MINIO_BASE_URL || '') + imgUrl;
+                }
+                var imgHtml = imgUrl
+                    ? '<img class="inquiry-img" src="' + escapeHtml(imgUrl) + '" alt="">'
+                    : '<div class="inquiry-img" style="display:flex;align-items:center;justify-content:center;font-size:24px;color:#bbb;">📋</div>';
+
+                // 报价信息块（status==1 或 status==2 都显示）
+                var quoteHtml = '';
+                if ((it.status === 1 || it.status === 2) && it.quotePrice != null) {
+                    quoteHtml = '<div class="quote-block">' +
+                        '<div class="quote-price"><span class="currency">¥</span>' + escapeHtml(it.quotePrice) + '</div>' +
+                        (it.quoteRemark ? '<div class="quote-remark">' + escapeHtml(it.quoteRemark) + '</div>' : '') +
+                        '<div class="quote-time">报价时间：' + formatDateTime(it.quotedAt) + '</div>' +
+                    '</div>';
+                }
+
+                // 操作按钮（按状态）
+                var actionsHtml = '';
+                if (it.status === 0) {
+                    actionsHtml = '<button class="btn btn-secondary" onclick="HRInquiry.cancel(' + it.id + ')">取消询价</button>';
+                } else if (it.status === 1) {
+                    actionsHtml =
+                        '<button class="btn btn-primary" onclick="HRInquiry.confirm(' + it.id + ')">确认报价转单</button>' +
+                        '<button class="btn btn-secondary" onclick="HRInquiry.cancel(' + it.id + ')">取消</button>';
+                } else if (it.status === 2 && it.orderId) {
+                    actionsHtml = '<a class="btn btn-link" href="order.html">查看订单 →</a>';
+                }
+
+                // 商品链接（如果有 url）
+                var nameLink = it.url
+                    ? '<a href="../../' + escapeHtml(it.url) + '" style="color:inherit">' + escapeHtml(it.productName) + '</a>'
+                    : escapeHtml(it.productName);
+
+                return '<div class="inquiry-card" data-status="' + it.status + '">' +
+                    '<div class="inquiry-card-body">' +
+                        imgHtml +
+                        '<div class="inquiry-main">' +
+                            '<div class="inquiry-top">' +
+                                '<span class="inquiry-no">' + escapeHtml(it.inquiryNo) + '</span>' +
+                                '<span class="status-badge">● ' + st.text + '</span>' +
+                            '</div>' +
+                            '<div class="inquiry-name">' + nameLink + '</div>' +
+                            '<div class="inquiry-meta">' +
+                                '<span class="meta-item"><span class="lbl">询价数量：</span><span class="val">' + escapeHtml(it.quantity) + '</span></span>' +
+                                (it.spec ? '<span class="meta-item"><span class="lbl">规格：</span><span class="val">' + escapeHtml(it.spec) + '</span></span>' : '') +
+                                '<span class="meta-item"><span class="lbl">提交时间：</span><span class="val">' + formatDateTime(it.createdAt) + '</span></span>' +
+                            '</div>' +
+                            quoteHtml +
+                        '</div>' +
+                        '<div class="inquiry-actions">' + actionsHtml + '</div>' +
+                    '</div>' +
+                '</div>';
+            }
+
+            // 加载列表
+            function loadList() {
+                var list = document.getElementById('inquiryList');
+                var pagination = document.getElementById('pagination');
+                list.innerHTML = '<div class="loading">正在加载询价记录...</div>';
+                pagination.innerHTML = '';
+
+                var url = API_BASE + '/inquiry/my?pageNum=' + currentPage + '&pageSize=' + pageSize;
+                if (currentStatus !== '') url += '&status=' + currentStatus;
+
+                fetch(url, { headers: authHeaders() })
+                    .then(function (r) { return r.json(); })
+                    .then(function (res) {
+                        if (res.code !== 0) {
+                            list.innerHTML = '<div class="empty-state"><div class="empty-icon">⚠️</div><div class="empty-title">加载失败</div><div class="empty-desc">' + escapeHtml(res.message || '请稍后重试') + '</div></div>';
+                            return;
+                        }
+                        var data = res.data || {};
+                        var items = data.items || data.list || [];
+                        document.getElementById('totalCount').textContent = data.total || items.length;
+
+                        if (!items.length) {
+                            list.innerHTML = '<div class="empty-state">' +
+                                '<div class="empty-icon">📋</div>' +
+                                '<div class="empty-title">暂无询价记录</div>' +
+                                '<div class="empty-desc">在商品详情页点击"询价"按钮，提交后即可在此跟踪报价</div>' +
+                                '<a class="empty-cta" href="../../index.html">去逛逛</a>' +
+                            '</div>';
+                            return;
+                        }
+
+                        list.innerHTML = items.map(renderCard).join('');
+                        renderPagination(data.total || items.length);
+                    })
+                    .catch(function () {
+                        list.innerHTML = '<div class="empty-state"><div class="empty-icon">📡</div><div class="empty-title">网络异常</div><div class="empty-desc">请稍后重试</div></div>';
+                    });
+            }
+
+            function renderPagination(total) {
+                var pagination = document.getElementById('pagination');
+                var totalPages = Math.ceil(total / pageSize) || 1;
+                if (totalPages <= 1) { pagination.innerHTML = ''; return; }
+
+                var html = '';
+                html += '<button ' + (currentPage === 1 ? 'disabled' : '') + ' onclick="HRInquiry.goPage(' + (currentPage - 1) + ')">上一页</button>';
+                for (var i = 1; i <= totalPages; i++) {
+                    if (i === 1 || i === totalPages || Math.abs(i - currentPage) <= 2) {
+                        html += '<button class="' + (i === currentPage ? 'active' : '') + '" onclick="HRInquiry.goPage(' + i + ')">' + i + '</button>';
+                    } else if (i === 2 || i === totalPages - 1) {
+                        html += '<button disabled>...</button>';
+                    }
+                }
+                html += '<button ' + (currentPage === totalPages ? 'disabled' : '') + ' onclick="HRInquiry.goPage(' + (currentPage + 1) + ')">下一页</button>';
+                pagination.innerHTML = html;
+            }
+
+            // 确认报价转订单
+            function confirm(id) {
+                if (!confirm('确认接受此报价吗？\n确认后系统将自动创建订单，并跳转到订单页进行支付。')) return;
+                fetch(API_BASE + '/inquiry/' + id + '/confirm', {
+                    method: 'POST',
+                    headers: authHeaders()
+                }).then(function (r) { return r.json(); }).then(function (res) {
+                    if (res.code === 0) {
+                        var order = res.data;
+                        var msg = order && order.orderNo
+                            ? '已生成订单 ' + order.orderNo + '，正在跳转...'
+                            : '已转为订单，正在跳转...';
+                        showToast(msg, 'success');
+                        setTimeout(function () { location.href = 'order.html'; }, 1200);
+                    } else {
+                        showToast('确认失败：' + (res.message || '请稍后重试'), 'error');
+                    }
+                }).catch(function () {
+                    showToast('网络异常，请稍后重试', 'error');
+                });
+            }
+
+            // 取消询价
+            function cancel(id) {
+                if (!confirm('确认取消此询价吗？取消后供应商将不再报价。')) return;
+                fetch(API_BASE + '/inquiry/' + id + '/cancel', {
+                    method: 'POST',
+                    headers: authHeaders()
+                }).then(function (r) { return r.json(); }).then(function (res) {
+                    if (res.code === 0) {
+                        showToast('询价已取消', 'success');
+                        loadList();
+                    } else {
+                        showToast('取消失败：' + (res.message || '请稍后重试'), 'error');
+                    }
+                }).catch(function () {
+                    showToast('网络异常，请稍后重试', 'error');
+                });
+            }
+
+            function filterStatus(s) {
+                currentStatus = s;
+                currentPage = 1;
+                var tabs = document.querySelectorAll('.status-tab');
+                for (var i = 0; i < tabs.length; i++) {
+                    tabs[i].classList.toggle('active', tabs[i].getAttribute('data-status') === s);
+                }
+                loadList();
+            }
+
+            function goPage(p) {
+                currentPage = p;
+                loadList();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+
+            function init() {
+                var token = getToken();
+                var username = localStorage.getItem('username');
+                if (!token || !username) {
+                    document.getElementById('loginView').style.display = '';
+                    document.getElementById('listView').style.display = 'none';
+                    return;
+                }
+                document.getElementById('loginView').style.display = 'none';
+                document.getElementById('listView').style.display = '';
+                loadList();
+            }
+
+            return {
+                init: init,
+                filterStatus: filterStatus,
+                goPage: goPage,
+                confirm: confirm,
+                cancel: cancel,
+                loadList: loadList
+            };
+        })();
+
+        document.addEventListener('DOMContentLoaded', function () {
+            HRInquiry.init();
+        });
+    </script>
+</body>
+
+</html>

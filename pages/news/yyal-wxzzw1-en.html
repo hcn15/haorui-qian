@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html xml:lang="zh" lang="zh" style="--color: #005CE6; --vh: 708px; scroll-behavior: auto;">
+<html xml:lang="en" lang="en" style="--color: #005CE6; --vh: 708px; scroll-behavior: auto;">
 <!-- en --><!-- xml:lang="en" lang="en" -->
 
 <head>
@@ -14,7 +14,7 @@
     <meta name="force-rendering" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
     <title>HARVEST Green Technology</title>
-    <meta name="keywords" content="">
+    <meta name="keywords" content="Off-Grid Cooling Technology,Passive Radiative Cooling Technology,Energy-Efficient New Materials,Cooling & Temperature Reduction,Green and Low-Carbon">
     <meta name="description" content="">
     <!-- ico -->
     <link rel="shortcut icon" href="">
@@ -236,12 +236,6 @@
             box-shadow: none !important;
         }
 
-        .nav_lan .nav_lan_box svg {
-            width: 6px !important;
-            height: 3px !important;
-            flex-shrink: 0;
-        }
-
         .nav_on li a {
             position: relative !important;
         }
@@ -296,6 +290,7 @@
         }
     </style>
 
+
 </head>
 
 <body style="">
@@ -312,54 +307,12 @@
     <div id="nav-container"></div>
 	<script src="../../components/load-components.js"></script>
 	<script>
-		loadComponent('nav-container', '.../../components/nav-en.html', function() {
+		loadComponent('nav-container', '../../components/nav-en.html', function() {
 			initNav();
 		});
 	</script>
-        <div class="mobile-nav-lang">
-            <a href="yyal-wxzzw1.html">中文</a>
-            <a href="yyal-wxzzw1-en.html" class="active">EN</a>
-        </div>
-        <div class="mobile-nav-item">
-            <a href="../../index-en.html" class="mobile-nav-link">Home</a>
-        </div>
-        <div class="mobile-nav-item">
-            <a href="#" class="mobile-nav-link">Products & Services
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M6 9l6 6 6-6"/>
-                </svg>
-            </a>
-            <div class="mobile-nav-sub" id="mobileNavProductSub">
-                <div class="mobile-nav-sub-item"><a href="../series/chanpin1-cp1-en.html" class="mobile-nav-sub-link">Advanced Materials</a></div>
-                <div class="mobile-nav-sub-item"><a href="../series/chanpin1-en.html?id=2" class="mobile-nav-sub-link">Digital Services & Platform</a></div>
-                <div class="mobile-nav-sub-item"><a href="../series/chanpin1-en.html?id=3" class="mobile-nav-sub-link">Communications & Network</a></div>
-                <div class="mobile-nav-sub-item"><a href="../series/chanpin1-ai-en.html" class="mobile-nav-sub-link">AI Robotics</a></div>
-                <div class="mobile-nav-sub-item"><a href="../series/chanpin1-en.html?id=5" class="mobile-nav-sub-link">Low Altitude Economy</a></div>
-                <div class="mobile-nav-sub-item"><a href="../series/chanpin1-en.html?id=6" class="mobile-nav-sub-link">Commodity Trading</a></div>
-                <div class="mobile-nav-sub-item"><a href="../series/chanpin1-en.html?id=7" class="mobile-nav-sub-link">Cultural & Creative IP</a></div>
-            </div>
-        </div>
-        <div class="mobile-nav-item">
-            <a href="#" class="mobile-nav-link">Application Scenarios
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M6 9l6 6 6-6"/>
-                </svg>
-            </a>
-            <div class="mobile-nav-sub">
-                <div class="mobile-nav-sub-item"><a href="../../index-en.html#yycj" class="mobile-nav-sub-link">Power-free Cooling</a></div>
-                <div class="mobile-nav-sub-item"><a href="../../index-en.html#yycj" class="mobile-nav-sub-link">Wireless Ad Hoc Network</a></div>
-            </div>
-        </div>
-        <div class="mobile-nav-item">
-            <a href="../../index-en.html#cpxn" class="mobile-nav-link">Core Technology</a>
-        </div>
-        <div class="mobile-nav-item">
-            <a href="#lxwm" class="mobile-nav-link">Contact Us</a>
-        </div>
-    </div>
 
     
-
 
 
     <!-- 首图容器（空标签，JS填充图片） -->
@@ -374,6 +327,7 @@
                     style="height:100%; width:100%; position:absolute; top:0; left:0; z-index:2;">
                     <!-- 首图两张img由JS动态生成 -->
                 </div>
+                <!-- 删掉首图标题DOM，不再渲染文字 -->
                 <div class="h_b_txt" style="display:none;"></div>
             </div>
         </div>
@@ -402,6 +356,7 @@
                 </div>
                 <div id="detailImgWrap"
                     style="height: auto !important; overflow: visible !important; position: relative !important; z-index: 9999 !important;text-align: center !important;">
+                    <!-- 详情PC+移动端图片JS动态渲染 -->
                 </div>
             </div>
         </div>
@@ -410,51 +365,46 @@
     <script>
         // 接口地址
         const apiUrl = `${SERVER_BASE_URL}/website/scene`;
-        // 当前英文页面匹配链接（改成你当前页面的英文链接）
-        const targetHref = './yyal-wxzzw1-en.html';
+        // 当前页面匹配链接
+        const targetHref = './yyal-wxzzw1.html';
 
         window.onload = function () {
             fetch(apiUrl)
                 .then(res => res.json())
                 .then(res => {
                     if (res.code !== 0 || !Array.isArray(res.data)) return;
-                    // 匹配英文跳转链接
-                    let currData = res.data.find(item => item.hrefToEn === targetHref);
+                    // 筛选当前页面对应数据
+                    let currData = res.data.find(item => item.hrefTo === targetHref);
                     if (!currData) return;
 
-                    // ============== 全部使用英文字段 ==============
-                    const {
-                        hrefToFirstImageUrlEn,
-                        hrefToTitleEn,
-                        hrefToDateEn,
-                        hrefToImageUrlEn,
-                        typeEn
-                    } = currData;
+                    // 字段赋值
+                    const { hrefToFirstImageUrl, hrefToTitle, hrefToDate, hrefToImageUrl, type } = currData;
 
-                    // 1、顶部Banner
+                    // 1、顶部Banner两张图
                     document.getElementById('bannerImgWrap').innerHTML = `
-                    <img class="img1" src="${hrefToFirstImageUrlEn}" alt="${hrefToTitleEn}" style="height:100%; width:100%; object-fit:cover; display:block; border:0; outline:0;">
-                    <img class="img2" src="${hrefToFirstImageUrlEn}" alt="${hrefToTitleEn}" style="height:100%; width:100%; object-fit:cover; display:block; border:0; outline:0;">
-                `;
+			<img class="img1" src="${hrefToFirstImageUrl}" alt="${hrefToTitle}" style="height:100%; width:100%; object-fit:cover; display:block; border:0; outline:0;">
+			<img class="img2" src="${hrefToFirstImageUrl}" alt="${hrefToTitle}" style="height:100%; width:100%; object-fit:cover; display:block; border:0; outline:0;">
+		`;
 
-                    // 面包屑
-                    document.getElementById('navTypeName').innerText = hrefToTitleEn;
+                    // 面包屑导航最后文字
+                    document.getElementById('navTypeName').innerText = hrefToTitle.replace('应用场景', '');
 
-                    // 标题 + 日期
-                    document.getElementById('detailTitle').innerText = hrefToTitleEn;
-                    document.getElementById('publishDate').innerText = `Published: ${hrefToDateEn}`;
+                    // 下方大标题、发布时间保留
+                    document.getElementById('detailTitle').innerText = hrefToTitle;
+                    document.getElementById('publishDate').innerText = `Published: ${hrefToDate}`;
 
-                    // 详情大图
+                    // 详情区域图片
                     document.getElementById('detailImgWrap').innerHTML = `
-                    <img loading="lazy" class="img1" src="${hrefToImageUrlEn}" alt="${hrefToTitleEn}" style="width: 70% !important; height: auto !important; margin: 0 auto !important; display: block !important; position: relative !important; z-index: 9999 !important;">
-                    <img loading="lazy" class="img2" src="${hrefToImageUrlEn}" alt="${hrefToTitleEn}" style="display: none !important;">
-                `;
+			<img loading="lazy" class="img1" src="${hrefToImageUrl}" alt="${hrefToTitle}" style="width: 70% !important; height: auto !important; margin: 0 auto !important; display: block !important; position: relative !important; z-index: 9999 !important;">
+			<img loading="lazy" class="img2" src="${hrefToImageUrl}" alt="${hrefToTitle}" style="display: none !important;">
+		`;
                 })
                 .catch(err => {
-                    console.log('API request failed：', err)
+                    console.log('接口请求失败：', err)
                 })
         }
     </script>
+
 
 
     <div style="font-size: 16px;">
@@ -467,7 +417,7 @@
 	<!-- ====================================================== -->
 	<div id="footer-container"></div>
 	<script>
-		loadComponent('footer-container', '.../../components/footer-en.html');
+		loadComponent('footer-container', '../../components/footer-en.html');
 	</script>
     <!-- 右侧浮窗 -->
 
@@ -869,29 +819,29 @@
             <div id="think_page_trace_tab_tit"
                 style="height:30px;padding: 6px 12px 0;border-bottom:1px solid #ececec;border-top:1px solid #ececec;font-size:16px">
                 <span
-                    style="color: rgb(0, 0, 0); padding-right: 12px; height: 30px; line-height: 30px; display: inline-block; margin-right: 3px; cursor: pointer; font-weight: 700;">基本</span>
+                    style="color: rgb(0, 0, 0); padding-right: 12px; height: 30px; line-height: 30px; display: inline-block; margin-right: 3px; cursor: pointer; font-weight: 700;">Basic</span>
                 <span
-                    style="color: rgb(153, 153, 153); padding-right: 12px; height: 30px; line-height: 30px; display: inline-block; margin-right: 3px; cursor: pointer; font-weight: 700;">文件</span>
+                    style="color: rgb(153, 153, 153); padding-right: 12px; height: 30px; line-height: 30px; display: inline-block; margin-right: 3px; cursor: pointer; font-weight: 700;">Files</span>
                 <span
-                    style="color: rgb(153, 153, 153); padding-right: 12px; height: 30px; line-height: 30px; display: inline-block; margin-right: 3px; cursor: pointer; font-weight: 700;">流程</span>
+                    style="color: rgb(153, 153, 153); padding-right: 12px; height: 30px; line-height: 30px; display: inline-block; margin-right: 3px; cursor: pointer; font-weight: 700;">Flow</span>
                 <span
-                    style="color: rgb(153, 153, 153); padding-right: 12px; height: 30px; line-height: 30px; display: inline-block; margin-right: 3px; cursor: pointer; font-weight: 700;">错误</span>
+                    style="color: rgb(153, 153, 153); padding-right: 12px; height: 30px; line-height: 30px; display: inline-block; margin-right: 3px; cursor: pointer; font-weight: 700;">Errors</span>
                 <span
                     style="color: rgb(153, 153, 153); padding-right: 12px; height: 30px; line-height: 30px; display: inline-block; margin-right: 3px; cursor: pointer; font-weight: 700;">SQL</span>
                 <span
-                    style="color: rgb(153, 153, 153); padding-right: 12px; height: 30px; line-height: 30px; display: inline-block; margin-right: 3px; cursor: pointer; font-weight: 700;">调试</span>
+                    style="color: rgb(153, 153, 153); padding-right: 12px; height: 30px; line-height: 30px; display: inline-block; margin-right: 3px; cursor: pointer; font-weight: 700;">Debug</span>
             </div>
             <div id="think_page_trace_tab_cont" style="overflow:auto;height:212px;padding:0;line-height: 24px">
                 <div style="display: block;">
                     <ol style="padding: 0; margin:0">
-                        <li style="border-bottom:1px solid #EEE;font-size:14px;padding:0 12px">请求信息 : 2026-04-15
+                        <li style="border-bottom:1px solid #EEE;font-size:14px;padding:0 12px">Request Info : 2026-04-15
                             18:07:29 HTTP/2.0 GET : https://www.i2cool.com.cn/</li>
-                        <li style="border-bottom:1px solid #EEE;font-size:14px;padding:0 12px">运行时间 : 0.127769s [
-                            吞吐率：7.83req/s ] 内存消耗：6,771.95kb 文件加载：223</li>
-                        <li style="border-bottom:1px solid #EEE;font-size:14px;padding:0 12px">查询信息 : 21 queries</li>
-                        <li style="border-bottom:1px solid #EEE;font-size:14px;padding:0 12px">缓存信息 : 83 reads,0 writes
+                        <li style="border-bottom:1px solid #EEE;font-size:14px;padding:0 12px">Runtime : 0.127769s [
+                            Throughput: 7.83req/s ] Memory Usage: 6,771.95kb Files Loaded: 223</li>
+                        <li style="border-bottom:1px solid #EEE;font-size:14px;padding:0 12px">Query Info : 21 queries</li>
+                        <li style="border-bottom:1px solid #EEE;font-size:14px;padding:0 12px">Cache Info : 83 reads,0 writes
                         </li>
-                        <li style="border-bottom:1px solid #EEE;font-size:14px;padding:0 12px">会话信息 :
+                        <li style="border-bottom:1px solid #EEE;font-size:14px;padding:0 12px">Session Info :
                             SESSION_ID=7d7e64926624591fb13f1d310a376fe0</li>
                     </ol>
                 </div>

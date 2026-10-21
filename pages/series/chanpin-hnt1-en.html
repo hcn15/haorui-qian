@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+﻿﻿﻿﻿<!DOCTYPE html>
 
 <html xml:lang="zh" lang="zh" style="--color: #005CE6; --vh: 708px; scroll-behavior: auto;">
 <!-- en --><!-- xml:lang="en" lang="en" -->
@@ -195,6 +195,21 @@
             }
         }
     </style>
+    <style id="en-deform-guard">
+        /* 英文文案较长：固定宽度/固定行数的文本容器用省略号兜底，避免 -en 页面变形 */
+        .three_menu { max-width: 360px; overflow: hidden !important; }
+        .three_menu a { overflow: hidden; }
+        .three_menu a p { white-space: nowrap !important; overflow: hidden; text-overflow: ellipsis; }
+        .mobile-nav-sub-link { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        #breadcrumb { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        #breadcrumb #productName { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        #pageTitle { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; word-break: break-word; }
+        #tabBar .tab-item { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        #productItemBox .item .txt h3 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; word-break: break-word; }
+        #productItemBox .item .txt p { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; word-break: break-word; }
+        .robot-product-item .product-name { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; word-break: break-word; }
+        .robot-product-item .product-sub-list li a { display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    </style>
 </head>
 
 
@@ -263,7 +278,7 @@
         <div class="nav_ljbox" style="background:#0059B3; position:relative; z-index: 999 !important;">
             <div class="nav_l_box" style="background:#0059B3;">
                 <a href="#" class="logo">
-                    <img class="xs" src="../../img/JSlogo-beb0d75f.png" alt="web logo-15.png">
+                    <img class="xs" src="../../images\黑科技logo.png" alt="web logo-15.png">
                 </a>
                 <div class="logo_bj">
                     <img src="../../index_files/home_1.png" alt="">
@@ -518,8 +533,8 @@
                                 <div class="nav_lan_sel"
                                     style="display: none; height: 80px; padding-top: 0px; margin-top: 0px; padding-bottom: 0px; margin-bottom: 0px;">
                                     <div class="nav_lan_sel_box ignore">
-                                        <a href="../../index-en.html">EN</a>
-                                        <a href="../../index.html">CN</a>
+                                        <a href="#" class="lang-switch-en active">EN</a>
+                                        <a href="#" class="lang-switch-zh">简</a>
                                     </div>
                                 </div>
                             </div>
@@ -717,7 +732,7 @@
 	<!-- ====================================================== -->
 	<div id="footer-container"></div>
 	<script>
-		loadComponent('footer-container', '.../../components/footer-en.html');
+		loadComponent('footer-container', '../../components/footer-en.html');
 	</script>
 
     <!-- 右侧浮窗 -->
@@ -1857,6 +1872,12 @@
                 </div>
             </div>
         </template></div>
+<script src="../../components/load-components.js"></script>
+<script>
+    if (typeof initNav === 'function') {
+        initNav();
+    }
+</script>
 </body>
 <div id="ai-assist-root-bangs"><template shadowrootmode="open">
         <div id="ai-assist-bangs" data-v-app="">

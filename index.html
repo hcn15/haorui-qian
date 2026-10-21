@@ -7,7 +7,7 @@
     <title>浩瑞科技 - 智能机器人与数字平台一站式服务平台</title>
     <meta name="keywords" content="智能机器人,数字平台,新能源应用,大宗贸易,应急产品,新材料,智慧建材,AI文旅,技术转移,国际贸易会客厅,浩瑞科技">
     <meta name="description"
-        content="浩瑞科技 - 专注智能机器人、数字平台、新能源应用、大宗贸易、应急产品、新材料、智慧建材、AI文旅、技术转移与本地化服务、国际贸易会客厅海南等领域的一站式服务平台">
+        content="浩瑞科技 - 专注智能机器人、数字平台、新能源应用、大宗贸易、应急产品、新材料、智慧建材、AI文旅、国际贸易会客厅海南等领域的一站式服务平台">
     <link rel="stylesheet" type="text/css" href="index_files/g-style.css">
     <script src="config1.js"></script>
     <script src="cart.js"></script>
@@ -92,11 +92,40 @@
         }
 
         .top-bar .top-right a {
-            margin: 0 10px;
+            margin: 0 7px;
+            white-space: nowrap;
+            flex-shrink: 0;
         }
 
         .top-bar a:hover {
             color: #0a4db4;
+        }
+
+        /* ===== 中英文切换按钮 ===== */
+        .top-bar .top-right .lang-toggle {
+            display: inline-flex;
+            align-items: center;
+            margin: 0 0 0 10px;
+            border: 1px solid #d9d9d9;
+            border-radius: 12px;
+            overflow: hidden;
+            line-height: 1;
+            vertical-align: middle;
+        }
+
+        .top-bar .top-right .lang-toggle a {
+            margin: 0;
+            padding: 3px 9px;
+            font-size: 12px;
+        }
+
+        .top-bar .top-right .lang-toggle a + a {
+            border-left: 1px solid #d9d9d9;
+        }
+
+        .top-bar .top-right .lang-toggle a.active {
+            background: #0a4db4;
+            color: #fff;
         }
 
         /* ===== 登录/注册组件 ===== */
@@ -377,74 +406,96 @@
             gap: 40px;
         }
 
+        /* ===== Logo 锁排：图标光环 + 双语字标 ===== */
         .logo {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
             flex-shrink: 0;
+            cursor: pointer;
+            transition: transform .3s var(--ease, ease);
+        }
+
+        .logo:hover {
+            transform: translateX(-2px);
+        }
+
+        /* 图标容器：渐变光环 + 微光晕 */
+        .logo .logo-icon-wrap {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, #eaf2ff 0%, #ffffff 60%, #e8f0fe 100%);
+            box-shadow:
+                0 4px 12px -4px rgba(10, 77, 180, 0.35),
+                inset 0 0 0 1px rgba(10, 77, 180, 0.12);
+            transition: box-shadow .3s var(--ease, ease), transform .3s var(--ease, ease);
+        }
+
+        .logo .logo-icon-wrap::before {
+            content: "";
+            position: absolute;
+            inset: -3px;
+            border-radius: 16px;
+            background: conic-gradient(from 0deg, #0a4db4, #22d3ee, #0a4db4);
+            opacity: 0;
+            z-index: -1;
+            transition: opacity .35s var(--ease, ease);
+            filter: blur(6px);
+        }
+
+        .logo:hover .logo-icon-wrap::before { opacity: .55; }
+        .logo:hover .logo-icon-wrap {
+            box-shadow:
+                0 6px 18px -4px rgba(10, 77, 180, 0.45),
+                inset 0 0 0 1px rgba(10, 77, 180, 0.2);
         }
 
         .logo .logo-icon {
-            width: 48px;
-            height: 48px;
+            width: 50px;
+            height: 50px;
             object-fit: contain;
+            transition: transform .35s var(--ease, ease);
         }
+
 
         .logo .logo-text {
             display: flex;
             flex-direction: column;
+            gap: 1px;
+            line-height: 1.1;
         }
 
-        .logo .logo-text .brand {
+        /* 主字标 HARVEST：黑→蓝渐变 */
+        .logo .brand {
             font-size: 24px;
-            font-weight: bold;
-            color: #333;
-            letter-spacing: 1px;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+            background: linear-gradient(135deg, #0b1f3a 0%, #0a4db4 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
         }
 
-        .logo .logo-text .brand .highlight {
-            color: #0a4db4;
+        .logo .brand .brand-dot {
+            display: inline-block;
+            color: #fbbf24;
+            -webkit-text-fill-color: #fbbf24;
+            margin-left: 1px;
         }
 
-        .logo .logo-text .tagline {
+        /* 副标 黑科技·商城 */
+        .logo .tagline {
             font-size: 11px;
-            color: #999;
-            letter-spacing: 2px;
-            margin-top: 2px;
-        }
-
-        /* Logo 微交互 */
-        .logo {
-            cursor: pointer;
-            transition: transform .3s var(--ease);
-        }
-
-        .logo:hover {
-            transform: translateX(-2px);
-        }
-
-        .logo .brand {
-            background: linear-gradient(135deg, #000000 0%, #006eff 100%);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        /* Logo 微交互 */
-        .logo {
-            cursor: pointer;
-            transition: transform .3s var(--ease);
-        }
-
-        .logo:hover {
-            transform: translateX(-2px);
-        }
-
-        .logo .brand {
-            background: linear-gradient(135deg, #000000 0%, #006eff 100%);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
+            font-weight: 600;
+            color: #6b7a8f;
+            letter-spacing: 3px;
+            margin-top: 1px;
         }
 
         .search-box {
@@ -551,7 +602,7 @@
             gap: 6px;
             color: #fff;
             font-weight: bold;
-            padding: 9px 18px;
+            padding: 9px 16px;
             border: none;
             border-radius: 4px;
             background: linear-gradient(135deg, #0a4db4, #1e6fd9);
@@ -559,6 +610,8 @@
             font-size: 14px;
             box-shadow: 0 2px 8px rgba(10, 77, 180, 0.3);
             transition: all 0.2s;
+            white-space: nowrap;
+            flex-shrink: 0;
         }
 
         .header-right .publish-btn:hover {
@@ -572,7 +625,7 @@
             gap: 6px;
             color: #fff;
             font-weight: bold;
-            padding: 9px 16px;
+            padding: 9px 14px;
             border: none;
             border-radius: 4px;
             background: linear-gradient(135deg, #f5a623, #e8941a);
@@ -580,6 +633,8 @@
             font-size: 14px;
             box-shadow: 0 2px 8px rgba(245, 166, 35, 0.3);
             transition: all 0.2s;
+            white-space: nowrap;
+            flex-shrink: 0;
         }
 
         .header-right .eccee-btn:hover {
@@ -608,6 +663,7 @@
             cursor: pointer;
             transition: background 0.2s;
             white-space: nowrap;
+            flex-shrink: 0;
         }
 
         .main-nav .nav-item:hover {
@@ -629,6 +685,108 @@
             height: 3px;
             background: #4a9eff;
             border-radius: 2px 2px 0 0;
+        }
+
+        /* ===== 主导航：三大核心板块 + 配套板块 视觉分级 ===== */
+        .main-nav-inner {
+            gap: 0;
+            position: relative;
+        }
+
+        /* 核心板块：图标+加粗+accent顶条 */
+        .main-nav .nav-item[data-tier="core"] {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 0 20px;
+            font-size: 15px;
+            font-weight: 700;
+            letter-spacing: .5px;
+            color: #ffffff;
+        }
+
+        .main-nav .nav-item[data-tier="core"] .core-icon {
+            width: 18px;
+            height: 18px;
+            flex-shrink: 0;
+            color: #fff;
+            filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.35));
+            transition: transform .25s var(--ease, ease);
+        }
+
+        .main-nav .nav-item[data-tier="core"]:hover .core-icon {
+            transform: scale(1.15) rotate(-4deg);
+        }
+
+        /* 核心板块顶部 accent 彩条（hover/active 时显现） */
+        .main-nav .nav-item[data-tier="core"]::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%) scaleX(0);
+            width: 70%;
+            height: 3px;
+            background: var(--accent, #4a9eff);
+            border-radius: 0 0 3px 3px;
+            transition: transform .25s var(--ease, ease);
+            transform-origin: center;
+            box-shadow: 0 0 10px var(--accent, #4a9eff);
+        }
+
+        .main-nav .nav-item[data-tier="core"]:hover::before,
+        .main-nav .nav-item[data-tier="core"].active::before {
+            transform: translateX(-50%) scaleX(1);
+        }
+
+        /* 三大核心各自 accent 配色 */
+        .main-nav .nav-item[data-accent="robot"] { --accent: #22d3ee; }
+        .main-nav .nav-item[data-accent="material"] { --accent: #34d399; }
+        .main-nav .nav-item[data-accent="emergency"] { --accent: #fbbf24; }
+        .main-nav .nav-item[data-accent="demand"] { --accent: #8b5cf6; }
+
+        .main-nav .nav-item[data-accent="robot"] .core-icon { color: #22d3ee; }
+        .main-nav .nav-item[data-accent="material"] .core-icon { color: #34d399; }
+        .main-nav .nav-item[data-accent="emergency"] .core-icon { color: #fbbf24; }
+        .main-nav .nav-item[data-accent="demand"] .core-icon { color: #a78bfa; }
+
+        .main-nav .nav-item[data-tier="core"]:hover {
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), transparent);
+        }
+
+        /* 核心与配套之间的分隔线 */
+        .main-nav .nav-divider {
+            width: 1px;
+            height: 22px;
+            background: linear-gradient(180deg, transparent, rgba(255, 255, 255, 0.45), transparent);
+            margin: 0 14px;
+            align-self: center;
+            flex-shrink: 0;
+        }
+
+        /* 配套板块：弱化、稍小、半透明 */
+        .main-nav .nav-item[data-tier="supporting"] {
+            padding: 0 16px;
+            font-size: 14px;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 0.78);
+            letter-spacing: 0;
+        }
+
+        .main-nav .nav-item[data-tier="supporting"]:hover {
+            background: rgba(255, 255, 255, 0.06);
+            color: #ffffff;
+        }
+
+        .main-nav .nav-item[data-tier="supporting"].active {
+            background: transparent;
+            color: #ffffff;
+            font-weight: 600;
+        }
+
+        .main-nav .nav-item[data-tier="supporting"].active::after {
+            background: rgba(255, 255, 255, 0.55);
+            width: 40%;
         }
 
         /* ===== 主体布局 ===== */
@@ -1481,6 +1639,8 @@
         .top-bar .top-right a {
             position: relative;
             transition: color .2s var(--ease);
+            white-space: nowrap;
+            flex-shrink: 0;
         }
 
         .top-bar .top-right a:hover {
@@ -1531,12 +1691,14 @@
             color: var(--c-primary);
             border: 1px solid var(--c-primary);
             border-radius: var(--radius);
-            padding: 8px 16px;
+            padding: 8px 14px;
             display: flex;
             align-items: center;
             gap: 6px;
             font-weight: 600;
             transition: all .25s var(--ease);
+            white-space: nowrap;
+            flex-shrink: 0;
         }
 
         .header-right .cart-btn:hover {
@@ -3092,6 +3254,9 @@
                 <a href="./pages/news/news.html">新闻资讯</a>
                 <a href="pages/about/about-us.html">关于我们</a>
                 <a href="pages/info/contact-us.html">联系我们</a>
+                <span class="lang-toggle" title="语言切换 / Language">
+                    <a href="#" class="lang-switch-zh active">中</a><a href="#" class="lang-switch-en">EN</a>
+                </span>
             </div>
         </div>
     </div>
@@ -3105,28 +3270,10 @@
                 <span class="toggle-bar"></span>
             </button>
             <div class="logo">
-                <img class="logo-icon" src="img/JSlogo-beb0d75f.png" alt="Logo">
                 <div class="logo-text">
-                    <div class="brand">黑科技 <span class="highlight">商城</span></div>
-                    <div class="tagline">Hi-Tech Bazaar </div>
+                    <div class="brand">HARVEST · 黑科技商城</div>
+                    
                 </div>
-            </div>
-            <div class="search-box">
-                <select class="cat-select" id="searchSelect">
-                    <option value="">全部分类</option>
-                    <option value="1">智能机器人</option>
-                    <option value="2">数字平台</option>
-                    <option value="3">新能源应用板块</option>
-                    <option value="4">大宗贸易</option>
-                    <option value="5">应急产品</option>
-                    <option value="6">新材料</option>
-                    <option value="7">智慧建材</option>
-                    <option value="8">AI文旅</option>
-                    <option value="9">技术转移与本地化服务</option>
-                    <option value="10">国际贸易会客厅海南</option>
-                </select>
-                <input type="text" id="searchInput" placeholder="请输入产品名称、品牌、规格型号...">
-                <button onclick="doSearch()">🔍 搜索</button>
             </div>
             <div class="header-right">
                 <a class="eccee-btn" href="pages/info/ece.html">🏅 ECEE认证</a>
@@ -3138,18 +3285,51 @@
     </div>
 
     <!-- ============ 主导航（产品服务） ============ -->
+    <!-- 顺序：需求对接(入口) → 三大核心(机器人/新材料/应急) → 配套板块 -->
     <nav class="main-nav">
         <div class="main-nav-inner" id="mainNav">
-            <div class="nav-item active" data-id="1" onclick="selectProduct(1)">智能机器人</div>
-            <div class="nav-item" data-id="2" onclick="selectProduct(2)">数字平台</div>
-            <div class="nav-item" data-id="3" onclick="selectProduct(3)">新能源应用板块</div>
-            <div class="nav-item" data-id="4" onclick="selectProduct(4)">大宗贸易</div>
-            <div class="nav-item" data-id="5" onclick="selectProduct(5)">应急产品</div>
-            <div class="nav-item" data-id="6" onclick="selectProduct(6)">新材料</div>
-            <div class="nav-item" data-id="7" onclick="selectProduct(7)">智慧建材</div>
-            <div class="nav-item" data-id="8" onclick="selectProduct(8)">AI文旅</div>
-            <div class="nav-item" data-id="9" onclick="selectProduct(9)">技术转移与本地化服务</div>
-            <div class="nav-item" data-id="10" onclick="selectProduct(10)">国际贸易会客厅海南</div>
+            <!-- ===== ① 需求对接（采购方入口，直链板块页） ===== -->
+            <div class="nav-item" data-tier="core" data-accent="demand" onclick="location.href='./pages/requirement/match.html'">
+                <svg class="core-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M8 11h.01M12 11h.01M16 11h.01M21 12c0 4.97-4.03 9-9 9-1.66 0-3.22-.45-4.56-1.24L3 21l1.24-4.44C3.45 15.22 3 13.66 3 12c0-4.97 4.03-9 9-9s9 4.03 9 9z"></path>
+                </svg>
+                需求对接
+            </div>
+
+            <!-- ===== 三大核心板块 ===== -->
+            <div class="nav-item" data-id="5" data-tier="core" data-accent="emergency" onclick="selectProduct(5)">
+                <svg class="core-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M10.3 3.2L1.8 17a1 1 0 00.9 1.5h17a1 1 0 00.9-1.5L12.7 3.2a1 1 0 00-1.4 0z"></path>
+                    <path d="M12 9v4M12 17h.01"></path>
+                </svg>
+                应急产品
+            </div>
+            <div class="nav-item" data-id="6" data-tier="core" data-accent="material" onclick="selectProduct(6)">
+                <svg class="core-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M12 3l8 4.5v9L12 21l-8-4.5v-9L12 3z"></path>
+                    <path d="M12 3v18M4 7.5l8 4.5 8-4.5"></path>
+                </svg>
+                新材料
+            </div>
+
+            <div class="nav-item active" data-id="1" data-tier="core" data-accent="robot" onclick="selectProduct(1)">
+                <svg class="core-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <rect x="4" y="8" width="16" height="11" rx="2"></rect>
+                    <path d="M12 8V4M9 4h6M9 13h.01M15 13h.01M9.5 16h5"></path>
+                    <circle cx="9" cy="13" r="0.5" fill="currentColor"></circle>
+                    <circle cx="15" cy="13" r="0.5" fill="currentColor"></circle>
+                </svg>
+                智能机器人
+            </div>
+            <div class="nav-divider" aria-hidden="true"></div>
+
+            <!-- ===== 配套板块 ===== -->
+            <div class="nav-item" data-id="3" data-tier="supporting" onclick="selectProduct(3)">新能源应用</div>
+            <div class="nav-item" data-id="4" data-tier="supporting" onclick="selectProduct(4)">大宗贸易</div>
+            <div class="nav-item" data-id="7" data-tier="supporting" onclick="selectProduct(7)">智慧建材</div>
+            <div class="nav-item" data-id="8" data-tier="supporting" onclick="selectProduct(8)">AI文旅</div>
+            <!-- <div class="nav-item" data-id="9" data-tier="supporting" onclick="selectProduct(9)">技术转移与本地化服务</div> -->
+            <div class="nav-item" data-id="10" data-tier="supporting" onclick="selectProduct(10)">国际贸易会客厅</div>
         </div>
     </nav>
     <!-- ============ 三栏布局 ============ -->
@@ -3273,7 +3453,7 @@
                                     <div class="main-title">浩瑞科技 · 产品服务平台</div>
                                     <div class="sub-title">前沿材料 · 数字服务 · AI机器人</div>
                                     <div class="desc">
-                                        一站式产品服务平台，涵盖智能机器人、数字平台、新能源应用、大宗贸易、应急产品、新材料、智慧建材、AI文旅、技术转移与本地化服务、国际贸易会客厅海南十大领域
+                                        一站式产品服务平台，涵盖智能机器人、数字平台、新能源应用、大宗贸易、应急产品、新材料、智慧建材、AI文旅、国际贸易会客厅海南十大领域
                                     </div>
                                 </div>
                             </div>
@@ -3415,24 +3595,639 @@
             <div class="np-sidebar-panel">
                 <div class="np-header">
                     <h3><span class="np-icon">📦</span>今日采购需求</h3>
-                    <span class="np-more" onclick="location.href='#'">发布需求 ›</span>
+                    <span class="np-more" onclick="location.href='./pages/user/publish.html'">发布需求 ›</span>
                 </div>
                 <div class="np-body" id="procurementList">
-                    <div class="np-list-item" onclick="location.href='#'"><span class="np-title">新能源电池材料</span><span
+                    <div class="np-list-item" onclick="location.href='./pages/requirement/match.html'"><span class="np-title">新能源电池材料</span><span
                             class="np-tag qty">200吨</span><span class="np-date">07-30</span></div>
-                    <div class="np-list-item" onclick="location.href='#'"><span class="np-title">石墨烯散热膜</span><span
+                    <div class="np-list-item" onclick="location.href='./pages/requirement/match.html'"><span class="np-title">石墨烯散热膜</span><span
                             class="np-tag qty">5000㎡</span><span class="np-date">07-30</span></div>
-                    <div class="np-list-item" onclick="location.href='#'"><span class="np-title">工业级传感器</span>
+                    <div class="np-list-item" onclick="location.href='./pages/requirement/match.html'"><span class="np-title">工业级传感器</span>
                         <span class="np-tag qty">1000只</span><span class="np-date">07-29</span>
                     </div>
-                    <div class="np-list-item" onclick="location.href='#'"><span class="np-title">高性能无人机</span><span
+                    <div class="np-list-item" onclick="location.href='./pages/requirement/match.html'"><span class="np-title">高性能无人机</span><span
                             class="np-tag qty">50台</span><span class="np-date">07-28</span></div>
-                    <div class="np-list-item" onclick="location.href='#'"><span class="np-title">AI视觉模块</span><span
+                    <div class="np-list-item" onclick="location.href='./pages/requirement/match.html'"><span class="np-title">AI视觉模块</span><span
                             class="np-tag qty">200片</span><span class="np-date">07-27</span></div>
                 </div>
             </div>
         </aside>
     </div>
+
+    <!-- ============ 中亚 / 俄罗斯采购专区 ============ -->
+    <!-- 集中展示中亚、俄罗斯既有采购需求，海外买家与国内供应商双向对接 -->
+    <style>
+        /* ----- 专区容器：深蓝渐变 + 网格地图氛围 ----- */
+        .ca-ru-zone {
+            position: relative;
+            max-width: 1200px;
+            margin: 28px auto 12px;
+            padding: 36px 32px 40px;
+            border-radius: 16px;
+            overflow: hidden;
+            background:
+                radial-gradient(900px 320px at 8% -10%, rgba(245, 158, 11, 0.18), transparent 60%),
+                radial-gradient(760px 300px at 96% 110%, rgba(220, 38, 38, 0.20), transparent 60%),
+                linear-gradient(135deg, #0a3a8f 0%, #0a4db4 45%, #08306e 100%);
+            box-shadow: 0 18px 50px -20px rgba(8, 48, 110, 0.55);
+            color: #fff;
+        }
+        /* 经纬网格纹理叠层 */
+        .ca-ru-zone::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+            background-size: 44px 44px;
+            mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, #000 30%, transparent 90%);
+            -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, #000 30%, transparent 90%);
+            pointer-events: none;
+        }
+        /* 流动光带 */
+        .ca-ru-zone::after {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -20%;
+            width: 60%;
+            height: 200%;
+            background: linear-gradient(115deg, transparent, rgba(255, 255, 255, 0.10), transparent);
+            transform: rotate(8deg);
+            animation: ca-ru-sheen 9s linear infinite;
+            pointer-events: none;
+        }
+        @keyframes ca-ru-sheen {
+            0% { transform: translateX(-60%) rotate(8deg); }
+            100% { transform: translateX(260%) rotate(8deg); }
+        }
+        .ca-ru-zone > * { position: relative; z-index: 1; }
+
+        /* ----- 专区头部 ----- */
+        .ca-ru-head {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            gap: 24px;
+            flex-wrap: wrap;
+            margin-bottom: 22px;
+            padding-bottom: 18px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+        }
+        .ca-ru-title-wrap { display: flex; flex-direction: column; gap: 6px; }
+        .ca-ru-eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            color: #fbbf24;
+            text-transform: uppercase;
+        }
+        .ca-ru-eyebrow::before {
+            content: "";
+            width: 22px;
+            height: 2px;
+            background: #fbbf24;
+        }
+        .ca-ru-title {
+            font-size: 28px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            line-height: 1.2;
+        }
+        .ca-ru-title .accent-ca { color: #fbbf24; }
+        .ca-ru-title .accent-ru { color: #f87171; }
+        .ca-ru-sub {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.78);
+            letter-spacing: 1px;
+        }
+        /* 双区域切换 tab */
+        .ca-ru-tabs {
+            display: inline-flex;
+            background: rgba(0, 0, 0, 0.22);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 999px;
+            padding: 4px;
+        }
+        .ca-ru-tab {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 7px 18px;
+            font-size: 14px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.75);
+            border: none;
+            background: transparent;
+            border-radius: 999px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            white-space: nowrap;
+        }
+        
+     /* 全部按钮：金→橙→红渐变，融合中亚金与俄罗斯红，语义"含两区" */
+        .ca-ru-all { position: relative; }
+        .ca-ru-all .flag {
+            font-size: 16px;
+            line-height: 1;
+            display: inline-block;
+            transition: transform .3s var(--ease, ease);
+        } .ca-ru-all:hover { color: #fff; }
+        .ca-ru-all:hover .flag { transform: rotate(-8deg) scale(1.08); }
+       
+        .ca-ru-tab .flag { font-size: 16px; line-height: 1; }
+        .ca-ru-tab:hover { color: #fff; }
+        .ca-ru-tab.active[data-region="ca"] {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: #1a1206;
+            box-shadow: 0 4px 14px -4px rgba(245, 158, 11, 0.6);
+        }
+        .ca-ru-tab.active[data-region="ru"] {
+            background: linear-gradient(135deg, #dc2626, #991b1b);
+            color: #fff;
+            box-shadow: 0 4px 14px -4px rgba(220, 38, 38, 0.6);
+        }
+        .ca-ru-tab.active[data-region="af"] {
+            background: linear-gradient(135deg, #10b981, #047857);
+            color: #fff;
+            box-shadow: 0 4px 14px -4px rgba(16, 185, 129, 0.6);
+        }
+        .ca-ru-tab.active[data-region="sea"] {
+            background: linear-gradient(135deg, #06b6d4, #0e7490);
+            color: #fff;
+            box-shadow: 0 4px 14px -4px rgba(6, 182, 212, 0.6);
+        }
+        .ca-ru-tab.active[data-region="all"] {
+            background: linear-gradient(135deg, #5c4112, #d97706);
+            color: #1a1206;
+            box-shadow: 0 4px 14px -4px rgba(245, 158, 11, 0.6);
+        }
+        .ca-ru-tab.active[data-region="all"] .flag { animation: globeSpin 0.6s ease; }
+        @keyframes globeSpin {
+            0% { transform: rotate(0); }
+            50% { transform: rotate(180deg) scale(1.15); }
+            100% { transform: rotate(360deg); }
+        }
+        /* 全部加载/空状态 */
+        .ca-ru-loading, .ca-ru-empty {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 36px 0;
+            color: rgba(255, 255, 255, 0.72);
+            font-size: 15px;
+        }
+        .ca-ru-loading::after {
+            content: '';
+            display: block;
+            width: 26px; height: 26px;
+            margin: 12px auto 0;
+            border: 3px solid rgba(255, 255, 255, 0.18);
+            border-top-color: #f97316;
+            border-radius: 50%;
+            animation: caRuSpin 0.8s linear infinite;
+        }
+        @keyframes caRuSpin { to { transform: rotate(360deg); } }
+
+        /* ----- 需求卡片网格 ----- */
+        .ca-ru-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 14px;
+        }
+        .ca-ru-card {
+            position: relative;
+            padding: 16px 16px 14px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            backdrop-filter: blur(6px);
+            cursor: pointer;
+            transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+                        background 0.28s ease, border-color 0.28s ease, box-shadow 0.28s ease;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(14px);
+            animation: ca-ru-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+        .ca-ru-card:nth-child(1) { animation-delay: 0.05s; }
+        .ca-ru-card:nth-child(2) { animation-delay: 0.12s; }
+        .ca-ru-card:nth-child(3) { animation-delay: 0.19s; }
+        .ca-ru-card:nth-child(4) { animation-delay: 0.26s; }
+        .ca-ru-card:nth-child(5) { animation-delay: 0.33s; }
+        .ca-ru-card:nth-child(6) { animation-delay: 0.40s; }
+        @keyframes ca-ru-in {
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .ca-ru-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.12);
+            border-color: var(--card-accent, rgba(255, 255, 255, 0.4));
+            box-shadow: 0 14px 30px -14px rgba(0, 0, 0, 0.6);
+        }
+        .ca-ru-card[data-region="ca"] { --card-accent: #fbbf24; }
+        .ca-ru-card[data-region="ru"] { --card-accent: #f87171; }
+        .ca-ru-card[data-region="af"] { --card-accent: #34d399; }
+        .ca-ru-card[data-region="sea"] { --card-accent: #22d3ee; }
+        /* 卡片顶部 accent 线 */
+        .ca-ru-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 14px;
+            right: 14px;
+            height: 2px;
+            background: var(--card-accent);
+            transform: scaleX(0.3);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+        .ca-ru-card:hover::before { transform: scaleX(1); }
+
+        .ca-ru-card-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        .ca-ru-region {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            padding: 3px 9px;
+            border-radius: 999px;
+            background: rgba(0, 0, 0, 0.28);
+            color: var(--card-accent);
+            border: 1px solid rgba(255, 255, 255, 0.16);
+        }
+        .ca-ru-region .flag { font-size: 13px; }
+        .ca-ru-qty {
+            font-size: 12px;
+            font-weight: 700;
+            color: #fff;
+            padding: 3px 9px;
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.14);
+        }
+        .ca-ru-card h4 {
+            font-size: 15px;
+            font-weight: 600;
+            line-height: 1.45;
+            color: #fff;
+            margin-bottom: 12px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .ca-ru-card-foot {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.62);
+        }
+        .ca-ru-match {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            color: #fff;
+            font-weight: 600;
+            transition: gap 0.2s ease;
+        }
+        .ca-ru-card:hover .ca-ru-match { gap: 7px; }
+
+        /* ----- 底部 CTA ----- */
+        .ca-ru-foot {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            flex-wrap: wrap;
+            margin-top: 22px;
+            padding-top: 18px;
+            border-top: 1px solid rgba(255, 255, 255, 0.14);
+        }
+        .ca-ru-stats { display: flex; gap: 28px; flex-wrap: wrap; }
+        .ca-ru-stat .num {
+            font-size: 22px;
+            font-weight: 800;
+            color: #fff;
+            line-height: 1;
+        }
+        .ca-ru-stat .num .unit { font-size: 13px; font-weight: 600; color: rgba(255, 255, 255, 0.7); margin-left: 2px; }
+        .ca-ru-stat .lbl {
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.65);
+            letter-spacing: 1px;
+            margin-top: 4px;
+        }
+        .ca-ru-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 11px 22px;
+            font-size: 14px;
+            font-weight: 700;
+            color: #0a3a8f;
+            background: linear-gradient(135deg, #ffffff, #e0eefe);
+            border-radius: 999px;
+            text-decoration: none;
+            box-shadow: 0 8px 22px -8px rgba(255, 255, 255, 0.5);
+            transition: transform 0.22s ease, box-shadow 0.22s ease;
+        }
+        .ca-ru-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 28px -8px rgba(255, 255, 255, 0.65);
+        }
+        .ca-ru-cta svg { width: 16px; height: 16px; }
+
+        @media (max-width: 768px) {
+            .ca-ru-zone { margin: 18px 12px 10px; padding: 24px 18px 26px; border-radius: 12px; }
+            .ca-ru-title { font-size: 22px; }
+            .ca-ru-head { gap: 14px; }
+            .ca-ru-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
+            .ca-ru-card h4 { font-size: 14px; }
+            .ca-ru-foot { flex-direction: column; align-items: flex-start; }
+            .ca-ru-stats { gap: 18px; }
+        }
+    </style>
+
+    <section class="ca-ru-zone revealed" id="caRuZone">
+        <div class="ca-ru-head">
+            <div class="ca-ru-title-wrap">
+                <span class="ca-ru-eyebrow">Cross-Border Sourcing</span>
+                <h2 class="ca-ru-title"><span class="accent-ca">中亚</span> · <span class="accent-ru">俄罗斯</span> · <span style="color:#34d399;">非洲</span> · <span style="color:#22d3ee;">东南亚</span> 采购专区</h2>
+                <div class="ca-ru-sub">海外买家直达需求池 · 国内供应商精准对接</div>
+            </div>
+            <div class="ca-ru-tabs" role="tablist">
+                <button class="ca-ru-tab active" data-region="all" type="button" role="tab"><span class="flag">🌐</span>全部</button>
+                <button class="ca-ru-tab" data-region="ca" type="button" role="tab"><span class="flag">🇰🇿</span>中亚专区</button>
+                <button class="ca-ru-tab" data-region="ru" type="button" role="tab"><span class="flag">🇷🇺</span>俄罗斯专区</button>
+                <button class="ca-ru-tab" data-region="af" type="button" role="tab"><span class="flag">🇪🇬</span>非洲专区</button>
+                <button class="ca-ru-tab" data-region="sea" type="button" role="tab"><span class="flag">🇻🇳</span>东南亚专区</button>
+            </div>
+        </div>
+
+        <div class="ca-ru-grid" id="caRuGrid">
+            <!-- 中亚采购需求 -->
+
+            <div class="ca-ru-card" data-region="ca" onclick="location.href='./pages/requirement/list.html?region=ca'">
+                <div class="ca-ru-card-top">
+                    <span class="ca-ru-region"><span class="flag">🇰🇿</span>哈萨克斯坦</span>
+                    <span class="ca-ru-qty">200吨</span>
+                </div>
+                <h4>新能源电池正极材料</h4>
+                <div class="ca-ru-card-foot">
+                    <span>2026-09-28</span>
+                    <span class="ca-ru-match">立即对接 →</span>
+                </div>
+            </div>
+            <div class="ca-ru-card" data-region="ca" onclick="location.href='./pages/requirement/list.html?region=ca'">
+                <div class="ca-ru-card-top">
+                    <span class="ca-ru-region"><span class="flag">🇺🇿</span>乌兹别克斯坦</span>
+                    <span class="ca-ru-qty">5000㎡</span>
+                </div>
+                <h4>石墨烯散热膜</h4>
+                <div class="ca-ru-card-foot">
+                    <span>2026-09-27</span>
+                    <span class="ca-ru-match">立即对接 →</span>
+                </div>
+            </div>
+            <div class="ca-ru-card" data-region="ca" onclick="location.href='./pages/requirement/list.html?region=ca'">
+                <div class="ca-ru-card-top">
+                    <span class="ca-ru-region"><span class="flag">🇰🇬</span>吉尔吉斯斯坦</span>
+                    <span class="ca-ru-qty">50台</span>
+                </div>
+                <h4>高性能巡检无人机</h4>
+                <div class="ca-ru-card-foot">
+                    <span>2026-09-25</span>
+                    <span class="ca-ru-match">立即对接 →</span>
+                </div>
+            </div>
+            <!-- 俄罗斯采购需求 -->
+            <div class="ca-ru-card" data-region="ru" onclick="location.href='./pages/requirement/list.html?region=ru'">
+                <div class="ca-ru-card-top">
+                    <span class="ca-ru-region"><span class="flag">🇷🇺</span>莫斯科</span>
+                    <span class="ca-ru-qty">1000只</span>
+                </div>
+                <h4>工业级压力传感器</h4>
+                <div class="ca-ru-card-foot">
+                    <span>2026-09-29</span>
+                    <span class="ca-ru-match">立即对接 →</span>
+                </div>
+            </div>
+            <div class="ca-ru-card" data-region="ru" onclick="location.href='./pages/requirement/list.html?region=ru'">
+                <div class="ca-ru-card-top">
+                    <span class="ca-ru-region"><span class="flag">🇷🇺</span>叶卡捷琳堡</span>
+                    <span class="ca-ru-qty">200片</span>
+                </div>
+                <h4>AI视觉识别模块</h4>
+                <div class="ca-ru-card-foot">
+                    <span>2026-09-26</span>
+                    <span class="ca-ru-match">立即对接 →</span>
+                </div>
+            </div>
+            <div class="ca-ru-card" data-region="ru" onclick="location.href='./pages/requirement/list.html?region=ru'">
+                <div class="ca-ru-card-top">
+                    <span class="ca-ru-region"><span class="flag">🇷🇺</span>新西伯利亚</span>
+                    <span class="ca-ru-qty">300吨</span>
+                </div>
+                <h4>锂电池电解液</h4>
+                <div class="ca-ru-card-foot">
+                    <span>2026-09-24</span>
+                    <span class="ca-ru-match">立即对接 →</span>
+                </div>
+            </div>
+            <!-- 非洲采购需求 -->
+            <div class="ca-ru-card" data-region="af" onclick="location.href='./pages/requirement/list.html?region=af'">
+                <div class="ca-ru-card-top">
+                    <span class="ca-ru-region"><span class="flag">🇪🇬</span>埃及·开罗</span>
+                    <span class="ca-ru-qty">500台</span>
+                </div>
+                <h4>太阳能离网逆变器</h4>
+                <div class="ca-ru-card-foot">
+                    <span>2026-09-28</span>
+                    <span class="ca-ru-match">立即对接 →</span>
+                </div>
+            </div>
+            <div class="ca-ru-card" data-region="af" onclick="location.href='./pages/requirement/list.html?region=af'">
+                <div class="ca-ru-card-top">
+                    <span class="ca-ru-region"><span class="flag">🇳🇬</span>尼日利亚·拉各斯</span>
+                    <span class="ca-ru-qty">200吨</span>
+                </div>
+                <h4>锂电池正极材料前驱体</h4>
+                <div class="ca-ru-card-foot">
+                    <span>2026-09-26</span>
+                    <span class="ca-ru-match">立即对接 →</span>
+                </div>
+            </div>
+            <div class="ca-ru-card" data-region="af" onclick="location.href='./pages/requirement/list.html?region=af'">
+                <div class="ca-ru-card-top">
+                    <span class="ca-ru-region"><span class="flag">🇿🇦</span>南非·约翰内斯堡</span>
+                    <span class="ca-ru-qty">80台</span>
+                </div>
+                <h4>矿用防爆巡检机器人</h4>
+                <div class="ca-ru-card-foot">
+                    <span>2026-09-23</span>
+                    <span class="ca-ru-match">立即对接 →</span>
+                </div>
+            </div>
+            <!-- 东南亚采购需求 -->
+            <div class="ca-ru-card" data-region="sea" onclick="location.href='./pages/requirement/list.html?region=sea'">
+                <div class="ca-ru-card-top">
+                    <span class="ca-ru-region"><span class="flag">🇻🇳</span>越南·胡志明</span>
+                    <span class="ca-ru-qty">1000套</span>
+                </div>
+                <h4>智能仓储AGV搬运机器人</h4>
+                <div class="ca-ru-card-foot">
+                    <span>2026-09-29</span>
+                    <span class="ca-ru-match">立即对接 →</span>
+                </div>
+            </div>
+            <div class="ca-ru-card" data-region="sea" onclick="location.href='./pages/requirement/list.html?region=sea'">
+                <div class="ca-ru-card-top">
+                    <span class="ca-ru-region"><span class="flag">🇹🇭</span>泰国·曼谷</span>
+                    <span class="ca-ru-qty">300吨</span>
+                </div>
+                <h4>铜铟镓硒薄膜太阳电池</h4>
+                <div class="ca-ru-card-foot">
+                    <span>2026-09-25</span>
+                    <span class="ca-ru-match">立即对接 →</span>
+                </div>
+            </div>
+            <div class="ca-ru-card" data-region="sea" onclick="location.href='./pages/requirement/list.html?region=sea'">
+                <div class="ca-ru-card-top">
+                    <span class="ca-ru-region"><span class="flag">🇮🇩</span>印尼·雅加达</span>
+                    <span class="ca-ru-qty">50台</span>
+                </div>
+                <h4>海洋环境监测无人船</h4>
+                <div class="ca-ru-card-foot">
+                    <span>2026-09-22</span>
+                    <span class="ca-ru-match">立即对接 →</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="ca-ru-foot">
+            <div class="ca-ru-stats">
+                <div class="ca-ru-stat">
+                    <div class="num">36<span class="unit">条</span></div>
+                    <div class="lbl">在采需求</div>
+                </div>
+                <div class="ca-ru-stat">
+                    <div class="num">18<span class="unit">国</span></div>
+                    <div class="lbl">覆盖区域</div>
+                </div>
+                <div class="ca-ru-stat">
+                    <div class="num">1.2<span class="unit">亿</span></div>
+                    <div class="lbl">采购规模</div>
+                </div>
+            </div>
+            <a class="ca-ru-cta" href="./pages/requirement/list.html">
+                进入需求大厅
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+            </a>
+        </div>
+    </section>
+    <script>
+        /* 中亚/俄罗斯专区 tab 切换 + 全部实时数据加载 */
+        (function () {
+            var tabs = document.querySelectorAll('.ca-ru-tab');
+            var grid = document.getElementById('caRuGrid');
+            if (!grid) return;
+            var staticHTML = grid.innerHTML; // 缓存 6 张策展卡片，供中亚/俄罗斯 切换还原
+
+            var API_BASE = window.SERVER_BASE_URL || '';
+            var CATEGORY_MAP = {
+                1: '人工智能和机器人', 2: '前沿新材料', 3: '数字服务与平台',
+                4: '通信与网络', 5: '低空经济', 6: '大宗贸易',
+                7: '文化创意与IP', 8: '智慧农业与粮储', 9: '安防与识别', 10: '新能源与储能'
+            };
+
+            function esc(s) {
+                return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+                    return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+                });
+            }
+
+            // 中亚/俄罗斯：还原策展卡片并按区域筛选
+            function showStatic(region) {
+                grid.innerHTML = staticHTML;
+                grid.querySelectorAll('.ca-ru-card').forEach(function (card) {
+                    var match = card.getAttribute('data-region') === region;
+                    card.style.display = match ? '' : 'none';
+                });
+            }
+
+            // 回退：显示全部策展卡片（不筛区域）
+            function showStaticAll() {
+                grid.innerHTML = staticHTML;
+            }
+
+            // 全部：渲染后端实时需求
+            function renderAll(items) {
+                if (!items.length) {
+                    grid.innerHTML = '<div class="ca-ru-empty">📋 暂无在采需求，<a href="./pages/user/publish.html" style="color:#fbbf24;">立即发布</a> 首条需求</div>';
+                    return;
+                }
+                grid.innerHTML = items.map(function (r) {
+                    var cat = CATEGORY_MAP[r.categoryId] || ('品类#' + r.categoryId);
+                    var qty = r.quantity ? esc(r.quantity) : '待补充';
+                    var date = r.createTime ? String(r.createTime).replace('T', ' ').substring(0, 10) : '-';
+                    return '<div class="ca-ru-card" onclick="location.href=\'./pages/requirement/detail.html?id=' + r.id + '\'">' +
+                        '<div class="ca-ru-card-top">' +
+                            '<span class="ca-ru-region"><span class="flag">🌐</span>' + esc(cat) + '</span>' +
+                            '<span class="ca-ru-qty">' + qty + '</span>' +
+                        '</div>' +
+                        '<h4>' + esc(r.name) + '</h4>' +
+                        '<div class="ca-ru-card-foot">' +
+                            '<span>' + date + '</span>' +
+                            '<span class="ca-ru-match">立即对接 →</span>' +
+                        '</div>' +
+                    '</div>';
+                }).join('');
+            }
+
+            // 全部：拉取后端实时需求
+            async function loadAll() {
+                grid.innerHTML = '<div class="ca-ru-loading">正在加载实时需求...</div>';
+                try {
+                    var resp = await fetch(API_BASE + '/requirement/public?pageNum=1&pageSize=12');
+                    var result = await resp.json();
+                    var items = (resp.ok && result.code === 0 && result.data) ? (result.data.items || []) : null;
+                    // 后端有实时需求 → 渲染；空列表或异常 → 回退 6 张策展卡片，保证"全部"永不空白
+                    if (items && items.length) {
+                        renderAll(items);
+                    } else {
+                        showStaticAll();
+                    }
+                } catch (e) {
+                    showStaticAll(); // 网络错误回退策展
+                }
+            }
+
+            tabs.forEach(function (tab) {
+                tab.addEventListener('click', function () {
+                    tabs.forEach(function (t) { t.classList.remove('active'); });
+                    tab.classList.add('active');
+                    var region = tab.getAttribute('data-region');
+                    if (region === 'all') {
+                        loadAll(); // 全部：加载后端实时需求
+                    } else {
+                        showStatic(region); // 中亚/俄罗斯：还原策展卡片并按区域筛选
+                    }
+                });
+            });
+        })();
+    </script>
+
     <!-- ============ 右侧快捷栏 ============ -->
     <div class="side-shortcut">
         <div class="shortcut-item"><span class="icon">🔔</span>公告</div>
@@ -3448,15 +4243,14 @@
         <div class="footer-inner">
             <div class="footer-col revealed">
                 <h4>产品服务</h4>
-                <a href="#">智能机器人</a>
-                <a href="#">数字平台</a>
-                <a href="#">新能源应用板块</a>
-                <a href="#">大宗贸易</a>
                 <a href="#">应急产品</a>
                 <a href="#">新材料</a>
+                <a href="#">智能机器人</a>
+                <a href="#">新能源应用板块</a>
+                <a href="#">大宗贸易</a>
                 <a href="#">智慧建材</a>
                 <a href="#">AI文旅</a>
-                <a href="#">技术转移与本地化服务</a>
+                <!-- <a href="#">技术转移与本地化服务</a> -->
                 <a href="#">国际贸易会客厅海南</a>
             </div>
             <div class="footer-col revealed">
@@ -3500,7 +4294,7 @@
             <p style="margin-top: 8px;">© 2026 浩瑞科技 版权所有 &nbsp;
                 <!-- display:block; -->
                 <a style="color:white;  margin-bottom:5px;" href="https://beian.miit.gov.cn/#/Integrated/index"
-                    target="_blank">京ICP备2026036471号</a>
+                    target="_blank">京ICP备2026036471号-2</a>
                 <a style="color:white;" href="https://beian.mps.gov.cn/#/query/webSearch?code=11010502061862"
                     rel="noreferrer" target="_blank"><img src="images/备案图标.png"
                         style="height:16px;vertical-align:middle;margin-right:4px;" alt="公安备案">京公网安备11010502061862号</a>
@@ -3563,16 +4357,16 @@
 
         /* ============ 产品数据配置 ============ */
         const PRODUCT_CONFIG = [
-            { id: 1, name: '智能机器人', en: 'Smart Robotics', cls: 'cat-ai', icon: '机' },
-            { id: 2, name: '数字平台', en: 'Digital Platform', cls: 'cat-digital', icon: '数' },
-            { id: 3, name: '新能源应用板块', en: 'New Energy', cls: 'cat-energy', icon: '能' },
-            { id: 4, name: '大宗贸易', en: 'Commodity Trading', cls: 'cat-trade', icon: '贸' },
-            { id: 5, name: '应急产品', en: 'Emergency Products', cls: 'cat-security', icon: '急' },
-            { id: 6, name: '新材料', en: 'New Materials', cls: 'cat-material', icon: '材' },
-            { id: 7, name: '智慧建材', en: 'Smart Building Mats', cls: 'cat-creative', icon: '建' },
-            { id: 8, name: 'AI文旅', en: 'AI Tourism', cls: 'cat-comm', icon: '文' },
-            { id: 9, name: '技术转移与本地化服务', en: 'Tech Transfer', cls: 'cat-lowalt', icon: '技' },
-            { id: 10, name: '国际贸易会客厅海南', en: 'Trade Hub Hainan', cls: 'cat-agri', icon: '国' }
+            { id: 2, name: '需求对接', en: 'Demand Matching', cls: 'cat-digital', icon: '需', tier: 'core', accent: 'demand', link: './pages/requirement/match.html', svg: '<path d="M8 11h.01M12 11h.01M16 11h.01M21 12c0 4.97-4.03 9-9 9-1.66 0-3.22-.45-4.56-1.24L3 21l1.24-4.44C3.45 15.22 3 13.66 3 12c0-4.97 4.03-9 9-9s9 4.03 9 9z"></path>' },
+            { id: 5, name: '应急产品', en: 'Emergency Products', cls: 'cat-security', icon: '急', tier: 'core', accent: 'emergency', svg: '<path d="M10.3 3.2L1.8 17a1 1 0 00.9 1.5h17a1 1 0 00.9-1.5L12.7 3.2a1 1 0 00-1.4 0z"></path><path d="M12 9v4M12 17h.01"></path>' },
+            { id: 6, name: '新材料', en: 'New Materials', cls: 'cat-material', icon: '材', tier: 'core', accent: 'material', svg: '<path d="M12 3l8 4.5v9L12 21l-8-4.5v-9L12 3z"></path><path d="M12 3v18M4 7.5l8 4.5 8-4.5"></path>' },
+            { id: 1, name: '智能机器人', en: 'Smart Robotics', cls: 'cat-ai', icon: '机', tier: 'core', accent: 'robot', svg: '<rect x="4" y="8" width="16" height="11" rx="2"></rect><path d="M12 8V4M9 4h6M9 13h.01M15 13h.01M9.5 16h5"></path><circle cx="9" cy="13" r="0.5" fill="currentColor"></circle><circle cx="15" cy="13" r="0.5" fill="currentColor"></circle>' },
+            { id: 3, name: '新能源应用', en: 'New Energy', cls: 'cat-energy', icon: '能', tier: 'supporting' },
+            { id: 4, name: '大宗贸易', en: 'Commodity Trading', cls: 'cat-trade', icon: '贸', tier: 'supporting' },
+            { id: 7, name: '智慧建材', en: 'Smart Building Mats', cls: 'cat-creative', icon: '建', tier: 'supporting' },
+            { id: 8, name: 'AI文旅', en: 'AI Tourism', cls: 'cat-comm', icon: '文', tier: 'supporting' },
+            // { id: 9, name: '技术转移与本地化服务', en: 'Tech Transfer', cls: 'cat-lowalt', icon: '技', tier: 'supporting' },
+            { id: 10, name: '国际贸易会客厅', en: 'Trade Hub Hainan', cls: 'cat-agri', icon: '国', tier: 'supporting' }
         ];
 
         const PRODUCT_IMAGE_COLORS = [
@@ -3696,7 +4490,7 @@
             // 使用setTimeout确保所有同步代码执行完毕后再渲染
             setTimeout(() => {
                 if (productList.length > 0) {
-                    const firstId = productList[0].id;
+                    const firstId = (productList.find(p => !p.link) || productList[0]).id;
                     currentProductId = firstId;
 
                     // 更新导航高亮
@@ -3875,16 +4669,31 @@
         }
 
         /* ============ 渲染主导航 ============ */
+        // 顺序：需求对接(入口) → 三大核心(机器人/新材料/应急) → 配套板块
         function renderMainNav(products) {
             const nav = document.getElementById('mainNav');
-            nav.innerHTML = products.map(p => {
-                const id = p.id;
-                const name = p.name;
-                return `<div class="nav-item" data-id="${id}" onclick="selectProduct(${id})">${name}</div>`;
-            }).join('');
-            // 标记第一个为默认激活
-            const firstItem = nav.querySelector('.nav-item');
-            if (firstItem) firstItem.classList.add('active');
+            let html = '';
+            let prevTier = null;
+            products.forEach(p => {
+                // 核心与配套之间插入分隔线
+                if (prevTier === 'core' && p.tier === 'supporting') {
+                    html += '<div class="nav-divider" aria-hidden="true"></div>';
+                }
+                const svg = p.svg ? `<svg class="core-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${p.svg}</svg>` : '';
+                if (p.link) {
+                    // 服务入口（需求对接）：直链板块页，不走 selectProduct
+                    html += `<div class="nav-item" data-tier="core" data-accent="${p.accent || ''}" onclick="location.href='${p.link}'">${svg}${p.name}</div>`;
+                } else if (p.tier === 'core') {
+                    html += `<div class="nav-item" data-id="${p.id}" data-tier="core" data-accent="${p.accent || ''}" onclick="selectProduct(${p.id})">${svg}${p.name}</div>`;
+                } else {
+                    html += `<div class="nav-item" data-id="${p.id}" data-tier="supporting" onclick="selectProduct(${p.id})">${p.name}</div>`;
+                }
+                prevTier = p.tier;
+            });
+            nav.innerHTML = html;
+            // 默认激活第一个产品项（跳过 link 类服务入口，避免把需求对接当产品加载）
+            const firstProduct = nav.querySelector('.nav-item[data-id]');
+            if (firstProduct) firstProduct.classList.add('active');
         }
 
         /* ============ 选择产品（切换导航 + 侧边栏 + 板块 ============ */
@@ -3907,22 +4716,28 @@
         }
 
         /* ============ 产品子项数据（含二级子项） ============ */
-        // 前端ID → API ID映射（按新十大分类对应后端API）
+        // 前端ID → API ID映射（按导航顺序排列；需求对接为服务入口，保留映射供板块图片预取）
         const PRODUCT_API_ID_MAP = {
+            2: 2,   // 需求对接 → API id=2（板块入口，直链 match.html）
             1: 4,   // 智能机器人 → API id=4（越疆机器人、山猫机器狗、商用服务机器人、教育机器人）
-            2: 2,   // 数字平台 → API id=2（ICP+EDI双证合规，信息中介+B2B/B2C交易模式）
-            3: 11,  // 新能源应用板块 → API id=11（储能柜、移动电源、户外电源、新能源设备贸易）
-            4: 6,   // 大宗贸易 → API id=6（俄罗斯、非洲、中东、东南亚、中亚大宗商品进出口）
-            5: 10,  // 应急产品 → API id=10（应急照明、储能设备、无线通信、应急救援装备）
             6: 1,   // 新材料 → API id=1（辐射制冷产品、集成材料、绿色建材）
+            5: 10,  // 应急产品 → API id=10（应急照明、储能设备、无线通信、应急救援装备）
+            3: 11,  // 新能源应用 → API id=11（储能柜、移动电源、户外电源、新能源设备贸易）
+            4: 6,   // 大宗贸易 → API id=6（俄罗斯、非洲、中东、东南亚、中亚大宗商品进出口）
             7: 7,   // 智慧建材 → API id=7（装配式建筑构件、智能建材、智慧车库）
             8: 7,   // AI文旅 → API id=7（AI文旅体验空间、AI文创IP产品、AI导览设备）
             9: 3,   // 技术转移与本地化服务 → API id=3（技术输出、本地化落地、合规认证、跨境供应链）
-            10: 6   // 国际贸易会客厅海南 → API id=6（线下撮合交易平台，金砖联盟国家会议联动）
+            10: 6   // 国际贸易会客厅 → API id=6（线下撮合交易平台，金砖联盟国家会议联动）
         };
 
-        // 前端子项数据
+        // 前端子项数据（按导航顺序排列）
         const PRODUCT_ITEMS_MAP = {
+            // 2. 需求对接（采购方发布入口 + 最新需求列表 + 成交案例，直链 match.html）
+            2: [
+                { id: 'dm-publish', name: '发布采购需求', children: [] },
+                { id: 'dm-list', name: '最新需求列表', children: ['新能源电池材料', '石墨烯散热膜', '工业级传感器', '高性能无人机', 'AI视觉模块'] },
+                { id: 'dm-cases', name: '对接记录/成交案例', children: [] }
+            ],
             // 1. 智能机器人（越疆机器人、山猫机器狗、商用服务机器人、教育机器人）
             1: [
                 { id: 'ai-dobot', name: '越疆机器人', children: ['CR 30H', 'CR20A', 'CRAF力控系列', 'CRA-IP68', 'Nova 2', 'Nova 5', 'MG400', 'Mi Pro', 'Atom', 'Rover X1家庭智能机器狗', 'RoboCat', 'X-Train', 'X-Trainer', 'Hexplorer六足仿生机器人'] },
@@ -3930,21 +4745,11 @@
                 { id: 'ai-commercial', name: '商用服务机器人', children: [] },
                 { id: 'ai-edu', name: '教育机器人', children: ['Magician E6', 'Magician', 'Magician Lite', 'DOBOTLAB', '电动真空吸盘DOBOT ES01', '电动真空吸盘实训台EGS01', '协作机器人通用实训台', 'Magician Lite传感器配件包', 'Magician传感器配件包', 'Magician人工智能配件', '滑台套件', '迷你传送带套件'] }
             ],
-            // 2. 数字平台（黑科技商城ICP+EDI双证合规，信息中介+B2B/B2C交易模式）
-            2: [
-                { id: 'dp-icp', name: '黑科技商城ICP+EDI双证合规', children: [] },
-                { id: 'dp-bc', name: '信息中介服务+B2B/B2C交易模式', children: [] }
-                // { id: 'dp-platform', name: '数字服务平台', children: ['能碳协同管理平台', '智能粮仓监测平台', '智能煤炭检测平台', '安全预警管理平台', '智慧工地管理平台'] }
-            ],
-            // 3. 新能源应用板块（储能柜、移动电源、户外电源、新能源设备贸易、储能设备）
-            3: [
-                { id: 'ne-storage', name: '储能设备', children: ['储能柜', '便携电源', '移动电源', '户外电源'] },
-                { id: 'ne-trade', name: '新能源设备贸易', children: ['新能源设备进出口', '储能设备口'] }
-            ],
-            // 4. 大宗贸易（俄罗斯、非洲、中东、东南亚、中亚大宗商品进出口）
-            4: [
-                { id: 'trade-region', name: '区域大宗贸易', children: ['俄罗斯', '非洲', '中东', '东南亚', '中亚'] },
-                { id: 'trade-cat', name: '大宗商品类目', children: ['能源', '农业', '化工', '矿产'] }
+            // 6. 新材料（辐射制冷产品、集成材料、绿色建材）
+            6: [
+                { id: 'mat-radiation', name: '辐射制冷技术产品', children: ['无电制冷涂层金属基层/无电制冷涂层混凝土基层/沥青卷材基/光伏伴侣/防水膜'] },
+                { id: 'mat-integrated', name: '集成材料', children: [] },
+                { id: 'mat-green', name: '绿色建材', children: ['HARVEST地宝防滑系统', 'HARVEST甲醛净化'] }
             ],
             // 5. 应急产品（应急照明、储能设备、无线通信、应急救援装备）
             5: [
@@ -3953,11 +4758,15 @@
                 { id: 'em-comm', name: '无线通信', children: ['无线对讲', '无线自组网', '无线光侨'] },
                 { id: 'em-rescue', name: '应急救援装备', children: [] }
             ],
-            // 6. 新材料（辐射制冷产品、集成材料、绿色建材）
-            6: [
-                { id: 'mat-radiation', name: '辐射制冷技术产品', children: ['无电制冷涂层金属基层/无电制冷涂层混凝土基层/沥青卷材基/光伏伴侣/防水膜'] },
-                { id: 'mat-integrated', name: '集成材料', children: [] },
-                { id: 'mat-green', name: '绿色建材', children: [] }
+            // 3. 新能源应用（储能柜、移动电源、户外电源、新能源设备贸易、储能设备）
+            3: [
+                { id: 'ne-storage', name: '储能设备', children: ['储能柜', '便携电源', '移动电源', '户外电源'] },
+                { id: 'ne-trade', name: '新能源设备贸易', children: ['新能源设备进出口', '储能设备口'] }
+            ],
+            // 4. 大宗贸易（俄罗斯、非洲、中东、东南亚、中亚大宗商品进出口）
+            4: [
+                { id: 'trade-region', name: '区域大宗贸易', children: ['俄罗斯', '非洲', '中东', '东南亚', '中亚'] },
+                { id: 'trade-cat', name: '大宗商品类目', children: ['能源', '农业', '化工', '矿产'] }
             ],
             // 7. 智慧建材（装配式建筑构件、智能建材、智慧车库）
             7: [
@@ -3978,7 +4787,7 @@
                 { id: 'tt-compliance', name: '合规运营与认证', children: ['EAC认证', 'CE认证', '本地标准对接'] },
                 { id: 'tt-supply', name: '跨境供应链服务', children: ['选品', '验厂', '物流', '清关'] }
             ],
-            // 10. 国际贸易会客厅海南（线下撮合交易平台，金砖联盟国家会议联动）
+            // 10. 国际贸易会客厅（线下撮合交易平台，金砖联盟国家会议联动）
             10: [
                 { id: 'hub-trade', name: '线下撮合交易平台', children: [] },
                 { id: 'hub-brics', name: '金砖联盟国家会议', children: [] },
@@ -4219,7 +5028,9 @@
             'Atom': './pages/product-detail/product-detail-atom.html',
             'Rover X1家庭智能机器狗': './pages/product-detail/product-detail-rover-x1.html',
             '无线对讲': './pages/product-detail/product-detail-aqwx.html',
-            '无电制冷涂层金属基层/无电制冷涂层混凝土基层/沥青卷材基/光伏伴侣/防水膜': './pages/product-detail/product-detail-cp1.html'
+            '无电制冷涂层金属基层/无电制冷涂层混凝土基层/沥青卷材基/光伏伴侣/防水膜': './pages/product-detail/product-detail-cp1.html',
+            'HARVEST地宝防滑系统': './pages/product-detail/product-detail-dbfx.html',
+            'HARVEST甲醛净化': './pages/product-detail/product-detail-cjq.html'
         };
 
         /* ============ 子菜单项点击跳转（优先跳详情页） ============ */
@@ -4507,7 +5318,7 @@
             if (!container) return;
             var html = '';
             procurementList.forEach(function (p) {
-                html += '<div class="np-list-item" onclick="location.href=\'#\'">' +
+                html += '<div class="np-list-item" onclick="location.href=\'./pages/requirement/match.html\'">' +
                     '<span class="np-title">' + p.name + '</span>' +
                     '<span class="np-tag ' + p.tagClass + '">' + p.tag + '</span>' +
                     '<span class="np-date">' + p.date + '</span>' +
@@ -4583,6 +5394,12 @@
                 if (window.innerWidth > 768) close();
             });
         })();
+    </script>
+    <script src="components/load-components.js"></script>
+    <script>
+    if (typeof initNav === 'function') {
+        initNav();
+    }
     </script>
 </body>
 

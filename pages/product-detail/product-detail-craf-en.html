@@ -1,354 +1,1177 @@
 <!DOCTYPE html>
-<html xml:lang="en" lang="en" style="--color: #005CE6; --vh: 708px; scroll-behavior: auto;">
+<html xml:lang="en" lang="en">
+
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta name="format-detection" content="telephone=no,telephone=no,email=no,adress=no">
-    <meta name="renderer" content="webkit">
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
-    <title>CRAF Force Control Series - Haorui Green Technology</title>
-    <meta name="keywords" content="CRAF,force control robot,collaborative robot,smart force control">
-    <meta name="description" content="CRAF Smart Force Control Collaborative Robot, integrated sensor, zero-installation deployment">
-    <link rel="shortcut icon" href="">
-    <link rel="stylesheet" type="text/css" href="../../index_files/extend.css">
-    <link rel="stylesheet" type="text/css" href="../../index_files/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRAF Force-Control Series - Hi-Tech Bazaar</title>
+    <meta name="keywords" content="CRAF,force-control robot,collaborative robot,intelligent force control">
+    <meta name="description" content="CRAF intelligent force-control collaborative robot with built-in torque sensors for high-precision force-controlled tasks, ideal for precision assembly, polishing and grinding">
     <link rel="stylesheet" type="text/css" href="../../index_files/g-style.css">
-    <link rel="stylesheet" type="text/css" href="../../index_files/f-style.css">
-	<link rel="stylesheet" type="text/css" href="../../components/nav.css">
-    <link rel="stylesheet" type="text/css" href="../../index_files/common.css">
-    <script src="../../index_files/hm.js"></script>
     <script src="../../config1.js"></script>
-    <script src="../../index_files/svg-inject.min.js" type="text/javascript"></script>
-    <style type="text/css">
-        img[onload^="SVGInject("] {
-            visibility: hidden;
-        }
-    </style>
-    <link rel="stylesheet" href="../../index_files/yang-product.css">
-    <link rel="stylesheet" href="../../index_files/zstyle.css">
-    <link rel="stylesheet" href="../../index_files/layui.css">
-    <link rel="stylesheet" href="../../index_files/share.min.css">
-    <link rel="stylesheet" type="text/css" href="../../index_files/liMarquee.css">
+    <script src="../../cart.js"></script>
+    <script src="../../favorite.js"></script>
     <link rel="stylesheet" type="text/css" href="../../mobile.css">
-	
-	<link rel="stylesheet" type="text/css" href="../../index_files/de-ai.css">
 
+    <link rel="stylesheet" type="text/css" href="../../index_files/de-ai.css">
     <style>
-        html, body {
-            max-width: 100vw;
-            overflow-x: hidden;
+        * {
             margin: 0;
             padding: 0;
-            background: #fff;
-            color: #333;
-            font-family: "Microsoft YaHei", "SimSun", "宋体", sans-serif;
+            box-sizing: border-box;
         }
 
-        .product-detail {
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif;
+            color: #333;
+            background: #f5f5f5;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        a {
+            text-decoration: none;
+            color: #333;
+        }
+
+        .top-bar {
+            background: #f7f9fc;
+            border-bottom: 1px solid #e8ecf1;
+            font-size: 12px;
+            color: #666;
+        }
+
+        .top-bar-inner {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 40px 20px;
+            padding: 6px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        .hero-section {
+        .top-bar a {
+            color: #666;
+            margin: 0 10px;
+        }
+
+        .top-bar a:hover {
+            color: #0a4db4;
+        }
+
+        /* ===== 登录/注册组件 ===== */
+        .auth-section {
             display: flex;
             align-items: center;
-            justify-content: flex-start;
-            padding: 160px 40px;
-            background: linear-gradient(135deg, #f5f8fc 0%, #e8f0fe 100%);
-            border-radius: 16px;
-            margin-bottom: 40px;
+            height: 100%;
+        }
+
+        .auth-guest {
+            gap: 0;
+        }
+
+        .auth-login-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 5px 14px;
+            background: linear-gradient(135deg, #0a4db4, #1e6fd9);
+            color: #fff !important;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+            margin: 0 !important;
+            text-decoration: none;
+            transition: all 0.25s ease;
+            box-shadow: 0 2px 6px rgba(10, 77, 180, 0.2);
+        }
+
+        .auth-login-btn:hover {
+            background: linear-gradient(135deg, #083d94, #1558b8);
+            color: #fff !important;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 10px rgba(10, 77, 180, 0.3);
+        }
+
+        .auth-icon {
+            width: 14px;
+            height: 14px;
+        }
+
+        .auth-divider {
+            color: #d0d7de;
+            margin: 0 8px;
+            font-weight: 300;
+        }
+
+        .auth-register-link {
+            color: #555 !important;
+            font-size: 12px;
+            font-weight: 400;
+            margin: 0 !important;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .auth-register-link:hover {
+            color: #0a4db4 !important;
+        }
+
+        .auth-user {
             position: relative;
+        }
+
+        .user-menu-trigger {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 3px 10px 3px 3px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: background 0.2s;
+            user-select: none;
+        }
+
+        .user-menu-trigger:hover {
+            background: #eef2f7;
+        }
+
+        .user-menu-trigger.active {
+            background: #e3ecf7;
+        }
+
+        .user-avatar {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #0a4db4, #4a9eff);
+            color: #fff;
+            font-size: 11px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .user-name {
+            font-size: 12px;
+            color: #333;
+            font-weight: 500;
+            max-width: 80px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .user-arrow {
+            width: 10px;
+            height: 10px;
+            color: #888;
+            transition: transform 0.25s ease;
+        }
+
+        .user-menu-trigger.active .user-arrow {
+            transform: rotate(180deg);
+        }
+
+        .user-dropdown {
+            position: absolute;
+            top: calc(100% + 8px);
+            left: 0;
+            min-width: 210px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.06);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-8px);
+            transition: all 0.22s cubic-bezier(0.22, 1, 0.36, 1);
+            overflow: hidden;
+            z-index: 100;
+        }
+
+        .user-dropdown.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 16px;
+            background: linear-gradient(135deg, #f0f5ff, #e8f0fe);
+        }
+
+        .dropdown-avatar {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #0a4db4, #4a9eff);
+            color: #fff;
+            font-size: 16px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            box-shadow: 0 2px 8px rgba(10, 77, 180, 0.25);
+        }
+
+        .dropdown-user-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .dropdown-username {
+            font-size: 14px;
+            font-weight: 600;
+            color: #1f2937;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .dropdown-label {
+            font-size: 11px;
+            color: #6b7280;
+            margin-top: 2px;
+        }
+
+        .dropdown-divider {
+            height: 1px;
+            background: #f0f0f0;
+            margin: 4px 0;
+        }
+
+        .dropdown-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 16px;
+            color: #4b5563;
+            font-size: 13px;
+            text-decoration: none;
+            transition: all 0.15s;
+            position: relative;
+        }
+
+        .dropdown-item:hover {
+            background: #f5f8fc;
+            color: #0a4db4;
+        }
+
+        .dropdown-item svg {
+            width: 15px;
+            height: 15px;
+            flex-shrink: 0;
+            color: #6b7280;
+        }
+
+        .dropdown-item:hover svg {
+            color: #0a4db4;
+        }
+
+        .dropdown-item span {
+            flex: 1;
+        }
+
+        .dropdown-logout {
+            color: #dc2626 !important;
+        }
+
+        .dropdown-logout:hover {
+            background: #fef2f2;
+            color: #dc2626 !important;
+        }
+
+        .dropdown-logout svg {
+            color: #dc2626;
+        }
+
+        .dropdown-badge {
+            background: #ef4444;
+            color: #fff;
+            font-size: 10px;
+            font-weight: 600;
+            padding: 1px 6px;
+            border-radius: 8px;
+            min-width: 18px;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .user-name {
+                max-width: 50px;
+            }
+
+            .user-dropdown {
+                min-width: 180px;
+            }
+        }
+
+        .header {
+            background: #fff;
+            border-bottom: 2px solid #0a4db4;
+        }
+
+        .header-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 18px 20px;
+            display: flex;
+            align-items: center;
+            gap: 40px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        .logo .logo-icon {
+            width: 48px;
+            height: 48px;
+            object-fit: contain;
+        }
+
+        .logo .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo .logo-text .brand {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            letter-spacing: 1px;
+        }
+
+        .logo .logo-text .brand .highlight {
+            color: #0a4db4;
+        }
+
+        .logo .logo-text .tagline {
+            font-size: 11px;
+            color: #999;
+            letter-spacing: 2px;
+            margin-top: 2px;
+        }
+
+        /* Logo 微交互 */
+        .logo {
+            cursor: pointer;
+            transition: transform .3s var(--ease);
+        }
+
+        .logo:hover {
+            transform: translateX(-2px);
+        }
+
+        .logo .brand {
+            background: linear-gradient(135deg, #000000 0%, #006eff 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .search-box {
+            flex: 1;
+            max-width: 580px;
+            display: flex;
+            border: 2px solid #0a4db4;
+            border-radius: 4px;
             overflow: hidden;
         }
 
-        .hero-section::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 55%;
-            height: 100%;
-            background-image: url('../../img/dobot/home-cra2.jpg');
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-position: center center;
-            opacity: 0.85;
+        .search-box .cat-select {
+            width: 120px;
+            padding: 0 10px;
+            border: none;
+            border-right: 1px solid #ddd;
+            background: #fafafa;
+            font-size: 13px;
+            cursor: pointer;
+            outline: none;
         }
 
-        .hero-section .hero-content {
+        .search-box input {
             flex: 1;
-            text-align: left;
-            position: relative;
-            z-index: 1;
+            padding: 0 15px;
+            border: none;
+            outline: none;
+            font-size: 14px;
+            height: 40px;
         }
 
-        .hero-section h1 {
-            font-size: 42px;
+        .search-box button {
+            width: 90px;
+            background: #0a4db4;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            font-size: 15px;
             font-weight: bold;
-            color: #0a3a8f;
-            margin: 0 0 15px;
+            letter-spacing: 2px;
         }
 
-        .hero-section .subtitle {
-            font-size: 20px;
-            color: #1967c2;
-            margin: 0 0 20px;
+        .search-box button:hover {
+            background: #083d94;
         }
 
-        .hero-section .description {
-            font-size: 16px;
-            color: #666;
-            line-height: 1.8;
-            margin: 0 0 30px;
-            max-width: 600px;
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-left: auto;
+            flex-shrink: 0;
         }
 
-        .section-title {
-            font-size: 28px;
-            font-weight: bold;
-            color: #0a3a8f;
-            margin: 0 0 25px;
-            text-align: center;
+        .header-right .cart-btn {
             position: relative;
-            padding-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: #0a4db4;
+            font-weight: bold;
+            font-size: 14px;
+            line-height: 1.5;
+            white-space: nowrap;
+            padding: 8px 16px;
+            border: 1px solid #0a4db4;
+            border-radius: 4px;
+            background: #fff;
+            cursor: pointer;
+            overflow: visible;
+            flex-shrink: 0;
+            text-decoration: none;
         }
 
-        .section-title::after {
+        .header-right .cart-btn:hover {
+            background: #e8f0fe;
+        }
+
+        .header-right .publish-btn {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: #fff;
+            font-weight: bold;
+            padding: 9px 18px;
+            border: none;
+            border-radius: 4px;
+            background: linear-gradient(135deg, #0a4db4, #1e6fd9);
+            cursor: pointer;
+            font-size: 14px;
+            text-decoration: none;
+            box-shadow: 0 2px 8px rgba(10, 77, 180, 0.3);
+            transition: all 0.2s;
+        }
+
+        .header-right .publish-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(10, 77, 180, 0.4);
+        }
+
+        .header-right .eccee-btn {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: #fff;
+            font-weight: bold;
+            padding: 9px 16px;
+            border: none;
+            border-radius: 4px;
+            background: linear-gradient(135deg, #f5a623, #e8941a);
+            cursor: pointer;
+            font-size: 14px;
+            text-decoration: none;
+            box-shadow: 0 2px 8px rgba(245, 166, 35, 0.3);
+            transition: all 0.2s;
+        }
+
+        .header-right .eccee-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(245, 166, 35, 0.4);
+        }
+
+        .main-nav {
+            background: #0a4db4;
+        }
+
+        .main-nav-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: stretch;
+        }
+
+        .main-nav .nav-item {
+            position: relative;
+            padding: 0 22px;
+            line-height: 46px;
+            color: #fff;
+            font-size: 15px;
+            cursor: pointer;
+            transition: background 0.2s;
+            white-space: nowrap;
+        }
+
+        .main-nav .nav-item:hover {
+            background: #083d94;
+        }
+
+        .main-nav .nav-item.active {
+            background: #083d94;
+            font-weight: bold;
+        }
+
+        .main-nav .nav-item.active::after {
             content: "";
             position: absolute;
             bottom: 0;
             left: 50%;
             transform: translateX(-50%);
-            width: 60px;
+            width: 60%;
+            height: 3px;
+            background: #4a9eff;
+            border-radius: 2px 2px 0 0;
+        }
+
+        .breadcrumb-wrap {
+            background: #fff;
+            border-bottom: 1px solid #eee;
+            padding: 12px 0;
+        }
+
+        .breadcrumb {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            font-size: 13px;
+            color: #999;
+        }
+
+        .breadcrumb a {
+            color: #999;
+        }
+
+        .breadcrumb a:hover {
+            color: #0a4db4;
+        }
+
+        .breadcrumb .sep {
+            margin: 0 8px;
+            color: #ddd;
+        }
+
+        .breadcrumb .current {
+            color: #333;
+        }
+
+        .product-show {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 30px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+            display: flex;
+            gap: 40px;
+        }
+
+        .product-gallery {
+            width: 480px;
+            flex-shrink: 0;
+        }
+
+        .main-image {
+            width: 100%;
+            height: 420px;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            overflow: hidden;
+            background: #f9f9f9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 12px;
+            position: relative;
+        }
+
+        .main-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            transition: transform 0.3s;
+            pointer-events: none;
+        }
+
+        .main-image:hover img {
+            transform: scale(1.05);
+        }
+
+        .main-image .nav-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 18px;
+            color: #333;
+            z-index: 10;
+            opacity: 0;
+            transition: all 0.25s;
+            border: none;
+        }
+
+        .main-image:hover .nav-arrow {
+            opacity: 1;
+        }
+
+        .main-image .nav-arrow:hover {
+            background: #0a4db4;
+            color: #fff;
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .main-image .nav-arrow.prev {
+            left: 12px;
+        }
+
+        .main-image .nav-arrow.next {
+            right: 12px;
+        }
+
+        .thumbnail-list {
+            display: flex;
+            gap: 10px;
+        }
+
+        .thumb-item {
+            width: 80px;
+            height: 80px;
+            border: 2px solid #eee;
+            border-radius: 6px;
+            overflow: hidden;
+            cursor: pointer;
+            background: #f9f9f9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .thumb-item img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            pointer-events: none;
+        }
+
+        .thumb-item:hover {
+            border-color: #4a9eff;
+        }
+
+        .thumb-item.active {
+            border-color: #0a4db4;
+            box-shadow: 0 0 0 2px rgba(10, 77, 180, 0.2);
+        }
+
+        .product-info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-title {
+            font-size: 26px;
+            font-weight: bold;
+            color: #222;
+            margin-bottom: 10px;
+            line-height: 1.3;
+        }
+
+        .product-subtitle {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .product-tags {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .product-tag {
+            padding: 3px 10px;
+            background: #fff5e6;
+            color: #f5a623;
+            border: 1px solid #ffe0b2;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+
+        .product-tag.blue {
+            background: #e8f0fe;
+            color: #0a4db4;
+            border-color: #b3d4fc;
+        }
+
+        .price-section {
+            background: linear-gradient(135deg, #fff9e6, #fff5d6);
+            border: 1px solid #ffe4a1;
+            border-radius: 8px;
+            padding: 20px 24px;
+            margin-bottom: 20px;
+        }
+
+        .price-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .price-row:last-child {
+            margin-bottom: 0;
+        }
+
+        .price-label {
+            width: 90px;
+            font-size: 13px;
+            color: #999;
+            flex-shrink: 0;
+        }
+
+        .price-value {
+            font-size: 28px;
+            font-weight: bold;
+            color: #e4393c;
+        }
+
+        .price-value .currency {
+            font-size: 18px;
+            margin-right: 2px;
+        }
+
+        .price-value .unit {
+            font-size: 14px;
+            color: #999;
+            margin-left: 6px;
+            font-weight: normal;
+        }
+
+        .price-value.range {
+            font-size: 20px;
+        }
+
+        .stock-info {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .spec-section {
+            margin-bottom: 18px;
+        }
+
+        .spec-label {
+            display: flex;
+            align-items: center;
+            width: 90px;
+            font-size: 13px;
+            color: #999;
+            flex-shrink: 0;
+        }
+
+        .spec-row {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 14px;
+        }
+
+        .spec-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            flex: 1;
+        }
+
+        .spec-option {
+            padding: 8px 18px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+            background: #fff;
+        }
+
+        .spec-option:hover {
+            border-color: #4a9eff;
+            color: #0a4db4;
+        }
+
+        .spec-option.selected {
+            border-color: #0a4db4;
+            color: #0a4db4;
+            background: #e8f0fe;
+            font-weight: 500;
+        }
+
+        .quantity-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 18px;
+        }
+
+        .quantity-input {
+            display: flex;
+            align-items: stretch;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            overflow: visible;
+            position: relative;
+            z-index: 1;
+        }
+
+        .quantity-input button {
+            width: 38px;
+            height: 38px;
+            border: none;
+            background: #f5f5f5;
+            font-size: 18px;
+            cursor: pointer;
+            color: #666;
+            transition: background 0.2s;
+            padding: 0;
+            line-height: 1;
+            position: relative;
+            z-index: 2;
+            pointer-events: auto;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        .quantity-input button:hover {
+            background: #e8e8e8;
+            color: #0a4db4;
+        }
+
+        .quantity-input button:active {
+            background: #d0d0d0;
+        }
+
+        .quantity-input input {
+            flex: 1;
+            height: 38px;
+            text-align: center;
+            border: none;
+            outline: none;
+            font-size: 15px;
+            border-left: 1px solid #ddd;
+            border-right: 1px solid #ddd;
+            -moz-appearance: textfield;
+        }
+
+        .quantity-input input::-webkit-outer-spin-button,
+        .quantity-input input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        .stock-label {
+            margin-left: 14px;
+            color: #999;
+            font-size: 13px;
+        }
+
+        .service-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 22px;
+            font-size: 13px;
+            color: #666;
+        }
+
+        .service-row .service-label {
+            width: 90px;
+            flex-shrink: 0;
+            color: #999;
+        }
+
+        .service-list {
+            display: flex;
+            gap: 18px;
+            flex: 1;
+        }
+
+        .service-list span {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .service-list .check-icon {
+            color: #52c41a;
+            font-weight: bold;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 14px;
+        }
+
+        .btn {
+            height: 48px;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: all 0.2s;
+            padding: 0 30px;
+        }
+
+        .btn-buy {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: #fff;
+        }
+
+        .btn-buy:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 5px 14px rgba(16, 185, 129, 0.4);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #0a4db4, #1e6fd9);
+            color: #fff;
+            box-shadow: 0 3px 10px rgba(10, 77, 180, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 5px 14px rgba(10, 77, 180, 0.4);
+        }
+
+        .btn-orange {
+            background: linear-gradient(135deg, #f5a623, #e8941a);
+            color: #fff;
+            box-shadow: 0 3px 10px rgba(245, 166, 35, 0.3);
+        }
+
+        .btn-orange:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 5px 14px rgba(245, 166, 35, 0.4);
+        }
+
+        .btn-default {
+            background: #fff;
+            color: #333;
+            border: 1px solid #ddd;
+        }
+
+        .btn-default:hover {
+            border-color: #0a4db4;
+            color: #0a4db4;
+        }
+
+        .detail-section {
+            max-width: 1200px;
+            margin: 0 auto 30px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+            overflow: hidden;
+        }
+
+        .detail-tabs {
+            display: flex;
+            border-bottom: 2px solid #0a4db4;
+            background: #fafafa;
+        }
+
+        .detail-tab {
+            padding: 14px 28px;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            color: #666;
+            border-bottom: 2px solid transparent;
+            margin-bottom: -2px;
+            transition: all 0.2s;
+        }
+
+        .detail-tab:hover {
+            color: #0a4db4;
+        }
+
+        .detail-tab.active {
+            color: #0a4db4;
+            background: #fff;
+            border-bottom-color: #0a4db4;
+            font-weight: bold;
+        }
+
+        .detail-content {
+            padding: 40px 50px;
+        }
+
+        .detail-panel {
+            display: none;
+        }
+
+        .detail-panel.active {
+            display: block;
+        }
+
+        .detail-panel h2 {
+            font-size: 22px;
+            font-weight: bold;
+            color: #0a3a8f;
+            margin-bottom: 24px;
+            text-align: center;
+            position: relative;
+            padding-bottom: 14px;
+        }
+
+        .detail-panel h2::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
             height: 3px;
             background: linear-gradient(90deg, #004a99, #1967c2);
             border-radius: 2px;
         }
 
-        .about-section {
-            text-align: center;
-            padding: 50px 20px;
-            margin-bottom: 50px;
+        .detail-panel h3 {
+            font-size: 18px;
+            font-weight: bold;
+            color: #0a4db4;
+            margin: 30px 0 16px;
+            padding-left: 12px;
+            border-left: 4px solid #0a4db4;
         }
 
-        .about-section p {
-            font-size: 16px;
+        .detail-panel p {
+            font-size: 15px;
             color: #444;
             line-height: 2;
-            margin: 0 0 15px;
-            max-width: 800px;
-            display: inline-block;
+            margin-bottom: 14px;
             text-align: justify;
         }
 
-        .versions-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 24px;
-            margin-bottom: 50px;
+        .detail-panel img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: 20px 0;
+            display: block;
         }
 
-        .version-card {
-            background: #fff;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-            border: 1px solid #e8e8e8;
-            transition: all 0.3s ease;
+        .detail-panel ul {
+            padding-left: 20px;
+            margin-bottom: 16px;
         }
 
-        .version-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-        }
-
-        .version-card img {
-            width: 100%;
-            height: 200px;
-            object-fit: contain;
-            background: #f5f8fc;
-        }
-
-        .version-card .version-info {
-            padding: 20px;
-        }
-
-        .version-card .version-info h3 {
-            font-size: 20px;
-            font-weight: bold;
-            color: #0a3a8f;
-            margin: 0 0 10px;
-        }
-
-        .version-card .version-info .spec-item {
+        .detail-panel ul li {
             font-size: 14px;
-            color: #666;
-            line-height: 1.8;
-            margin: 0 0 5px;
+            color: #555;
+            line-height: 2;
+            margin-bottom: 6px;
         }
 
-        .version-card .version-info .spec-item strong {
-            color: #1967c2;
-        }
-
-        .features-section {
-            background: #f5f8fc;
-            padding: 50px 20px;
-            border-radius: 12px;
-            margin-bottom: 50px;
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 24px;
-        }
-
-        .feature-card {
-            background: #fff;
-            border-radius: 12px;
+        .feature-highlight {
+            display: flex;
+            gap: 20px;
             padding: 30px;
+            background: linear-gradient(135deg, #004a99, #1967c2);
+            border-radius: 10px;
+            color: #fff;
+            margin: 25px 0;
+        }
+
+        .feature-highlight .main-feature {
+            width: 120px;
             text-align: center;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-            border: 1px solid #e8e8e8;
-            transition: all 0.3s ease;
+            border-right: 1px solid rgba(255, 255, 255, 0.2);
+            padding-right: 20px;
         }
 
-        .feature-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-        }
-
-        .feature-card img {
-            width: 100%;
-            max-height: 150px;
-            object-fit: contain;
-            margin-bottom: 15px;
-        }
-
-        .feature-card h3 {
-            font-size: 18px;
-            font-weight: bold;
-            color: #0a3a8f;
-            margin: 0 0 10px;
-        }
-
-        .feature-card p {
-            font-size: 14px;
-            color: #666;
-            line-height: 1.6;
-            margin: 0;
-            text-align: left;
-        }
-
-        .force-control-section {
-            margin-bottom: 50px;
-        }
-
-        .force-control-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 24px;
-        }
-
-        .force-control-item {
+        .feature-highlight .main-feature .hexagon {
+            width: 80px;
+            height: 80px;
             background: #fff;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-            border: 1px solid #e8e8e8;
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px;
         }
 
-        .force-control-item img {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-        }
-
-        .force-control-item .content {
-            padding: 20px;
-        }
-
-        .force-control-item h3 {
-            font-size: 18px;
+        .feature-highlight .main-feature .hexagon span {
+            font-size: 36px;
             font-weight: bold;
-            color: #0a3a8f;
-            margin: 0 0 10px;
+            color: #004a99;
         }
 
-        .force-control-item p {
+        .feature-highlight .main-feature .label {
             font-size: 14px;
-            color: #666;
-            line-height: 1.6;
-            margin: 0;
+            font-weight: bold;
         }
 
-        .applications-grid {
+        .feature-highlight .feature-items {
+            flex: 1;
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 24px;
-            margin-bottom: 50px;
+            gap: 15px;
         }
 
-        .application-card {
-            background: #fff;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-            border: 1px solid #e8e8e8;
-            transition: all 0.3s ease;
+        .feature-highlight .feature-item {
+            background: rgba(255, 255, 255, 0.12);
+            padding: 14px;
+            border-radius: 6px;
+            text-align: center;
         }
 
-        .application-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-        }
-
-        .application-card img {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-        }
-
-        .application-card .content {
-            padding: 20px;
-        }
-
-        .application-card h3 {
-            font-size: 18px;
-            font-weight: bold;
-            color: #0a3a8f;
-            margin: 0 0 10px;
-        }
-
-        .application-card p {
+        .feature-highlight .feature-item .title {
             font-size: 14px;
-            color: #666;
-            line-height: 1.6;
-            margin: 0;
+            opacity: 0.9;
+            margin-bottom: 4px;
         }
 
-        .specs-section {
-            margin-bottom: 50px;
-        }
-
-        .specs-section h3 {
-            font-size: 20px;
+        .feature-highlight .feature-item .value {
+            font-size: 22px;
             font-weight: bold;
-            color: #0a3a8f;
-            margin: 0 0 20px;
         }
 
         .spec-table {
             width: 100%;
             border-collapse: collapse;
-            background: #fff;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-            border: 1px solid #e8e8e8;
+            margin: 20px 0;
         }
 
         .spec-table th {
@@ -358,7 +1181,6 @@
             text-align: center;
             font-weight: bold;
             font-size: 14px;
-            white-space: nowrap;
         }
 
         .spec-table td {
@@ -366,7 +1188,6 @@
             border-bottom: 1px solid #f0f0f0;
             font-size: 14px;
             color: #444;
-            text-align: center;
         }
 
         .spec-table tr:nth-child(even) td {
@@ -377,62 +1198,895 @@
             background: #f0f5fc;
         }
 
-        .nav-back-btn {
+        .spec-table td:first-child {
+            font-weight: 500;
+            width: 180px;
+            color: #555;
+        }
+
+        .related-section {
+            max-width: 1200px;
+            margin: 0 auto 40px;
+            padding: 30px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+        }
+
+        .related-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 24px;
+            padding-left: 12px;
+            border-left: 4px solid #0a4db4;
+        }
+
+        .related-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .related-card {
+            border: 1px solid #eee;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .related-card:hover {
+            box-shadow: 0 6px 20px rgba(10, 77, 180, 0.15);
+            transform: translateY(-3px);
+        }
+
+        .related-card .img-wrap {
+            height: 160px;
+            background: #f9f9f9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+        }
+
+        .related-card .img-wrap img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        .related-card .info {
+            padding: 14px;
+        }
+
+        .related-card .info .name {
+            font-size: 14px;
+            font-weight: 500;
+            color: #333;
+            margin-bottom: 6px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .related-card .info .price {
+            font-size: 16px;
+            font-weight: bold;
+            color: #e4393c;
+        }
+
+        .sidebar-service {
+            position: fixed;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            background: #fff;
+            border: 1px solid #eee;
+            border-right: none;
+            border-radius: 8px 0 0 8px;
+            box-shadow: -2px 2px 10px rgba(0, 0, 0, 0.08);
+            display: flex;
+            flex-direction: column;
+            z-index: 100;
+        }
+
+        .sidebar-service a {
+            padding: 16px 12px;
+            text-align: center;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 12px;
+            color: #666;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            transition: all 0.2s;
+        }
+
+        .sidebar-service a:last-child {
+            border-bottom: none;
+        }
+
+        .sidebar-service a:hover {
+            color: #0a4db4;
+            background: #f0f6ff;
+        }
+
+        .sidebar-service .icon {
+            font-size: 22px;
+        }
+
+        .toast {
+            position: fixed;
+            top: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-100px);
+            padding: 14px 28px;
+            border-radius: 8px;
+            color: #fff;
+            font-size: 14px;
+            z-index: 9999;
+            transition: transform 0.4s;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .toast.success {
+            background: #2ecc71;
+        }
+
+        .toast.error {
+            background: #e74c3c;
+        }
+
+        .toast.info {
+            background: #0a4db4;
+        }
+
+        .back-to-top {
+            position: fixed;
+            right: 20px;
+            bottom: 30px;
+            width: 44px;
+            height: 44px;
+            background: #0a4db4;
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 20px;
+            box-shadow: 0 4px 12px rgba(10, 77, 180, 0.3);
+            display: none;
+            z-index: 100;
+            transition: all 0.2s;
+        }
+
+        .back-to-top.show {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .back-to-top:hover {
+            background: #1e6fd9;
+        }
+
+
+        .footer {
+            background: linear-gradient(180deg, #2c3e50 0%, #1a2530 100%);
+            color: #bbb;
+            margin-top: 40px;
+        }
+
+        .footer-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px 20px;
+            display: flex;
+            justify-content: space-between;
+            gap: 40px;
+        }
+
+        .footer-col {
+            flex: 1;
+        }
+
+        .footer-col h4 {
+            color: #fff;
+            font-size: 15px;
+            margin-bottom: 16px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-col a {
+            display: block;
+            color: #bbb;
+            font-size: 13px;
+            padding: 4px 0;
+            transition: all 0.2s;
+        }
+
+        .footer-col a:hover {
+            color: #4a9eff;
+            padding-left: 4px;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            padding: 16px 20px;
+            font-size: 12px;
+            color: #888;
+        }
+
+        .footer-bottom a {
+            color: #888;
+            margin: 0 6px;
+            transition: color 0.2s;
+        }
+
+        .footer-bottom a:hover {
+            color: #4a9eff;
+        }
+        /* ===== 中英文切换按钮 ===== */
+        .top-bar .top-right .lang-toggle {
             display: inline-flex;
             align-items: center;
-            gap: 8px;
-            background: rgba(255, 255, 255, 0.2);
+            margin: 0 0 0 10px;
+            border: 1px solid #d9d9d9;
+            border-radius: 12px;
+            overflow: hidden;
+            line-height: 1;
+            vertical-align: middle;
+        }
+
+        .top-bar .top-right .lang-toggle a {
+            margin: 0;
+            padding: 3px 9px;
+            font-size: 12px;
+        }
+
+        .top-bar .top-right .lang-toggle a + a {
+            border-left: 1px solid #d9d9d9;
+        }
+
+        .top-bar .top-right .lang-toggle a.active {
+            background: #0a4db4;
             color: #fff;
-            padding: 8px 20px;
-            border-radius: 4px;
-            text-decoration: none;
-            font-size: 14px;
-            transition: all 0.3s ease;
-            margin-right: 15px;
-            border: 1px solid rgba(255, 255, 255, 0.3);
         }
 
-        .nav-back-btn:hover {
-            background: rgba(255, 255, 255, 0.3);
+        /* ===== 英文文本防溢出 ===== */
+        .product-title,
+        .related-card .info .name {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            white-space: normal;
         }
 
-        
+        .breadcrumb .current,
+        .related-title,
+        .spec-table th,
+        .spec-table td {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
 
-        
+        .spec-table {
+            table-layout: fixed;
+        }
+
     </style>
 </head>
+
 <body>
-    <div id="nav-container"></div>
-	<script src="../../components/load-components.js"></script>
-	<script>
-		loadComponent('nav-container', '.../../components/nav-en.html', function() {
-			initNav();
-		});
-	</script>
-       
+    <!-- ============ 顶部条 ============ -->
+    <div class="top-bar">
+        <div class="top-bar-inner">
+            <div class="top-left">
+                <div class="auth-section auth-guest" id="authGuest">
+                    <a href="../user/login.html" class="auth-login-btn">
+                        <svg class="auth-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4" />
+                            <polyline points="10 17 15 12 10 7" />
+                            <line x1="15" y1="12" x2="3" y2="12" />
+                        </svg>
+                        <span>Login</span>
+                    </a>
+                    <span class="auth-divider">|</span>
+                    <a href="../user/login.html?tab=register" class="auth-register-link">Register</a>
+                </div>
+                <div class="auth-section auth-user" id="authUser" style="display:none;">
+                    <div class="user-menu-trigger" id="userMenuTrigger">
+                        <div class="user-avatar" id="userAvatar"></div>
+                        <span class="user-name" id="userName"></span>
+                        <svg class="user-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="6 9 12 15 18 9" />
+                        </svg>
+                    </div>
+                    <div class="user-dropdown" id="userDropdown">
+                        <div class="dropdown-header">
+                            <div class="dropdown-avatar" id="dropdownAvatar"></div>
+                            <div class="dropdown-user-info">
+                                <div class="dropdown-username" id="dropdownUsername"></div>
+                                <div class="dropdown-label">Welcome back</div>
+                            </div>
+                        </div>
+                        <div class="dropdown-divider"></div>
+                        <a href="../user/order.html" class="dropdown-item">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M9 11H5a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7a2 2 0 0 0-2-2h-4" />
+                                <path d="M9 11V7a3 3 0 0 1 6 0v4" />
+                            </svg>
+                            <span>My Orders</span>
+                        </a>
+                        <a href="../user/cart.html" class="dropdown-item">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="9" cy="21" r="1" />
+                                <circle cx="20" cy="21" r="1" />
+                                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
+                            </svg>
+                            <span>Cart</span>
+                            <span class="dropdown-badge" id="dropdownCartBadge">0</span>
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a href="javascript:void(0)" class="dropdown-item dropdown-logout" id="dropdownLogout">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                                <polyline points="16 17 21 12 16 7" />
+                                <line x1="21" y1="12" x2="9" y2="12" />
+                            </svg>
+                            <span>Log Out</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="top-right">
+                <a href="../../index-en.html">Home</a>
+                <a href="#">Products & Services</a>
+                <a href="#">Solutions</a>
+                <a href="#">News</a>
+                <a href="../about/about-us.html">About Us</a>
+                <a href="../info/contact-us.html">Contact Us</a>
+                <span class="lang-toggle" title="Language"><a href="#" class="lang-switch-zh">中</a><a href="#" class="lang-switch-en active">EN</a></span>
+            </div>
+        </div>
+    </div>
 
-    
+    <div class="header">
+        <div class="header-inner">
+            <div class="logo" onclick="window.location.href='../../index-en.html'">
+                <div class="logo-text">
+                    <div class="brand">HARVEST · Hi-Tech Bazaar</div>
+                </div>
+            </div>
+            <div class="header-right">
+                <a class="eccee-btn" href="../info/ece.html">🏅 ECEE Certification</a>
+                <a class="publish-btn" href="../user/publish.html">✏️ Publish Requirement</a>
+                
+                <a class="cart-btn" href="../user/cart.html" data-cart-enhanced="1">🛒 Cart<span class="cart-badge">0</span></a>
+            </div>
+        </div>
+    </div>
+    <!-- 
+    <nav class="main-nav">
+        <div class="main-nav-inner" id="mainNav"></div>
+    </nav> -->
 
-    <script src="../../index_files/layui.js"></script>
-    <script src="../../index_files/extend.js" type="text/javascript"></script>
-    <script src="../../index_files/public.js" type="text/javascript"></script>
-    <script src="../../index_files/jquery.pjax.js" type="text/javascript"></script>
+    <div class="breadcrumb-wrap">
+        <div class="breadcrumb">
+            <a href="../../index-en.html">Home</a>
+            <span class="sep">›</span>
+            <a href="../../index-en.html">AI & Robotics</a>
+            <span class="sep">›</span>
+            <a href="../../index-en.html">CR Series 6-Axis Collaborative Robots</a>
+            <span class="sep">›</span>
+            <span class="current">CRAF Force-Control Series</span>
+        </div>
+    </div>
+
+    <div class="product-show">
+        <div class="product-gallery">
+            <div class="main-image">
+                <img id="mainImage" src="../../img/dobot/home-cra2.jpg" alt="CRAF Force-Control Series">
+                <button class="nav-arrow prev" onclick="prevImage()" title="Previous">‹</button>
+                <button class="nav-arrow next" onclick="nextImage()" title="Next">›</button>
+            </div>
+            <div class="thumbnail-list" id="thumbnailList">
+                <div class="thumb-item active" data-src="../../img/dobot/home-cra.jpg"
+                    onclick="changeImage(this)">
+                    <img src="../../img/dobot/home-cra2.jpg" alt="Image 1">
+                </div>
+                <div class="thumb-item" data-src="../../img/dobot/home-cra2.jpg"
+                    onclick="changeImage(this)">
+                    <img src="../../img/dobot/home-cra.jpg" alt="Image 2">
+                </div>
+                <div class="thumb-item" data-src="../../img/dobot/home-cra.jpg"
+                    onclick="changeImage(this)">
+                    <img src="../../img/dobot/cr30h-list1.jpg" alt="Image 3">
+                </div>
+                <div class="thumb-item" data-src="../../img/dobot/cr30h-list1.jpg"
+                    onclick="changeImage(this)">
+                    <img src="../../img/dobot/cr30h-list2.jpg" alt="Image 4">
+                </div>
+                <div class="thumb-item" data-src="../../img/dobot/cr30h-list2.jpg"
+                    onclick="changeImage(this)">
+                    <img src="../../img/dobot/cr30h-list3.jpg" alt="Image 5">
+                </div>
+            </div>
+        </div>
+
+        <div class="product-info">
+            <h1 class="product-title">CRAF Force-Control Series: Intelligent Compliant Force Control</h1>
+            <div class="product-subtitle">Built-in torque sensors enable high-precision force-controlled operation, ideal for precision assembly, polishing and grinding</div>
+            <div class="product-tags">
+                <span class="product-tag">Force Control</span>
+                <span class="product-tag">Compliant</span>
+                <span class="product-tag blue">Precision Assembly</span>
+            </div>
+
+            <div class="price-section">
+                <div class="price-row">
+                    <span class="price-label">Price</span>
+                    <span class="price-value"><span class="currency">¥</span>45,000<span class="unit">/unit</span></span></span>           </div>
+                <div class="price-row">
+                    <span class="price-label">Order Qty</span>
+                    <span class="stock-info">From 1 unit</span>
+                </div>
+                <div class="price-row">
+                    <span class="price-label">Stock</span>
+                    <span class="stock-info" style="color:#52c41a;">● In stock, customization supported</span>
+                </div>
+            </div>
+
+            <div class="spec-section">
+                <div class="spec-row">
+                    <span class="spec-label">Model</span>
+                    <div class="spec-options">
+                        <div class="spec-option selected" onclick="selectSpec(this, 'CR5AF')">CR5AF (5kg)</div>
+                        <div class="spec-option" onclick="selectSpec(this, 'CR10AF')">CR10AF (10kg)</div>
+                        <div class="spec-option" onclick="selectSpec(this, 'CR20AF')">CR20AF (20kg)</div>
+                    </div>
+                </div>
+                <div class="spec-row">
+                    <span class="spec-label">Application</span>
+                    <div class="spec-options">
+                        <div class="spec-option selected" onclick="selectSpec(this, '精密装配')">Precision Assembly</div>
+                        <div class="spec-option" onclick="selectSpec(this, '打磨抛光')">Grinding & Polishing</div>
+                        <div class="spec-option" onclick="selectSpec(this, '智能焊接')">Smart Welding</div>
+                        <div class="spec-option" onclick="selectSpec(this, '医疗辅助')">Medical Assistance</div>
+                    </div>
+                </div>
+                <div class="quantity-row">
+                    <span class="spec-label">Quantity</span>
+                    <div class="quantity-input">
+                        <button onclick="changeQty(-1)">-</button>
+                        <input type="number" id="quantityInput" value="1" min="1">
+                        <button onclick="changeQty(1)">+</button>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="service-row">
+                <span class="service-label">Service & Support</span>
+                <div class="service-list">
+                    <span><span class="check-icon">✓</span> Genuine Guarantee</span>
+                    <span><span class="check-icon">✓</span> Fast Shipping</span>
+                    <span><span class="check-icon">✓</span> 3-Year Warranty</span>
+                    <span><span class="check-icon">✓</span> 7×24 Support</span>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <button class="btn btn-buy" onclick="handleBuyNow()">⚡ Buy Now</button>
+                <button class="btn btn-primary" onclick="handleInquiry()">💰 Inquiry</button>
+                <button class="btn btn-orange" onclick="handleAddCart()">🛒 Add to Cart</button>
+                <button class="btn btn-default" onclick="handleFavorite()">⭐ Favorite</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="detail-section">
+        <div class="detail-tabs">
+            <div class="detail-tab active" onclick="switchTab('tab-detail')">Product Details</div>
+            <div class="detail-tab" onclick="switchTab('tab-spec')">Specifications</div>
+            <div class="detail-tab" onclick="switchTab('tab-service')">Service Guarantee</div>
+        </div>
+        <div class="detail-content">
+            <div id="tab-detail" class="detail-panel active">
+                <h2>CRAF Force-Control Series Product Details</h2>
+
+                <div class="feature-highlight">
+                    <div class="main-feature">
+                        <div class="hexagon"><span>AF</span></div>
+                        <div class="label">Built-in Force Control</div>
+                    </div>
+                    <div class="feature-items">
+                        <div class="feature-item">
+                            <div class="title">Force Accuracy</div>
+                            <div class="value">±0.1N</div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="title">Response Time</div>
+                            <div class="value">
+                                <20ms< /div>
+                            </div>
+                            <div class="feature-item">
+                                <div class="title">Joints</div>
+                                <div class="value">6-Axis</div>
+                            </div>
+                            <div class="feature-item">
+                                <div class="title">Payload Range</div>
+                                <div class="value">5-20kg</div>
+                            </div>
+                            <div class="feature-item">
+                                <div class="title">Repeatability</div>
+                                <div class="value">±0.02mm</div>
+                            </div>
+                            <div class="feature-item">
+                                <div class="title">Operating Voltage</div>
+                                <div class="value">220V</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3>Core Technology: Intelligent Compliant Force Control</h3>
+                    <p>The CRAF Force-Control Series is Dobot's new generation of collaborative robots with built-in torque sensors. Each joint integrates a high-precision torque sensor that senses torque changes in real time, enabling precise perception and response to external forces.</p>
+                    <p>Unlike traditional position-controlled robots, the CRAF series uses advanced force-control algorithms to automatically adjust its motion trajectory and applied force upon contact with external objects, achieving truly "compliant" operation. This capability is essential in applications with strict contact-force requirements such as precision assembly, polishing and grinding, and smart welding.
+                    </p>
+
+                    <h3>Product Features</h3>
+                    <ul>
+                        <li><strong>Full-joint torque feedback:</strong>High-precision torque sensors built into every joint provide real-time feedback on joint loads</li>
+                        <li><strong>Intelligent compliant control:</strong>Automatically adjusts posture and force when contacting workpieces, preventing overshoot and damage</li>
+                        <li><strong>Drag-to-teach:</strong>Complete teaching by manual dragging without programming, greatly shortening deployment time</li>
+                        <li><strong>Collision detection:</strong>Sensitive collision detection stops the robot immediately upon contact with foreign objects, ensuring personal safety</li>
+                        <li><strong>Multiple models:</strong>Available in 5kg, 10kg and 20kg payload models to cover diverse application needs</li>
+                        <li><strong>Compatible with mainstream tools:</strong>Supports grippers, polishing heads, welding torches and other end effectors</li>
+                    </ul>
+
+                    <h3>Application Scenarios</h3>
+                    <p>The intelligent compliant force control of the CRAF series makes it ideal for the following precision operations:</p>
+                    <ul>
+                        <li><strong>Precision assembly:</strong>Precise alignment and assembly of electronic components and precision mechanical parts</li>
+                        <li><strong>Grinding & polishing:</strong>Automated grinding and surface finishing of castings and hardware with stable contact force</li>
+                        <li><strong>Smart welding:</strong>Automatically adjusts torch position and pressure along the weld seam to ensure welding quality</li>
+                        <li><strong>Medical assistance:</strong>Precision operation of medical equipment with gentle contact force to ensure patient safety</li>
+                        <li><strong>Semiconductor industry:</strong>Wafer handling, chip mounting and other scenarios demanding extreme precision and cleanliness</li>
+                    </ul>
+
+                    <h3>Technical Advantages</h3>
+                    <p>Compared with traditional collaborative robots, the CRAF Force-Control Series offers significant advantages:</p>
+                    <p><strong>Higher force accuracy:</strong>±0.1N force-control accuracy precisely controls contact force, ideal for force-sensitive operations.</p>
+                    <p><strong>Faster response:</strong>A force-control response time under 20ms enables real-time reaction to unexpected events, ensuring operational safety.</p>
+                    <p><strong>Easier deployment:</strong>Drag-to-teach allows non-specialists to get started quickly, greatly lowering the barrier to use.</p>
+                    <p><strong>Greater scalability:</strong>Supports a wide range of end effectors and peripherals for easy integration into existing production lines.</p>
+                </div>
+
+                <div id="tab-spec" class="detail-panel">
+                    <h2>Specifications</h2>
+
+                    <h3>General Specifications</h3>
+                    <table class="spec-table">
+                        <thead>
+                            <tr>
+                                <th>Parameter</th>
+                                <th>Specification</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Product Name</td>
+                                <td>CRAF Force-Control Series Collaborative Robot</td>
+                            </tr>
+                            <tr>
+                                <td>Joints</td>
+                                <td>6-Axis</td>
+                            </tr>
+                            <tr>
+                                <td>Repeatability</td>
+                                <td>±0.02mm</td>
+                            </tr>
+                            <tr>
+                                <td>Operating Voltage</td>
+                                <td>220V ± 10%, 50/60Hz</td>
+                            </tr>
+                            <tr>
+                                <td>Power Consumption</td>
+                                <td>≤ 500W</td>
+                            </tr>
+                            <tr>
+                                <td>Operating Temperature</td>
+                                <td>0°C ~ 45°C</td>
+                            </tr>
+                            <tr>
+                                <td>Storage Temperature</td>
+                                <td>-20°C ~ 55°C</td>
+                            </tr>
+                            <tr>
+                                <td>Humidity</td>
+                                <td>≤ 95% RH (non-condensing)</td>
+                            </tr>
+                            <tr>
+                                <td>Protection Rating</td>
+                                <td>IP54</td>
+                            </tr>
+                            <tr>
+                                <td>Noise</td>
+                                <td>≤ 68dB</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h3>Detailed Parameters by Model</h3>
+                    <table class="spec-table">
+                        <thead>
+                            <tr>
+                                <th>Parameter</th>
+                                <th>CR5AF</th>
+                                <th>CR10AF</th>
+                                <th>CR20AF</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Max Payload</td>
+                                <td>5kg</td>
+                                <td>10kg</td>
+                                <td>20kg</td>
+                            </tr>
+                            <tr>
+                                <td>Working Radius</td>
+                                <td>900mm</td>
+                                <td>1300mm</td>
+                                <td>1700mm</td>
+                            </tr>
+                            <tr>
+                                <td>Max End-Effector Speed</td>
+                                <td>1.5m/s</td>
+                                <td>1.5m/s</td>
+                                <td>1.5m/s</td>
+                            </tr>
+                            <tr>
+                                <td>Robot Weight</td>
+                                <td>≤ 12kg</td>
+                                <td>≤ 28kg</td>
+                                <td>≤ 60kg</td>
+                            </tr>
+                            <tr>
+                                <td>Force Accuracy</td>
+                                <td>±0.1N</td>
+                                <td>±0.1N</td>
+                                <td>±0.1N</td>
+                            </tr>
+                            <tr>
+                                <td>Torque Sensors</td>
+                                <td>All joints</td>
+                                <td>All joints</td>
+                                <td>All joints</td>
+                            </tr>
+                            <tr>
+                                <td>Collision Detection</td>
+                                <td>Supported</td>
+                                <td>Supported</td>
+                                <td>Supported</td>
+                            </tr>
+                            <tr>
+                                <td>Drag-to-Teach</td>
+                                <td>Supported</td>
+                                <td>Supported</td>
+                                <td>Supported</td>
+                            </tr>
+                            <tr>
+                                <td>Communication Interfaces</td>
+                                <td>Ethernet × 2</td>
+                                <td>Ethernet × 2</td>
+                                <td>Ethernet × 2</td>
+                            </tr>
+                            <tr>
+                                <td>IO Interfaces</td>
+                                <td>16DI/16DO</td>
+                                <td>16DI/16DO</td>
+                                <td>16DI/16DO</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h3>Software & Programming</h3>
+                    <table class="spec-table">
+                        <thead>
+                            <tr>
+                                <th>Parameter</th>
+                                <th>Specification</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Programming Languages</td>
+                                <td>DobotScript / Lua / Python</td>
+                            </tr>
+                            <tr>
+                                <td>Graphical Programming</td>
+                                <td>Supported (flow-based drag-and-drop programming)</td>
+                            </tr>
+                            <tr>
+                                <td>Teaching Methods</td>
+                                <td>GUI teach pendant / drag-to-teach / remote API</td>
+                            </tr>
+                            <tr>
+                                <td>Communication Protocols</td>
+                                <td>TCP/IP, Modbus TCP, EtherCAT</td>
+                            </tr>
+                            <tr>
+                                <td>API Interfaces</td>
+                                <td>RESTful API, WebSocket</td>
+                            </tr>
+                            <tr>
+                                <td>Simulation Software</td>
+                                <td>Dobot Studio (free)</td>
+                            </tr>
+                            <tr>
+                                <td>Operating Systems</td>
+                                <td>Windows / Linux / macOS</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h3>Safety & Certifications</h3>
+                    <table class="spec-table">
+                        <thead>
+                            <tr>
+                                <th>Parameter</th>
+                                <th>Specification</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Safety Functions</td>
+                                <td>Emergency stop, collision detection, torque limiting, software limits</td>
+                            </tr>
+                            <tr>
+                                <td>Certifications</td>
+                                <td>CE, UL, RoHS, ISO 10218</td>
+                            </tr>
+                            <tr>
+                                <td>Collaborative Safety</td>
+                                <td>ISO 10218-1 collaborative robot standard</td>
+                            </tr>
+                            <tr>
+                                <td>EMC</td>
+                                <td>Compliant with EN 61000-6-2/4</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div id="tab-service" class="detail-panel">
+                    <h2>Service Guarantee</h2>
+
+                    <h3>After-Sales Commitment</h3>
+                    <p>Hi-Tech Bazaar provides comprehensive service guarantees for the CRAF Force-Control Series collaborative robot you purchase:</p>
+
+                    <table class="spec-table">
+                        <thead>
+                            <tr>
+                                <th>Service Item</th>
+                                <th>Details</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Warranty Period</td>
+                                <td>3-year warranty for the whole machine, 5-year warranty for core components</td>
+                            </tr>
+                            <tr>
+                                <td>Response Time</td>
+                                <td>7×24 technical support, response within 2 hours</td>
+                            </tr>
+                            <tr>
+                                <td>On-Site Service</td>
+                                <td>48-hour on-site service in major cities nationwide</td>
+                            </tr>
+                            <tr>
+                                <td>Remote Diagnosis</td>
+                                <td>Remote fault diagnosis and software upgrades supported</td>
+                            </tr>
+                            <tr>
+                                <td>Return & Exchange</td>
+                                <td>7-day no-questions-asked return, 15-day exchange guarantee</td>
+                            </tr>
+                            <tr>
+                                <td>Training Support</td>
+                                <td>Free basic operation training and technical documentation</td>
+                            </tr>
+                            <tr>
+                                <td>Parts Supply</td>
+                                <td>Genuine parts guaranteed, lifetime parts supply</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h3>Value-Added Services</h3>
+                    <ul>
+                        <li><strong>Solution customization:</strong>Our professional engineering team designs personalized application solutions for you</li>
+                        <li><strong>System integration:</strong>Assistance with integrating and commissioning robots into your existing production lines</li>
+                        <li><strong>Software upgrades:</strong>Lifetime free software and firmware upgrades and new feature unlocks</li>
+                        <li><strong>Technical consulting:</strong>One-on-one consulting with a dedicated technical advisor after purchase</li>
+                        <li><strong>Extended warranty:</strong>Optional extended warranty of up to 5 years or longer</li>
+                        <li><strong>Leasing services:</strong>Flexible short-term and long-term leasing plans</li>
+                    </ul>
+
+                    <h3>Service Process</h3>
+                    <p>1. <strong>Submit request:</strong>Submit your service request by phone, online customer service, or email</p>
+                    <p>2. <strong>Fast response:</strong>A dedicated service engineer responds within 2 hours and learns the details</p>
+                    <p>3. <strong>Remote support:</strong>Most software and configuration issues are resolved first via remote diagnosis</p>
+                    <p>4. <strong>On-site service:</strong>When on-site service is needed, an engineer arrives within 48 hours</p>
+                    <p>5. <strong>Resolution verification:</strong>Functional verification is performed after resolution to ensure normal operation</p>
+                    <p>6. <strong>Follow-up:</strong>A follow-up visit within 3 days of service completion to confirm satisfaction</p>
+
+                    <h3>Contact Us</h3>
+                    <p>Service hotline: 400-888-8888 (7×24)</p>
+                    <p>Technical support: support@heikeji.com</p>
+                    <p>Business cooperation: business@heikeji.com</p>
+                    <p>Address: Science and Technology Park, Nanshan District, Shenzhen</p>
+                </div>
+            </div>
+        </div>
+
+    <!-- 相关推荐 -->
+    <div class="related-section">
+        <div class="related-title">Recommended for You</div>
+        <div class="related-grid">
+            <div class="related-card" onclick="location.href='./product-detail-cr30h-en.html'">
+                <div class="img-wrap">
+                    <img src="../../img/dobot/cr30h-main.jpg" alt="CR 30H Collaborative Robot">
+                </div>
+                <div class="info">
+                    <div class="name">CR 30H Collaborative Robot</div>
+                    <div class="price">¥Inquiry</div>
+                </div>
+            </div>
+            <div class="related-card" onclick="location.href='./product-detail-cr20a-en.html'">
+                <div class="img-wrap">
+                    <img src="../../img/dobot/home-cr30h.jpg" alt="CR20A Collaborative Robot">
+                </div>
+                <div class="info">
+                    <div class="name">CR20A Collaborative Robot</div>
+                    <div class="price">¥Inquiry</div>
+                </div>
+            </div>
+            <div class="related-card" onclick="location.href='./product-detail-cra-ip68-en.html'">
+                <div class="img-wrap">
+                    <img src="../../img/dobot/home-cra.jpg" alt="CRA-IP68 High-Protection Collaborative Robot">
+                </div>
+                <div class="info">
+                    <div class="name">CRA-IP68 High-Protection Collaborative Robot</div>
+                    <div class="price">¥Inquiry</div>
+                </div>
+            </div>
+            <div class="related-card" onclick="location.href='./product-detail-magician-e6-en.html'">
+                <div class="img-wrap">
+                    <img src="../../img/dobot/magician-e6-main.jpg" alt="Magician E6 Desktop 6-Axis Collaborative Robot">
+                </div>
+                <div class="info">
+                    <div class="name">Magician E6 Desktop 6-Axis Collaborative Robot</div>
+                    <div class="price">¥Inquiry</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="../../components/load-components.js"></script>
     <script>
-        $(document).on('click', 'a', function () {
-            href = $(this).attr('href');
-            if ($(this).attr('href') == '') {
-                event.preventDefault();
-            } else if (href.startsWith('http://') || href.startsWith('https://')) {
-                $(this).attr('target', '_blank');
-            }
-        })
+        if (typeof initNav === 'function') {
+            initNav();
+        }
     </script>
-
-    <script src="../../index_files/jquery.liMarquee.js" type="text/javascript" charset="utf-8"></script>
-
-	<div id="footer-container"></div>
-	<script>
-		loadComponent('footer-container', '.../../components/footer-en.html');
-	</script>
-</body>
-</html>
+    

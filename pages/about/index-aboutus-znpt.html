@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+﻿﻿﻿﻿<!DOCTYPE html>
 
 <html xml:lang="zh" lang="zh" style="--color: #005CE6; --vh: 708px; scroll-behavior: auto;">
 <!-- en --><!-- xml:lang="en" lang="en" -->
@@ -305,7 +305,7 @@
 	<div class="new-nav-wrap">
 		<div class="new-nav-logo">
 			<a href="../../index.html">
-				<img src="../../img/JSlogo-beb0d75f.png" alt="logo">
+				<img src="../../images\黑科技logo.png" alt="logo">
 			</a>
 		</div>
 
@@ -379,8 +379,8 @@
 						</svg>
 					</div>
 					<div class="nav_lan_sel">
-						<a href="../../index-en.html">EN</a>
-						<a href="../../index.html">简</a>
+						<a href="#" class="lang-switch-en">EN</a>
+						<a href="#" class="lang-switch-zh active">简</a>
 					</div>
 				</div>
 
@@ -518,7 +518,7 @@
 	<!-- ====================================================== -->
 	<div id="footer-container"></div>
 	<script>
-		loadComponent('footer-container', '.../../components/footer-zh.html');
+		loadComponent('footer-container', '../../components/footer-zh.html');
 	</script>
 
 	<!-- 右侧浮窗 -->
@@ -1658,6 +1658,12 @@
 				</div>
 			</div>
 		</template></div>
+<script src="../../components/load-components.js"></script>
+<script>
+    if (typeof loadComponent === 'function' && typeof initNav === 'function') {
+        initNav();
+    }
+</script>
 </body>
 <div id="ai-assist-root-bangs"><template shadowrootmode="open">
 		<div id="ai-assist-bangs" data-v-app="">

@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Requirements Matching - HARVEST Green Technology</title>
+    <link rel="stylesheet" type="text/css" href="../../index_files/g-style.css">
+    <script src="../../config1.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif;
+            color: #333;
+            background: #f7f9fc;
+            -webkit-font-smoothing: antialiased;
+            min-height: 100vh;
+        }
+        a { text-decoration: none; color: #333; }
+        ul, ol { list-style: none; }
+        :root {
+            --brand: #0a4db4;
+            --brand-d: #083d94;
+            --demand: #8b5cf6;
+            --demand-d: #7c3aed;
+            --ease: cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        /* ===== 顶部条 ===== */
+        .top-bar {
+            background: #fff;
+            border-bottom: 1px solid #e8ecf1;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .top-bar-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 14px 20px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            color: var(--brand);
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            padding: 7px 14px;
+            border-radius: 6px;
+            transition: background .2s;
+            white-space: nowrap;
+        }
+        .back-btn:hover { background: #e8f0fe; }
+        .page-title {
+            flex: 1;
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            color: #1f2937;
+            letter-spacing: 1px;
+            min-width: 0;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        .header-logo { display: flex; align-items: center; gap: 8px; }
+        .header-logo img { height: 30px; width: auto; }
+        .header-logo span { font-size: 15px; font-weight: 800; color: var(--brand); letter-spacing: 1px; }
+
+        /* 语言切换按钮（与首页一致） */
+        .lang-toggle {
+            display: inline-flex;
+            align-items: center;
+            margin: 0 0 0 10px;
+            border: 1px solid #d9d9d9;
+            border-radius: 12px;
+            overflow: hidden;
+            line-height: 1;
+            vertical-align: middle;
+            flex-shrink: 0;
+        }
+        .lang-toggle a {
+            margin: 0;
+            padding: 3px 9px;
+            font-size: 12px;
+            color: #333;
+        }
+        .lang-toggle a + a { border-left: 1px solid #d9d9d9; }
+        .lang-toggle a.active {
+            background: #0a4db4;
+            color: #fff;
+        }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 24px 20px 60px; }
+
+        /* ===== ① 顶部：发布需求入口（采购方用） ===== */
+        .publish-hero {
+            position: relative;
+            overflow: hidden;
+            border-radius: 18px;
+            padding: 38px 40px;
+            margin-bottom: 28px;
+            color: #fff;
+            background:
+                radial-gradient(620px 240px at 92% -20%, rgba(139, 92, 246, 0.55), transparent 60%),
+                radial-gradient(520px 220px at 0% 120%, rgba(34, 211, 238, 0.30), transparent 60%),
+                linear-gradient(135deg, #0a3a8f 0%, #0a4db4 50%, #1e6fd9 100%);
+            box-shadow: 0 18px 50px -22px rgba(8, 48, 110, 0.55);
+        }
+        .publish-hero::before {
+            content: "";
+            position: absolute; inset: 0;
+            background-image:
+                linear-gradient(rgba(255,255,255,.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,.05) 1px, transparent 1px);
+            background-size: 40px 40px;
+            mask-image: radial-gradient(ellipse 75% 70% at 50% 40%, #000 30%, transparent 90%);
+            -webkit-mask-image: radial-gradient(ellipse 75% 70% at 50% 40%, #000 30%, transparent 90%);
+            pointer-events: none;
+        }
+        .publish-hero > * { position: relative; z-index: 1; }
+        .hero-row { display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+        .hero-text { max-width: 620px; }
+        .hero-eyebrow {
+            display: inline-flex; align-items: center; gap: 8px;
+            font-size: 12px; font-weight: 700; letter-spacing: 3px;
+            color: #c4b5fd; text-transform: uppercase;
+        }
+        .hero-eyebrow::before { content: ""; width: 22px; height: 2px; background: #c4b5fd; }
+        .hero-title { font-size: 30px; font-weight: 800; letter-spacing: 1px; margin: 10px 0 8px; line-height: 1.2; }
+        .hero-title .violet { color: #c4b5fd; }
+        .hero-desc { font-size: 14px; color: rgba(255,255,255,.82); line-height: 1.7; }
+        .hero-cta {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 13px 28px;
+            font-size: 15px; font-weight: 700;
+            color: var(--demand-d);
+            background: linear-gradient(135deg, #ffffff, #f3e8ff);
+            border-radius: 999px;
+            box-shadow: 0 10px 26px -10px rgba(196, 181, 253, 0.7);
+            transition: transform .22s var(--ease), box-shadow .22s var(--ease);
+            white-space: nowrap;
+        }
+        .hero-cta:hover { transform: translateY(-2px); box-shadow: 0 14px 32px -10px rgba(196, 181, 253, 0.85); }
+        .hero-cta svg { width: 18px; height: 18px; }
+        .hero-stats { display: flex; gap: 32px; margin-top: 22px; flex-wrap: wrap; }
+        .hero-stat .num { font-size: 24px; font-weight: 800; line-height: 1; }
+        .hero-stat .num .unit { font-size: 13px; font-weight: 600; color: rgba(255,255,255,.75); margin-left: 2px; }
+        .hero-stat .lbl { font-size: 12px; color: rgba(255,255,255,.7); letter-spacing: 1px; margin-top: 5px; }
+
+        /* ===== 章节标题 ===== */
+        .sec-head { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 16px; gap: 16px; flex-wrap: wrap; }
+        .sec-title-wrap { display: flex; flex-direction: column; gap: 4px; }
+        .sec-eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 2px; color: var(--demand); text-transform: uppercase; }
+        .sec-title { font-size: 22px; font-weight: 800; color: #1f2937; letter-spacing: .5px; }
+        .sec-sub { font-size: 13px; color: #6b7280; }
+        .sec-more {
+            display: inline-flex; align-items: center; gap: 4px;
+            font-size: 13px; font-weight: 600; color: var(--brand);
+            padding: 6px 12px; border-radius: 6px; cursor: pointer; transition: background .2s;
+            white-space: nowrap;
+        }
+        .sec-more:hover { background: #e8f0fe; }
+
+        /* ===== ② 中部：最新需求列表（滚动展示） ===== */
+        .req-panel {
+            background: #fff;
+            border: 1px solid #e8ecf1;
+            border-radius: 14px;
+            box-shadow: 0 4px 18px -10px rgba(10, 77, 180, 0.12);
+            overflow: hidden;
+            margin-bottom: 36px;
+        }
+        .req-filter {
+            display: flex; gap: 8px; flex-wrap: wrap;
+            padding: 14px 18px;
+            border-bottom: 1px solid #f0f2f5;
+            background: #fafbfd;
+        }
+        .filter-chip {
+            padding: 6px 16px; font-size: 13px; font-weight: 600;
+            color: #6b7280; background: #fff; border: 1px solid #e5e7eb;
+            border-radius: 999px; cursor: pointer; transition: all .2s var(--ease);
+        }
+        .filter-chip:hover { color: var(--demand-d); border-color: #c4b5fd; }
+        .filter-chip.active { color: #fff; background: linear-gradient(135deg, var(--demand), var(--demand-d)); border-color: transparent; }
+
+        .req-scroll {
+            max-height: 560px;
+            overflow-y: auto;
+            padding: 8px 8px 8px 18px;
+        }
+        .req-scroll::-webkit-scrollbar { width: 6px; }
+        .req-scroll::-webkit-scrollbar-track { background: #f0f2f5; border-radius: 3px; }
+        .req-scroll::-webkit-scrollbar-thumb { background: #c4b5fd; border-radius: 3px; }
+        .req-scroll::-webkit-scrollbar-thumb:hover { background: var(--demand); }
+
+        .req-row {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr 1.2fr 0.5fr;
+            align-items: center;
+            gap: 14px;
+            padding: 16px 14px;
+            border-bottom: 1px solid #f3f4f6;
+            cursor: pointer;
+            transition: background .2s var(--ease), transform .2s var(--ease);
+            border-left: 3px solid transparent;
+        }
+        .req-row:last-child { border-bottom: none; }
+        .req-row:hover { background: #faf5ff; border-left-color: var(--demand); transform: translateX(2px); }
+        .req-row .r-cat {
+            display: inline-flex; align-items: center; gap: 6px;
+            font-size: 11px; font-weight: 700; letter-spacing: .5px;
+            padding: 3px 10px; border-radius: 999px;
+            background: #f3e8ff; color: var(--demand-d); width: fit-content;
+            margin-bottom: 6px;
+            max-width: 100%;
+        }
+        .req-row .r-cat span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .req-row .r-title { font-size: 15px; font-weight: 600; color: #1f2937; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; word-break: break-word; }
+        .req-row .r-cell { font-size: 13px; color: #4b5563; min-width: 0; }
+        .req-row .r-cell .lbl { display: block; font-size: 10px; color: #9ca3af; letter-spacing: 1px; margin-bottom: 3px; text-transform: uppercase; }
+        .req-row .r-cell .val { font-weight: 600; color: #374151; display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .req-row .r-cell .val.muted { color: #9ca3af; font-weight: 400; }
+        .req-row .r-price { font-size: 13px; font-weight: 700; color: var(--brand); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .req-row .r-go { text-align: right; color: var(--demand); font-weight: 700; font-size: 13px; transition: gap .2s; white-space: nowrap; }
+        .req-row:hover .r-go { letter-spacing: 1px; }
+
+        .req-head-row {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr 1.2fr 0.5fr;
+            gap: 14px;
+            padding: 12px 14px;
+            background: #f9fafb;
+            border-bottom: 1px solid #e5e7eb;
+            font-size: 11px; font-weight: 700; color: #6b7280; letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .loading, .empty-state, .error-box {
+            padding: 50px 20px; text-align: center; color: #9ca3af;
+        }
+        .empty-state .empty-icon { font-size: 40px; margin-bottom: 10px; }
+        .empty-state h3 { font-size: 16px; color: #6b7280; margin-bottom: 6px; }
+
+        /* ===== ③ 底部：对接记录 / 成交案例 ===== */
+        .cases-section { margin-top: 8px; }
+        .cases-placeholder {
+            background: #fff;
+            border: 1px dashed #d1d5db;
+            border-radius: 14px;
+            padding: 44px 30px;
+            text-align: center;
+            color: #9ca3af;
+            position: relative;
+            overflow: hidden;
+        }
+        .cases-placeholder::before {
+            content: "";
+            position: absolute; inset: 0;
+            background: repeating-linear-gradient(45deg, #faf5ff 0 14px, transparent 14px 28px);
+            opacity: .5; pointer-events: none;
+        }
+        .cases-placeholder > * { position: relative; }
+        .cases-icon {
+            width: 56px; height: 56px; margin: 0 auto 14px;
+            display: flex; align-items: center; justify-content: center;
+            border-radius: 50%; background: linear-gradient(135deg, #f3e8ff, #e0e7ff);
+            font-size: 26px;
+        }
+        .cases-placeholder h3 { font-size: 17px; color: #4b5563; margin-bottom: 6px; }
+        .cases-placeholder p { font-size: 13px; line-height: 1.7; max-width: 460px; margin: 0 auto; }
+        .cases-placeholder .tag {
+            display: inline-block; margin-top: 14px;
+            padding: 4px 12px; font-size: 11px; font-weight: 700; letter-spacing: 1px;
+            color: var(--demand-d); background: #f3e8ff; border-radius: 999px;
+        }
+
+        @media (max-width: 900px) {
+            .req-head-row { display: none; }
+            .req-row { grid-template-columns: 1fr 1fr; gap: 10px; }
+            .req-row .r-title { grid-column: 1 / -1; }
+            .req-row .r-go { grid-column: 1 / -1; text-align: left; }
+        }
+        @media (max-width: 600px) {
+            .publish-hero { padding: 26px 20px; }
+            .hero-title { font-size: 22px; }
+            .hero-row { flex-direction: column; align-items: flex-start; }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- ===== 顶部条 ===== -->
+    <div class="top-bar">
+        <div class="top-bar-inner">
+            <span class="back-btn" onclick="location.href='../../index-en.html'">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"></path></svg>
+                Home
+            </span>
+            <div class="page-title">Requirements Matching</div>
+            <span class="lang-toggle" title="Language"><a href="#" class="lang-switch-zh">中</a><a href="#" class="lang-switch-en active">EN</a></span>
+            <div class="header-logo">
+                <img src="../../images/黑科技logo.png" alt="Logo">
+                <span>HARVEST</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+
+        <!-- ============ ① 顶部：发布需求入口（采购方用） ============ -->
+        <section class="publish-hero">
+            <div class="hero-row">
+                <div class="hero-text">
+                    <span class="hero-eyebrow">Demand Matching</span>
+                    <h1 class="hero-title">Publish Requirements · <span class="violet">Precise Matching</span></h1>
+                    <p class="hero-desc">Buyers publish procurement or cooperation requirements in one click. The platform brings together global supplier resources and matches them intelligently by category, quantity and delivery time, bridging the last mile of cross-border supply and demand.</p>
+                    <div class="hero-stats">
+                        <div class="hero-stat"><div class="num">28</div><div class="lbl">Active Requirements</div></div>
+                        <div class="hero-stat"><div class="num">12</div><div class="lbl">Countries &amp; Regions</div></div>
+                        <div class="hero-stat"><div class="num">96<span class="unit">%</span></div><div class="lbl">Match Intent</div></div>
+                    </div>
+                </div>
+                <a class="hero-cta" href="../user/publish.html">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"></path></svg>
+                    Publish a Requirement
+                </a>
+            </div>
+        </section>
+
+        <!-- ============ ② 中部：最新需求列表（滚动展示） ============ -->
+        <section>
+            <div class="sec-head">
+                <div class="sec-title-wrap">
+                    <span class="sec-eyebrow">Latest Sourcing</span>
+                    <h2 class="sec-title">Latest Requirements</h2>
+                    <span class="sec-sub">Scroll to browse · each tagged with category / quantity / delivery / publish time</span>
+                </div>
+                <span class="sec-more" onclick="location.href='list.html'">Enter Requirements Hall →</span>
+            </div>
+
+            <div class="req-panel">
+                <div class="req-filter">
+                    <div class="filter-chip active" data-type="" onclick="switchType('')">All</div>
+                    <div class="filter-chip" data-type="buy" onclick="switchType('buy')">Buy</div>
+                    <div class="filter-chip" data-type="sell" onclick="switchType('sell')">Sell</div>
+                    <div class="filter-chip" data-type="coop" onclick="switchType('coop')">Partner</div>
+                </div>
+                <div class="req-head-row">
+                    <div>Requirement / Category</div>
+                    <div>Qty</div>
+                    <div>Delivery</div>
+                    <div>Price</div>
+                    <div>Published</div>
+                    <div></div>
+                </div>
+                <div class="req-scroll" id="reqScroll">
+                    <div class="loading">Loading...</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============ ③ 底部：对接记录 / 成交案例 ============ -->
+        <section class="cases-section">
+            <div class="sec-head">
+                <div class="sec-title-wrap">
+                    <span class="sec-eyebrow">Closed Deals</span>
+                    <h2 class="sec-title">Matching Records / Success Stories</h2>
+                    <span class="sec-sub">Real matching records will be shown once deals are completed</span>
+                </div>
+            </div>
+            <div class="cases-placeholder">
+                <div class="cases-icon">🤝</div>
+                <h3>Success Stories Coming Soon</h3>
+                <p>This section will showcase completed matching records and successful deals. Once the first batch of requirements completes the matching process, they will be displayed here as a credit reference for future cooperation.</p>
+                <span class="tag">Stay Tuned</span>
+            </div>
+        </section>
+
+    </div>
+
+    <script>
+        const API_BASE = window.SERVER_BASE_URL || '';
+        const CATEGORY_MAP = {
+            1: 'AI & Robotics', 2: 'Advanced Materials', 3: 'Digital Services & Platform',
+            4: 'Communications & Networks', 5: 'Low-Altitude Economy', 6: 'Commodity Trading',
+            7: 'Cultural & Creative IP', 8: 'Smart Agriculture & Grain Storage', 9: 'Security & Identification', 10: 'New Energy & Storage'
+        };
+        const TYPE_MAP = { buy: 'Buy', sell: 'Sell', coop: 'Partner' };
+
+        let currentType = '';
+        const PAGE_SIZE = 50; // 滚动列表一次加载较多条
+
+        function switchType(t) {
+            currentType = t;
+            document.querySelectorAll('.filter-chip').forEach(c => {
+                c.classList.toggle('active', c.dataset.type === (t || ''));
+            });
+            loadList();
+        }
+
+        async function loadList() {
+            const box = document.getElementById('reqScroll');
+            box.innerHTML = '<div class="loading">Loading...</div>';
+            const params = new URLSearchParams({ pageNum: 1, pageSize: PAGE_SIZE });
+            if (currentType) params.set('type', currentType);
+            try {
+                const resp = await fetch(`${API_BASE}/requirement/public?${params}`);
+                const result = await resp.json();
+                if (resp.ok && result.code === 0) {
+                    renderList(result.data.items || []);
+                } else {
+                    box.innerHTML = `<div class="error-box">${escapeHtml(result.message || result.msg || 'Load failed')}</div>`;
+                }
+            } catch (err) {
+                console.error('加载错误:', err);
+                box.innerHTML = '<div class="error-box">Network error, please try again later</div>';
+            }
+        }
+
+        function renderList(items) {
+            const box = document.getElementById('reqScroll');
+            if (!items.length) {
+                box.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-icon">🔍</div>
+                        <h3>No Requirements Yet</h3>
+                        <p>No matching requirements right now. Be the first to publish one!</p>
+                    </div>`;
+                return;
+            }
+            // 注意：当前需求数据模型暂无 quantity / deliveryDate 字段，
+            // 数量 / 交期 暂以 "TBD" 占位，待 publish 表单与后端 DTO 扩展后即可展示真实值。
+            box.innerHTML = items.map(r => {
+                const cat = CATEGORY_MAP[r.categoryId] || `Category #${r.categoryId}`;
+                const price = (r.minPrice != null || r.maxPrice != null)
+                    ? `¥${r.minPrice || 0} ~ ${r.maxPrice != null ? '¥' + r.maxPrice : 'Negotiable'}`
+                    : 'Price Negotiable';
+                const qty = r.quantity ? escapeHtml(r.quantity) : '<span class="muted">TBD</span>';
+                const delivery = r.deliveryDate ? escapeHtml(r.deliveryDate) : '<span class="muted">TBD</span>';
+                return `
+                <div class="req-row" onclick="goDetail(${r.id})">
+                    <div>
+                        <span class="r-cat"><span>${TYPE_MAP[r.type] ? '' : ''}${escapeHtml(cat)}</span></span>
+                        <div class="r-title">${escapeHtml(r.name)}</div>
+                    </div>
+                    <div class="r-cell"><span class="lbl">Qty</span><span class="val">${qty}</span></div>
+                    <div class="r-cell"><span class="lbl">Delivery</span><span class="val">${delivery}</span></div>
+                    <div class="r-cell r-price">${escapeHtml(price)}</div>
+                    <div class="r-cell"><span class="lbl">Posted</span><span class="val">${formatTime(r.createTime)}</span></div>
+                    <div class="r-go">Match →</div>
+                </div>`;
+            }).join('');
+        }
+
+        function goDetail(id) { location.href = `detail.html?id=${id}`; }
+        function formatTime(t) { return t ? t.replace('T', ' ').substring(0, 10) : '-'; }
+        function escapeHtml(s) {
+            if (s == null) return '';
+            return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+        }
+
+        loadList();
+    </script>
+    <script src="../../components/load-components.js"></script>
+    <script>
+        if (typeof initNav === 'function') { initNav(); }
+    </script>
+</body>
+
+</html>

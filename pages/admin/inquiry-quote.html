@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>询价报价 - 黑科技商城管理后台</title>
+    <link rel="stylesheet" type="text/css" href="../../index_files/g-style.css">
+    <script src="../../config1.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif;
+            color: #333; background: #f0f2f5;
+            -webkit-font-smoothing: antialiased; min-height: 100vh;
+        }
+        a { text-decoration: none; color: inherit; }
+        ul, ol { list-style: none; }
+
+        /* ===== 顶部导航条 ===== */
+        .top-bar {
+            background: linear-gradient(135deg, #1a1f2e 0%, #2c3e50 100%);
+            color: #fff;
+            position: sticky; top: 0; z-index: 100;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+        .top-bar-inner {
+            max-width: 1200px; margin: 0 auto; padding: 14px 24px;
+            display: flex; align-items: center; gap: 16px;
+        }
+        .back-btn {
+            display: flex; align-items: center; gap: 4px;
+            color: #fff; font-size: 14px; font-weight: 500;
+            cursor: pointer; padding: 6px 12px; border-radius: 4px;
+            transition: background 0.2s;
+        }
+        .back-btn:hover { background: rgba(255,255,255,0.1); }
+        .page-title {
+            flex: 1; text-align: center; font-size: 17px; font-weight: bold;
+            letter-spacing: 1px;
+        }
+        .page-title .admin-badge {
+            display: inline-block; padding: 2px 8px; margin-left: 8px;
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            border-radius: 4px; font-size: 11px; font-weight: 500;
+            vertical-align: middle;
+        }
+        .header-logo { display: flex; align-items: center; gap: 8px; }
+        .header-logo .logo-text { font-size: 16px; font-weight: bold; }
+        .header-logo .logo-text .highlight { color: #ffd700; }
+
+        /* ===== 主体容器 ===== */
+        .container { max-width: 1200px; margin: 0 auto; padding: 24px 24px 60px; }
+
+        /* ===== 统计卡片 ===== */
+        .stats-row {
+            display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px;
+            margin-bottom: 20px;
+        }
+        .stat-card {
+            background: #fff; border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            padding: 16px 18px; cursor: pointer;
+            transition: all 0.2s; border-left: 4px solid #0a4db4;
+        }
+        .stat-card:hover { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(0,0,0,0.1); }
+        .stat-card.active {
+            background: linear-gradient(135deg, #0a4db4 0%, #1e6fd9 100%);
+            color: #fff;
+        }
+        .stat-card.active .stat-num,
+        .stat-card.active .stat-label { color: #fff; }
+        .stat-card.pending  { border-left-color: #faad14; }
+        .stat-card.quoted    { border-left-color: #10b981; }
+        .stat-card.confirmed { border-left-color: #0a4db4; }
+        .stat-card.cancelled { border-left-color: #b0b7c4; }
+        .stat-card.pending.active  { background: linear-gradient(135deg, #faad14 0%, #d48806 100%); }
+        .stat-card.quoted.active    { background: linear-gradient(135deg, #10b981 0%, #059669 100%); }
+        .stat-card.confirmed.active { background: linear-gradient(135deg, #0a4db4 0%, #1e6fd9 100%); }
+        .stat-card.cancelled.active { background: linear-gradient(135deg, #b0b7c4 0%, #8a93a3 100%); }
+        .stat-card .stat-num { font-size: 24px; font-weight: bold; color: #333; }
+        .stat-card .stat-label { font-size: 13px; color: #999; margin-top: 4px; }
+
+        /* ===== 工具栏 ===== */
+        .toolbar {
+            background: #fff; padding: 14px 18px; border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06); margin-bottom: 18px;
+            display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+        }
+        .toolbar .title {
+            font-size: 15px; font-weight: 600; color: #333;
+            margin-right: auto;
+        }
+        .toolbar select, .toolbar input {
+            padding: 7px 12px; border: 1px solid #d0d6de;
+            border-radius: 6px; font-size: 13px; outline: none;
+            background: #fff;
+        }
+        .toolbar select:focus, .toolbar input:focus {
+            border-color: #0a4db4;
+        }
+        .toolbar .btn-refresh {
+            padding: 7px 14px; background: #eaf2ff; color: #0a4db4;
+            border: none; border-radius: 6px; cursor: pointer;
+            font-size: 13px; font-weight: 500;
+            transition: background 0.2s;
+        }
+        .toolbar .btn-refresh:hover { background: #d4e5ff; }
+
+        /* ===== 询价表格 ===== */
+        .inquiry-table {
+            background: #fff; border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06); overflow: hidden;
+        }
+        table { width: 100%; border-collapse: collapse; }
+        thead { background: #f7f9fc; }
+        th {
+            text-align: left; padding: 12px 14px;
+            font-size: 13px; font-weight: 600; color: #666;
+            border-bottom: 1px solid #e8ecf1;
+            white-space: nowrap;
+        }
+        td {
+            padding: 14px; font-size: 13px; color: #333;
+            border-bottom: 1px solid #f0f2f5; vertical-align: middle;
+        }
+        tr:hover td { background: #fafbfc; }
+        .col-no { width: 130px; font-family: "Consolas","Monaco",monospace; color: #888; }
+        .col-product { min-width: 200px; }
+        .col-product .name { font-weight: 600; color: #1a1f2e; }
+        .col-product .sub { color: #999; font-size: 12px; margin-top: 3px; }
+        .col-qty { width: 80px; text-align: center; font-weight: 600; }
+        .col-buyer { width: 110px; color: #666; }
+        .col-time { width: 130px; color: #888; font-size: 12px; }
+        .col-status { width: 90px; }
+        .col-quote { width: 130px; }
+        .col-action { width: 130px; text-align: right; }
+
+        .status-pill {
+            display: inline-flex; align-items: center; gap: 4px;
+            padding: 3px 9px; border-radius: 999px;
+            font-size: 12px; font-weight: 600;
+        }
+        .status-pill::before {
+            content: "●"; margin-right: 2px;
+        }
+        .status-pill.s0 { background: #fff7e6; color: #faad14; }
+        .status-pill.s1 { background: #e6fffb; color: #10b981; }
+        .status-pill.s2 { background: #eaf2ff; color: #0a4db4; }
+        .status-pill.s3 { background: #f0f2f5; color: #888; }
+
+        .quote-text {
+            font-weight: 600; color: #10b981;
+        }
+        .quote-text.empty { color: #bbb; font-weight: 400; }
+
+        .btn-action {
+            padding: 6px 12px; border: none; border-radius: 6px;
+            font-size: 12px; font-weight: 600; cursor: pointer;
+            transition: all 0.2s; white-space: nowrap;
+        }
+        .btn-quote { background: linear-gradient(135deg, #10b981, #059669); color: #fff; }
+        .btn-quote:hover { box-shadow: 0 3px 10px rgba(16, 185, 129, 0.4); }
+        .btn-view { background: #eaf2ff; color: #0a4db4; }
+        .btn-view:hover { background: #d4e5ff; }
+        .btn-cancel-admin {
+            background: #fff1f0; color: #ff4d4f; margin-left: 6px;
+        }
+        .btn-cancel-admin:hover { background: #ffccc7; }
+
+        /* ===== 空状态 ===== */
+        .empty {
+            text-align: center; padding: 80px 20px;
+            color: #999;
+        }
+        .empty .icon { font-size: 56px; margin-bottom: 14px; }
+        .empty .title { font-size: 16px; color: #666; margin-bottom: 6px; }
+        .empty .desc { font-size: 13px; color: #aaa; }
+
+        /* ===== 加载态 ===== */
+        .loading {
+            text-align: center; padding: 60px 20px;
+            color: #888; font-size: 14px;
+        }
+        .loading::after {
+            content: ""; display: block; width: 28px; height: 28px;
+            margin: 12px auto 0; border: 3px solid #e1e5ed;
+            border-top-color: #0a4db4; border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* ===== 分页 ===== */
+        .pagination {
+            display: flex; justify-content: center; gap: 6px;
+            padding: 18px;
+        }
+        .pagination button {
+            padding: 7px 13px; font-size: 13px;
+            border: 1px solid #e1e5ed; background: #fff;
+            border-radius: 6px; cursor: pointer; color: #555;
+            transition: all 0.2s;
+        }
+        .pagination button:hover { border-color: #0a4db4; color: #0a4db4; }
+        .pagination button.active {
+            background: #0a4db4; color: #fff; border-color: #0a4db4;
+        }
+        .pagination button:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        /* ===== 报价弹窗 ===== */
+        .modal-mask {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.5);
+            display: none; align-items: center; justify-content: center;
+            z-index: 1000;
+        }
+        .modal-mask.show { display: flex; }
+        .modal {
+            background: #fff; border-radius: 12px;
+            width: 460px; max-width: 92vw; padding: 24px 28px;
+            box-shadow: 0 12px 40px rgba(0,0,0,0.2);
+            animation: modalIn .25s ease;
+        }
+        @keyframes modalIn {
+            from { opacity: 0; transform: translateY(-12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .modal h3 {
+            font-size: 18px; font-weight: 700; color: #1a1f2e;
+            margin-bottom: 6px;
+        }
+        .modal .modal-sub {
+            color: #888; font-size: 13px; margin-bottom: 18px;
+        }
+        .modal .form-row { margin-bottom: 14px; }
+        .modal label {
+            display: block; font-size: 13px; font-weight: 600;
+            color: #555; margin-bottom: 6px;
+        }
+        .modal label .required { color: #ff4d4f; margin-left: 2px; }
+        .modal input, .modal textarea {
+            width: 100%; padding: 9px 12px;
+            border: 1px solid #d0d6de; border-radius: 6px;
+            font-size: 14px; outline: none; font-family: inherit;
+            transition: border-color 0.2s;
+        }
+        .modal input:focus, .modal textarea:focus { border-color: #0a4db4; }
+        .modal textarea { resize: vertical; min-height: 70px; }
+        .modal .form-row .hint { font-size: 12px; color: #999; margin-top: 4px; }
+        .modal .modal-actions {
+            display: flex; gap: 10px; justify-content: flex-end;
+            margin-top: 20px;
+        }
+        .modal .btn {
+            padding: 9px 22px; border: none; border-radius: 6px;
+            font-size: 14px; font-weight: 600; cursor: pointer;
+            transition: all 0.2s;
+        }
+        .modal .btn-cancel { background: #f0f2f5; color: #666; }
+        .modal .btn-cancel:hover { background: #e1e5ed; }
+        .modal .btn-submit {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: #fff;
+        }
+        .modal .btn-submit:hover {
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+        }
+        .modal .product-preview {
+            background: #f7f9fc; padding: 10px 14px;
+            border-radius: 6px; margin-bottom: 16px;
+            font-size: 13px;
+        }
+        .modal .product-preview .pn { font-weight: 600; color: #333; }
+        .modal .product-preview .pq { color: #666; margin-top: 3px; }
+
+        /* ===== Toast ===== */
+        .toast {
+            position: fixed; top: 20px; left: 50%;
+            transform: translateX(-50%) translateY(-100px);
+            background: rgba(20, 25, 40, 0.95); color: #fff;
+            padding: 12px 24px; border-radius: 8px; font-size: 14px;
+            z-index: 10000; opacity: 0;
+            transition: all .35s cubic-bezier(0.22, 1, 0.36, 1);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+        }
+        .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+        .toast.success { background: rgba(16, 142, 75, 0.95); }
+        .toast.error { background: rgba(220, 53, 69, 0.95); }
+
+        @media (max-width: 768px) {
+            .stats-row { grid-template-columns: repeat(2, 1fr); }
+            .col-time, .col-buyer { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <!-- 顶部导航 -->
+    <div class="top-bar">
+        <div class="top-bar-inner">
+            <a href="../../index.html" class="back-btn">← 返回首页</a>
+            <div class="page-title">询价报价管理<span class="admin-badge">ADMIN</span></div>
+            <a href="audit-requirements.html" class="back-btn" style="background:rgba(255,215,0,0.15);color:#ffd700;">📋 需求审核</a>
+            <div class="header-logo">
+                <span class="logo-text">黑<span class="highlight">科技</span>商城</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- 统计卡片 -->
+        <div class="stats-row" id="statsRow">
+            <div class="stat-card active" data-status="" onclick="HRQuote.filterStatus('')">
+                <div class="stat-num" id="cnt-all">-</div>
+                <div class="stat-label">全部询价</div>
+            </div>
+            <div class="stat-card pending" data-status="0" onclick="HRQuote.filterStatus('0')">
+                <div class="stat-num" id="cnt-0">-</div>
+                <div class="stat-label">待报价</div>
+            </div>
+            <div class="stat-card quoted" data-status="1" onclick="HRQuote.filterStatus('1')">
+                <div class="stat-num" id="cnt-1">-</div>
+                <div class="stat-label">已报价</div>
+            </div>
+            <div class="stat-card confirmed" data-status="2" onclick="HRQuote.filterStatus('2')">
+                <div class="stat-num" id="cnt-2">-</div>
+                <div class="stat-label">已确认转单</div>
+            </div>
+        </div>
+
+        <!-- 工具栏 -->
+        <div class="toolbar">
+            <div class="title">询价列表</div>
+            <input type="text" id="searchInput" placeholder="搜索商品名/询价单号" style="width:220px">
+            <select id="statusFilter" onchange="HRQuote.onFilterChange()">
+                <option value="">全部状态</option>
+                <option value="0">待报价</option>
+                <option value="1">已报价</option>
+                <option value="2">已确认</option>
+                <option value="3">已取消</option>
+            </select>
+            <button class="btn-refresh" onclick="HRQuote.refresh()">🔄 刷新</button>
+        </div>
+
+        <!-- 表格 -->
+        <div class="inquiry-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th class="col-no">询价单号</th>
+                        <th class="col-product">商品 / 规格</th>
+                        <th class="col-qty">数量</th>
+                        <th class="col-buyer">买家</th>
+                        <th class="col-time">提交时间</th>
+                        <th class="col-status">状态</th>
+                        <th class="col-quote">报价</th>
+                        <th class="col-action">操作</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+                    <tr><td colspan="8" class="loading">加载中...</td></tr>
+                </tbody>
+            </table>
+            <div class="pagination" id="pagination"></div>
+        </div>
+    </div>
+
+    <!-- 报价弹窗 -->
+    <div class="modal-mask" id="quoteModal">
+        <div class="modal">
+            <h3>💬 在线报价</h3>
+            <div class="modal-sub">填写报价金额与备注，买家确认后将自动生成订单</div>
+            <div class="product-preview" id="productPreview"></div>
+            <div class="form-row">
+                <label>报价金额（元）<span class="required">*</span></label>
+                <input type="number" id="quotePrice" step="0.01" min="0" placeholder="例如 12800.00">
+                <div class="hint">买家确认后，订单总金额 = 报价金额 × 询价数量</div>
+            </div>
+            <div class="form-row">
+                <label>报价备注</label>
+                <textarea id="quoteRemark" placeholder="可说明交期、运费、含税情况等（选填）"></textarea>
+            </div>
+            <div class="modal-actions">
+                <button class="btn btn-cancel" onclick="HRQuote.closeQuoteModal()">取消</button>
+                <button class="btn btn-submit" onclick="HRQuote.submitQuote()">提交报价</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var HRQuote = (function () {
+            var API_BASE = window.SERVER_BASE_URL || '';
+            var currentStatus = '';
+            var currentPage = 1;
+            var pageSize = 10;
+            var currentInquiry = null; // 当前正报价的 inquiry 对象
+
+            var STATUS_TEXT = { 0: '待报价', 1: '已报价', 2: '已确认', 3: '已取消' };
+
+            function getToken() { return localStorage.getItem('token'); }
+
+            function authHeaders() {
+                return { 'Authorization': getToken() };
+            }
+
+            function authJsonHeaders() {
+                return { 'Authorization': getToken(), 'Content-Type': 'application/json' };
+            }
+
+            function escapeHtml(s) {
+                return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+                    return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+                });
+            }
+
+            function formatDateTime(s) {
+                if (!s) return '-';
+                return String(s).replace('T', ' ').substring(0, 16);
+            }
+
+            function formatPrice(p) {
+                if (p == null || p === '') return '—';
+                var n = parseFloat(p);
+                if (isNaN(n)) return '—';
+                return '¥' + n.toLocaleString('zh-CN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            }
+
+            function showToast(msg, type) {
+                var el = document.createElement('div');
+                el.className = 'toast ' + (type || '');
+                el.textContent = msg;
+                document.body.appendChild(el);
+                setTimeout(function () { el.classList.add('show'); }, 10);
+                setTimeout(function () {
+                    el.classList.remove('show');
+                    setTimeout(function () { el.remove(); }, 350);
+                }, 2400);
+            }
+
+            // JWT roleId 解析（参考 audit-requirements.html）
+            function parseJwtRoleId(token) {
+                try {
+                    var part = token.split('.')[1];
+                    if (!part) return null;
+                    var padded = part.replace(/-/g, '+').replace(/_/g, '/');
+                    while (padded.length % 4) padded += '=';
+                    var json = decodeURIComponent(escape(window.atob(padded)));
+                    var claims = JSON.parse(json);
+                    return claims.roleId ? Number(claims.roleId) : null;
+                } catch (e) {
+                    return null;
+                }
+            }
+
+            function checkTokenExpired() {
+                var token = getToken();
+                if (!token) return true;
+                try {
+                    var part = token.split('.')[1];
+                    if (!part) return true;
+                    var padded = part.replace(/-/g, '+').replace(/_/g, '/');
+                    while (padded.length % 4) padded += '=';
+                    var claims = JSON.parse(decodeURIComponent(escape(window.atob(padded))));
+                    var exp = claims.exp;
+                    if (!exp) return false;
+                    return Date.now() / 1000 > exp;
+                } catch (e) {
+                    return true;
+                }
+            }
+
+            function checkAdmin() {
+                var token = getToken();
+                if (!token || checkTokenExpired()) {
+                    var cur = window.location.pathname.replace(/^\//, '') + (window.location.search || '');
+                    window.location.href = '../user/login.html?redirect=' + encodeURIComponent(cur);
+                    return false;
+                }
+                var roleId = parseJwtRoleId(token);
+                if (roleId !== 1) {
+                    document.body.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;min-height:100vh;flex-direction:column;color:#999;"><div style="font-size:64px;margin-bottom:16px;">🔒</div><h3 style="color:#333;margin-bottom:8px;">权限不足</h3><p>该页面仅管理员可访问</p><a href="../../index.html" style="margin-top:22px;color:#0a4db4;">返回首页</a></div>';
+                    return false;
+                }
+                return true;
+            }
+
+            function renderRow(it) {
+                var st = STATUS_TEXT[it.status] || '未知';
+                var statusPill = '<span class="status-pill s' + it.status + '">' + st + '</span>';
+
+                var quoteCell = (it.quotePrice != null)
+                    ? '<span class="quote-text">' + formatPrice(it.quotePrice) + '</span>'
+                    : '<span class="quote-text empty">未报价</span>';
+
+                var actionBtn = '';
+                if (it.status === 0) {
+                    actionBtn = '<button class="btn-action btn-quote" onclick="HRQuote.openQuoteModal(' + it.id + ')">💬 报价</button>';
+                } else if (it.status === 1) {
+                    actionBtn = '<button class="btn-action btn-view" onclick="HRQuote.viewDetail(' + it.id + ')">查看</button>' +
+                        '<button class="btn-action btn-cancel-admin" onclick="HRQuote.adminCancel(' + it.id + ')">取消</button>';
+                } else {
+                    actionBtn = '<button class="btn-action btn-view" onclick="HRQuote.viewDetail(' + it.id + ')">查看</button>';
+                }
+
+                var buyerName = it.contactName || ('用户#' + it.userId);
+                var productSub = it.spec ? escapeHtml(it.spec) : '—';
+
+                return '<tr>' +
+                    '<td class="col-no">' + escapeHtml(it.inquiryNo) + '</td>' +
+                    '<td class="col-product"><div class="name">' + escapeHtml(it.productName) + '</div><div class="sub">' + productSub + '</div></td>' +
+                    '<td class="col-qty">' + escapeHtml(it.quantity) + '</td>' +
+                    '<td class="col-buyer">' + escapeHtml(buyerName) + '</td>' +
+                    '<td class="col-time">' + formatDateTime(it.createdAt) + '</td>' +
+                    '<td class="col-status">' + statusPill + '</td>' +
+                    '<td class="col-quote">' + quoteCell + '</td>' +
+                    '<td class="col-action">' + actionBtn + '</td>' +
+                '</tr>';
+            }
+
+            function loadList() {
+                var tbody = document.getElementById('tableBody');
+                var pagination = document.getElementById('pagination');
+                tbody.innerHTML = '<tr><td colspan="8" class="loading">正在加载询价单...</td></tr>';
+                pagination.innerHTML = '';
+
+                var url = API_BASE + '/inquiry/admin/list?pageNum=' + currentPage + '&pageSize=' + pageSize;
+                if (currentStatus !== '') url += '&status=' + currentStatus;
+
+                fetch(url, { headers: authHeaders() })
+                    .then(function (r) {
+                        if (r.status === 401) {
+                            var cur = window.location.pathname.replace(/^\//, '') + (window.location.search || '');
+                            window.location.href = '../user/login.html?redirect=' + encodeURIComponent(cur);
+                            throw new Error('未登录');
+                        }
+                        return r.json();
+                    })
+                    .then(function (res) {
+                        if (res.code !== 0) {
+                            tbody.innerHTML = '<tr><td colspan="8" class="empty"><div class="icon">⚠️</div><div class="title">加载失败</div><div class="desc">' + escapeHtml(res.message || '请稍后重试') + '</div></td></tr>';
+                            return;
+                        }
+                        var data = res.data || {};
+                        var items = data.items || data.list || [];
+                        if (!items.length) {
+                            tbody.innerHTML = '<tr><td colspan="8" class="empty"><div class="icon">📋</div><div class="title">暂无询价单</div><div class="desc">买家提交询价后，将在此处显示</div></td></tr>';
+                            return;
+                        }
+                        tbody.innerHTML = items.map(renderRow).join('');
+                        renderPagination(data.total || items.length);
+                    })
+                    .catch(function (e) {
+                        if (e.message === '未登录') return;
+                        tbody.innerHTML = '<tr><td colspan="8" class="empty"><div class="icon">📡</div><div class="title">网络异常</div><div class="desc">请稍后重试</div></td></tr>';
+                    });
+            }
+
+            function loadStats() {
+                ['0', '1', '2'].forEach(function (s) {
+                    fetch(API_BASE + '/inquiry/admin/list?pageNum=1&pageSize=1&status=' + s, { headers: authHeaders() })
+                        .then(function (r) { return r.json(); })
+                        .then(function (res) {
+                            if (res.code === 0 && res.data) {
+                                document.getElementById('cnt-' + s).textContent = res.data.total || 0;
+                            }
+                        })
+                        .catch(function () {});
+                });
+                fetch(API_BASE + '/inquiry/admin/list?pageNum=1&pageSize=1', { headers: authHeaders() })
+                    .then(function (r) { return r.json(); })
+                    .then(function (res) {
+                        if (res.code === 0 && res.data) {
+                            document.getElementById('cnt-all').textContent = res.data.total || 0;
+                        }
+                    })
+                    .catch(function () {});
+            }
+
+            function renderPagination(total) {
+                var pagination = document.getElementById('pagination');
+                var totalPages = Math.ceil(total / pageSize) || 1;
+                if (totalPages <= 1) { pagination.innerHTML = ''; return; }
+
+                var html = '';
+                html += '<button ' + (currentPage === 1 ? 'disabled' : '') + ' onclick="HRQuote.goPage(' + (currentPage - 1) + ')">上一页</button>';
+                for (var i = 1; i <= totalPages; i++) {
+                    if (i === 1 || i === totalPages || Math.abs(i - currentPage) <= 2) {
+                        html += '<button class="' + (i === currentPage ? 'active' : '') + '" onclick="HRQuote.goPage(' + i + ')">' + i + '</button>';
+                    } else if (i === 2 || i === totalPages - 1) {
+                        html += '<button disabled>...</button>';
+                    }
+                }
+                html += '<button ' + (currentPage === totalPages ? 'disabled' : '') + ' onclick="HRQuote.goPage(' + (currentPage + 1) + ')">下一页</button>';
+                pagination.innerHTML = html;
+            }
+
+            // 报价弹窗
+            function openQuoteModal(id) {
+                // 拉取详情
+                fetch(API_BASE + '/inquiry/admin/' + id, { headers: authHeaders() })
+                    .then(function (r) { return r.json(); })
+                    .then(function (res) {
+                        if (res.code !== 0 || !res.data) {
+                            showToast('加载询价详情失败', 'error');
+                            return;
+                        }
+                        currentInquiry = res.data;
+                        var it = res.data;
+                        document.getElementById('productPreview').innerHTML =
+                            '<div class="pn">' + escapeHtml(it.productName) + '</div>' +
+                            '<div class="pq">询价数量：' + escapeHtml(it.quantity) + (it.spec ? ' · 规格：' + escapeHtml(it.spec) : '') + '</div>' +
+                            (it.remark ? '<div class="pq">买家备注：' + escapeHtml(it.remark) + '</div>' : '') +
+                            (it.contactName || it.contactPhone ? '<div class="pq">联系人：' + escapeHtml(it.contactName || '') + ' ' + escapeHtml(it.contactPhone || '') + '</div>' : '');
+                        document.getElementById('quotePrice').value = '';
+                        document.getElementById('quoteRemark').value = '';
+                        document.getElementById('quoteModal').classList.add('show');
+                        setTimeout(function () { document.getElementById('quotePrice').focus(); }, 100);
+                    })
+                    .catch(function () {
+                        showToast('网络异常，无法加载详情', 'error');
+                    });
+            }
+
+            function closeQuoteModal() {
+                document.getElementById('quoteModal').classList.remove('show');
+                currentInquiry = null;
+            }
+
+            function submitQuote() {
+                if (!currentInquiry) return;
+                var priceStr = document.getElementById('quotePrice').value;
+                var price = parseFloat(priceStr);
+                if (!price || price <= 0 || isNaN(price)) {
+                    showToast('请输入有效的报价金额', 'error');
+                    return;
+                }
+                var remark = document.getElementById('quoteRemark').value;
+
+                fetch(API_BASE + '/inquiry/admin/' + currentInquiry.id + '/quote', {
+                    method: 'PUT',
+                    headers: authJsonHeaders(),
+                    body: JSON.stringify({ quotePrice: price, quoteRemark: remark })
+                })
+                    .then(function (r) { return r.json(); })
+                    .then(function (res) {
+                        if (res.code === 0) {
+                            showToast('报价已提交，已通知买家', 'success');
+                            closeQuoteModal();
+                            loadList();
+                            loadStats();
+                        } else {
+                            showToast('报价失败：' + (res.message || '请稍后重试'), 'error');
+                        }
+                    })
+                    .catch(function () {
+                        showToast('网络异常，请稍后重试', 'error');
+                    });
+            }
+
+            function viewDetail(id) {
+                // 简单展示详情：用 alert 或跳转，这里用 toast 提示并提示询价号
+                fetch(API_BASE + '/inquiry/admin/' + id, { headers: authHeaders() })
+                    .then(function (r) { return r.json(); })
+                    .then(function (res) {
+                        if (res.code === 0 && res.data) {
+                            var it = res.data;
+                            var msg = '询价单：' + it.inquiryNo + '\n商品：' + it.productName + '\n数量：' + it.quantity +
+                                '\n状态：' + (STATUS_TEXT[it.status] || '') +
+                                (it.quotePrice != null ? '\n报价：' + formatPrice(it.quotePrice) : '') +
+                                (it.quoteRemark ? '\n报价备注：' + it.quoteRemark : '') +
+                                (it.orderId ? '\n订单ID：' + it.orderId : '');
+                            alert(msg);
+                        }
+                    })
+                    .catch(function () {});
+            }
+
+            function adminCancel(id) {
+                if (!confirm('确认取消此询价单吗？取消后买家将无法再确认报价。')) return;
+                fetch(API_BASE + '/inquiry/admin/' + id + '/cancel', {
+                    method: 'PUT',
+                    headers: authHeaders()
+                })
+                    .then(function (r) { return r.json(); })
+                    .then(function (res) {
+                        if (res.code === 0) {
+                            showToast('询价已取消', 'success');
+                            loadList();
+                            loadStats();
+                        } else {
+                            showToast('取消失败：' + (res.message || '请稍后重试'), 'error');
+                        }
+                    })
+                    .catch(function () {
+                        showToast('网络异常，请稍后重试', 'error');
+                    });
+            }
+
+            function filterStatus(s) {
+                currentStatus = s;
+                currentPage = 1;
+                document.getElementById('statusFilter').value = s;
+                // 同步统计卡片激活
+                var cards = document.querySelectorAll('.stat-card');
+                for (var i = 0; i < cards.length; i++) {
+                    cards[i].classList.toggle('active', cards[i].getAttribute('data-status') === s);
+                }
+                loadList();
+            }
+
+            function onFilterChange() {
+                var s = document.getElementById('statusFilter').value;
+                filterStatus(s);
+            }
+
+            function goPage(p) {
+                currentPage = p;
+                loadList();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+
+            function refresh() {
+                loadList();
+                loadStats();
+            }
+
+            function init() {
+                if (!checkAdmin()) return;
+                loadList();
+                loadStats();
+                // ESC 关闭弹窗
+                document.addEventListener('keydown', function (e) {
+                    if (e.key === 'Escape') closeQuoteModal();
+                });
+                // 点击遮罩关闭
+                document.getElementById('quoteModal').addEventListener('click', function (e) {
+                    if (e.target.id === 'quoteModal') closeQuoteModal();
+                });
+            }
+
+            return {
+                init: init,
+                filterStatus: filterStatus,
+                onFilterChange: onFilterChange,
+                goPage: goPage,
+                refresh: refresh,
+                openQuoteModal: openQuoteModal,
+                closeQuoteModal: closeQuoteModal,
+                submitQuote: submitQuote,
+                viewDetail: viewDetail,
+                adminCancel: adminCancel
+            };
+        })();
+
+        document.addEventListener('DOMContentLoaded', function () {
+            HRQuote.init();
+        });
+    </script>
+</body>
+</html>

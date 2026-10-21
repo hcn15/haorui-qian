@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,84 +8,191 @@
     <link rel="stylesheet" type="text/css" href="../../index_files/g-style.css">
     <script src="../../config1.js"></script>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
             font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif;
-            color: #333; background: #f7f9fc;
-            -webkit-font-smoothing: antialiased; min-height: 100vh;
+            color: #333;
+            background: #f7f9fc;
+            -webkit-font-smoothing: antialiased;
+            min-height: 100vh;
         }
-        a { text-decoration: none; color: #333; }
-        ul, ol { list-style: none; }
+
+        a {
+            text-decoration: none;
+            color: #333;
+        }
+
+        ul,
+        ol {
+            list-style: none;
+        }
 
         /* ===== 顶部导航条 ===== */
         .top-bar {
-            background: #fff; border-bottom: 1px solid #e8ecf1;
-            position: sticky; top: 0; z-index: 100;
+            background: #fff;
+            border-bottom: 1px solid #e8ecf1;
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
+
         .top-bar-inner {
-            max-width: 1100px; margin: 0 auto; padding: 14px 20px;
-            display: flex; align-items: center; gap: 16px;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 14px 20px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
         }
+
         .back-btn {
-            display: flex; align-items: center; gap: 4px;
-            color: #0a4db4; font-size: 14px; font-weight: 500;
-            cursor: pointer; padding: 6px 12px; border-radius: 4px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            color: #0a4db4;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            padding: 6px 12px;
+            border-radius: 4px;
             transition: background 0.2s;
         }
-        .back-btn:hover { background: #e8f0fe; }
-        .page-title {
-            flex: 1; text-align: center; font-size: 17px; font-weight: bold;
-            color: #333; letter-spacing: 1px;
+
+        .back-btn:hover {
+            background: #e8f0fe;
         }
-        .header-logo { display: flex; align-items: center; gap: 8px; }
-        .header-logo .logo-icon { width: 36px; height: 36px; object-fit: contain; }
-        .header-logo .logo-text { font-size: 16px; font-weight: bold; color: #333; }
-        .header-logo .logo-text .highlight { color: #0a4db4; }
+
+        .page-title {
+            flex: 1;
+            text-align: center;
+            font-size: 17px;
+            font-weight: bold;
+            color: #333;
+            letter-spacing: 1px;
+        }
+
+        .header-logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .header-logo .logo-icon {
+            width: 36px;
+            height: 36px;
+            object-fit: contain;
+        }
+
+        .header-logo .logo-text {
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .header-logo .logo-text .highlight {
+            color: #0a4db4;
+        }
 
         /* ===== 主体容器 ===== */
-        .container { max-width: 1100px; margin: 0 auto; padding: 24px 20px 60px; }
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 24px 20px 60px;
+        }
 
         /* ===== 筛选栏 ===== */
         .filter-bar {
-            background: #fff; border-radius: 12px;
-            box-shadow: 0 2px 12px rgba(10,77,180,0.08);
-            padding: 16px 20px; margin-bottom: 20px;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(10, 77, 180, 0.08);
+            padding: 16px 20px;
+            margin-bottom: 20px;
         }
+
         .filter-row {
-            display: flex; gap: 12px; align-items: center; flex-wrap: wrap;
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            flex-wrap: wrap;
             margin-bottom: 10px;
         }
-        .filter-row:last-child { margin-bottom: 0; }
+
+        .filter-row:last-child {
+            margin-bottom: 0;
+        }
+
         .filter-label {
-            font-size: 13px; color: #666; min-width: 70px;
+            font-size: 13px;
+            color: #666;
+            min-width: 70px;
         }
+
         .filter-chip {
-            padding: 5px 12px; font-size: 13px; cursor: pointer;
-            border: 1px solid #d9e0ea; border-radius: 16px;
-            background: #fafbfc; color: #666; transition: all 0.2s;
-        }
-        .filter-chip:hover { color: #0a4db4; border-color: #0a4db4; }
-        .filter-chip.active {
-            background: linear-gradient(135deg, #0a4db4 0%, #1e6fd9 100%);
-            color: #fff; border-color: transparent;
-        }
-        .search-box {
-            flex: 1; min-width: 200px;
-            display: flex; gap: 8px;
-        }
-        .search-box input {
-            flex: 1; padding: 8px 12px; font-size: 14px;
-            border: 1px solid #d9e0ea; border-radius: 6px;
-            background: #fafbfc; color: #333;
-        }
-        .search-box input:focus { outline: none; border-color: #0a4db4; background: #fff; }
-        .search-box button {
-            padding: 8px 18px; font-size: 14px; font-weight: 500;
-            background: linear-gradient(135deg, #0a4db4 0%, #1e6fd9 100%);
-            color: #fff; border: none; border-radius: 6px; cursor: pointer;
+            padding: 5px 12px;
+            font-size: 13px;
+            cursor: pointer;
+            border: 1px solid #d9e0ea;
+            border-radius: 16px;
+            background: #fafbfc;
+            color: #666;
             transition: all 0.2s;
         }
-        .search-box button:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(10,77,180,0.3); }
+
+        .filter-chip:hover {
+            color: #0a4db4;
+            border-color: #0a4db4;
+        }
+
+        .filter-chip.active {
+            background: linear-gradient(135deg, #0a4db4 0%, #1e6fd9 100%);
+            color: #fff;
+            border-color: transparent;
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 200px;
+            display: flex;
+            gap: 8px;
+        }
+
+        .search-box input {
+            flex: 1;
+            padding: 8px 12px;
+            font-size: 14px;
+            border: 1px solid #d9e0ea;
+            border-radius: 6px;
+            background: #fafbfc;
+            color: #333;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: #0a4db4;
+            background: #fff;
+        }
+
+        .search-box button {
+            padding: 8px 18px;
+            font-size: 14px;
+            font-weight: 500;
+            background: linear-gradient(135deg, #0a4db4 0%, #1e6fd9 100%);
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .search-box button:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(10, 77, 180, 0.3);
+        }
 
         /* ===== 列表网格 ===== */
         .req-grid {
@@ -92,234 +200,333 @@
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 16px;
         }
+
         .req-card {
-            background: #fff; border-radius: 12px;
-            box-shadow: 0 2px 12px rgba(10,77,180,0.08);
-            padding: 18px; cursor: pointer; transition: all 0.25s;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(10, 77, 180, 0.08);
+            padding: 18px;
+            cursor: pointer;
+            transition: all 0.25s;
             border-top: 3px solid transparent;
-            display: flex; flex-direction: column;
+            display: flex;
+            flex-direction: column;
         }
+
         .req-card:hover {
             transform: translateY(-3px);
-            box-shadow: 0 6px 24px rgba(10,77,180,0.15);
+            box-shadow: 0 6px 24px rgba(10, 77, 180, 0.15);
             border-top-color: #0a4db4;
         }
+
         .req-head {
-            display: flex; align-items: center; gap: 8px;
-            margin-bottom: 10px; flex-wrap: wrap;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
         }
+
         .req-type-tag {
-            display: inline-block; padding: 2px 8px; border-radius: 4px;
-            font-size: 12px; font-weight: 500;
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
         }
-        .req-type-tag.buy  { background: #fff1f0; color: #cf1322; }
-        .req-type-tag.sell { background: #f6ffed; color: #389e0d; }
-        .req-type-tag.coop { background: #e6f7ff; color: #096dd9; }
+
+        .req-type-tag.buy {
+            background: #fff1f0;
+            color: #cf1322;
+        }
+
+        .req-type-tag.sell {
+            background: #f6ffed;
+            color: #389e0d;
+        }
+
+        .req-type-tag.coop {
+            background: #e6f7ff;
+            color: #096dd9;
+        }
+
         .req-category {
-            font-size: 12px; color: #999;
+            font-size: 12px;
+            color: #999;
         }
+
         .req-title {
-            font-size: 15px; font-weight: bold; color: #333;
+            font-size: 15px;
+            font-weight: bold;
+            color: #333;
             margin-bottom: 8px;
-            display: -webkit-box; -webkit-box-orient: vertical;
-            -webkit-line-clamp: 2; overflow: hidden;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 2;
+            overflow: hidden;
             line-height: 1.4;
         }
+
         .req-meta {
-            font-size: 13px; color: #666; line-height: 1.7;
+            font-size: 13px;
+            color: #666;
+            line-height: 1.7;
             margin-bottom: 8px;
         }
-        .req-meta-row { display: flex; align-items: center; gap: 6px; }
+
+        .req-meta-row {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
         .req-price {
-            color: #ff4d4f; font-weight: bold; font-size: 14px;
+            color: #ff4d4f;
+            font-weight: bold;
+            font-size: 14px;
             margin-top: 6px;
         }
+
         .req-footer {
-            display: flex; align-items: center; justify-content: space-between;
-            font-size: 12px; color: #999; margin-top: auto;
-            padding-top: 8px; border-top: 1px dashed #f0f3f7;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 12px;
+            color: #999;
+            margin-top: auto;
+            padding-top: 8px;
+            border-top: 1px dashed #f0f3f7;
         }
 
         /* ===== 空状态 ===== */
         .empty-state {
             grid-column: 1 / -1;
-            text-align: center; padding: 80px 20px; color: #999;
+            text-align: center;
+            padding: 80px 20px;
+            color: #999;
         }
-        .empty-state .empty-icon { font-size: 56px; margin-bottom: 16px; }
-        .empty-state h3 { font-size: 18px; color: #666; margin-bottom: 8px; }
-        .empty-state p { font-size: 14px; }
+
+        .empty-state .empty-icon {
+            font-size: 56px;
+            margin-bottom: 16px;
+        }
+
+        .empty-state h3 {
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 8px;
+        }
+
+        .empty-state p {
+            font-size: 14px;
+        }
 
         /* ===== 分页 ===== */
-        .pagination { display: flex; justify-content: center; gap: 6px; margin-top: 24px; }
-        .pagination button {
-            padding: 6px 12px; min-width: 32px;
-            border: 1px solid #d9e0ea; background: #fff;
-            border-radius: 6px; cursor: pointer; font-size: 14px;
-            color: #333; transition: all 0.2s;
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 6px;
+            margin-top: 24px;
         }
-        .pagination button:hover:not(:disabled) { border-color: #0a4db4; color: #0a4db4; }
+
+        .pagination button {
+            padding: 6px 12px;
+            min-width: 32px;
+            border: 1px solid #d9e0ea;
+            background: #fff;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            color: #333;
+            transition: all 0.2s;
+        }
+
+        .pagination button:hover:not(:disabled) {
+            border-color: #0a4db4;
+            color: #0a4db4;
+        }
+
         .pagination button.active {
             background: linear-gradient(135deg, #0a4db4 0%, #1e6fd9 100%);
-            color: #fff; border-color: transparent;
+            color: #fff;
+            border-color: transparent;
         }
-        .pagination button:disabled { cursor: not-allowed; opacity: 0.5; }
 
-        .loading, .error-box {
-            grid-column: 1 / -1; text-align: center; padding: 60px; color: #999; font-size: 14px;
+        .pagination button:disabled {
+            cursor: not-allowed;
+            opacity: 0.5;
         }
-        .error-box { color: #cf1322; }
+
+        .loading,
+        .error-box {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 60px;
+            color: #999;
+            font-size: 14px;
+        }
+
+        .error-box {
+            color: #cf1322;
+        }
 
         @media (max-width: 768px) {
-            .container { padding: 16px 12px 40px; }
-            .filter-row { font-size: 12px; }
+            .container {
+                padding: 16px 12px 40px;
+            }
+
+            .filter-row {
+                font-size: 12px;
+            }
         }
     </style>
 </head>
+
 <body>
 
-<!-- ============ 顶部导航 ============ -->
-<div class="top-bar">
-    <div class="top-bar-inner">
-        <div class="back-btn" onclick="goBack()">◀ 返回</div>
-        <div class="page-title">需求大厅</div>
-        <div class="header-logo">
-            <img class="logo-icon" src="../../img/JSlogo-beb0d75f.png" alt="Logo">
-            <div class="logo-text">黑科技 <span class="highlight">商城</span></div>
-        </div>
-    </div>
-</div>
-
-<!-- ============ 主体 ============ -->
-<div class="container">
-    <!-- 筛选栏 -->
-    <div class="filter-bar">
-        <div class="filter-row">
-            <span class="filter-label">类型：</span>
-            <span class="filter-chip active" data-type=""   onclick="switchType('')">全部</span>
-            <span class="filter-chip" data-type="buy"  onclick="switchType('buy')">🛒 我要买</span>
-            <span class="filter-chip" data-type="sell" onclick="switchType('sell')">📦 我要卖</span>
-            <span class="filter-chip" data-type="coop" onclick="switchType('coop')">🤝 我要合作</span>
-        </div>
-        <div class="filter-row">
-            <span class="filter-label">品类：</span>
-            <span class="filter-chip active" data-cat="" onclick="switchCategory('')">全部</span>
-            <span class="filter-chip" data-cat="1"  onclick="switchCategory('1')">人工智能和机器人</span>
-            <span class="filter-chip" data-cat="2"  onclick="switchCategory('2')">前沿新材料</span>
-            <span class="filter-chip" data-cat="3"  onclick="switchCategory('3')">数字服务与平台</span>
-            <span class="filter-chip" data-cat="4"  onclick="switchCategory('4')">通信与网络</span>
-            <span class="filter-chip" data-cat="5"  onclick="switchCategory('5')">低空经济</span>
-            <span class="filter-chip" data-cat="6"  onclick="switchCategory('6')">大宗贸易</span>
-            <span class="filter-chip" data-cat="7"  onclick="switchCategory('7')">文化创意与IP</span>
-            <span class="filter-chip" data-cat="8"  onclick="switchCategory('8')">智慧农业与粮储</span>
-            <span class="filter-chip" data-cat="9"  onclick="switchCategory('9')">安防与识别</span>
-            <span class="filter-chip" data-cat="10" onclick="switchCategory('10')">新能源与储能</span>
-        </div>
-        <div class="filter-row">
-            <span class="filter-label">搜索：</span>
-            <div class="search-box">
-                <input type="text" id="keyword" placeholder="按需求名称或联系人关键词搜索" onkeyup="if(event.key==='Enter')doSearch()">
-                <button onclick="doSearch()">搜索</button>
+    <!-- ============ 顶部导航 ============ -->
+    <div class="top-bar">
+        <div class="top-bar-inner">
+            <div class="back-btn" onclick="goBack()">◀ 返回</div>
+            <div class="page-title">需求大厅</div>
+            <div class="header-logo">
+                <div class="logo-text">HARVEST · 黑科技商城</div>
             </div>
         </div>
     </div>
 
-    <!-- 列表 -->
-    <div id="gridBox" class="req-grid">
-        <div class="loading">加载中...</div>
+    <!-- ============ 主体 ============ -->
+    <div class="container">
+        <!-- 筛选栏 -->
+        <div class="filter-bar">
+            <div class="filter-row">
+                <span class="filter-label">类型：</span>
+                <span class="filter-chip active" data-type="" onclick="switchType('')">全部</span>
+                <span class="filter-chip" data-type="buy" onclick="switchType('buy')">🛒 我要买</span>
+                <span class="filter-chip" data-type="sell" onclick="switchType('sell')">📦 我要卖</span>
+                <span class="filter-chip" data-type="coop" onclick="switchType('coop')">🤝 我要合作</span>
+            </div>
+            <div class="filter-row">
+                <span class="filter-label">品类：</span>
+                <span class="filter-chip active" data-cat="" onclick="switchCategory('')">全部</span>
+                <span class="filter-chip" data-cat="1" onclick="switchCategory('1')">人工智能和机器人</span>
+                <span class="filter-chip" data-cat="2" onclick="switchCategory('2')">前沿新材料</span>
+                <span class="filter-chip" data-cat="3" onclick="switchCategory('3')">数字服务与平台</span>
+                <span class="filter-chip" data-cat="4" onclick="switchCategory('4')">通信与网络</span>
+                <span class="filter-chip" data-cat="5" onclick="switchCategory('5')">低空经济</span>
+                <span class="filter-chip" data-cat="6" onclick="switchCategory('6')">大宗贸易</span>
+                <span class="filter-chip" data-cat="7" onclick="switchCategory('7')">文化创意与IP</span>
+                <span class="filter-chip" data-cat="8" onclick="switchCategory('8')">智慧农业与粮储</span>
+                <span class="filter-chip" data-cat="9" onclick="switchCategory('9')">安防与识别</span>
+                <span class="filter-chip" data-cat="10" onclick="switchCategory('10')">新能源与储能</span>
+            </div>
+            <div class="filter-row">
+                <span class="filter-label">搜索：</span>
+                <div class="search-box">
+                    <input type="text" id="keyword" placeholder="按需求名称或联系人关键词搜索"
+                        onkeyup="if(event.key==='Enter')doSearch()">
+                    <button onclick="doSearch()">搜索</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 列表 -->
+        <div id="gridBox" class="req-grid">
+            <div class="loading">加载中...</div>
+        </div>
+
+        <!-- 分页 -->
+        <div class="pagination" id="pagination" style="display:none;"></div>
     </div>
 
-    <!-- 分页 -->
-    <div class="pagination" id="pagination" style="display:none;"></div>
-</div>
+    <script>
+        const API_BASE = window.SERVER_BASE_URL || '';
+        let currentType = '';
+        let currentCategory = '';
+        let currentKeyword = '';
+        let currentPage = 1;
+        const PAGE_SIZE = 12;
 
-<script>
-const API_BASE = window.SERVER_BASE_URL || '';
-let currentType = '';
-let currentCategory = '';
-let currentKeyword = '';
-let currentPage = 1;
-const PAGE_SIZE = 12;
+        const CATEGORY_MAP = {
+            1: '人工智能和机器人', 2: '前沿新材料', 3: '数字服务与平台',
+            4: '通信与网络', 5: '低空经济', 6: '大宗贸易',
+            7: '文化创意与IP', 8: '智慧农业与粮储', 9: '安防与识别', 10: '新能源与储能'
+        };
+        const TYPE_MAP = { buy: '我要买', sell: '我要卖', coop: '我要合作' };
 
-const CATEGORY_MAP = {
-    1: '人工智能和机器人', 2: '前沿新材料', 3: '数字服务与平台',
-    4: '通信与网络', 5: '低空经济', 6: '大宗贸易',
-    7: '文化创意与IP', 8: '智慧农业与粮储', 9: '安防与识别', 10: '新能源与储能'
-};
-const TYPE_MAP = { buy: '我要买', sell: '我要卖', coop: '我要合作' };
-
-/* ============ 筛选切换 ============ */
-function switchType(t) {
-    currentType = t;
-    currentPage = 1;
-    document.querySelectorAll('.filter-chip[data-type]').forEach(c => {
-        c.classList.toggle('active', c.dataset.type === t);
-    });
-    loadList();
-}
-function switchCategory(c) {
-    currentCategory = c;
-    currentPage = 1;
-    document.querySelectorAll('.filter-chip[data-cat]').forEach(el => {
-        el.classList.toggle('active', el.getAttribute('data-cat') === currentCategory);
-    });
-    loadList();
-}
-function doSearch() {
-    currentKeyword = document.getElementById('keyword').value.trim();
-    currentPage = 1;
-    loadList();
-}
-
-/* ============ 加载列表 ============ */
-async function loadList() {
-    const box = document.getElementById('gridBox');
-    box.innerHTML = '<div class="loading">加载中...</div>';
-    document.getElementById('pagination').style.display = 'none';
-
-    const params = new URLSearchParams({
-        pageNum: currentPage, pageSize: PAGE_SIZE
-    });
-    if (currentType)     params.set('type', currentType);
-    if (currentCategory) params.set('categoryId', currentCategory);
-    if (currentKeyword)  params.set('keyword', currentKeyword);
-
-    try {
-        const resp = await fetch(`${API_BASE}/requirement/public?${params}`);
-        const result = await resp.json();
-        if (resp.ok && result.code === 0) {
-            renderList(result.data);
-        } else {
-            box.innerHTML = `<div class="error-box">${escapeHtml(result.message || result.msg || '加载失败')}</div>`;
+        /* ============ 筛选切换 ============ */
+        function switchType(t) {
+            currentType = t;
+            currentPage = 1;
+            document.querySelectorAll('.filter-chip[data-type]').forEach(c => {
+                c.classList.toggle('active', c.dataset.type === t);
+            });
+            loadList();
         }
-    } catch (err) {
-        console.error('加载错误:', err);
-        box.innerHTML = '<div class="error-box">网络错误，请稍后重试</div>';
-    }
-}
+        function switchCategory(c) {
+            currentCategory = c;
+            currentPage = 1;
+            document.querySelectorAll('.filter-chip[data-cat]').forEach(el => {
+                el.classList.toggle('active', el.getAttribute('data-cat') === currentCategory);
+            });
+            loadList();
+        }
+        function doSearch() {
+            currentKeyword = document.getElementById('keyword').value.trim();
+            currentPage = 1;
+            loadList();
+        }
 
-/* ============ 渲染列表 ============ */
-function renderList(page) {
-    const box = document.getElementById('gridBox');
-    const items = page.items || [];
-    const total = page.total || 0;
+        /* ============ 加载列表 ============ */
+        async function loadList() {
+            const box = document.getElementById('gridBox');
+            box.innerHTML = '<div class="loading">加载中...</div>';
+            document.getElementById('pagination').style.display = 'none';
 
-    if (!items.length) {
-        box.innerHTML = `
+            const params = new URLSearchParams({
+                pageNum: currentPage, pageSize: PAGE_SIZE
+            });
+            if (currentType) params.set('type', currentType);
+            if (currentCategory) params.set('categoryId', currentCategory);
+            if (currentKeyword) params.set('keyword', currentKeyword);
+
+            try {
+                const resp = await fetch(`${API_BASE}/requirement/public?${params}`);
+                const result = await resp.json();
+                if (resp.ok && result.code === 0) {
+                    renderList(result.data);
+                } else {
+                    box.innerHTML = `<div class="error-box">${escapeHtml(result.message || result.msg || '加载失败')}</div>`;
+                }
+            } catch (err) {
+                console.error('加载错误:', err);
+                box.innerHTML = '<div class="error-box">网络错误，请稍后重试</div>';
+            }
+        }
+
+        /* ============ 渲染列表 ============ */
+        function renderList(page) {
+            const box = document.getElementById('gridBox');
+            const items = page.items || [];
+            const total = page.total || 0;
+
+            if (!items.length) {
+                box.innerHTML = `
             <div class="empty-state">
                 <div class="empty-icon">🔍</div>
                 <h3>暂无符合条件的需求数据</h3>
                 <p>试试调整筛选条件或关键词</p>
             </div>
         `;
-        return;
-    }
+                return;
+            }
 
-    box.innerHTML = items.map(r => {
-        const cat = CATEGORY_MAP[r.categoryId] || `品类#${r.categoryId}`;
-        const price = (r.minPrice != null || r.maxPrice != null)
-            ? `¥${r.minPrice || 0} ~ ¥${r.maxPrice || '面议'}`
-            : '价格面议';
-        return `
+            box.innerHTML = items.map(r => {
+                const cat = CATEGORY_MAP[r.categoryId] || `品类#${r.categoryId}`;
+                const price = (r.minPrice != null || r.maxPrice != null)
+                    ? `¥${r.minPrice || 0} ~ ¥${r.maxPrice || '面议'}`
+                    : '价格面议';
+                return `
             <div class="req-card" onclick="goDetail(${r.id})">
                 <div class="req-head">
                     <span class="req-type-tag ${r.type}">${TYPE_MAP[r.type] || r.type}</span>
@@ -337,64 +544,65 @@ function renderList(page) {
                 </div>
             </div>
         `;
-    }).join('');
-    renderPagination(total);
-}
+            }).join('');
+            renderPagination(total);
+        }
 
-function maskPhone(p) { return p ? p.replace(/(\d{3})\d{4}(\d{4})/, '$1****$2') : ''; }
-function formatTime(t) { return t ? t.replace('T', ' ').substring(0, 10) : ''; }
+        function maskPhone(p) { return p ? p.replace(/(\d{3})\d{4}(\d{4})/, '$1****$2') : ''; }
+        function formatTime(t) { return t ? t.replace('T', ' ').substring(0, 10) : ''; }
 
-/* ============ 分页 ============ */
-function renderPagination(total) {
-    const pag = document.getElementById('pagination');
-    const totalPages = Math.ceil(total / PAGE_SIZE);
-    if (totalPages <= 1) { pag.style.display = 'none'; return; }
-    pag.style.display = 'flex';
+        /* ============ 分页 ============ */
+        function renderPagination(total) {
+            const pag = document.getElementById('pagination');
+            const totalPages = Math.ceil(total / PAGE_SIZE);
+            if (totalPages <= 1) { pag.style.display = 'none'; return; }
+            pag.style.display = 'flex';
 
-    const max = 7;
-    let start = Math.max(1, currentPage - 3);
-    let end = Math.min(totalPages, start + max - 1);
-    start = Math.max(1, end - max + 1);
+            const max = 7;
+            let start = Math.max(1, currentPage - 3);
+            let end = Math.min(totalPages, start + max - 1);
+            start = Math.max(1, end - max + 1);
 
-    let html = '';
-    html += `<button ${currentPage === 1 ? 'disabled' : ''} onclick="gotoPage(${currentPage - 1})">上一页</button>`;
-    if (start > 1) {
-        html += `<button onclick="gotoPage(1)">1</button>`;
-        if (start > 2) html += `<button disabled>...</button>`;
-    }
-    for (let i = start; i <= end; i++) {
-        html += `<button class="${i === currentPage ? 'active' : ''}" onclick="gotoPage(${i})">${i}</button>`;
-    }
-    if (end < totalPages) {
-        if (end < totalPages - 1) html += `<button disabled>...</button>`;
-        html += `<button onclick="gotoPage(${totalPages})">${totalPages}</button>`;
-    }
-    html += `<button ${currentPage === totalPages ? 'disabled' : ''} onclick="gotoPage(${currentPage + 1})">下一页</button>`;
-    pag.innerHTML = html;
-}
-function gotoPage(p) { currentPage = p; loadList(); window.scrollTo({ top: 0, behavior: 'smooth' }); }
+            let html = '';
+            html += `<button ${currentPage === 1 ? 'disabled' : ''} onclick="gotoPage(${currentPage - 1})">上一页</button>`;
+            if (start > 1) {
+                html += `<button onclick="gotoPage(1)">1</button>`;
+                if (start > 2) html += `<button disabled>...</button>`;
+            }
+            for (let i = start; i <= end; i++) {
+                html += `<button class="${i === currentPage ? 'active' : ''}" onclick="gotoPage(${i})">${i}</button>`;
+            }
+            if (end < totalPages) {
+                if (end < totalPages - 1) html += `<button disabled>...</button>`;
+                html += `<button onclick="gotoPage(${totalPages})">${totalPages}</button>`;
+            }
+            html += `<button ${currentPage === totalPages ? 'disabled' : ''} onclick="gotoPage(${currentPage + 1})">下一页</button>`;
+            pag.innerHTML = html;
+        }
+        function gotoPage(p) { currentPage = p; loadList(); window.scrollTo({ top: 0, behavior: 'smooth' }); }
 
-function goDetail(id) {
-    window.location.href = `detail.html?id=${id}`;
-}
-function goBack() {
-    if (document.referrer && document.referrer.indexOf('index') !== -1) {
-        history.back();
-    } else {
-        window.location.href = '../../index.html';
-    }
-}
+        function goDetail(id) {
+            window.location.href = `detail.html?id=${id}`;
+        }
+        function goBack() {
+            if (document.referrer && document.referrer.indexOf('index') !== -1) {
+                history.back();
+            } else {
+                window.location.href = '../../index.html';
+            }
+        }
 
-function escapeHtml(s) {
-    if (s == null) return '';
-    return String(s).replace(/[&<>"']/g, c => ({
-        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
-    })[c]);
-}
+        function escapeHtml(s) {
+            if (s == null) return '';
+            return String(s).replace(/[&<>"']/g, c => ({
+                '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+            })[c]);
+        }
 
-/* ============ 启动 ============ */
-loadList();
-</script>
+        /* ============ 启动 ============ */
+        loadList();
+    </script>
 
 </body>
+
 </html>

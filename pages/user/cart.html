@@ -17,8 +17,8 @@
     <script src="../../cart.js"></script>
     <script src="../../favorite.js"></script>
     <link rel="stylesheet" type="text/css" href="../../mobile.css">
-	
-	<link rel="stylesheet" type="text/css" href="../../index_files/de-ai.css">
+
+    <link rel="stylesheet" type="text/css" href="../../index_files/de-ai.css">
     <style>
         * {
             margin: 0;
@@ -344,8 +344,13 @@
         }
 
         @media (max-width: 768px) {
-            .user-name { max-width: 50px; }
-            .user-dropdown { min-width: 180px; }
+            .user-name {
+                max-width: 50px;
+            }
+
+            .user-dropdown {
+                min-width: 180px;
+            }
         }
 
         /* ===== Header ===== */
@@ -1578,6 +1583,33 @@
         .cart-badge[style*="display:none"] {
             display: none !important;
         }
+
+        /* ===== 中英文切换按钮 ===== */
+        .top-bar .top-right .lang-toggle {
+            display: inline-flex;
+            align-items: center;
+            margin: 0 0 0 10px;
+            border: 1px solid #d9d9d9;
+            border-radius: 12px;
+            overflow: hidden;
+            line-height: 1;
+            vertical-align: middle;
+        }
+
+        .top-bar .top-right .lang-toggle a {
+            margin: 0;
+            padding: 3px 9px;
+            font-size: 12px;
+        }
+
+        .top-bar .top-right .lang-toggle a + a {
+            border-left: 1px solid #d9d9d9;
+        }
+
+        .top-bar .top-right .lang-toggle a.active {
+            background: #0a4db4;
+            color: #fff;
+        }
     </style>
 </head>
 
@@ -1591,9 +1623,9 @@
                 <div class="auth-section auth-guest" id="authGuest">
                     <a href="login.html" class="auth-login-btn">
                         <svg class="auth-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
-                            <polyline points="10 17 15 12 10 7"/>
-                            <line x1="15" y1="12" x2="3" y2="12"/>
+                            <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4" />
+                            <polyline points="10 17 15 12 10 7" />
+                            <line x1="15" y1="12" x2="3" y2="12" />
                         </svg>
                         <span>登录</span>
                     </a>
@@ -1606,7 +1638,7 @@
                         <div class="user-avatar" id="userAvatar"></div>
                         <span class="user-name" id="userName"></span>
                         <svg class="user-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <polyline points="6 9 12 15 18 9"/>
+                            <polyline points="6 9 12 15 18 9" />
                         </svg>
                     </div>
                     <div class="user-dropdown" id="userDropdown">
@@ -1620,23 +1652,24 @@
                         <div class="dropdown-divider"></div>
                         <a href="order.html" class="dropdown-item">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M9 11H5a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7a2 2 0 0 0-2-2h-4"/>
-                                <path d="M9 11V7a3 3 0 0 1 6 0v4"/>
+                                <path d="M9 11H5a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7a2 2 0 0 0-2-2h-4" />
+                                <path d="M9 11V7a3 3 0 0 1 6 0v4" />
                             </svg>
                             <span>我的订单</span>
                         </a>
                         <a href="cart.html" class="dropdown-item">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <circle cx="9" cy="21" r="1"/>
-                                <circle cx="20" cy="21" r="1"/>
-                                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+                                <circle cx="9" cy="21" r="1" />
+                                <circle cx="20" cy="21" r="1" />
+                                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
                             </svg>
                             <span>购物车</span>
                             <span class="dropdown-badge" id="dropdownCartBadge">0</span>
                         </a>
                         <a href="favorite.html" class="dropdown-item">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                                <polygon
+                                    points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
                             </svg>
                             <span>我的收藏</span>
                             <span class="dropdown-badge" id="dropdownFavBadge">0</span>
@@ -1644,9 +1677,9 @@
                         <div class="dropdown-divider"></div>
                         <a href="javascript:void(0)" class="dropdown-item dropdown-logout" id="dropdownLogout">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
-                                <polyline points="16 17 21 12 16 7"/>
-                                <line x1="21" y1="12" x2="9" y2="12"/>
+                                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                                <polyline points="16 17 21 12 16 7" />
+                                <line x1="21" y1="12" x2="9" y2="12" />
                             </svg>
                             <span>退出登录</span>
                         </a>
@@ -1660,6 +1693,7 @@
                 <a href="#">新闻资讯</a>
                 <a href="../about/about-us.html">关于我们</a>
                 <a href="../info/contact-us.html">联系我们</a>
+                <span class="lang-toggle" title="Language"><a href="#" class="active">中</a><a href="../../index-en.html">EN</a></span>
             </div>
         </div>
     </div>
@@ -1668,10 +1702,8 @@
     <div class="header">
         <div class="header-inner">
             <div class="logo" onclick="window.location.href='../../index.html'">
-                <img class="logo-icon" src="../../img/JSlogo-beb0d75f.png" alt="Logo" onerror="this.style.display='none'">
                 <div class="logo-text">
-                    <div class="brand">黑科技 <span class="highlight">商城</span></div>
-                    <div class="tagline">Hi-Tech Bazaar</div>
+                    <div class="brand">HARVEST · 黑科技商城</div>
                 </div>
             </div>
             <div class="header-right">
@@ -1806,7 +1838,7 @@
             <p style="margin-top: 8px;">© 2026 浩瑞科技 版权所有 &nbsp;
                 <!-- display:block; -->
                 <a style="color:white;  margin-bottom:5px;" href="https://beian.miit.gov.cn/#/Integrated/index"
-                    target="_blank">京ICP备2026036471号</a>
+                    target="_blank">京ICP备2026036471号-2</a>
                 <a style="color:white;" href="https://beian.mps.gov.cn/#/query/webSearch?code=11010502061862"
                     rel="noreferrer" target="_blank"><img src="../../images/备案图标.png"
                         style="height:16px;vertical-align:middle;margin-right:4px;" alt="公安备案">京公网安备11010502061862号</a>
@@ -1904,22 +1936,22 @@
         document.addEventListener('DOMContentLoaded', function () {
             const trigger = document.getElementById('userMenuTrigger');
             const logoutBtn = document.getElementById('dropdownLogout');
-            
+
             if (trigger) {
                 trigger.addEventListener('click', toggleUserDropdown);
             }
-            
+
             if (logoutBtn) {
                 logoutBtn.addEventListener('click', handleLogout);
             }
-            
+
             document.addEventListener('click', function (e) {
                 const userSection = document.getElementById('authUser');
                 if (userSection && !userSection.contains(e.target)) {
                     closeUserDropdown();
                 }
             });
-            
+
             document.addEventListener('keydown', function (e) {
                 if (e.key === 'Escape') closeUserDropdown();
             });

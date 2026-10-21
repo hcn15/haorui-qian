@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+﻿﻿﻿﻿<!DOCTYPE html>
 
 <html xml:lang="en" lang="en" style="--color: #005CE6; --vh: 708px; scroll-behavior: auto;">
 <!-- en --><!-- xml:lang="en" lang="en" -->
@@ -196,6 +196,21 @@ all 0.5s ease-in-out;
             }
         }
     </style>
+    <style id="en-deform-guard">
+        /* 英文文案较长：固定宽度/固定行数的文本容器用省略号兜底，避免 -en 页面变形 */
+        .three_menu { max-width: 360px; overflow: hidden !important; }
+        .three_menu a { overflow: hidden; }
+        .three_menu a p { white-space: nowrap !important; overflow: hidden; text-overflow: ellipsis; }
+        .mobile-nav-sub-link { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        #breadcrumb { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        #breadcrumb #productName { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        #pageTitle { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; word-break: break-word; }
+        #tabBar .tab-item { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        #productItemBox .item .txt h3 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; word-break: break-word; }
+        #productItemBox .item .txt p { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; word-break: break-word; }
+        .robot-product-item .product-name { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; word-break: break-word; }
+        .robot-product-item .product-sub-list li a { display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    </style>
 </head>
 
 <body style="">
@@ -262,8 +277,8 @@ all 0.5s ease-in-out;
         <div class="nav_ljbox" style="background:#0059B3;">
             <div class="nav_l_box" style="background:#0059B3;">
                 <a href="#" class="logo">
-                    <img loading="lazy" class="xs" src="../../img/JSlogo-beb0d75f.png" alt="web logo-15.png">
-                    <img loading="lazy" class="yc" src="../../img/JSlogo-beb0d75f.png" alt="web logo-14.png">
+                    <img loading="lazy" class="xs" src="../../images\黑科技logo.png" alt="web logo-15.png">
+                    <img loading="lazy" class="yc" src="../../images\黑科技logo.png" alt="web logo-14.png">
                 </a>
                 <div class="logo_bj">
                     <img loading="lazy" src="../../index_files/home_1.png" alt="">
@@ -293,28 +308,28 @@ all 0.5s ease-in-out;
                                 </a>
                                 <div class="pro_nav2" style="margin-left:50px;">
                                     <div class="pro_nav2_box">
-                                        <a href="chanpin-jsjc1.html" class="font-m " target="_blank">
+                                        <a href="chanpin-jsjc1-en.html" class="font-m " target="_blank">
                                             <p class="g_hot">Metal Primer Coating</p>
                                         </a>
-                                        <a href="chanpin-jsjc2.html" class="font-m " target="_blank">
+                                        <a href="chanpin-jsjc2-en.html" class="font-m " target="_blank">
                                             <p>Metal Intermediate Coating</p>
                                         </a>
-                                        <a href="chanpin-jsjc3.html" class="font-m " target="_blank">
+                                        <a href="chanpin-jsjc3-en.html" class="font-m " target="_blank">
                                             <p>Metal Component A</p>
                                         </a>
-                                        <a href="chanpin-jsjc4.html" class="font-m " target="_blank">
+                                        <a href="chanpin-jsjc4-en.html" class="font-m " target="_blank">
                                             <p>Metal Component B</p>
                                         </a>
-                                        <a href="chanpin-lqjc1.html" class="font-m " target="_blank">
+                                        <a href="chanpin-lqjc1-en.html" class="font-m " target="_blank">
                                             <p>Asphalt Membrane Primer Coating</p>
                                         </a>
-                                        <a href="chanpin-lqjc1.html" class="font-m " target="_blank">
+                                        <a href="chanpin-lqjc1-en.html" class="font-m " target="_blank">
                                             <p>Asphalt Membrane Intermediate Coating</p>
                                         </a>
-                                        <a href="chanpin-lqjc1.html" class="font-m " target="_blank">
+                                        <a href="chanpin-lqjc1-en.html" class="font-m " target="_blank">
                                             <p>Asphalt Membrane Component A</p>
                                         </a>
-                                        <a href="chanpin-lqjc1.html" class="font-m " target="_blank">
+                                        <a href="chanpin-lqjc1-en.html" class="font-m " target="_blank">
                                             <p>Asphalt Membrane Component B</p>
                                         </a>
                                     </div>
@@ -339,19 +354,19 @@ all 0.5s ease-in-out;
                                 </a>
                                 <div class="pro_nav2">
                                     <div class="pro_nav2_box">
-                                        <a href="../news/yyal-lc.html" class="font-m " target="_blank">
+                                        <a href="../news/yyal-lc-en.html" class="font-m " target="_blank">
 
                                             <p class="g_hot">Grain Warehouse Projects</p>
                                         </a>
-                                        <a href="../news/yyal-gfdz.html" class="font-m " target="_blank">
+                                        <a href="../news/yyal-gfdz-en.html" class="font-m " target="_blank">
 
                                             <p>Photovoltaic Power Stations</p>
                                         </a>
-                                        <a href="../news/yyal-nyjd.html" class="font-m " target="_blank">
+                                        <a href="../news/yyal-nyjd-en.html" class="font-m " target="_blank">
 
                                             <p>Agricultural Training Bases</p>
                                         </a>
-                                        <a href="../news/yyal-cndz.html" class="font-m " target="_blank">
+                                        <a href="../news/yyal-cndz-en.html" class="font-m " target="_blank">
 
                                             <p>Energy Storage & Substation</p>
                                         </a>
@@ -410,8 +425,8 @@ all 0.5s ease-in-out;
                                 <div class="nav_lan_sel"
                                     style="display: none; height: 80px; padding-top: 0px; margin-top: 0px; padding-bottom: 0px; margin-bottom: 0px;">
                                     <div class="nav_lan_sel_box ignore">
-                                        <a href="../../index-en.html">EN</a>
-                                        <a href="../../index.html">CN</a>
+                                        <a href="#" class="lang-switch-en active">EN</a>
+                                        <a href="#" class="lang-switch-zh">简</a>
                                     </div>
                                 </div>
                             </div>
@@ -637,7 +652,7 @@ all 0.5s ease-in-out;
 	<!-- ====================================================== -->
 	<div id="footer-container"></div>
 	<script>
-		loadComponent('footer-container', '.../../components/footer-en.html');
+		loadComponent('footer-container', '../../components/footer-en.html');
 	</script>
     <!-- 右侧浮窗 -->
 
@@ -1776,6 +1791,12 @@ all 0.5s ease-in-out;
                 </div>
             </div>
         </template></div>
+<script src="../../components/load-components.js"></script>
+<script>
+    if (typeof initNav === 'function') {
+        initNav();
+    }
+</script>
 </body>
 <div id="ai-assist-root-bangs"><template shadowrootmode="open">
         <div id="ai-assist-bangs" data-v-app="">

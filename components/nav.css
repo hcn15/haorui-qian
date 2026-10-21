@@ -67,12 +67,12 @@
 
 /**
  * 导航项列表
- * 水平排列，间距36px，禁止换行
+ * 水平排列，间距收紧适配英文，禁止换行
  */
 .new-nav-list {
 	display: flex;
 	align-items: center;
-	gap: 36px;
+	gap: 22px;
 	white-space: nowrap;
 	height: 60px;
 }
@@ -91,16 +91,20 @@
 
 /**
  * 导航链接样式
- * 白色文字，17px字号，flex布局居中对齐
+ * 白色文字，16px字号，单行省略号防止英文撑宽
  */
 .new-nav-link {
 	display: flex;
 	align-items: center;
-	gap: 5px;
+	gap: 4px;
 	color: #f0f7ff;
-	font-size: 17px;
+	font-size: 16px;
 	transition: all 0.25s ease;
 	text-decoration: none;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	max-width: 170px;
 }
 
 /**

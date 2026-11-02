@@ -28,32 +28,41 @@ function loadComponent(elementId, url, callback) {
 function getLangUrl(targetLang) {
 	var currentPath = window.location.pathname;
 	var currentQuery = window.location.search;
-	var currentFilename = currentPath.split('/').pop();
-	var baseUrl = currentPath.substring(0, currentPath.length - currentFilename.length);
-	
+	var currentHash = window.location.hash;
+
+	// 以目录形式访问时（如 "/"、"http://域名/"、"http://域名/子目录/"），
+	// pathname 末尾没有文件名，此时实际渲染的就是 index.html / index-en.html。
+	// 若不处理，会返回原地址导致切换看起来“失灵”。
+	var slashIndex = currentPath.lastIndexOf('/');
+	var baseUrl = currentPath.substring(0, slashIndex + 1);
+	var currentFilename = currentPath.substring(slashIndex + 1);
+	if (!currentFilename) {
+		currentFilename = 'index.html';
+	}
+
 	// 如果目标语言是英文
 	if (targetLang === 'en') {
 		if (currentFilename === 'index.html') {
-			return baseUrl + 'index-en.html' + currentQuery;
+			return baseUrl + 'index-en.html' + currentQuery + currentHash;
 		} else if (currentFilename === 'search.html') {
-			return baseUrl + 'search-en.html' + currentQuery;
+			return baseUrl + 'search-en.html' + currentQuery + currentHash;
 		} else if (currentFilename.indexOf('-en.html') !== -1) {
-			return currentPath + currentQuery;
+			return currentPath + currentQuery + currentHash;
 		} else if (currentFilename.endsWith('.html')) {
-			return baseUrl + currentFilename.replace('.html', '-en.html') + currentQuery;
+			return baseUrl + currentFilename.replace('.html', '-en.html') + currentQuery + currentHash;
 		}
 	} else {
 		if (currentFilename === 'index-en.html') {
-			return baseUrl + 'index.html' + currentQuery;
+			return baseUrl + 'index.html' + currentQuery + currentHash;
 		} else if (currentFilename === 'search-en.html') {
-			return baseUrl + 'search.html' + currentQuery;
+			return baseUrl + 'search.html' + currentQuery + currentHash;
 		} else if (currentFilename.indexOf('-en.html') !== -1) {
-			return baseUrl + currentFilename.replace('-en.html', '.html') + currentQuery;
+			return baseUrl + currentFilename.replace('-en.html', '.html') + currentQuery + currentHash;
 		} else {
-			return currentPath + currentQuery;
+			return currentPath + currentQuery + currentHash;
 		}
 	}
-	return currentPath + currentQuery;
+	return currentPath + currentQuery + currentHash;
 }
 
 /**
@@ -183,6 +192,106 @@ function initNav() {
 		});
 	});
 
+	/* ================================================================
+	 * 语言切换下拉：点击展开 / 收起 + 点击外部关闭
+	 * 适用于 .nav_lan（组件页）与 .lang-dropdown（内联页）
+	 * ================================================================ */
+	var openDropdown = null;
+
+	function closeAllDropdowns() {
+		document.querySelectorAll('.nav_lan.open, .lang-dropdown.open').forEach(function(el) {
+			el.classList.remove('open');
+			if (el.classList.contains('nav_lan')) {
+				var box = el.querySelector('.nav_lan_box svg');
+				if (box) box.style.transform = '';
+			}
+		});
+		openDropdown = null;
+	}
+
+	// .nav_lan 点击切换（组件页）
+	document.querySelectorAll('.nav_lan').forEach(function(trigger) {
+		trigger.addEventListener('click', function(e) {
+			e.stopPropagation();
+			var isOpen = trigger.classList.contains('open');
+			closeAllDropdowns();
+			if (!isOpen) {
+				trigger.classList.add('open');
+				openDropdown = trigger;
+			}
+		});
+		trigger.addEventListener('mouseenter', function() {
+			// hover 打开时关闭其他 click-opened 状态
+			if (openDropdown && openDropdown !== trigger) {
+				openDropdown.classList.remove('open');
+				openDropdown = null;
+			}
+		});
+		// 点击下拉项本身不关闭（让 initNav 的 a 点击处理），但防止事件冒泡
+		var sel = trigger.querySelector('.nav_lan_sel');
+		if (sel) {
+			sel.addEventListener('click', function(e) { e.stopPropagation(); });
+		}
+	});
+
+	// .lang-dropdown 点击切换（内联页）
+	document.querySelectorAll('.lang-dropdown').forEach(function(wrap) {
+		var btn = wrap.querySelector('.lang-dropdown-trigger');
+		if (!btn) return;
+		btn.addEventListener('click', function(e) {
+			e.stopPropagation();
+			var isOpen = wrap.classList.contains('open');
+			closeAllDropdowns();
+			if (!isOpen) {
+				wrap.classList.add('open');
+				openDropdown = wrap;
+			}
+		});
+		// 下拉面板内点击不冒泡
+		var panel = wrap.querySelector('.lang-dropdown-panel');
+		if (panel) {
+			panel.addEventListener('click', function(e) { e.stopPropagation(); });
+		}
+	});
+
+	// 页面任意位置点击 → 关闭
+	document.addEventListener('click', function() { closeAllDropdowns(); });
+	// ESC 关闭
+	document.addEventListener('keydown', function(e) {
+		if (e.key === 'Escape') closeAllDropdowns();
+	});
+
+	/* ===== 为组件页 .nav_lan_sel 动态补 sel-mark（选中对勾） ===== */
+	document.querySelectorAll('.nav_lan_sel a').forEach(function(a) {
+		if (!a.querySelector('.sel-mark')) {
+			var mark = document.createElement('span');
+			mark.className = 'sel-mark';
+			mark.textContent = '✓';
+			a.appendChild(mark);
+		}
+	});
+
+	/* ===== 根据当前高亮项更新 .lang-dropdown-trigger 文字 ===== */
+	function syncDropdownTrigger() {
+		document.querySelectorAll('.lang-dropdown').forEach(function(wrap) {
+			var cur = wrap.querySelector('.lang-dropdown-current');
+			var active = wrap.querySelector('.lang-dropdown-panel a.active');
+			if (cur && active) {
+				var label = active.textContent.trim();
+				// 取第一个词（"简体中文" → "中"，"English" → "EN"）
+				var short = label.indexOf('简体') === 0 ? '中' :
+				            label.indexOf('中文') === 0 ? '中' :
+				            label.indexOf('English') === 0 ? 'EN' :
+				            label.indexOf('简') === 0 ? '中' :
+				            label.length > 4 ? label.substring(0, 4) : label;
+				cur.textContent = short;
+			}
+		});
+	}
+	syncDropdownTrigger();
+	// initNav 绑定完后再同步一次（某些页面可能在组件加载前就 initNav 了）
+	setTimeout(syncDropdownTrigger, 200);
+
 	// 窗口大小变化时，大于768px自动关闭移动端菜单
 	window.addEventListener('resize', function() {
 		if (window.innerWidth >= 768) {
@@ -216,8 +325,7 @@ function initProductSubNav() {
 				}
 			})
 			.catch(err => {
-				console.error("加载产品导航失败：", err);
-				// 接口调用失败时使用硬编码数据作为兜底
+				// 接口失败静默，已走硬编码兜底
 				renderProductNavFallback(isEnglish);
 			});
 	} else {

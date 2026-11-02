@@ -1,4 +1,4 @@
-let timerIds = [];
+﻿let timerIds = [];
 let selectedType = '';
 let productItemList = [];
 let originBannerList = [];
@@ -60,14 +60,13 @@ async function loadProductInfo(productId) {
             if (langLinks[1]) langLinks[1].href = `./chanpin1.html?id=${productId}`;
         }
     } catch (err) {
-        console.error("加载产品服务信息失败：", err);
+        /* 保留结构，忽略错误 */
     }
 }
 
 async function loadProductItem(productId) {
     try {
         const resData = await ApiService.getProductItems(productId);
-        console.log('productItem API response:', resData);
         
         if (resData.code === 0 && Array.isArray(resData.data)) {
             productItemList = resData.data.slice(0, 10);
@@ -81,11 +80,9 @@ async function loadProductItem(productId) {
                 renderEmptyState();
             }
         } else {
-            console.warn('productItem API data is not valid:', resData);
             renderEmptyState();
         }
     } catch (err) {
-        console.error("接口请求失败：", err);
         renderEmptyState();
     }
 }

@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>登录 / 注册 - 黑科技商城</title>
     <link rel="stylesheet" type="text/css" href="../../index_files/g-style.css">
+    <link rel="stylesheet" type="text/css" href="../../components/nav.css">
     <script src="../../config1.js"></script>
     <style>
         * {
@@ -702,35 +703,28 @@
             background: #0a4db4;
         }
 
-        /* ===== 中英文切换按钮 ===== */
-        .auth-container .lang-toggle {
+        /* ===== 中英文切换按钮（固定在卡片右上角，不参与 flex 布局） ===== */
+        .auth-container > .lang-dropdown {
             position: absolute;
-            top: 20px;
-            right: 20px;
-            z-index: 10;
-            display: inline-flex;
-            align-items: center;
-            border: 1px solid #d9d9d9;
-            border-radius: 12px;
-            overflow: hidden;
-            line-height: 1;
-            background: #fff;
+            top: 18px;
+            right: 18px;
+            z-index: 20;
         }
 
-        .auth-container .lang-toggle a {
-            margin: 0;
-            padding: 3px 9px;
-            font-size: 12px;
-            color: #666;
+        .auth-container > .lang-dropdown .lang-dropdown-panel {
+            z-index: 30;
         }
 
-        .auth-container .lang-toggle a + a {
-            border-left: 1px solid #d9d9d9;
-        }
+        /* 移动端：卡片变窄时下拉面板右对齐，避免溢出屏幕 */
+        @media (max-width: 768px) {
+            .auth-container > .lang-dropdown {
+                top: 12px;
+                right: 12px;
+            }
 
-        .auth-container .lang-toggle a.active {
-            background: #0a4db4;
-            color: #fff;
+            .auth-container > .lang-dropdown .lang-dropdown-panel {
+                right: 0;
+            }
         }
     </style>
 </head>
@@ -742,7 +736,17 @@
     <div class="toast" id="toast"></div>
 
     <div class="auth-container">
-        <span class="lang-toggle" title="Language"><a href="#" class="active">中</a><a href="../../index-en.html">EN</a></span>
+        <span class="lang-dropdown" title="Language / 语言">
+                    <button type="button" class="lang-dropdown-trigger">
+                        <span class="lang-dropdown-icon">🌐</span>
+                        <span class="lang-dropdown-current">中</span>
+                        <span class="lang-dropdown-arrow"></span>
+                    </button>
+                    <span class="lang-dropdown-panel">
+                        <a href="#" class="active">简体中文<span class="sel-mark">✓</span></a>
+                        <a href="../../index-en.html">English<span class="sel-mark"></span></a>
+                    </span>
+                </span>
         <!-- 左侧品牌面板 -->
         <div class="brand-panel">
             <div class="brand-content">
@@ -1284,6 +1288,30 @@
         document.getElementById('regUsername').addEventListener('input', onRegUsernameInput);
         document.getElementById('regPassword').addEventListener('input', onRegPasswordInput);
         document.getElementById('regConfirmPassword').addEventListener('input', onRegConfirmInput);
+    </script>
+    <script>
+        /* 登录页语言下拉：点击展开/收起（本页未引入 load-components.js，需单独绑定） */
+        (function () {
+            var dd = document.querySelector('.auth-container > .lang-dropdown');
+            if (!dd) return;
+            var btn = dd.querySelector('.lang-dropdown-trigger');
+            if (btn) {
+                btn.addEventListener('click', function (e) {
+                    e.stopPropagation();
+                    dd.classList.toggle('open');
+                });
+            }
+            var panel = dd.querySelector('.lang-dropdown-panel');
+            if (panel) {
+                panel.addEventListener('click', function (e) { e.stopPropagation(); });
+            }
+            // 当前语言项不做跳转，避免页面被 # 顶回顶部
+            var active = dd.querySelector('.lang-dropdown-panel a.active');
+            if (active && active.getAttribute('href') === '#') {
+                active.addEventListener('click', function (e) { e.preventDefault(); });
+            }
+            document.addEventListener('click', function () { dd.classList.remove('open'); });
+        })();
     </script>
 </body>
 

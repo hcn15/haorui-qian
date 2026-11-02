@@ -4,6 +4,21 @@
  */
 class CommonNav {
     /**
+     * HTML 转义：防止 API 返回的名称/URL 等字段包含 < > & " ' 等特殊字符引发 DOM 注入。
+     * <p>
+     * 仅转义渲染到 innerHTML / 属性值里会被解析的字符，不处理 URL 编码。
+     *
+     * @param {string} s 待转义的原始字符串
+     * @returns {string} 转义后的安全字符串
+     */
+    static escapeHtml(s) {
+        if (s === null || s === undefined) return '';
+        return String(s).replace(/[&<>"']/g, c => ({
+            '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+        }[c]));
+    }
+
+    /**
      * 构造函数
      * @param {Object} options - 配置选项
      * @param {boolean} options.loadNav - 是否加载产品导航
@@ -104,11 +119,11 @@ class CommonNav {
                     }
                     navHtml += `
                         <div class="new-nav-sub-item">
-                            <a href="${jumpUrl}" class="new-nav-sub-link">${item.name}</a>
+                            <a href="${jumpUrl}" class="new-nav-sub-link">${CommonNav.escapeHtml(item.name)}</a>
                         </div>
                     `;
                     mobileHtml += `
-                        <div class="mobile-nav-sub-item"><a href="${jumpUrl}" class="mobile-nav-sub-link">${item.name}</a></div>
+                        <div class="mobile-nav-sub-item"><a href="${jumpUrl}" class="mobile-nav-sub-link">${CommonNav.escapeHtml(item.name)}</a></div>
                     `;
                 });
                 if (this.navProductSub) {
@@ -119,7 +134,7 @@ class CommonNav {
                 }
             }
         } catch (err) {
-            console.error("加载产品导航失败：", err);
+            // 产品导航加载失败静默，UI 已有空状态兜底
         }
     }
 }
@@ -152,7 +167,7 @@ class ApiService {
             const data = await this.parseResponse(response);
             return this.sanitizeResponse(data);
         } catch (error) {
-            console.error(`API请求失败 [${url}]:`, error);
+            // API 请求失败静默，调用方已处理错误态
             return { code: -1, data: null, message: this.getErrorMessage(error) };
         }
     }
@@ -183,7 +198,7 @@ class ApiService {
             const result = await this.parseResponse(response);
             return this.sanitizeResponse(result);
         } catch (error) {
-            console.error(`API请求失败 [${url}]:`, error);
+            // API 请求失败静默，调用方已处理错误态
             return { code: -1, data: null, message: this.getErrorMessage(error) };
         }
     }
@@ -492,7 +507,7 @@ class PreloadManager {
                 return data;
             })
             .catch(err => {
-                console.error(`预加载 ${key} 失败：`, err);
+            // 预加载失败静默，不阻塞主流程
                 return null;
             });
         return this.preloadPromises[key];

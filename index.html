@@ -9,6 +9,7 @@
     <meta name="description"
         content="浩瑞科技 - 专注智能机器人、数字平台、新能源应用、大宗贸易、应急产品、新材料、智慧建材、AI文旅、国际贸易会客厅海南等领域的一站式服务平台">
     <link rel="stylesheet" type="text/css" href="index_files/g-style.css">
+    <link rel="stylesheet" type="text/css" href="components/nav.css">
     <script src="config1.js"></script>
     <script src="cart.js"></script>
     <script src="favorite.js"></script>
@@ -3254,8 +3255,16 @@
                 <a href="./pages/news/news.html">新闻资讯</a>
                 <a href="pages/about/about-us.html">关于我们</a>
                 <a href="pages/info/contact-us.html">联系我们</a>
-                <span class="lang-toggle" title="语言切换 / Language">
-                    <a href="#" class="lang-switch-zh active">中</a><a href="#" class="lang-switch-en">EN</a>
+                <span class="lang-dropdown" title="Language / 语言">
+                    <button type="button" class="lang-dropdown-trigger">
+                        <span class="lang-dropdown-icon">🌐</span>
+                        <span class="lang-dropdown-current">中</span>
+                        <span class="lang-dropdown-arrow"></span>
+                    </button>
+                    <span class="lang-dropdown-panel">
+                        <a href="#" class="lang-switch-zh active">简体中文<span class="sel-mark">✓</span></a>
+                        <a href="#" class="lang-switch-en">English<span class="sel-mark"></span></a>
+                    </span>
                 </span>
             </div>
         </div>
@@ -3662,6 +3671,7 @@
             0% { transform: translateX(-60%) rotate(8deg); }
             100% { transform: translateX(260%) rotate(8deg); }
         }
+        .ca-ru-zone.revealed { height: auto; } /* 覆盖全局 .revealed 的 height:360px，让专区自适应内容 */
         .ca-ru-zone > * { position: relative; z-index: 1; }
 
         /* ----- 专区头部 ----- */
@@ -3792,12 +3802,23 @@
         }
         @keyframes caRuSpin { to { transform: rotate(360deg); } }
 
-        /* ----- 需求卡片网格 ----- */
+        /* ----- 需求卡片网格（两行上限，超出滚动） ----- */
         .ca-ru-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
             gap: 14px;
+            max-height: 268px; /* 卡片 127px × 2 行 + gap 14px ≈ 两行高度 */
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding-right: 6px; /* 给滚动条留点空间，避免 hover 时抖动 */
         }
+        /* 滚动条美化 —— 深色主题适配 */
+        .ca-ru-grid::-webkit-scrollbar { width: 6px; }
+        .ca-ru-grid::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.06); border-radius: 3px; }
+        .ca-ru-grid::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.28); border-radius: 3px; }
+        .ca-ru-grid::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.5); }
+        /* Firefox */
+        .ca-ru-grid { scrollbar-width: thin; scrollbar-color: rgba(255,255,255,0.28) rgba(255,255,255,0.06); }
         .ca-ru-card {
             position: relative;
             padding: 16px 16px 14px;

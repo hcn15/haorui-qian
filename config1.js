@@ -22,11 +22,10 @@
         window.MINIO_BASE_URL = "http://192.168.199.71:9001";
         console.log('[config1.js] 检测到本地开发环境，后端: ' + window.SERVER_BASE_URL);
     } else {
-        // ============ 生产环境（黑科技.商城 公网域名）============
-        // 同域部署，Nginx 反代所有 API 到后端 8080，前后端同协议同域
+        // ============ 生产环境（同域反代模式）============
+        // 前后端同域同协议，SERVER_BASE_URL/MINIO_BASE_URL 留空串，由 Nginx 反代
         window.SERVER_BASE_URL = "";
         window.MINIO_BASE_URL = "";
-        console.log('[config1.js] 检测到生产环境，同域反代模式');
     }
 })();
 

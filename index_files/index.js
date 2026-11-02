@@ -1,4 +1,4 @@
-/**
+﻿/**
  * 全局变量声明
  * productListData - 产品服务数据列表
  * scrollDataList - 核心技术滚动数据列表
@@ -15,7 +15,6 @@ let sceneSwiper = null;
  * 页面加载完成后初始化，并行调用所有数据接口
  */
 document.addEventListener('DOMContentLoaded', async function () {
-    console.log('🚀 页面加载完成，开始并行调用接口...');
 
     new CommonNav({ loadNav: false });
     new LazyLoad();
@@ -29,7 +28,6 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     await Promise.all(promises);
 
-    console.log('🎉 所有接口调用完成！');
 });
 
 /**
@@ -69,9 +67,7 @@ function goProduct(id) {
  * 数据来源：GET /website/news?latest=true
  */
 async function loadNewsData() {
-    console.log('🔹 开始调用：资讯动态接口');
     const json = await (window.__PRELOAD_PROMISES__.news || fetch(`${SERVER_BASE_URL}/website/news?latest=true`).then(r => r.json()));
-    console.log("✅ 成功拿到新闻：", json);
     let newsList = json.data || [];
 
     newsList = newsList.sort((a, b) => b.id - a.id);
@@ -163,7 +159,6 @@ async function loadNewsData() {
     setInterval(() => {
         nextSlide();
     }, 3000);
-    console.log('✅ 资讯动态接口调用完成');
 }
 
 /** 产品服务区域的DOM容器引用 */
@@ -177,12 +172,10 @@ const iconBoxWrap = document.getElementById('iconBoxWrap');
  * 数据来源：GET /website/product
  */
 async function loadProductData() {
-    console.log('🔹 开始调用：产品服务接口');
     try {
         const resData = await (window.__PRELOAD_PROMISES__.product || fetch(`${SERVER_BASE_URL}/website/product`).then(r => r.json()));
 
         if (resData.code !== 0 || !Array.isArray(resData.data)) {
-            console.log('❌ 产品服务接口异常');
             return;
         }
         productListData = resData.data;
@@ -284,10 +277,7 @@ async function loadProductData() {
         renderProductNav();
 
         bindSwitchEvent();
-        console.log('✅ 产品服务接口调用完成');
-    } catch (err) {
-        console.log('❌ 产品服务接口请求失败：', err);
-    }
+    } catch (err) { /* 保留结构，忽略错误 */ }
 }
 
 /**
@@ -405,7 +395,6 @@ function getSvgByIndex(idx) {
  * 数据来源：GET /website/techMain（主技术数据）和 GET /website/techScrolling（滚动技术列表）
  */
 async function loadCoreTechData() {
-    console.log('🔹 开始调用：核心技术接口');
     try {
         const techResData = await (window.__PRELOAD_PROMISES__.techMain || fetch(`${SERVER_BASE_URL}/website/techMain`).then(r => r.json()));
         if (techResData.code === 0 && Array.isArray(techResData.data) && techResData.data.length > 0) {
@@ -470,10 +459,7 @@ async function loadCoreTechData() {
                 setTimeout(initTechSwiper, 200);
             });
         }
-        console.log('✅ 核心技术接口调用完成');
-    } catch (err) {
-        console.error('❌ 核心技术接口请求失败：', err);
-    }
+    } catch (err) { /* 保留结构，忽略错误 */ }
 }
 
 /**
@@ -583,14 +569,12 @@ function initSceneSwiper() {
  * 数据来源：GET /website/scene
  */
 async function loadSceneData() {
-    console.log('🔹 开始调用：应用场景接口');
     try {
         const wrapDom = document.getElementById('sceneWrap');
 
         const resData = await (window.__PRELOAD_PROMISES__.scene || fetch(`${SERVER_BASE_URL}/website/scene`).then(r => r.json()));
 
         if (resData.code !== 0 || !Array.isArray(resData.data)) {
-            console.warn('❌ 应用场景接口异常');
             return;
         }
         let htmlStr = '';
@@ -652,8 +636,5 @@ async function loadSceneData() {
         });
         wrapDom.innerHTML = htmlStr;
         initSceneSwiper();
-        console.log('✅ 应用场景接口调用完成');
-    } catch (err) {
-        console.error('❌ 应用场景接口请求失败：', err);
-    }
+    } catch (err) { /* 保留结构，忽略错误 */ }
 }

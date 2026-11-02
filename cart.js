@@ -19,6 +19,9 @@
 (function () {
     'use strict';
 
+    var IS_EN = /-en\.html(?:[?#]|$)/.test(window.location.pathname);
+    function T(zh, en) { return IS_EN ? en : zh; }
+
     var STORAGE_KEY = 'hr_cart_items';
     var SYNCED_FLAG = 'hr_cart_synced'; // 标记本地是否已与后端同步
 
@@ -494,11 +497,11 @@
             var item = collectFromPage();
             addToCart(item);
             if (typeof showToast === 'function') {
-                showToast('已加入购物车！', 'success');
+                showToast(T('已加入购物车！', 'Added to cart!'), 'success');
             }
         } catch (e) {
             if (typeof showToast === 'function') {
-                showToast('加入购物车失败：' + e.message, 'error');
+                showToast(T('加入购物车失败：', 'Failed to add to cart: ') + e.message, 'error');
             }
         }
     }
@@ -599,8 +602,8 @@
             wrap.innerHTML =
                 '<div class="cart-empty">' +
                 '<div class="empty-icon">🛒</div>' +
-                '<p class="empty-text">购物车还是空的，快去挑选心仪的产品吧～</p>' +
-                '<a class="btn-go-shop" href="' + rootPath('index.html') + '">去逛逛</a>' +
+                '<p class="empty-text">' + T('购物车还是空的，快去挑选心仪的产品吧～', 'Your cart is empty. Go find something you love!') + '</p>' +
+                '<a class="btn-go-shop" href="' + rootPath(IS_EN ? 'index-en.html' : 'index.html') + '">' + T('去逛逛', 'Go Shopping') + '</a>' +
                 '</div>';
             if (totalEl) totalEl.textContent = '¥0';
             if (countEl) countEl.textContent = '0';
@@ -626,12 +629,12 @@
                 '<col class="colgroup-op">' +
                 '</colgroup>' +
                 '<thead><tr>' +
-                '<th>商品</th>' +
-                '<th>名称</th>' +
-                '<th>单价</th>' +
-                '<th>数量</th>' +
-                '<th>小计</th>' +
-                '<th>操作</th>' +
+                '<th>' + T('商品', 'Product') + '</th>' +
+                '<th>' + T('名称', 'Name') + '</th>' +
+                '<th>' + T('单价', 'Unit Price') + '</th>' +
+                '<th>' + T('数量', 'Quantity') + '</th>' +
+                '<th>' + T('小计', 'Subtotal') + '</th>' +
+                '<th>' + T('操作', 'Action') + '</th>' +
                 '</tr></thead>' +
                 '<tbody></tbody>';
             wrap.innerHTML = '';
@@ -647,20 +650,20 @@
             var subtotal = price * qty;
 
             // 单价显示：有价格时显示纯数字（CSS::before会加¥），无价格时显示"¥询价"
-            var priceDisplay = hasPrice ? price.toLocaleString() : '¥询价';
-            var subtotalDisplay = hasPrice ? subtotal.toLocaleString() : '¥询价';
+            var priceDisplay = hasPrice ? price.toLocaleString() : T('¥询价', 'Price on request');
+            var subtotalDisplay = hasPrice ? subtotal.toLocaleString() : T('¥询价', 'Price on request');
             var avatar = getItemAvatar(it);
 
             // 生成商品详情链接
             var productLink = '';
             if (it.url) {
-                productLink = '<a class="link" href="' + rootPath(it.url) + '">查看商品 <span class="arrow">→</span></a>';
+                productLink = '<a class="link" href="' + rootPath(it.url) + '">' + T('查看商品 ', 'View product ') + '<span class="arrow">→</span></a>';
             }
 
             // 生成规格标签
             var specTag = '';
             if (it.spec) {
-                specTag = '<div class="spec">规格：' + escapeHtml(it.spec) + '</div>';
+                specTag = '<div class="spec">' + T('规格：', 'Spec: ') + escapeHtml(it.spec) + '</div>';
             }
 
             var priceClass = hasPrice ? 'col-price has-price' : 'col-price no-price';
@@ -679,16 +682,16 @@
                 '<td class="' + priceClass + '" data-price="' + (it.price || 0) + '">' + escapeHtml(priceDisplay) + '</td>' +
                 '<td class="col-qty">' +
                 '<div class="qty-control">' +
-                '<button class="qty-btn minus" aria-label="减少" onclick="HRCart.changeItemQty(\'' + escapeHtml(it.key) + '\', -1)">−</button>' +
+                '<button class="qty-btn minus" aria-label="' + T('减少', 'Decrease') + '" onclick="HRCart.changeItemQty(\'' + escapeHtml(it.key) + '\', -1)">−</button>' +
                 '<input class="qty-input" type="number" value="' + qty + '" min="1" max="999" onchange="HRCart.setItemQty(\'' + escapeHtml(it.key) + '\', this.value)">' +
-                '<button class="qty-btn plus" aria-label="增加" onclick="HRCart.changeItemQty(\'' + escapeHtml(it.key) + '\', 1)">+</button>' +
+                '<button class="qty-btn plus" aria-label="' + T('增加', 'Increase') + '" onclick="HRCart.changeItemQty(\'' + escapeHtml(it.key) + '\', 1)">+</button>' +
                 '</div>' +
                 '</td>' +
                 '<td class="' + subtotalClass + '" data-subtotal="' + subtotal + '">' + escapeHtml(subtotalDisplay) + '</td>' +
                 '<td class="col-op">' +
                 '<button class="btn-remove" onclick="HRCart.removeCartItem(\'' + escapeHtml(it.key) + '\')">' +
                 '<span class="icon">🗑</span>' +
-                '<span class="text">删除</span>' +
+                '<span class="text">' + T('删除', 'Remove') + '</span>' +
                 '</button>' +
                 '</td>' +
                 '</tr>';
@@ -702,7 +705,7 @@
 
         // 合计
         var total = getCartTotal();
-        if (totalEl) totalEl.textContent = total ? ('¥' + total.toLocaleString()) : '¥询价';
+        if (totalEl) totalEl.textContent = total ? ('¥' + total.toLocaleString()) : T('¥询价', 'Price on request');
         if (countEl) countEl.textContent = getCartCount();
         if (checkoutBtn) checkoutBtn.style.display = '';
         if (clearBtn) clearBtn.style.display = '';
@@ -790,15 +793,15 @@
         var itemName = '';
         for (var i = 0; i < cart.length; i++) {
             if (cart[i].key === String(key)) {
-                itemName = cart[i].name || '该商品';
+                itemName = cart[i].name || T('该商品', 'this item');
                 break;
             }
         }
 
         // 显示自定义确认对话框
         showConfirmDialog(
-            '确认删除',
-            '确定要从购物车中删除"' + itemName + '"吗？',
+            T('确认删除', 'Confirm Deletion'),
+            T('确定要从购物车中删除"', 'Remove "') + itemName + T('"吗？', '" from your cart?'),
             function () {
                 // 先执行删除的视觉动画
                 var row = document.querySelector('tr[data-key="' + key + '"]');
@@ -814,7 +817,7 @@
                     removeFromCart(key);
                     renderCartPage();
                     if (typeof showToast === 'function') {
-                        showToast('已从购物车移除', 'success');
+                        showToast(T('已从购物车移除', 'Removed from cart'), 'success');
                     }
                 }, 250);
             }
@@ -831,8 +834,8 @@
             '<div class="dialog-title">' + escapeHtml(title) + '</div>' +
             '<div class="dialog-content">' + escapeHtml(content) + '</div>' +
             '<div class="dialog-actions">' +
-            '<button class="btn-cancel">取消</button>' +
-            '<button class="btn-confirm">确认删除</button>' +
+            '<button class="btn-cancel">' + T('取消', 'Cancel') + '</button>' +
+            '<button class="btn-confirm">' + T('确认删除', 'Confirm Deletion') + '</button>' +
             '</div>' +
             '</div>';
 
@@ -869,7 +872,7 @@
     }
 
     function clearCartAndRefresh() {
-        if (!confirm('确定要清空购物车吗？')) return;
+        if (!confirm(T('确定要清空购物车吗？', 'Are you sure you want to clear your cart?'))) return;
         clearCart();
         renderCartPage();
     }
@@ -879,7 +882,7 @@
         var cart = getCart();
         if (!cart.length) return;
         if (!isLoggedIn()) {
-            if (confirm('结算需要先登录，是否前往登录？')) {
+            if (confirm(T('结算需要先登录，是否前往登录？', 'Please log in before checking out. Go to the login page?'))) {
                 var curPath = location.pathname.replace(/^\//, '') + location.search;
                 location.href = rootPath('pages/user/login.html') + '?redirect=' + encodeURIComponent(curPath);
             }
@@ -1003,37 +1006,37 @@
         mask.innerHTML =
             '<div class="hr-modal">' +
             '<div class="hr-modal-head">' +
-            '<h3>📝 填写订单信息</h3>' +
-            '<button class="hr-modal-close" onclick="HRCart.closeCheckoutModal()" title="关闭">×</button>' +
+            '<h3>' + T('📝 填写订单信息', '📝 Order Information') + '</h3>' +
+            '<button class="hr-modal-close" onclick="HRCart.closeCheckoutModal()" title="' + T('关闭', 'Close') + '">×</button>' +
             '</div>' +
             '<div class="hr-modal-body">' +
             '<div class="hr-summary">' +
-            '<span class="label">共 <strong id="hrCoQty">0</strong> 件商品，合计：</span>' +
+            '<span class="label">' + T('共 ', 'Total ') + '<strong id="hrCoQty">0</strong>' + T(' 件商品，合计：', ' item(s), total: ') + '</span>' +
             '<span class="amount" id="hrCoTotal">¥0</span>' +
             '</div>' +
             '<div class="hr-field" id="hrField-name">' +
-            '<label>收货人姓名<span class="req">*</span></label>' +
-            '<input type="text" id="hrCoName" placeholder="请输入收货人姓名" maxlength="32">' +
-            '<div class="err">请填写收货人姓名</div>' +
+            '<label>' + T('收货人姓名', 'Recipient Name') + '<span class="req">*</span></label>' +
+            '<input type="text" id="hrCoName" placeholder="' + T('请输入收货人姓名', 'Enter recipient name') + '" maxlength="32">' +
+            '<div class="err">' + T('请填写收货人姓名', 'Please enter the recipient name') + '</div>' +
             '</div>' +
             '<div class="hr-field" id="hrField-phone">' +
-            '<label>联系电话<span class="req">*</span></label>' +
-            '<input type="tel" id="hrCoPhone" placeholder="请输入11位手机号" maxlength="11" inputmode="numeric">' +
-            '<div class="err">请输入正确的11位手机号</div>' +
+            '<label>' + T('联系电话', 'Phone Number') + '<span class="req">*</span></label>' +
+            '<input type="tel" id="hrCoPhone" placeholder="' + T('请输入11位手机号', 'Enter your phone number') + '" ' + (IS_EN ? '' : 'maxlength="11" ') + 'inputmode="numeric">' +
+            '<div class="err">' + T('请输入正确的11位手机号', 'Please enter your phone number') + '</div>' +
             '</div>' +
             '<div class="hr-field" id="hrField-address">' +
-            '<label>收货地址<span class="req">*</span></label>' +
-            '<textarea id="hrCoAddress" placeholder="请输入详细收货地址（省/市/区/街道/门牌号）" maxlength="500"></textarea>' +
-            '<div class="err">请填写收货地址</div>' +
+            '<label>' + T('收货地址', 'Shipping Address') + '<span class="req">*</span></label>' +
+            '<textarea id="hrCoAddress" placeholder="' + T('请输入详细收货地址（省/市/区/街道/门牌号）', 'Enter the full address (province/city/district/street/house number)') + '" maxlength="500"></textarea>' +
+            '<div class="err">' + T('请填写收货地址', 'Please enter the shipping address') + '</div>' +
             '</div>' +
             '<div class="hr-field">' +
-            '<label>订单备注（可选）</label>' +
-            '<textarea id="hrCoRemark" placeholder="如有特殊需求请在此说明" maxlength="500"></textarea>' +
+            '<label>' + T('订单备注（可选）', 'Order Notes (Optional)') + '</label>' +
+            '<textarea id="hrCoRemark" placeholder="' + T('如有特殊需求请在此说明', 'Tell us about any special requirements') + '" maxlength="500"></textarea>' +
             '</div>' +
             '</div>' +
             '<div class="hr-modal-foot">' +
-            '<button class="hr-btn hr-btn-cancel" onclick="HRCart.closeCheckoutModal()">取消</button>' +
-            '<button class="hr-btn hr-btn-submit" id="hrCoSubmit" onclick="HRCart.submitCheckout()">确认提交</button>' +
+            '<button class="hr-btn hr-btn-cancel" onclick="HRCart.closeCheckoutModal()">' + T('取消', 'Cancel') + '</button>' +
+            '<button class="hr-btn hr-btn-submit" id="hrCoSubmit" onclick="HRCart.submitCheckout()">' + T('确认提交', 'Confirm & Submit') + '</button>' +
             '</div>' +
             '</div>';
         document.body.appendChild(mask);
@@ -1053,7 +1056,7 @@
         if (qtyEl) qtyEl.textContent = getCartCount();
         if (totalEl) {
             var total = getCartTotal();
-            totalEl.textContent = total ? ('¥' + total.toLocaleString()) : '¥询价';
+            totalEl.textContent = total ? ('¥' + total.toLocaleString()) : T('¥询价', 'Price on request');
         }
         //清空表单
         ['hrCoName', 'hrCoPhone', 'hrCoAddress', 'hrCoRemark'].forEach(function (id) {
@@ -1066,7 +1069,7 @@
         });
         //重置提交按钮
         var btn = document.getElementById('hrCoSubmit');
-        if (btn) { btn.disabled = false; btn.textContent = '确认提交'; }
+        if (btn) { btn.disabled = false; btn.textContent = T('确认提交', 'Confirm & Submit'); }
 
         mask.classList.add('show');
         //自动聚焦姓名
@@ -1097,7 +1100,12 @@
         fAddr.classList.remove('invalid');
 
         if (!name) { fName.classList.add('invalid'); valid = false; }
-        if (!phone || !/^1[3-9]\d{9}$/.test(phone)) { fPhone.classList.add('invalid'); valid = false; }
+        // 英文页面暂不做手机号格式校验，仅要求填写
+        if (IS_EN) {
+            if (!phone) { fPhone.classList.add('invalid'); valid = false; }
+        } else if (!phone || !/^1[3-9]\d{9}$/.test(phone)) {
+            fPhone.classList.add('invalid'); valid = false;
+        }
         if (!address) { fAddr.classList.add('invalid'); valid = false; }
         if (!valid) return;
 
@@ -1109,7 +1117,7 @@
         if (remark) { dto.remark = remark; }
 
         var btn = document.getElementById('hrCoSubmit');
-        if (btn) { btn.disabled = true; btn.textContent = '提交中...'; }
+        if (btn) { btn.disabled = true; btn.textContent = T('提交中...', 'Submitting...'); }
 
         fetchWithTimeout(apiUrl('').replace('/cart', '/order/checkout'), {
             method: 'POST',
@@ -1117,10 +1125,10 @@
             body: JSON.stringify(dto)
         }, 15000).then(function (resp) {
             if (handleAuthFailure(resp)) {
-                throw new Error('未登录或登录已过期');
+                throw new Error(T('未登录或登录已过期', 'Not logged in or session expired'));
             }
-            if (!resp.ok) throw new Error('服务器错误(' + resp.status + ')');
-            return resp.json().catch(function () { throw new Error('响应解析失败，请稍后重试'); });
+            if (!resp.ok) throw new Error(T('服务器错误', 'Server error') + '(' + resp.status + ')');
+            return resp.json().catch(function () { throw new Error(T('响应解析失败，请稍后重试', 'Failed to parse the response, please try again later')); });
         }).then(function (res) {
             if (res.code === 0 && res.data) {
                 closeCheckoutModal();
@@ -1133,7 +1141,7 @@
                 var orderNo = order.orderNo || '';
                 var qty = order.totalQuantity || 0;
                 var total = parseFloat(order.totalAmount) || 0;
-                var totalText = total ? ('¥' + total.toLocaleString()) : '¥询价';
+                var totalText = total ? ('¥' + total.toLocaleString()) : T('¥询价', 'Price on request');
 
                 /* ---------- 分支判断：有价商品走支付流程，询价商品直接下单 ---------- */
                 if (total > 0) {
@@ -1144,12 +1152,12 @@
                     showInquirySuccessModal(orderNo, qty, totalText);
                 }
             } else {
-                showToastMsg(res.message || res.msg || '订单提交失败', 'error');
+                showToastMsg(res.message || res.msg || T('订单提交失败', 'Failed to submit order'), 'error');
             }
         }).catch(function (err) {
-            showToastMsg('订单提交失败：' + err.message, 'error');
+            showToastMsg(T('订单提交失败：', 'Failed to submit order: ') + err.message, 'error');
         }).finally(function () {
-            if (btn) { btn.disabled = false; btn.textContent = '确认提交'; }
+            if (btn) { btn.disabled = false; btn.textContent = T('确认提交', 'Confirm & Submit'); }
         });
     }
 
@@ -1170,15 +1178,15 @@
             '<div style="width:64px;height:64px;margin:0 auto 16px;border-radius:50%;background:linear-gradient(135deg,#52c41a,#389e0d);display:flex;align-items:center;justify-content:center;box-shadow:0 6px 20px rgba(82,196,26,.35);animation:hrPayPop .4s cubic-bezier(.22,1,.36,1);">' +
             '<svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>' +
             '</div>' +
-            '<div style="font-size:20px;font-weight:700;color:#333;margin-bottom:8px;">订单提交成功</div>' +
-            '<div style="font-size:14px;color:#888;margin-bottom:4px;">订单号：' + orderNo + '</div>' +
-            '<div style="font-size:14px;color:#888;margin-bottom:16px;">共 ' + qty + ' 件商品，合计：' + totalText + '</div>' +
+            '<div style="font-size:20px;font-weight:700;color:#333;margin-bottom:8px;">' + T('订单提交成功', 'Order Submitted') + '</div>' +
+            '<div style="font-size:14px;color:#888;margin-bottom:4px;">' + T('订单号：', 'Order No.: ') + orderNo + '</div>' +
+            '<div style="font-size:14px;color:#888;margin-bottom:16px;">' + T('共 ', 'Total ') + qty + T(' 件商品，合计：', ' item(s), total: ') + totalText + '</div>' +
             '<div style="background:#f6ffed;border:1px solid #b7eb8f;border-radius:8px;padding:10px 16px;margin-bottom:20px;font-size:13px;color:#389e0d;text-align:left;">' +
-            '您的订单为询价单，客服将尽快与您联系确认价格。如有疑问请联系在线客服。</div>' +
+            T('您的订单为询价单，客服将尽快与您联系确认价格。如有疑问请联系在线客服。', 'This is a price-request order. Our team will contact you shortly to confirm pricing. Contact our online support if you have any questions.') + '</div>' +
             '</div>' +
             '<div style="border-top:1px solid #f0f0f0;padding:16px 24px;display:flex;gap:12px;">' +
-            '<button onclick="closeInquiryModal()" style="flex:1;padding:12px;border:1px solid #ddd;background:#fff;border-radius:8px;cursor:pointer;font-size:14px;color:#666;">继续购物</button>' +
-            '<button onclick="HRCart.viewOrders()" style="flex:1;padding:12px;border:none;background:#0a4db4;color:#fff;border-radius:8px;cursor:pointer;font-size:14px;font-weight:600;">查看订单</button>' +
+            '<button onclick="closeInquiryModal()" style="flex:1;padding:12px;border:1px solid #ddd;background:#fff;border-radius:8px;cursor:pointer;font-size:14px;color:#666;">' + T('继续购物', 'Continue Shopping') + '</button>' +
+            '<button onclick="HRCart.viewOrders()" style="flex:1;padding:12px;border:none;background:#0a4db4;color:#fff;border-radius:8px;cursor:pointer;font-size:14px;font-weight:600;">' + T('查看订单', 'View Orders') + '</button>' +
             '</div>' +
             '</div></div>';
         // 注入成功动画关键帧
@@ -1227,13 +1235,12 @@
                     resolve(window.QRCode && typeof window.QRCode === 'function');
                 };
                 s.onerror = function () {
-                    console.warn('[QR] 本地qrcode.min.js加载失败（路径：' + src + '），将回退到 qrserver.com。' +
-                        '若需离线渲染，请确认 qrcode.min.js 与 cart.js 位于同一目录。');
+                    // QR 本地脚本加载失败，静默降级到 qrserver.com
                     resolve(false);
                 };
                 document.head.appendChild(s);
             } catch (err) {
-                console.warn('[QR] 动态加载qrcode.min.js发生异常：', err);
+                // 动态加载 qrcode.min.js 发生异常，静默降级到 qrserver.com
                 resolve(false);
             }
         });
@@ -1306,7 +1313,7 @@
             '</div>' +
             '<div style="border-top:1px solid #f0f0f0;padding:16px 24px;display:flex;gap:12px;">' +
             '<button onclick="cancelPayment()" style="flex:1;padding:12px;border:1px solid #ddd;background:#fff;border-radius:8px;cursor:pointer;font-size:14px;color:#666;">取消支付</button>' +
-            '<button onclick="viewOrdersFromPayment()" style="flex:1;padding:12px;border:none;background:#0a4db4;color:#fff;border-radius:8px;cursor:pointer;font-size:14px;font-weight:600;">查看订单</button>' +
+            '<button onclick="viewOrdersFromPayment()" style="flex:1;padding:12px;border:none;background:#0a4db4;color:#fff;border-radius:8px;cursor:pointer;font-size:14px;font-weight:600;">' + T('查看订单', 'View Orders') + '</button>' +
             '</div>' +
             '</div>';
         document.body.insertAdjacentHTML('beforeend', html);
@@ -1461,7 +1468,7 @@
                 if (data.indexOf('MOCK_') < 0) container.appendChild(copyBtn);
                 return;
             } catch (err) {
-                console.warn('[QR] 本地qrcodejs渲染失败，降级到qrserver.com：', err);
+                // 本地 QR 渲染失败，静默降级到 qrserver.com 在线图片
                 container.innerHTML = '';
             }
         }
@@ -1561,9 +1568,9 @@
             hint = '模拟支付模式，请使用下方模拟扫码按钮';
         } else {
             data = qrUrl;
-            hint = '请用沙箱/支付宝 APP 或微信 APP 扫一扫此二维码进行支付';
+            hint = '请用支付宝 APP 或微信 APP 扫一扫此二维码进行支付';
             if (qrUrl.indexOf('qr.alipay.com') >= 0 || qrUrl.indexOf('alipay.com') >= 0) {
-                hint = '请用【沙箱版支付宝 APP】扫一扫支付（买家账号：fxpxvm6410@sandbox.com / 111111）';
+                hint = '请打开【支付宝APP】扫一扫完成支付';
             } else if (qrUrl.indexOf('weixin://') === 0 || qrUrl.indexOf('wechat.com') >= 0) {
                 hint = '请用【微信】扫一扫此二维码支付';
             }
@@ -1816,7 +1823,7 @@
                 headers: authHeaders(),
                 body: JSON.stringify({ paymentId: paymentId })
             }, 8000).catch(function (e) {
-                console.warn('关闭支付记录失败:', e);
+                // 取消支付接口失败静默（订单仍保留待支付状态）
             });
         }
 

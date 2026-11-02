@@ -1,3 +1,12 @@
+<!--
+  ====================================================================
+  页面：shangcheng.html
+  路径：my-web/shangcheng.html
+  用途：商城首页
+  关联 JS：load-components.js (nav/footer)、index_files/*.css、index_files/*.js
+  双语对：无
+  ====================================================================
+-->
 <!DOCTYPE html>
 <html xml:lang="zh" lang="zh">
 
@@ -1569,6 +1578,7 @@
     </section>
 
     <!-- ============ Footer ============ -->
+    <!-- 页脚（静态 footer 区域） -->
     <footer class="footer">
         <div class="footer-inner">
             <div class="footer-col">
@@ -1791,15 +1801,23 @@
             { img: 'img/chanpin1-cp1-cpjs.png', name: '无电制冷涂层', url: 'pages/product-detail/product-detail-cp1.html', fallback: '&#127777;' }
         ];
 
+        /** HTML 转义：防止后续若数据源改为 API 时引发 DOM 注入 */
+        function escapeHtml(s) {
+            if (s === null || s === undefined) return '';
+            return String(s).replace(/[&<>"']/g, c => ({
+                '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+            }[c]));
+        }
+
         function renderFlashProducts() {
             var container = document.getElementById('flashProducts');
             if (!container) return;
             var html = '';
             flashProducts.forEach(function (p) {
-                html += '<div class="flash-product" onclick="location.href=\'' + p.url + '\'">' +
-                    '<div class="fp-img"><img src="' + p.img + '" alt="' + p.name + '" onerror="this.parentNode.innerHTML=\'' + p.fallback + '\'"></div>' +
+                html += '<div class="flash-product" onclick="location.href=\'' + escapeHtml(p.url) + '\'">' +
+                    '<div class="fp-img"><img src="' + escapeHtml(p.img) + '" alt="' + escapeHtml(p.name) + '" onerror="this.parentNode.innerHTML=\'' + p.fallback + '\'"></div>' +
                     '<div class="fp-info">' +
-                    '<div class="fp-name">' + p.name + '</div>' +
+                    '<div class="fp-name">' + escapeHtml(p.name) + '</div>' +
                     '</div></div>';
             });
             container.innerHTML = html;
@@ -1821,9 +1839,9 @@
             var html = '';
             newProducts.forEach(function (p) {
                 html += '<div class="np-list-item" onclick="location.href=\'#\'">' +
-                    '<span class="np-title">' + p.name + '</span>' +
-                    '<span class="np-tag ' + p.tagClass + '">' + p.tag + '</span>' +
-                    '<span class="np-date">' + p.date + '</span>' +
+                    '<span class="np-title">' + escapeHtml(p.name) + '</span>' +
+                    '<span class="np-tag ' + escapeHtml(p.tagClass) + '">' + escapeHtml(p.tag) + '</span>' +
+                    '<span class="np-date">' + escapeHtml(p.date) + '</span>' +
                     '</div>';
             });
             container.innerHTML = html;

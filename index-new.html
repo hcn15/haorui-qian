@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>浩瑞绿色科技 · 欧亚一站式出海采购平台</title>
+<meta name="keywords" content="浩瑞绿色科技,欧亚工委会,EAC认证,出海,俄罗斯,中亚,跨境采购">
+<meta name="description" content="浩瑞绿色科技 · 欧亚工委会执行单位。1C1直通服务，俄白哈EAC认证绿色通道，源头产品直供下单。">
+<script src="config1.js"></script>
+<script src="cart.js"></script>
+<script src="favorite.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:"PingFang SC","Microsoft YaHei",Arial,sans-serif;color:#2a2f40;background:#f4f6fa;-webkit-font-smoothing:antialiased;line-height:1.6}
+a{text-decoration:none;color:inherit}
+ul{list-style:none}
+img{display:block;max-width:100%}
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:#eef0f4}
+::-webkit-scrollbar-thumb{background:#c4cad6;border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:#0a4db4}
+
+:root{
+  --brand-blue:#0a4db4;--brand-blue-deep:#0a3a8f;--brand-gold:#f59e0b;--brand-green:#10b981;
+  --accent-red:#e11d48;--text-dark:#1a2236;--text-soft:#5a6278;--text-muted:#8a93a7;
+  --bg-soft:#f4f6fa;--bg-card:#ffffff;--border-soft:#e8ecf4;
+  --shadow-card:0 2px 12px rgba(10,30,80,.06);--shadow-card-hover:0 10px 30px rgba(10,30,80,.12);
+}
+.container{max-width:1200px;margin:0 auto;padding:0 20px}
+
+/* ===== 顶部通栏 ===== */
+.hero-strip{background:linear-gradient(90deg,#0a3a8f,#0a4db4,#08306e);color:#fff;font-size:13px;padding:9px 0;overflow:hidden;position:relative}
+.hero-strip::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0,transparent 40px,rgba(255,255,255,.04) 40px,rgba(255,255,255,.04) 41px)}
+.hero-strip-inner{display:flex;align-items:center;justify-content:center;gap:30px;position:relative}
+.hero-strip-item{display:flex;align-items:center;gap:7px}
+.hero-strip-badge{background:linear-gradient(135deg,#f59e0b,#fbbf24);color:#78350f;font-weight:700;padding:2px 10px;border-radius:999px;font-size:12px;margin-right:4px}
+
+/* ===== Header ===== */
+.site-header{background:#fff;border-bottom:1px solid var(--border-soft);position:sticky;top:0;z-index:100;box-shadow:0 1px 4px rgba(0,0,0,.04)}
+.site-header-inner{display:flex;align-items:center;gap:28px;height:72px}
+.site-logo{display:flex;align-items:center;gap:12px;flex-shrink:0}
+.site-logo-mark{width:42px;height:42px;border-radius:12px;background:linear-gradient(135deg,#0a4db4,#1e6fd9);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:18px;box-shadow:0 4px 14px rgba(10,77,180,.3)}
+.site-logo-text h1{font-size:17px;font-weight:700;color:var(--text-dark);letter-spacing:.5px}
+.site-logo-text span{font-size:11px;color:var(--brand-blue);font-weight:600;letter-spacing:1px}
+.site-nav{display:flex;gap:6px;flex:1}
+.site-nav a{padding:10px 16px;border-radius:8px;font-size:14.5px;font-weight:500;color:var(--text-dark);transition:all .2s}
+.site-nav a:hover{color:var(--brand-blue);background:rgba(10,77,180,.06)}
+.site-nav a.active{color:var(--brand-blue);font-weight:700}
+.site-tools{display:flex;align-items:center;gap:10px;flex-shrink:0}
+.tool-btn{display:flex;align-items:center;gap:6px;padding:8px 12px;border-radius:8px;font-size:13px;color:var(--text-soft);background:transparent;border:none;cursor:pointer;transition:all .2s}
+.tool-btn:hover{color:var(--brand-blue);background:rgba(10,77,180,.06)}
+.tool-btn .count{background:var(--accent-red);color:#fff;border-radius:999px;font-size:11px;padding:1px 6px;font-weight:700}
+.publish-btn{background:linear-gradient(135deg,#0a4db4,#1e6fd9);color:#fff!important;font-weight:600;box-shadow:0 4px 12px rgba(10,77,180,.25)}
+.publish-btn:hover{background:linear-gradient(135deg,#083a90,#1658c0);transform:translateY(-1px)}
+
+/* ===================== 区块一：首屏核心区（左右分栏） ===================== */
+.hero{padding:32px 0 20px;background:var(--bg-soft)}
+.hero-grid{display:grid;grid-template-columns:1.5fr 1fr;gap:22px;align-items:stretch}
+
+/* --- 左栏：大轮播 Banner --- */
+.hero-carousel{position:relative;border-radius:16px;overflow:hidden;background:#ddd;aspect-ratio:16/9;box-shadow:var(--shadow-card)}
+.hero-slide{position:absolute;inset:0;display:flex;align-items:flex-end;padding:44px 48px;opacity:0;transition:opacity .7s ease}
+.hero-slide.active{opacity:1}
+.slide-content{position:relative;z-index:2;max-width:480px;color:#fff}
+.slide-title{font-size:32px;font-weight:800;margin-bottom:12px;text-shadow:0 2px 8px rgba(0,0,0,.4)}
+.slide-sub{font-size:15.5px;margin-bottom:22px;opacity:.95;text-shadow:0 1px 4px rgba(0,0,0,.3)}
+.slide-btn{display:inline-flex;align-items:center;gap:8px;padding:12px 24px;border-radius:10px;background:#fff;color:var(--brand-blue-deep);font-weight:700;font-size:14px;box-shadow:0 6px 18px rgba(0,0,0,.2);transition:all .25s}
+.slide-btn:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(0,0,0,.25)}
+.slide1{background:linear-gradient(135deg,#0a3a8f 0%,#1e6fd9 55%,#f59e0b 150%)}
+.slide2{background:linear-gradient(135deg,#064e3b 0%,#10b981 55%,#0a4db4 150%)}
+.slide3{background:linear-gradient(135deg,#7c2d12 0%,#dc2626 55%,#0a4db4 150%)}
+.carousel-dots{position:absolute;bottom:18px;left:50%;transform:translateX(-50%);display:flex;gap:8px;z-index:5}
+.carousel-dots button{width:26px;height:5px;border-radius:99px;border:none;background:rgba(255,255,255,.4);cursor:pointer;transition:all .3s}
+.carousel-dots button.active{background:#fff;width:36px}
+
+/* --- 右栏：🔥 跨境需求播报（撑满左栏高度） --- */
+.hero-side{display:flex;height:100%}
+
+.demand-ticker{background:linear-gradient(135deg,#0a3a8f,#0a4db4);border-radius:16px;padding:22px 24px;color:#fff;box-shadow:0 6px 22px rgba(10,58,143,.35);position:relative;overflow:hidden;flex:1;display:flex;flex-direction:column}
+.demand-ticker::before{content:"";position:absolute;top:-30%;right:-20%;width:50%;height:160%;background:radial-gradient(ellipse,rgba(245,158,11,.18),transparent 60%);pointer-events:none}
+.demand-ticker h3{font-size:14px;font-weight:700;margin-bottom:12px;position:relative}
+.demand-ticker h3::before{content:"🔥 ";font-size:16px}
+.ticker-list{position:relative;flex:1;display:flex;flex-direction:column;justify-content:center;gap:4px}
+.ticker-item{display:flex;align-items:center;gap:8px;padding:8px 0;font-size:13px;border-bottom:1px dashed rgba(255,255,255,.15)}
+.ticker-item:last-child{border-bottom:none}
+.ticker-flag{font-size:14px}
+.ticker-text{flex:1;opacity:.92}
+.ticker-text b{color:#fbbf24;font-weight:700}
+.ticker-qty{color:rgba(255,255,255,.6);font-size:12px;flex-shrink:0}
+.ticker-cta{margin-top:12px;padding-top:12px;border-top:1px dashed rgba(255,255,255,.2);text-align:center;position:relative}
+.ticker-cta a{color:#fbbf24;font-weight:700;font-size:13px}
+
+/* ===== 通用 ===== */
+.section{padding:36px 0}
+.section-head{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:22px}
+.section-title{display:flex;align-items:center;gap:12px}
+.section-title .line{width:4px;height:26px;background:linear-gradient(180deg,#0a4db4,#f59e0b);border-radius:2px}
+.section-title h2{font-size:22px;font-weight:800;color:var(--text-dark)}
+.section-title small{font-size:13px;color:var(--text-muted);font-weight:400}
+.section-more{color:var(--brand-blue);font-size:13px;font-weight:600;display:flex;align-items:center;gap:4px}
+.section-more:hover{text-decoration:underline}
+
+/* ===== 区块二：四大核心业务 ===== */
+.biz-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.biz-card{background:#fff;border-radius:14px;padding:22px 20px;box-shadow:var(--shadow-card);border:1px solid var(--border-soft);cursor:pointer;transition:all .3s;position:relative;overflow:hidden}
+.biz-card:hover{transform:translateY(-5px);box-shadow:var(--shadow-card-hover);border-color:rgba(10,77,180,.2)}
+.biz-card::after{content:"";position:absolute;bottom:0;left:0;height:3px;width:0;transition:width .3s}
+.biz-card:hover::after{width:100%}
+.biz-card.b1::after{background:linear-gradient(90deg,#0a4db4,#1e6fd9)}
+.biz-card.b2::after{background:linear-gradient(90deg,#f59e0b,#fbbf24)}
+.biz-card.b3::after{background:linear-gradient(90deg,#10b981,#34d399)}
+.biz-card.b4::after{background:linear-gradient(90deg,#e11d48,#f43f5e)}
+.biz-ico{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:24px;margin-bottom:14px}
+.b1 .biz-ico{background:rgba(10,77,180,.1);color:#0a4db4}
+.b2 .biz-ico{background:rgba(245,158,11,.12);color:#d97706}
+.b3 .biz-ico{background:rgba(16,185,129,.12);color:#059669}
+.b4 .biz-ico{background:rgba(225,29,72,.1);color:#dc2626}
+.biz-card h3{font-size:16px;font-weight:700;color:var(--text-dark);margin-bottom:6px}
+.biz-card p{font-size:12.5px;color:var(--text-muted);margin-bottom:14px;line-height:1.5}
+.biz-card .biz-enter{font-size:13px;font-weight:700;color:var(--brand-blue);display:flex;align-items:center;gap:4px}
+.biz-card.b2 .biz-enter{color:#d97706}
+.biz-card.b3 .biz-enter{color:#059669}
+.biz-card.b4 .biz-enter{color:#dc2626}
+
+/* ===== 区块三：浩瑞新产品推荐 ===== */
+.products{background:var(--bg-soft)}
+.product-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.product-card{background:#fff;border-radius:14px;overflow:hidden;box-shadow:var(--shadow-card);transition:all .3s;border:1px solid var(--border-soft);cursor:pointer}
+.product-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-card-hover)}
+.product-img{aspect-ratio:4/3;background:linear-gradient(135deg,#eef3fb,#dde6f4);display:flex;align-items:center;justify-content:center;font-size:40px;color:#0a4db4;position:relative}
+.product-info{padding:14px 16px 16px}
+.product-info h4{font-size:14.5px;font-weight:600;color:var(--text-dark);margin-bottom:6px;line-height:1.4}
+.product-meta{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.product-price{font-size:18px;font-weight:800;color:#dc2626}
+.product-price small{font-size:12px;font-weight:500;color:var(--text-muted)}
+.product-origin{font-size:11px;color:var(--text-muted)}
+.product-buy{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;padding:9px;background:linear-gradient(135deg,#0a4db4,#1e6fd9);color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;transition:all .2s}
+.product-buy:hover{background:linear-gradient(135deg,#083a90,#1658c0)}
+
+/* ===== 区块四：出海落地服务 ===== */
+.services{background:#fff}
+.service-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.service-card{border-radius:14px;padding:24px 22px;border:1px solid var(--border-soft);background:#fff;transition:all .3s;position:relative;overflow:hidden}
+.service-card:hover{border-color:rgba(10,77,180,.3);transform:translateY(-4px);box-shadow:0 10px 28px rgba(10,58,143,.12)}
+.sv-ico{width:56px;height:56px;border-radius:14px;background:linear-gradient(135deg,#0a4db4,#1e6fd9);display:flex;align-items:center;justify-content:center;font-size:26px;color:#fff;margin-bottom:16px;box-shadow:0 6px 18px rgba(10,77,180,.25)}
+.service-card h3{font-size:16px;font-weight:700;color:var(--text-dark);margin-bottom:6px}
+.service-card p{font-size:13px;color:var(--text-muted);margin-bottom:14px;line-height:1.5}
+.service-btn{display:inline-flex;align-items:center;gap:5px;font-size:13px;font-weight:600;color:var(--brand-blue)}
+.service-btn:hover{text-decoration:underline}
+
+/* ===== 区块五：跨境采购大厅 ===== */
+.sourcing{background:radial-gradient(900px 320px at 8% -10%,rgba(245,158,11,.18),transparent 60%),radial-gradient(760px 300px at 96% 110%,rgba(225,29,72,.18),transparent 60%),linear-gradient(135deg,#0a3a8f 0%,#0a4db4 50%,#08306e 100%);padding:40px 0;color:#fff;position:relative;overflow:hidden}
+.sourcing::before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px);background-size:44px 44px;pointer-events:none}
+.sourcing>*{position:relative;z-index:1}
+.sourcing .section-title h2{color:#fff}
+.sourcing .section-title .line{background:linear-gradient(180deg,#fbbf24,#f59e0b)}
+.src-tabs{display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap}
+.src-tab{padding:8px 18px;border-radius:999px;background:rgba(255,255,255,.08);color:rgba(255,255,255,.8);font-size:13px;font-weight:600;border:1px solid rgba(255,255,255,.12);cursor:pointer;transition:all .2s}
+.src-tab:hover{background:rgba(255,255,255,.18);color:#fff}
+.src-tab.active{background:linear-gradient(135deg,#f59e0b,#fbbf24);color:#78350f;border-color:transparent}
+.src-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;max-height:290px;overflow-y:auto;padding-right:4px}
+.src-grid::-webkit-scrollbar{width:5px}
+.src-grid::-webkit-scrollbar-track{background:rgba(255,255,255,.06);border-radius:3px}
+.src-grid::-webkit-scrollbar-thumb{background:rgba(255,255,255,.3);border-radius:3px}
+.src-card{background:rgba(255,255,255,.08);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.14);border-radius:12px;padding:16px;cursor:pointer;transition:all .28s}
+.src-card:hover{background:rgba(255,255,255,.15);transform:translateY(-3px);border-color:rgba(255,255,255,.35);box-shadow:0 10px 26px rgba(0,0,0,.3)}
+.src-card[data-region="ca"]{border-top:2px solid #fbbf24}
+.src-card[data-region="ru"]{border-top:2px solid #f87171}
+.src-card[data-region="af"]{border-top:2px solid #34d399}
+.src-card[data-region="sea"]{border-top:2px solid #22d3ee}
+.src-card-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.src-region{font-size:11px;font-weight:700;letter-spacing:.5px;color:#fbbf24;background:rgba(0,0,0,.28);padding:3px 9px;border-radius:999px}
+.src-qty{font-size:13px;font-weight:700;color:#fff;background:rgba(255,255,255,.14);padding:3px 10px;border-radius:6px}
+.src-card h4{font-size:14.5px;font-weight:600;color:#fff;margin-bottom:10px;line-height:1.45;min-height:42px}
+.src-card-foot{display:flex;align-items:center;justify-content:space-between;font-size:11px;color:rgba(255,255,255,.6)}
+.src-card-foot .match{color:#fbbf24;font-weight:700;display:flex;align-items:center;gap:4px;font-size:12px}
+.src-foot{display:flex;align-items:center;justify-content:space-between;margin-top:20px;padding-top:18px;border-top:1px solid rgba(255,255,255,.15)}
+.src-stats{display:flex;gap:30px}
+.src-stat{text-align:center}
+.src-stat .num{font-size:24px;font-weight:800;color:#fbbf24}
+.src-stat .lbl{font-size:12px;color:rgba(255,255,255,.65)}
+.src-cta{background:linear-gradient(135deg,#f59e0b,#fbbf24);color:#78350f;padding:10px 22px;border-radius:10px;font-weight:700;font-size:14px;display:inline-flex;align-items:center;gap:6px}
+.src-cta:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(245,158,11,.4)}
+
+/* ===== 区块六：出海避坑干货 ===== */
+.insights{background:var(--bg-soft)}
+.insights-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.insight-box{background:#fff;border-radius:14px;padding:22px 24px;box-shadow:var(--shadow-card);border:1px solid var(--border-soft)}
+.insight-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--border-soft)}
+.insight-head h3{font-size:16px;font-weight:700;color:var(--text-dark);display:flex;align-items:center;gap:8px}
+.insight-head h3::before{content:"";width:3px;height:16px;border-radius:2px}
+.insight-box.news .insight-head h3::before{background:var(--brand-blue)}
+.insight-box.guide .insight-head h3::before{background:var(--brand-gold)}
+.insight-head a{font-size:12px;color:var(--text-muted)}
+.insight-head a:hover{color:var(--brand-blue)}
+.news-list li{display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-bottom:1px dashed var(--border-soft);cursor:pointer;transition:all .2s}
+.news-list li:last-child{border-bottom:none}
+.news-list li:hover .news-title{color:var(--brand-blue)}
+.news-tag{background:rgba(10,77,180,.08);color:var(--brand-blue);font-size:11px;font-weight:700;padding:2px 8px;border-radius:4px;flex-shrink:0;margin-top:3px}
+.news-title{font-size:13.5px;color:var(--text-dark);line-height:1.5;flex:1;transition:color .2s}
+.news-date{font-size:11px;color:var(--text-muted);flex-shrink:0;margin-top:3px}
+.guide-list li{display:flex;align-items:center;gap:12px;padding:11px 12px;border-radius:10px;background:linear-gradient(135deg,#fffbf0,#fff6e0);border:1px solid #fdecc8;margin-bottom:10px;cursor:pointer;transition:all .2s}
+.guide-list li:last-child{margin-bottom:0}
+.guide-list li:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(245,158,11,.18)}
+.guide-ico{font-size:18px;flex-shrink:0}
+.guide-text{flex:1}
+.guide-text h4{font-size:13.5px;font-weight:600;color:#78350f;margin-bottom:2px}
+.guide-text p{font-size:11.5px;color:#92400e;opacity:.8}
+.guide-arrow{color:#d97706;font-size:14px}
+
+/* ===== Footer ===== */
+.site-footer{background:linear-gradient(180deg,#0f172a 0%,#1e293b 100%);color:rgba(255,255,255,.8);padding:50px 0 0;font-size:13px}
+.footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1.2fr;gap:40px}
+.footer-col h4{color:#fff;font-size:14px;font-weight:700;margin-bottom:18px;position:relative;padding-bottom:8px}
+.footer-col h4::after{content:"";position:absolute;bottom:0;left:0;width:32px;height:2px;background:linear-gradient(90deg,#0a4db4,#f59e0b)}
+.footer-col p{line-height:1.8;margin-bottom:10px;color:rgba(255,255,255,.6)}
+.footer-col a{display:block;padding:4px 0;color:rgba(255,255,255,.65);transition:color .2s}
+.footer-col a:hover{color:#fbbf24}
+.footer-req{background:rgba(245,158,11,.12);border:1px solid rgba(245,158,11,.3);color:#fbbf24;padding:10px 14px;border-radius:8px;font-size:12.5px;font-weight:600;line-height:1.6;margin-bottom:14px}
+.footer-contact{display:flex;flex-direction:column;gap:8px}
+.footer-contact li{display:flex;align-items:center;gap:8px;color:rgba(255,255,255,.7)}
+.footer-contact li .fi{font-size:15px}
+.footer-bottom{margin-top:40px;padding:20px 0;border-top:1px solid rgba(255,255,255,.1);text-align:center;font-size:12px;color:rgba(255,255,255,.45)}
+.footer-bottom a{color:rgba(255,255,255,.55);margin:0 4px}
+.footer-bottom a:hover{color:#fbbf24}
+.footer-bottom p{margin:4px 0}
+
+/* 右侧快捷栏 */
+.side-shortcut{position:fixed;right:14px;bottom:60px;display:flex;flex-direction:column;gap:8px;z-index:99}
+.sc-item{width:48px;height:48px;background:#fff;border-radius:50%;box-shadow:0 4px 16px rgba(0,0,0,.12);display:flex;align-items:center;justify-content:center;font-size:20px;cursor:pointer;border:1px solid var(--border-soft);transition:all .25s}
+.sc-item:hover{background:var(--brand-blue);color:#fff;transform:scale(1.05)}
+.sc-top{background:linear-gradient(135deg,#0a4db4,#1e6fd9);color:#fff}
+
+/* ===== 移动端 ===== */
+@media(max-width:1024px){
+  .hero-grid{grid-template-columns:1fr}.hero-carousel{aspect-ratio:16/8}
+  .biz-grid,.product-grid,.service-grid{grid-template-columns:repeat(2,1fr)}
+  .insights-grid,.footer-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:768px){
+  .hero-strip-inner{flex-wrap:wrap;gap:8px;padding:4px 0}
+  .site-header-inner{height:60px;gap:12px}
+  .site-logo-mark{width:36px;height:36px;font-size:15px}
+  .site-logo-text h1{font-size:14px}
+  .site-nav{display:none}
+  .biz-grid,.product-grid,.service-grid{grid-template-columns:1fr 1fr;gap:12px}
+  .section{padding:24px 0}
+  .section-title h2{font-size:18px}
+  .footer-grid{grid-template-columns:1fr 1fr;gap:24px}
+  .hero{padding:20px 0}
+  .hero-slide{padding:24px}
+  .slide-title{font-size:22px}
+  .src-grid{grid-template-columns:1fr 1fr}
+  .src-stat .num{font-size:20px}
+}
+@media(max-width:480px){
+  .biz-grid,.product-grid,.service-grid,.insights-grid,.footer-grid,.src-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- ===== 顶部通栏 ===== -->
+<div class="hero-strip">
+  <div class="container hero-strip-inner">
+    <div class="hero-strip-item"><span class="hero-strip-badge">🏅 欧亚工委会</span><span>执行单位</span></div>
+    <div class="hero-strip-item"><span>⚡</span>1C1（一对一）直通服务</div>
+    <div class="hero-strip-item"><span>🛡️</span>俄白哈 EAC 认证绿色通道</div>
+  </div>
+</div>
+
+<!-- ===== Header ===== -->
+<header class="site-header">
+  <div class="container site-header-inner">
+    <a href="#" class="site-logo">
+      <div class="site-logo-mark">H</div>
+      <div class="site-logo-text"><h1>浩瑞绿色科技</h1><span>HARVEST GREEN TECH</span></div>
+    </a>
+    <nav class="site-nav">
+      <a href="#" class="active">首页</a>
+      <a href="#products">浩瑞新产品</a>
+      <a href="#biz">黑科技爆品</a>
+      <a href="#services">出海服务</a>
+    </nav>
+    <div class="site-tools">
+      <button class="tool-btn" title="语言"><span>🌐</span><span>中</span></button>
+      <button class="tool-btn" title="购物车"><span>🛒</span><span class="count" id="cartCount">0</span></button>
+      <a href="./pages/requirement/publish.html" class="tool-btn publish-btn">🔴 发布需求</a>
+    </div>
+  </div>
+</header>
+
+<!-- ===================== 区块一：首屏核心区（左右分栏） ===================== -->
+<section class="hero">
+  <div class="container hero-grid">
+
+    <!-- 左栏：大轮播 Banner（3 张） -->
+    <div class="hero-carousel" id="carousel">
+      <div class="hero-slide slide1 active">
+        <div class="slide-content">
+          <h2 class="slide-title">浩瑞新产品</h2>
+          <p class="slide-sub">【源头直供，支持在线下单】</p>
+          <a href="#products" class="slide-btn">⚡ 立即采购浩瑞新产品</a>
+        </div>
+      </div>
+      <div class="hero-slide slide2">
+        <div class="slide-content">
+          <h2 class="slide-title">出海全链路服务</h2>
+          <p class="slide-sub">认证 · 海外仓 · 法税 · 物流 · 考察团</p>
+          <a href="#services" class="slide-btn">🚀 了解出海全链路</a>
+        </div>
+      </div>
+      <div class="hero-slide slide3">
+        <div class="slide-content">
+          <h2 class="slide-title">欧亚实地考察团</h2>
+          <p class="slide-sub">深度走访 · 对接商会 · 精准对接采购</p>
+          <a href="#services" class="slide-btn">✈️ 报名考察团</a>
+        </div>
+      </div>
+      <div class="carousel-dots">
+        <button class="active" data-idx="0"></button>
+        <button data-idx="1"></button>
+        <button data-idx="2"></button>
+      </div>
+    </div>
+
+    <!-- 右栏：🔥 跨境需求滚动播报（唯一卡） -->
+    <div class="hero-side">
+      <div class="demand-ticker">
+        <h3>跨境需求滚动播报</h3>
+        <div class="ticker-list">
+          <div class="ticker-item"><span class="ticker-flag">🇷🇺</span><span class="ticker-text">俄客商求购: <b>压力传感器</b></span><span class="ticker-qty">1000只</span></div>
+          <div class="ticker-item"><span class="ticker-flag">🇰🇿</span><span class="ticker-text">哈客商求购: <b>电池正极材料</b></span><span class="ticker-qty">200吨</span></div>
+        </div>
+        <div class="ticker-cta"><a href="#sourcing">➡️ 进入需求大厅</a></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ===== 区块二：四大核心业务 ===== -->
+<section class="section" id="biz">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-title"><span class="line"></span><h2>四大核心业务</h2><small>一站式出海采购 · 高效撮合对接</small></div>
+    </div>
+    <div class="biz-grid">
+      <a href="#products" class="biz-card b1"><div class="biz-ico">📦</div><h3>浩瑞新产品专区</h3><p>源头直供 · 支持在线下单 · EAC认证现货</p><div class="biz-enter">进入选购 →</div></a>
+      <a href="#flash" class="biz-card b2"><div class="biz-ico">🤖</div><h3>黑科技产品库</h3><p>合作工厂精选 · 前沿科技爆品 · 可追溯</p><div class="biz-enter">查看产品 →</div></a>
+      <a href="#sourcing" class="biz-card b3"><div class="biz-ico">🌍</div><h3>跨境采购寻源</h3><p>真实买家需求 · 1C1直通服务 · 中亚俄非东南亚</p><div class="biz-enter">立即对接 →</div></a>
+      <a href="#services" class="biz-card b4"><div class="biz-ico">🛡️</div><h3>全链路出海赋能</h3><p>考察 · 认证 · 法税 · 物流 · 海外仓</p><div class="biz-enter">查看服务图谱 →</div></a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 区块三：浩瑞新产品推荐 ===== -->
+<section class="section products" id="products">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-title"><span class="line"></span><h2>浩瑞新产品推荐</h2><small>源头直供 · 支持在线下单 · 附EAC认证</small></div>
+      <a href="./pages/series/chanpin1.html" class="section-more">查看全部 →</a>
+    </div>
+    <div class="product-grid">
+      <div class="product-card" onclick="location.href='./pages/series/chanpin1-cp1.html'">
+        <div class="product-img">❄️</div>
+        <div class="product-info"><h4>无电制冷涂层 · 被动辐射制冷技术</h4><div class="product-meta"><span class="product-price">¥咨询</span><span class="product-origin">🏭 北京工厂直发</span></div><button class="product-buy">🛒 立即采购</button></div>
+      </div>
+      <div class="product-card" onclick="location.href='./pages/series/chanpin-lqjc1.html'">
+        <div class="product-img">🤖</div>
+        <div class="product-info"><h4>CR 30H 协作机器人 · 全新旗舰机型</h4><div class="product-meta"><span class="product-price">¥咨询</span><span class="product-origin">🏭 浩瑞智造</span></div><button class="product-buy">🛒 立即采购</button></div>
+      </div>
+      <div class="product-card" onclick="location.href='./pages/series/chanpin-jsjc1.html'">
+        <div class="product-img">📡</div>
+        <div class="product-info"><h4>AI视觉识别模块 · 智能巡检方案</h4><div class="product-meta"><span class="product-price">¥咨询</span><span class="product-origin">🏭 浩瑞智造</span></div><button class="product-buy">🛒 立即采购</button></div>
+      </div>
+      <div class="product-card" onclick="location.href='./pages/series/chanpin-hnt1.html'">
+        <div class="product-img">⚡</div>
+        <div class="product-info"><h4>智慧储能逆变器 · 离并网双模式</h4><div class="product-meta"><span class="product-price">¥咨询</span><span class="product-origin">🏭 浩瑞智造</span></div><button class="product-buy">🛒 立即采购</button></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 区块四：出海落地服务 ===== -->
+<section class="section services" id="services">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-title"><span class="line"></span><h2>出海落地服务</h2><small>去掉虚的 · 保留实的 · 真正能帮你出海</small></div>
+      <a href="./pages/info/contact-us.html" class="section-more">咨询服务 →</a>
+    </div>
+    <div class="service-grid">
+      <div class="service-card"><div class="sv-ico">✈️</div><h3>欧亚实地考察团</h3><p>对接当地商会、采购商、工厂与园区，深度实地走访</p><a href="./pages/info/contact-us.html" class="service-btn">报名考察团 →</a></div>
+      <div class="service-card"><div class="sv-ico">🛡️</div><h3>合规准入与认证</h3><p>EAC认证高效通道，海关联盟技术法规，一对一辅导</p><a href="./pages/info/contact-us.html" class="service-btn">办理EAC认证 →</a></div>
+      <div class="service-card"><div class="sv-ico">🚢</div><h3>海外仓与物流落地</h3><p>俄白哈共享仓、园区入驻、头程尾程全链路物流</p><a href="./pages/info/contact-us.html" class="service-btn">咨询海外仓 →</a></div>
+      <div class="service-card"><div class="sv-ico">⚖️</div><h3>跨国法税护航</h3><p>资金合规、签证代办、当地主体设立与财税筹划</p><a href="./pages/info/contact-us.html" class="service-btn">预约咨询 →</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 区块五：跨境采购大厅 ===== -->
+<section class="sourcing" id="sourcing">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-title"><span class="line"></span><h2>跨境采购大厅</h2><small>真实海外买家 · 中亚 · 俄罗斯 · 非洲 · 东南亚</small></div>
+    </div>
+    <div class="src-tabs">
+      <button class="src-tab active" data-region="all">🌐 全部</button>
+      <button class="src-tab" data-region="ca">🇰🇿 中亚专区</button>
+      <button class="src-tab" data-region="ru">🇷🇺 俄罗斯专区</button>
+      <button class="src-tab" data-region="af">🇪🇬 非洲专区</button>
+      <button class="src-tab" data-region="sea">🇻🇳 东南亚专区</button>
+    </div>
+    <div class="src-grid" id="srcGrid">
+      <div class="src-card" data-region="ca"><div class="src-card-top"><span class="src-region">🇰🇿 哈萨克斯坦</span><span class="src-qty">200吨</span></div><h4>新能源电池正极材料</h4><div class="src-card-foot"><span>2026-09-28</span><span class="match">🔴 立即对接 →</span></div></div>
+      <div class="src-card" data-region="ca"><div class="src-card-top"><span class="src-region">🇺🇿 乌兹别克斯坦</span><span class="src-qty">5000㎡</span></div><h4>石墨烯散热膜</h4><div class="src-card-foot"><span>2026-09-27</span><span class="match">🔴 立即对接 →</span></div></div>
+      <div class="src-card" data-region="ca"><div class="src-card-top"><span class="src-region">🇰🇬 吉尔吉斯斯坦</span><span class="src-qty">50台</span></div><h4>高性能巡检无人机</h4><div class="src-card-foot"><span>2026-09-25</span><span class="match">🔴 立即对接 →</span></div></div>
+      <div class="src-card" data-region="ru"><div class="src-card-top"><span class="src-region">🇷🇺 莫斯科</span><span class="src-qty">1000只</span></div><h4>工业级压力传感器</h4><div class="src-card-foot"><span>2026-09-29</span><span class="match">🔴 立即对接 →</span></div></div>
+      <div class="src-card" data-region="ru"><div class="src-card-top"><span class="src-region">🇷🇺 叶卡捷琳堡</span><span class="src-qty">200片</span></div><h4>AI视觉识别模块</h4><div class="src-card-foot"><span>2026-09-26</span><span class="match">🔴 立即对接 →</span></div></div>
+      <div class="src-card" data-region="ru"><div class="src-card-top"><span class="src-region">🇷🇺 新西伯利亚</span><span class="src-qty">300吨</span></div><h4>锂电池电解液</h4><div class="src-card-foot"><span>2026-09-24</span><span class="match">🔴 立即对接 →</span></div></div>
+      <div class="src-card" data-region="af"><div class="src-card-top"><span class="src-region">🇪🇬 埃及·开罗</span><span class="src-qty">500台</span></div><h4>太阳能离网逆变器</h4><div class="src-card-foot"><span>2026-09-28</span><span class="match">🔴 立即对接 →</span></div></div>
+      <div class="src-card" data-region="af"><div class="src-card-top"><span class="src-region">🇳🇬 尼日利亚·拉各斯</span><span class="src-qty">200吨</span></div><h4>锂电池正极材料前驱体</h4><div class="src-card-foot"><span>2026-09-26</span><span class="match">🔴 立即对接 →</span></div></div>
+      <div class="src-card" data-region="af"><div class="src-card-top"><span class="src-region">🇿🇦 南非·约翰内斯堡</span><span class="src-qty">80台</span></div><h4>矿用防爆巡检机器人</h4><div class="src-card-foot"><span>2026-09-23</span><span class="match">🔴 立即对接 →</span></div></div>
+      <div class="src-card" data-region="sea"><div class="src-card-top"><span class="src-region">🇻🇳 越南·胡志明</span><span class="src-qty">1000套</span></div><h4>智能仓储AGV搬运机器人</h4><div class="src-card-foot"><span>2026-09-29</span><span class="match">🔴 立即对接 →</span></div></div>
+      <div class="src-card" data-region="sea"><div class="src-card-top"><span class="src-region">🇹🇭 泰国·曼谷</span><span class="src-qty">300吨</span></div><h4>铜铟镓硒薄膜太阳电池</h4><div class="src-card-foot"><span>2026-09-25</span><span class="match">🔴 立即对接 →</span></div></div>
+      <div class="src-card" data-region="sea"><div class="src-card-top"><span class="src-region">🇮🇩 印尼·雅加达</span><span class="src-qty">50台</span></div><h4>海洋环境监测无人船</h4><div class="src-card-foot"><span>2026-09-22</span><span class="match">🔴 立即对接 →</span></div></div>
+    </div>
+    <div class="src-foot">
+      <div class="src-stats">
+        <div class="src-stat"><div class="num">36<span style="font-size:13px">条</span></div><div class="lbl">在采需求</div></div>
+        <div class="src-stat"><div class="num">18<span style="font-size:13px">国</span></div><div class="lbl">覆盖区域</div></div>
+        <div class="src-stat"><div class="num">1.2<span style="font-size:13px">亿</span></div><div class="lbl">采购规模</div></div>
+      </div>
+      <a href="./pages/requirement/list.html" class="src-cta">进入需求大厅 →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 区块六：出海避坑干货 ===== -->
+<section class="section insights" id="guide">
+  <div class="container insights-grid">
+    <div class="insight-box news">
+      <div class="insight-head"><h3>📰 行业政策与公告</h3><a href="./pages/news/news.html">更多 →</a></div>
+      <ul class="news-list">
+        <li><span class="news-tag">政策</span><span class="news-title">七部门联合发布《黑科技推广目录》，涉及无电制冷、AI视觉等多个领域</span><span class="news-date">11-10</span></li>
+        <li><span class="news-tag">公告</span><span class="news-title">2026黑科技参展企业名单公布，浩瑞绿色科技入选重点推荐</span><span class="news-date">11-08</span></li>
+        <li><span class="news-tag">活动</span><span class="news-title">欧亚实地考察团冬季招募启动：俄罗斯 · 哈萨克斯坦 · 乌兹别克斯坦</span><span class="news-date">11-05</span></li>
+      </ul>
+    </div>
+    <div class="insight-box guide">
+      <div class="insight-head"><h3>💡 出海避坑指南</h3><a href="./pages/news/news.html">更多干货 →</a></div>
+      <ul class="guide-list">
+        <li><span class="guide-ico">📘</span><div class="guide-text"><h4>一文看懂俄罗斯 EAC 认证</h4><p>流程 · 费用 · 周期 · 常见坑点</p></div><span class="guide-arrow">→</span></li>
+        <li><span class="guide-ico">🌐</span><div class="guide-text"><h4>中亚五国营商环境分析</h4><p>从关税到物流，一篇讲透</p></div><span class="guide-arrow">→</span></li>
+        <li><span class="guide-ico">💼</span><div class="guide-text"><h4>海外主体设立与资金合规</h4><p>俄罗斯/哈萨克斯坦实操经验</p></div><span class="guide-arrow">→</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Footer ===== -->
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div class="footer-col">
+      <h4>关于浩瑞绿色科技</h4>
+      <div class="footer-req">🏅 欧亚工委会执行单位<br>⚡ 1C1 直通服务 · 俄白哈 EAC 绿色通道</div>
+      <p>浩瑞绿色科技专注欧亚出海一站式服务，从源头产品直供到认证、法税、物流、海外仓，真正帮中国企业把货卖出去。</p>
+    </div>
+    <div class="footer-col">
+      <h4>快速导航</h4>
+      <a href="#">浩瑞新产品</a><a href="#">黑科技爆品</a><a href="#">跨境采购寻源</a><a href="#">出海全链路服务</a><a href="#">欧亚考察团</a>
+    </div>
+    <div class="footer-col">
+      <h4>服务支持</h4>
+      <a href="#">EAC 认证办理</a><a href="#">海外仓咨询</a><a href="#">跨国法税</a><a href="#">发布采购需求</a><a href="#">成为供应商</a>
+    </div>
+    <div class="footer-col">
+      <h4>联系我们</h4>
+      <ul class="footer-contact">
+        <li><span class="fi">📞</span>173-0180-8315</li>
+        <li><span class="fi">📧</span>tech@jnsco.cn</li>
+        <li><span class="fi">📍</span>中国 · 北京</li>
+        <li><span class="fi">🕐</span>工作日 9:00-18:00</li>
+      </ul>
+      <a href="https://weixin.sogou.com/weixin?query=浩瑞科技Harvest+Tech" target="_blank" rel="noopener noreferrer" style="display:inline-block;margin-top:10px;color:#fbbf24;font-size:12px;">微信：浩瑞科技Harvest Tech →</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 北京浩瑞绿色科技有限公司 · 版权所有
+       <a href="pages/about/about-us.html">关于我们</a> | <a href="pages/info/contact-us.html">联系我们</a>
+       | <a href="#">加入我们</a> | <a href="#">友情链接</a></p>
+    <p style="margin-top:6px">
+       <a href="https://beian.miit.gov.cn/#/Integrated/index" target="_blank">京ICP备2026036471号-2</a>
+       <a href="https://beian.mps.gov.cn/#/query/webSearch?code=11010502061862" target="_blank">京公网安备11010502061862号</a>
+    </p>
+  </div>
+</footer>
+
+<!-- 右侧快捷栏 -->
+<div class="side-shortcut">
+  <div class="sc-item" onclick="location.href='./pages/user/order.html'" title="我的订单">📋</div>
+  <div class="sc-item" onclick="location.href='./pages/user/favorite.html'" title="我的收藏">⭐</div>
+  <div class="sc-item sc-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="回到顶部">↑</div>
+</div>
+
+<script>
+/* 轮播：3张 slide，自动 + 圆点切换 */
+(function(){
+  const slides = document.querySelectorAll('.hero-slide');
+  const dots = document.querySelectorAll('.carousel-dots button');
+  let idx = 0, timer;
+  function go(n){ slides[idx].classList.remove('active'); dots[idx].classList.remove('active'); idx=n; slides[idx].classList.add('active'); dots[idx].classList.add('active'); }
+  function auto(){ timer = setInterval(()=>go((idx+1)%slides.length), 5000); }
+  function stop(){ clearInterval(timer); }
+  dots.forEach(d=>d.addEventListener('click',()=>{ stop(); go(+d.dataset.idx); auto(); }));
+  auto();
+})();
+
+/* 采购大厅 Tab */
+(function(){
+  const tabs = document.querySelectorAll('.src-tab');
+  const cards = document.querySelectorAll('#srcGrid .src-card');
+  tabs.forEach(t=>t.addEventListener('click',()=>{
+    tabs.forEach(x=>x.classList.remove('active')); t.classList.add('active');
+    const r = t.dataset.region;
+    cards.forEach(c=>{ if(r==='all' || c.dataset.region===r) c.style.display=''; else c.style.display='none'; });
+  }));
+})();
+
+/* 平滑锚点 */
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click', e=>{ const t = document.querySelector(a.getAttribute('href')); if(t){ e.preventDefault(); t.scrollIntoView({behavior:'smooth',block:'start'}); } });
+});
+</script>
+</body>
+</html>
